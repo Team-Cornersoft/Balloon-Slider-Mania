@@ -5,7 +5,7 @@ include util.mk
 # Default target
 default: all
 
-TARGET_STRING := sm64
+TARGET_STRING := secrethacksurprisedpikachuface
 
 # Preprocessor definitions
 DEFINES :=
