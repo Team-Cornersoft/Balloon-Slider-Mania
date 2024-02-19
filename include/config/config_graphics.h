@@ -50,7 +50,7 @@
  * Enables Puppyprint, a display library for text and large images.
  * Automatically enabled when PUPPYPRINT_DEBUG is enabled.
  */
-// #define PUPPYPRINT
+#define PUPPYPRINT
 
 /**
  * Disables AA (Improves console performance but causes visible seams between unconnected geometry).
@@ -68,13 +68,6 @@
 #define IA8_30FPS_COINS
 
 /**
- * Use .rej microcode for certain objects (experimental - only should be used when F3DEX_GBI_2 is defined).
- * For advanced users only. Does not work perfectly out the box, best used when exported actor models are
- * using 64 vertex sizes, offered by Fast64 in the microcode menu.
- */
-// #define OBJECTS_REJ
-
-/**
  * Mario's silhouette when behind solid objects/surfaces.
  * Also enables new render layers, such as LAYER_ALPHA_DECAL.
  * The number is the intensity of the silhouette, from 0-255.
@@ -82,7 +75,7 @@
  * Also, this also disables anti-aliasing on Mario.
  * NOTE: Regarding performance, silhouette seems to lose 1-2 frames on console.
  */
-// #define SILHOUETTE 127
+#define SILHOUETTE 127
 
 /**
  * Use 64x64 quarter shadow textures (Vanilla are 16x16).
@@ -108,7 +101,7 @@
  * Uses the star object's model in the star dance cutscene.
  * This has a side effect of making the star dance star also transparent when Mario collects a transparent star.
  */
-// #define STAR_DANCE_USES_STARS_MODEL
+#define STAR_DANCE_USES_STARS_MODEL
 
 /**
  * Disables all object shadows. You'll probably only want this either as a last resort for performance or if you're making a super stylized hack.
@@ -151,4 +144,4 @@
  * Can improve performance in some circumstances, though it can also cause large tris to warp if cut off from the camera.
  * Only use this if you can test the difference of your hack with and without this change on console.
  */
-// #define USE_FRUSTRATIO2
+#define USE_FRUSTRATIO2

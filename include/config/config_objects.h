@@ -65,7 +65,7 @@
 /**
  * Enables Mr I to shoot his particle in any direction.
  */
-// #define MR_I_PITCH_SHOOTING
+#define MR_I_PITCH_SHOOTING
 
 /********************
  * -- WATER RING --

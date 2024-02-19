@@ -36,7 +36,7 @@
 /**
  * Prevents Mario from falling asleep while idle.
  */
-// #define NO_SLEEP
+#define NO_SLEEP
 
 /**
  * Disables fall damage.
@@ -61,7 +61,7 @@
 /**
  * Disables Mario getting stuck in snow and sand when falling.
  */
-// #define NO_GETTING_BURIED
+#define NO_GETTING_BURIED
 
 /**
  * Prevents hands-free holding.
@@ -71,7 +71,7 @@
 /**
  * Prevents Mario from losing his cap.
  */
-// #define PREVENT_CAP_LOSS
+#define PREVENT_CAP_LOSS
 
 /**
  * Uses Shindou's pole behavior.
@@ -116,7 +116,7 @@
 /**
  * Buffers an A input if you jump off a slope during the landing lag
  */
-// #define SLOPE_BUFFER
+#define SLOPE_BUFFER
 
 /**
  * Disables BLJs and crushes SimpleFlips's dreams.
