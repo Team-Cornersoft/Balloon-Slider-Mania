@@ -10,8 +10,8 @@ void scroll_castle_grounds_dl_B_Menu_checkers_a_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_B_Menu_checkers_a_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.25 * 0x20) % width;
-	deltaY = (int)(-0.25 * 0x20) % height;
+	deltaX = (int)(0.6700000166893005 * 0x20) % width;
+	deltaY = (int)(-0.33000001311302185 * 0x20) % height;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -39,8 +39,8 @@ void scroll_castle_grounds_dl_B_Menu_checkers_b_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_B_Menu_checkers_b_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.25 * 0x20) % width;
-	deltaY = (int)(-0.25 * 0x20) % height;
+	deltaX = (int)(0.6700000166893005 * 0x20) % width;
+	deltaY = (int)(-0.33000001311302185 * 0x20) % height;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -68,8 +68,8 @@ void scroll_castle_grounds_dl_B_Menu_checkers_c_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_B_Menu_checkers_c_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.25 * 0x20) % width;
-	deltaY = (int)(-0.25 * 0x20) % height;
+	deltaX = (int)(0.6700000166893005 * 0x20) % width;
+	deltaY = (int)(-0.33000001311302185 * 0x20) % height;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
