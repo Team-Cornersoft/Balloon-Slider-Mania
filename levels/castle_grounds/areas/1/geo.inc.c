@@ -1,3 +1,5 @@
+#include "game/bsm_level_select_menu.h"
+
 // 0x0E00073C
 const GeoLayout castle_grounds_geo_00073C[] = {
    GEO_NODE_SCREEN_AREA(10, SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_CENTER_X, SCREEN_CENTER_Y),
@@ -36,4 +38,31 @@ const GeoLayout castle_grounds_geo_00073C[] = {
       GEO_CLOSE_NODE(),
    GEO_CLOSE_NODE(),
    GEO_END(),
+};
+
+const GeoLayout castle_grounds_area_1_custom_static[] = {
+	GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
+	GEO_OPEN_NODE(),
+		GEO_ZBUFFER(0),
+		GEO_OPEN_NODE(),
+			GEO_NODE_ORTHO(100.0000),
+			GEO_OPEN_NODE(),
+				GEO_BACKGROUND_COLOR(0x1987),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+		GEO_ZBUFFER(1),
+		GEO_OPEN_NODE(),
+			GEO_CAMERA_FRUSTUM(45.0000, 100, 30000),
+			GEO_OPEN_NODE(),
+            GEO_ASM(0, geo_bsm_level_select_camera),
+				GEO_CAMERA(CAMERA_MODE_NONE, 0, 1200, 200, 0, 1200, 0, 0x00000000),
+				GEO_OPEN_NODE(),
+					GEO_BRANCH(1, castle_grounds_area_1_geo),
+					GEO_RENDER_OBJ(),
+					GEO_ASM(ENVFX_MODE_NONE, geo_envfx_main),
+				GEO_CLOSE_NODE(),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_END(),
 };

@@ -53,7 +53,6 @@
 s16 gMatStackIndex = 0;
 ALIGNED16 Mat4 gMatStack[32];
 ALIGNED16 Mtx *gMatStackFixed[32];
-f32 sAspectRatio;
 
 /**
  * Animation nodes have state in global variables, so this struct captures
@@ -449,9 +448,10 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
     }
     if (node->fnNode.node.children != NULL) {
         u16 perspNorm;
+        f32 sAspectRatio;
         Mtx *mtx = alloc_display_list(sizeof(*mtx));
 #ifdef WIDE
-        if (gConfig.widescreen && gCurrLevelNum != 0x01){
+        if (gConfig.widescreen && gCurrLevelNum != LEVEL_UNKNOWN_2){
             sAspectRatio = 16.0f / 9.0f; // 1.775f
         } else {
             sAspectRatio = 4.0f / 3.0f; // 1.33333f
@@ -472,9 +472,16 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
 
         // With low fovs, coordinate overflow can occur more easily. This slightly reduces precision only while zoomed in.
         f32 scale = node->fov < 28.0f ? remap(MAX(node->fov, 15), 15, 28, 0.5f, 1.0f): 1.0f;
-        guPerspective(mtx, &perspNorm, node->fov, sAspectRatio, node->near / WORLD_SCALE, node->far / WORLD_SCALE, scale);
 
-        gSPPerspNormalize(gDisplayListHead++, perspNorm);
+        if (gOrthoCam) {
+            const f32 baseHeight = 300.0f;
+            const f32 width = 300.0f * sAspectRatio;
+            guOrtho(mtx, -width, width, -baseHeight, baseHeight, node->near / WORLD_SCALE, node->far / WORLD_SCALE, 100.0f);
+            gSPPerspNormalize(gDisplayListHead++, 0xFFFF);
+        } else {
+            guPerspective(mtx, &perspNorm, node->fov, sAspectRatio, node->near / WORLD_SCALE, node->far / WORLD_SCALE, scale);
+            gSPPerspNormalize(gDisplayListHead++, perspNorm);
+        }
 
         gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
 

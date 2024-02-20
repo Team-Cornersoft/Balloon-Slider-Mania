@@ -1,0 +1,137 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "instruments",
+    "envelopes": {
+        "envelope0": [
+            [4, 32700],
+            [498, 0],
+            [1, 0],
+            "hang"
+        ],
+        "envelope1": [
+            [4, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope2": [
+            [0, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope3": [
+            [1, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope4": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope5": [
+            [6, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope6": [
+            [0, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope7": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope8": [
+            [0, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope9": [
+            [1, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 40,
+            "envelope": "envelope0",
+            "sound": "26_crystal_rhodes"
+        },
+        "inst1": {
+            "release_rate": 40,
+            "envelope": "envelope1",
+            "sound": "custom_02b_sfx9_organ"
+        },
+        "inst2": {
+            "release_rate": 65,
+            "envelope": "envelope2",
+            "sound": "27_harpsichord"
+        },
+        "inst3": {
+            "release_rate": 80,
+            "envelope": "envelope3",
+            "sound": "21_sine_bass"
+        },
+        "inst4": {
+            "release_rate": 80,
+            "envelope": "envelope4",
+            "sound": "custom_dppt_string_bass"
+        },
+        "inst5": {
+            "release_rate": 20,
+            "normal_range_lo": 27,
+            "normal_range_hi": 46,
+            "envelope": "envelope5",
+            "sound_lo": "23_strings_1",
+            "sound": "24_strings_2",
+            "sound_hi": "25_strings_3"
+        },
+        "inst6": {
+            "release_rate": 255,
+            "normal_range_lo": 46,
+            "normal_range_hi": 62,
+            "envelope": "envelope6",
+            "sound_lo": "custom_25_low",
+            "sound": "custom_25_mid",
+            "sound_hi": "custom_25_high"
+        },
+        "inst7": {
+            "release_rate": 45,
+            "normal_range_lo": 24,
+            "envelope": "envelope7",
+            "sound_lo": "0E_hihat_closed",
+            "sound": "0F_hihat_open"
+        },
+        "percussion": [
+            {"release_rate": 35, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_smg_elct_kick_low", "tuning": 0.6890625}},
+            {"release_rate": 40, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_acst_snare", "tuning": 1.0}},
+            {"release_rate": 32, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_cmpr_snare", "tuning": 1.0}},
+            {"release_rate": 30, "pan": 29, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_chns_cymbal", "tuning": 1.0}},
+            {"release_rate": 35, "pan": 13, "envelope": "envelope9", "sound": {"sample": "custom_mgtt_cabasa", "tuning": 1.378125}},
+            {"release_rate": 75, "pan": 98, "envelope": "envelope9", "sound": {"sample": "custom_tp_revr_cymbal", "tuning": 1.0}},
+            {"release_rate": 35, "pan": 115, "envelope": "envelope9", "sound": {"sample": "20_cabasa", "tuning": 1.0}}
+        ]
+	},
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2",
+        "inst3",
+        "inst4",
+        "inst5",
+        "inst6",
+        "inst7"
+    ]
+}

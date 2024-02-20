@@ -140,6 +140,22 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1],
         .reverbMultsR = sReverbMultsArr[2],
     },
+    { /* Preset 3 - Level Select Menu */
+        .useLightweightSettings = TRUE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 9),   // Ignored with lightweight settings
+
+        .windowSize = 0x0A00,
+        .gain = 0x1FFF,
+        .gainIndex = 0xA0,                  // Ignored with lightweight settings
+        .reverbIndex = 0x30,                // Ignored with lightweight settings
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
+        .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
+    },
 };
 
 #ifdef PUPPYPRINT_DEBUG

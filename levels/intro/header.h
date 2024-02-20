@@ -4,10 +4,14 @@
 #include "types.h"
 
 // geo
+extern const GeoLayout intro_scam_screen[];
 extern const GeoLayout intro_geo_splash_screen[];
 extern const GeoLayout intro_geo_mario_head_regular[];
 extern const GeoLayout intro_geo_mario_head_dizzy[];
 extern const GeoLayout intro_geo_debug_level_select[];
+
+// texture
+extern const Texture scam_warning[];
 
 // leveldata
 extern const Gfx intro_seg7_dl_main_logo[];
@@ -16,6 +20,7 @@ extern const f32 intro_seg7_table_scale_1[];
 extern const f32 intro_seg7_table_scale_2[];
 
 // script
+extern const LevelScript level_scam_warning_screen[];
 extern const LevelScript level_intro_splash_screen[];
 extern const LevelScript level_intro_mario_head_regular[];
 extern const LevelScript level_intro_mario_head_dizzy[];

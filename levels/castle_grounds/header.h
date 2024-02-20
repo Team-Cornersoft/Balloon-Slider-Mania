@@ -40,6 +40,7 @@ extern const Gfx castle_grounds_dl_waterfall[];
 
 // script
 extern const LevelScript level_castle_grounds_entry[];
+extern const LevelScript level_cgds_menu_select[];
 
 
 #include "levels/castle_grounds/header.inc.h"

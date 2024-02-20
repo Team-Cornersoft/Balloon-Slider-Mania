@@ -86,6 +86,12 @@ extern struct CreditsEntry *gCurrCreditsEntry;
 extern struct MarioState gMarioStates[];
 extern struct MarioState *gMarioState;
 
+extern s32 loadFrames;
+extern u32 pressAFrames;
+extern u8 renderPressA;
+
+extern u8 gOrthoCam;
+
 extern s16 sCurrPlayMode;
 extern s16 sTransitionTimer;
 extern void (*sTransitionUpdate)(s16 *);
@@ -181,5 +187,9 @@ s32 lvl_init_from_save_file(      UNUSED s16 initOrUpdate,        s32 levelNum);
 s32 lvl_set_current_level(        UNUSED s16 initOrUpdate,        s32 levelNum);
 s32 lvl_play_the_end_screen_sound(UNUSED s16 initOrUpdate, UNUSED s32 levelNum);
 void basic_update(void);
+
+s32 init_image_screen_press_button(s16 frames, UNUSED s32 arg1);
+s32 image_screen_press_button(s16 frames, UNUSED s32 arg1);
+s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1);
 
 #endif // LEVEL_UPDATE_H

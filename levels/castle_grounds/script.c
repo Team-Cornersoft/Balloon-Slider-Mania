@@ -14,12 +14,68 @@
 #include "actors/common1.h"
 
 /* Fast64 begin persistent block [includes] */
+#include "levels/intro/header.h"
+#include "game/area.h"
+#include "game/texscroll.h"
+#include "game/bsm_level_select_menu.h"
 /* Fast64 end persistent block [includes] */
 
 #include "make_const_nonconst.h"
 #include "levels/castle_grounds/header.h"
 
 /* Fast64 begin persistent block [scripts] */
+const LevelScript level_cgds_menu_select[] = {
+    INIT_LEVEL(),
+	LOAD_YAY0(0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd), 
+
+	ALLOC_LEVEL_POOL(),
+	AREA(1, castle_grounds_area_1_custom_static),
+	END_AREA(),
+	FREE_LEVEL_POOL(),
+
+    LOAD_AREA(/*area*/ 1),
+	SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_LEVEL_SELECT, 3, 3),
+
+    CALL(/*arg*/ 0, /*func*/ load_mario_area),
+
+	SET_ORTHO_CAM(TRUE),
+
+    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    JUMP_LINK_PUSH_ARG(75),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+    
+	// To compensate for the early sleep below
+    CALL(/*arg*/ 0, /*func*/ scroll_textures),
+
+    LOOP_BEGIN(),
+		// This sleep comes early because of the way 'image_screen_press_button' is written.
+		// 'image_screen_cannot_press_button' needs to be called on the same frame if the first returns TRUE, or else the button flickers.
+        SLEEP(/*frames*/ 1),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ -1, /*func*/ image_screen_press_button),
+    LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ TRUE),
+
+	// PLAY_SOUND_EFFECT(SOUND_MENU_CUSTOM_MENU_SOUND),
+
+	// To compensate for that early sleep above
+    CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
+    SLEEP(/*frames*/ 1),
+
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    JUMP_LINK_PUSH_ARG(16),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+
+    UNLOAD_AREA(/*area*/ 1),
+    CLEAR_LEVEL(),
+    SLEEP(/*frames*/ 2),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_regular, _introSegmentBssStart, _introSegmentBssEnd),
+};
 /* Fast64 end persistent block [scripts] */
 
 const LevelScript level_castle_grounds_entry[] = {

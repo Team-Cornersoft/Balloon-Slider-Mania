@@ -13,6 +13,7 @@
 #include "game/area.h"
 #include "game/debug.h"
 #include "game/game_init.h"
+#include "game/level_update.h"
 #include "game/mario.h"
 #include "game/memory.h"
 #include "game/object_helpers.h"
@@ -332,6 +333,8 @@ static void level_cmd_init_level(void) {
         gAreaSkyboxStart[clearPointers] = 0;
         gAreaSkyboxEnd[clearPointers] = 0;
     }
+
+    gOrthoCam = FALSE;
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -877,6 +880,16 @@ static void level_cmd_set_echo(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
+static void level_cmd_play_sound_effect(void) {
+    play_sound(CMD_GET(s32, 4), gGlobalSoundSource);
+    sCurrentCmd = CMD_NEXT;
+}
+
+static void level_cmd_ortho_cam(void) {
+    gOrthoCam = CMD_GET(u16, 2);
+    sCurrentCmd = CMD_NEXT;
+}
+
 static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_LOAD_AND_EXECUTE            */ level_cmd_load_and_execute,
     /*LEVEL_CMD_EXIT_AND_EXECUTE            */ level_cmd_exit_and_execute,
@@ -942,6 +955,8 @@ static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_PUPPYVOLUME                 */ level_cmd_puppyvolume,
     /*LEVEL_CMD_CHANGE_AREA_SKYBOX          */ level_cmd_change_area_skybox,
     /*LEVEL_CMD_SET_ECHO                    */ level_cmd_set_echo,
+    /*LEVEL_CMD_PLAY_SOUND_EFFECT           */ level_cmd_play_sound_effect,
+    /*LEVEL_CMD_ORTHO_CAM                   */ level_cmd_ortho_cam,
 };
 
 struct LevelCommand *level_script_execute(struct LevelCommand *cmd) {

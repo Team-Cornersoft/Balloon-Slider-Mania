@@ -23,6 +23,9 @@ ALIGNED8 static const Texture small_font_plain[] = {
 ALIGNED8 static const Texture small_font_vanilla[] = {
 #include "textures/segment2/custom_text4.i4.inc.c"
 };
+ALIGNED8 static const Texture small_font_bsm_custom[] = {
+#include "textures/segment2/custom_text5.ia4.inc.c"
+};
 
 const u8 small_font_kerning_default[] = {
     /*!*/ 4, /*"*/ 5, /*#*/ 0, /*$*/ 0, /*%*/ 8, /*&*/ 8, /*'*/ 2, /*(*/ 5, /*)*/ 5, /***/ 0, /*+*/ 8, /*,*/ 3, /*-*/ 8, /*.*/ 3, /*/*/ 8, /*0*/ 6,
@@ -100,6 +103,25 @@ const u16 small_font_offsets_vanilla[] = {
     /*v*/ 608, /*w*/ 616, /*x*/ 624, /*y*/ 632, /*z*/ 640, /*{*/ 648, /*|*/ 648, /*}*/ 648, /*~*/ 648, /*:)*/ 656
 };
 
+static const u8 small_font_kerning_bsm_custom[] = {
+    /*!*/ 3, /*"*/ 4, /*#*/ 0, /*$*/ 0, /*%*/ 6, /*&*/ 6, /*'*/ 2, /*(*/ 4, /*)*/ 4, /***/ 0, /*+*/ 6, /*,*/ 2, /*-*/ 6, /*.*/ 2, /*/*/ 6, /*0*/ 6,
+    /*1*/ 6, /*2*/ 6, /*3*/ 6, /*4*/ 6, /*5*/ 6, /*6*/ 6, /*7*/ 6, /*8*/ 6, /*9*/ 6, /*:*/ 2, /*;*/ 2, /*<*/ 0, /*=*/ 0, /*>*/ 0, /*?*/ 6, /*@*/ 0, 
+    /*A*/ 6, /*B*/ 6, /*C*/ 6, /*D*/ 6, /*E*/ 6, /*F*/ 6, /*G*/ 6, /*H*/ 6, /*I*/ 5, /*J*/ 7, /*K*/ 6, /*L*/ 6, /*M*/ 6, /*N*/ 6, /*O*/ 6, /*P*/ 6, 
+    /*Q*/ 6, /*R*/ 6, /*S*/ 6, /*T*/ 6, /*U*/ 6, /*V*/ 6, /*W*/ 6, /*X*/ 6, /*Y*/ 6, /*Z*/ 6, /*[*/ 0, /*\\*/ 0, /*]*/ 0, /*^*/ 7, /*_*/ 0, /*`*/ 0,  
+    /*a*/ 5, /*b*/ 5, /*c*/ 5, /*d*/ 5, /*e*/ 5, /*f*/ 5, /*g*/ 5, /*h*/ 5, /*i*/ 2, /*j*/ 6, /*k*/ 4, /*l*/ 2, /*m*/ 5, /*n*/ 5, /*o*/ 5, /*p*/ 5, 
+    /*q*/ 5, /*r*/ 5, /*s*/ 5, /*t*/ 5, /*u*/ 5, /*v*/ 5, /*w*/ 5, /*x*/ 5, /*y*/ 5, /*z*/ 5, /*~*/ 6,   
+};
+
+const u16 small_font_offsets_bsm_custom[] = {
+    /*!*/ 0, /*"*/ 8, /*#*/ 16, /*$*/ 24, /*%*/ 32, /*&*/ 40, /*'*/ 48, /*(*/ 56, /*)*/ 64, /***/ 72, /*+*/ 80, /*,*/ 88, /*-*/ 96, /*.*/ 104, /*/*/ 112,
+    /*0*/ 120, /*1*/ 128, /*2*/ 136, /*3*/ 144, /*4*/ 152, /*5*/ 160, /*6*/ 168, /*7*/ 176, /*8*/ 184, /*9*/ 192, /*:*/ 200, /*;*/ 208, /*<*/ 216, /*=*/ 216,
+    /*>*/ 216, /*?*/ 216, /*@*/ 224, /*A*/ 224, /*B*/ 232, /*C*/ 240, /*D*/ 248, /*E*/ 256, /*F*/ 264, /*G*/ 272, /*H*/ 280, /*I*/ 288, /*J*/ 296, /*K*/ 304,
+    /*L*/ 312, /*M*/ 320, /*N*/ 328, /*O*/ 336, /*P*/ 344, /*Q*/ 352, /*R*/ 360, /*S*/ 368, /*T*/ 376, /*U*/ 384, /*V*/ 392, /*W*/ 400, /*X*/ 408, /*Y*/ 416,
+    /*Z*/ 424, /*[*/ 432, /*\*/ 432, /*]*/ 432, /*^*/ 432, /*_*/ 440, /*`*/ 440, /*a*/ 440, /*b*/ 448, /*c*/ 456, /*d*/ 464, /*e*/ 472, /*f*/ 480, /*g*/ 488, 
+    /*h*/ 496, /*i*/ 504, /*j*/ 512, /*k*/ 520, /*l*/ 528, /*m*/ 536, /*n*/ 544, /*o*/ 552, /*p*/ 560, /*q*/ 568, /*r*/ 576, /*s*/ 584, /*t*/ 592, /*u*/ 600, 
+    /*v*/ 608, /*w*/ 616, /*x*/ 624, /*y*/ 632, /*z*/ 640, /*{*/ 648, /*|*/ 648, /*}*/ 648, /*~*/ 648, /*:)*/ 656
+};
+
 const struct PPTextFont sPPFont_default = {
     small_font_default,
     small_font_kerning_default,
@@ -140,17 +162,27 @@ const struct PPTextFont sPPFont_vanilla = {
     8, 12
 };
 
+const struct PPTextFont sPPFont_bsm_custom = {
+    small_font_bsm_custom,
+    small_font_kerning_bsm_custom,
+    small_font_offsets_bsm_custom,
+    NULL,
+    G_IM_FMT_IA, G_IM_SIZ_4b,
+    672, 12,
+    8, 12
+};
+
 const struct PPTextFont *const gPuppyPrintFontTable[] = {
-    &sPPFont_default, &sPPFont_outline, &sPPFont_plain, &sPPFont_vanilla
+    &sPPFont_default, &sPPFont_outline, &sPPFont_plain, &sPPFont_vanilla, &sPPFont_bsm_custom
 };
 
 
 const Texture *const puppyprint_font_lut[] = {
-    small_font_default, small_font_outline, small_font_plain, small_font_vanilla
+    small_font_default, small_font_outline, small_font_plain, small_font_vanilla, small_font_bsm_custom
 };
 
 const u8 *const puppyprint_kerning_lut[][95] = {
-    small_font_kerning_default, small_font_kerning_outline, small_font_kerning_plain, small_font_kerning_vanilla
+    small_font_kerning_default, small_font_kerning_outline, small_font_kerning_plain, small_font_kerning_vanilla, small_font_kerning_bsm_custom
 };
 
 #endif
@@ -389,6 +421,22 @@ ALIGNED8 static const Texture texture_hud_char_percent[] = {
 #include "textures/segment2/segment2.percent.rgba16.inc.c"// JP %
 };
 #endif
+
+ALIGNED8 static const Texture texture_hud_char_A_button[] = {
+#include "textures/segment2/custom.a_button.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_dpad_button[] = {
+#include "textures/segment2/custom.dpad_button.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_c_button[] = {
+#include "textures/segment2/custom.c_button.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_slash[] = {
+#include "textures/segment2/custom.slash.rgba16.inc.c"
+};
 
 ALIGNED8 static const Texture texture_hud_char_minus[] = {
 #include "textures/segment2/segment2.minus.rgba16.inc.c"
@@ -2024,8 +2072,8 @@ const Texture *const main_hud_lut[] = {
     texture_hud_char_S, texture_hud_char_T, texture_hud_char_U, texture_hud_char_V,
     texture_hud_char_W, texture_hud_char_X, texture_hud_char_Y, texture_hud_char_Z,
     texture_hud_char_exclamation, texture_hud_char_double_exclamation, texture_hud_char_question, texture_hud_char_ampersand,
-    texture_hud_char_percent,                0x0,                0x0,                0x0,
-                   0x0,                0x0,                0x0, texture_hud_char_minus,
+    texture_hud_char_percent, texture_hud_char_A_button, texture_hud_char_dpad_button, texture_hud_char_c_button,
+                   0x0,                0x0, texture_hud_char_slash, texture_hud_char_minus,
     texture_hud_char_multiply, texture_hud_char_coin, texture_hud_char_red_coin, texture_hud_char_silver_coin,
     texture_hud_char_mario_head, texture_hud_char_star, texture_hud_char_decimal_point, texture_hud_char_beta_key,
     texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut,

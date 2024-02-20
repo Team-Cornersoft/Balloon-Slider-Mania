@@ -3396,6 +3396,10 @@ ALIGNED8 static const Texture intro_seg7_texture_trademark[] = {
 
 #endif
 
+ALIGNED8 const Texture scam_warning[] = {
+#include "levels/intro/scam_warning.custom.rgba16.inc.c"
+};
+
 // 0x0700C6A0 - 0x0700C790
 const Gfx intro_seg7_dl_copyright_trademark[] = {
     gsDPPipeSync(),

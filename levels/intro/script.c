@@ -12,6 +12,7 @@
 
 #include "levels/scripts.h"
 #include "levels/menu/header.h"
+#include "levels/castle_grounds/header.h"
 
 #include "actors/common0.h"
 #include "actors/common1.h"
@@ -24,6 +25,36 @@
 #include "game/print.h"
 
 #include "game/object_list_processor.h"
+
+const LevelScript level_scam_warning_screen[] = {
+    INIT_LEVEL(),
+    SLEEP(/*frames*/ 15),
+    FIXED_LOAD(/*loadAddr*/ _goddardSegmentStart, /*romStart*/ _goddardSegmentRomStart, /*romEnd*/ _goddardSegmentRomEnd),
+    LOAD_RAW(/*seg*/ 0x13, _behaviorSegmentRomStart, _behaviorSegmentRomEnd),
+    LOAD_YAY0(/*seg*/ 0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
+
+    // Load Scam Warning Screen
+    ALLOC_LEVEL_POOL(),
+    AREA(/*index*/ 1, intro_scam_screen),
+    END_AREA(),
+    FREE_LEVEL_POOL(),
+
+    // Start animation
+    LOAD_AREA(/*area*/ 1),
+
+    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    SLEEP(/*frames*/ 105),
+    CALL_LOOP(/*arg*/ -1, /*func*/ image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    CALL_LOOP(/*arg*/ 16, /*func*/ image_screen_cannot_press_button),
+    UNLOAD_AREA(/*area*/ 1),
+    CLEAR_LEVEL(),
+    SLEEP(/*frames*/ 20),
+
+    // NOTE: Remember to change ALL OF THESE if changing scripts/segments
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+};
 
 const LevelScript level_intro_splash_screen[] = {
 #ifdef SKIP_TITLE_SCREEN

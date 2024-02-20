@@ -145,6 +145,12 @@ s8 gNeverEnteredCastle;
 // Prevent multiple 100 coin stars from spawning
 u8 g100CoinStarSpawned = FALSE;
 
+s32 loadFrames = 0;
+u32 pressAFrames = 0;
+u8 renderPressA = FALSE;
+
+u8 gOrthoCam = FALSE;
+
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
 
@@ -1383,4 +1389,43 @@ s32 lvl_set_current_level(UNUSED s16 initOrUpdate, s32 levelNum) {
 s32 lvl_play_the_end_screen_sound(UNUSED s16 initOrUpdate, UNUSED s32 levelNum) {
     play_sound(SOUND_MENU_THANK_YOU_PLAYING_MY_GAME, gGlobalSoundSource);
     return TRUE;
+}
+
+s32 init_image_screen_press_button(UNUSED s16 frames, UNUSED s32 arg1) {
+    pressAFrames = 0;
+    loadFrames = 0;
+    renderPressA = FALSE;
+    return TRUE;
+}
+
+s32 image_screen_press_button(s16 frames, UNUSED s32 arg1) {
+    loadFrames--;
+
+    if (loadFrames < 0)
+        loadFrames = frames; // Timer never expires if frames < 0
+
+    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | START_BUTTON) || loadFrames == 0) {
+        loadFrames = 0; // Reset loadFrames in case it needs to be used elsewhere
+        return TRUE; // Continue in level script
+    }
+
+    renderPressA = TRUE;
+    pressAFrames++;
+
+    return FALSE; // Don't continue in level script, call this function again next frame
+}
+
+s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
+    loadFrames--;
+
+    if (loadFrames < 0)
+        loadFrames = frames; // Timer never expires if frames < 0
+
+    if (loadFrames == 0)
+        return TRUE; // Continue in level script
+
+    renderPressA = TRUE;
+    pressAFrames++;
+
+    return FALSE; // Don't continue in level script, call this function again next frame
 }

@@ -71,6 +71,8 @@ enum LevelCommands {
     /*0x3D*/ LEVEL_CMD_PUPPYVOLUME,
     /*0x3E*/ LEVEL_CMD_CHANGE_AREA_SKYBOX,
     /*0x3F*/ LEVEL_CMD_SET_ECHO,
+    /*0x40*/ LEVEL_CMD_PLAY_SOUND_EFFECT,
+    /*0x41*/ LEVEL_CMD_ORTHO_CAM,
 };
 
 enum LevelActs {
@@ -448,6 +450,13 @@ enum GoddardScene {
 
 #define SET_ECHO(console, emulator) \
     CMD_BBBB(LEVEL_CMD_SET_ECHO, 0x04, console, emulator)
+
+#define PLAY_SOUND_EFFECT(sound) \
+    CMD_BBH(LEVEL_CMD_PLAY_SOUND_EFFECT, 0x08, 0x0000), \
+    CMD_W(sound)
+
+#define SET_ORTHO_CAM(shouldUseOrthoCam) \
+    CMD_BBH(LEVEL_CMD_ORTHO_CAM, 0x04, shouldUseOrthoCam)
 
 #define MACRO_OBJECTS(objList) \
     CMD_BBH(LEVEL_CMD_SET_MACRO_OBJECTS, 0x08, 0x0000), \

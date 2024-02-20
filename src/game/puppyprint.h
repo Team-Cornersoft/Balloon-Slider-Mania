@@ -116,6 +116,7 @@ enum PuppyFont {
     FONT_OUTLINE,
     FONT_PLAIN,
     FONT_VANILLA,
+    FONT_BALLOON_SLIDER_MANIA,
     FONT_NUM
 };
 
