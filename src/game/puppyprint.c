@@ -1595,7 +1595,7 @@ void print_small_text(s32 x, s32 y, const char *str, s32 align, s32 amount, u8 f
     lines = 0;
     
     shakeTablePos = gGlobalTimer % sizeof(sTextShakeTable);
-    gDPLoadTextureBlock_4b(gDisplayListHead++, fnt->tex, fnt->fmt, fnt->imW, fnt->imH, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), 0, 0, 0, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock_4bS(gDisplayListHead++, fnt->tex, fnt->fmt, fnt->imW, fnt->imH, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), 0, 0, 0, G_TX_NOLOD, G_TX_NOLOD);
     
     for (s32 i = 0, j = 0; i < textLength; i++, j++) {
         if (str[i] == '\n') {
@@ -1717,7 +1717,7 @@ void print_small_text_light(s32 x, s32 y, const char *str, s32 align, s32 amount
     }
 
     lines = 0;
-    gDPLoadTextureBlock_4b(gDisplayListHead++, fnt->tex, fnt->fmt, fnt->imW, fnt->imH, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), 0, 0, 0, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock_4bS(gDisplayListHead++, fnt->tex, fnt->fmt, fnt->imW, fnt->imH, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), 0, 0, 0, G_TX_NOLOD, G_TX_NOLOD);
     
     for (s32 i = 0, j = 0; i < textLength; i++, j++) {
         if (str[i] == '\n') {
@@ -1908,11 +1908,25 @@ void get_char_from_byte(s32 *textX, s32 *textPos, u8 letter, u8 *wideX, u8 *spac
 
     switch (letter) {
         // This is for the letters that sit differently on the line. It just moves them down a bit.
-        case 'g': *offsetY = 2 * textSizeTotal; break;
-        case 'q': *offsetY = 2 * textSizeTotal; break;
-        case 'j': *offsetY = 2 * textSizeTotal; break;
-        case 'p': *offsetY = 2 * textSizeTotal; break;
-        case 'y': *offsetY = 2 * textSizeTotal; break;
+        case 'g':
+            *offsetY = 2 * textSizeTotal;
+            break;
+        case 'q':
+            *offsetY = 2 * textSizeTotal;
+            break;
+        case 'j':
+            if (font == FONT_OUTLINE || font == FONT_BALLOON_SLIDER_MANIA) {
+                *offsetY = 1 * textSizeTotal;
+            } else {
+                *offsetY = 2 * textSizeTotal;
+            }
+            break;
+        case 'p':
+            *offsetY = 2 * textSizeTotal;
+            break;
+        case 'y':
+            *offsetY = 2 * textSizeTotal;
+            break;
     }
 }
 
