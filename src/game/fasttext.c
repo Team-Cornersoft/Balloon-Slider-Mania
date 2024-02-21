@@ -59,7 +59,7 @@ void drawSmallString_impl(Gfx **dl, int x, int y, const char* string, int r, int
 
     while (string[i] != '\0') {
         unsigned int cur_char = string[i];
-        s32 goddamnJMeasure = string[i] == 'j' ? -1 : 0;
+        s32 goddamnJMeasure = string[i] == 'j' ? 1 : 0;
 
         if (cur_char == '\n') {
             xPos = x;

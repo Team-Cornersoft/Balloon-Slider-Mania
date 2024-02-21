@@ -42,15 +42,6 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
 
         // TODO: remove
         print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT - 14, "<RAINBOW>Press L to swap perspective<RAINBOW>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-
-        
-        print_small_text_buffered(16, 16, "<RAINBOW>\
-ABCDEFGHIJKLMN\n\
-NOPQRSTUVWXYZa\n\
-abcdefghijklmn\n\
-nopqrstuvwxyz!\n\
-!\"%&'()+,-./0\n\
-0123456789:;?^~A<RAINBOW>", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_OUTLINE);
     }
 
     return NULL;
