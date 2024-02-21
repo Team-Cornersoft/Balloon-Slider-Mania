@@ -196,3 +196,10 @@ const GeoLayout geo_menu_act_selector_strings[] = {
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
+
+#include "levels/menu/custom_menu_stage/geo.inc.c"
+#include "levels/menu/custom_menu_tcstoken/geo.inc.c"
+#include "levels/menu/custom_menu_tcslock/geo.inc.c"
+#include "levels/menu/custom_menu_rank/geo.inc.c"
+#include "levels/menu/custom_menu_lock/geo.inc.c"
+#include "levels/menu/custom_menu_button/geo.inc.c"

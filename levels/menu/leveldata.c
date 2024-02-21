@@ -1849,3 +1849,10 @@ const Collision main_menu_seg7_collision[] = {
 #undef COURSE_TABLE
 
 #endif
+
+#include "levels/menu/custom_menu_stage/model.inc.c"
+#include "levels/menu/custom_menu_tcstoken/model.inc.c"
+#include "levels/menu/custom_menu_tcslock/model.inc.c"
+#include "levels/menu/custom_menu_rank/model.inc.c"
+#include "levels/menu/custom_menu_lock/model.inc.c"
+#include "levels/menu/custom_menu_button/model.inc.c"

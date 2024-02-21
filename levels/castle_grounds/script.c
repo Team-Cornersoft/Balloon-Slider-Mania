@@ -29,7 +29,6 @@ const LevelScript level_cgds_menu_select[] = {
 	LOAD_YAY0(0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd), 
 
 	ALLOC_LEVEL_POOL(),
-	AREA(1, castle_grounds_area_1_custom_static),
 	END_AREA(),
 	FREE_LEVEL_POOL(),
 
