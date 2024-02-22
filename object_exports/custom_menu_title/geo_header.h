@@ -10,7 +10,7 @@ extern u8 custom_menu_title_title_section_5_rgba32[];
 extern Vtx custom_menu_title_model_mesh_layer_5_vtx_cull[8];
 extern Vtx custom_menu_title_model_mesh_layer_5_vtx_0[6];
 extern Gfx custom_menu_title_model_mesh_layer_5_tri_0[];
-extern Vtx custom_menu_title_model_mesh_layer_5_vtx_1[11];
+extern Vtx custom_menu_title_model_mesh_layer_5_vtx_1[12];
 extern Gfx custom_menu_title_model_mesh_layer_5_tri_1[];
 extern Vtx custom_menu_title_model_mesh_layer_5_vtx_2[5];
 extern Gfx custom_menu_title_model_mesh_layer_5_tri_2[];
