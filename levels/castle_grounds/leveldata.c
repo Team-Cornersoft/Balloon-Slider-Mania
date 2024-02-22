@@ -33,3 +33,10 @@
 #include "levels/castle_grounds/areas/1/movtext.inc.c"
 
 #include "levels/castle_grounds/leveldata.inc.c"
+
+#include "levels/castle_grounds/custom_menu_stage/model.inc.c"
+#include "levels/castle_grounds/custom_menu_tcstoken/model.inc.c"
+#include "levels/castle_grounds/custom_menu_tcslock/model.inc.c"
+#include "levels/castle_grounds/custom_menu_rank/model.inc.c"
+#include "levels/castle_grounds/custom_menu_lock/model.inc.c"
+#include "levels/castle_grounds/custom_menu_button/model.inc.c"

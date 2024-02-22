@@ -401,6 +401,11 @@ enum BehaviorCommands {
     BC_B0H(BHV_CMD_SET_LIGHT_FALLOFF, constant), \
     BC_HH(linear, quadratic)
 
+const BehaviorScript bhvNone[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    BREAK(),
+};
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),

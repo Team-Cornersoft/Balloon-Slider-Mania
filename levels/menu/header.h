@@ -49,16 +49,4 @@ extern const u8 eu_course_strings_de_table[];
 extern const LevelScript level_main_menu_entry_file_select[];
 extern const LevelScript level_main_menu_entry_act_select[];
 
-#include "levels/menu/custom_menu_stage/geo_header.h"
-
-#include "levels/menu/custom_menu_tcstoken/geo_header.h"
-
-#include "levels/menu/custom_menu_tcslock/geo_header.h"
-
-#include "levels/menu/custom_menu_rank/geo_header.h"
-
-#include "levels/menu/custom_menu_lock/geo_header.h"
-
-#include "levels/menu/custom_menu_button/geo_header.h"
-
 #endif

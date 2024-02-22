@@ -20,3 +20,10 @@
 #include "levels/castle_grounds/areas/1/geo.inc.c"
 
 #include "levels/castle_grounds/geo.inc.c"
+
+#include "levels/castle_grounds/custom_menu_stage/geo.inc.c"
+#include "levels/castle_grounds/custom_menu_tcstoken/geo.inc.c"
+#include "levels/castle_grounds/custom_menu_tcslock/geo.inc.c"
+#include "levels/castle_grounds/custom_menu_rank/geo.inc.c"
+#include "levels/castle_grounds/custom_menu_lock/geo.inc.c"
+#include "levels/castle_grounds/custom_menu_button/geo.inc.c"

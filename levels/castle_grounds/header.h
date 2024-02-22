@@ -5,6 +5,7 @@
 #include "game/moving_texture.h"
 
 // geo
+extern const GeoLayout castle_grounds_area_1_custom_static[];
 extern const GeoLayout castle_grounds_geo_000660[];
 extern const GeoLayout castle_grounds_geo_0006F4[];
 extern const GeoLayout castle_grounds_geo_00070C[];
@@ -44,5 +45,17 @@ extern const LevelScript level_cgds_menu_select[];
 
 
 #include "levels/castle_grounds/header.inc.h"
+
+#include "levels/castle_grounds/custom_menu_stage/geo_header.h"
+
+#include "levels/castle_grounds/custom_menu_tcstoken/geo_header.h"
+
+#include "levels/castle_grounds/custom_menu_tcslock/geo_header.h"
+
+#include "levels/castle_grounds/custom_menu_rank/geo_header.h"
+
+#include "levels/castle_grounds/custom_menu_lock/geo_header.h"
+
+#include "levels/castle_grounds/custom_menu_button/geo_header.h"
 
 #endif
