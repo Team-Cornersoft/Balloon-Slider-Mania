@@ -25,18 +25,20 @@
 
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript cgds_area1_jump[] = {
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 40, 0, 0, 0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 40, 0, 0, 0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
+	OBJECT(MODEL_BSM_MENU_TITLE,   -980, 2020, 40, 0, 0, 15, 0x00000000, bhvBSMMenuTitle), // Title
 
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 40, 0, 0, 0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 40, 0, 0, 0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 40, 0, 0, 0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 40, 0, 0, 0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 40, 0, 0, 0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 40, 0, 0, 0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 40, 0, 0, 0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 40, 0, 0, 0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
-	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 40, 0, 0, 0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 40, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 40, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
+
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 40, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 40, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 40, 0, 0,  0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 40, 0, 0,  0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 40, 0, 0,  0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 40, 0, 0,  0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 40, 0, 0,  0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 40, 0, 0,  0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
+	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 40, 0, 0,  0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
 
 	// Rank:     x:  340, y: 60 (Relative to button)
 	// CS Token: x: -340, y: 60 (Relative to button)
@@ -56,6 +58,7 @@ const LevelScript level_cgds_menu_select[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSLOCK, custom_menu_tcslock_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TITLE, custom_menu_title_geo), 
 
 	AREA(1, castle_grounds_area_1_custom_static),
 		JUMP_LINK(cgds_area1_jump),
@@ -122,6 +125,7 @@ const LevelScript level_castle_grounds_entry[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSLOCK, custom_menu_tcslock_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TITLE, custom_menu_title_geo), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */

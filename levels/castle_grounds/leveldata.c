@@ -40,3 +40,4 @@
 #include "levels/castle_grounds/custom_menu_rank/model.inc.c"
 #include "levels/castle_grounds/custom_menu_lock/model.inc.c"
 #include "levels/castle_grounds/custom_menu_button/model.inc.c"
+#include "levels/castle_grounds/custom_menu_title/model.inc.c"

@@ -406,6 +406,17 @@ const BehaviorScript bhvNone[] = {
     BREAK(),
 };
 
+const BehaviorScript bhvBSMMenuTitle[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bsm_menu_title_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_menu_title_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvBSMMenuButtonOrStage[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
