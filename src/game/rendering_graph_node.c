@@ -1277,10 +1277,12 @@ s32 obj_is_in_view(struct GraphNodeObject *node) {
 
 #ifndef CULLING_ON_EMULATOR
     // If an emulator is detected, skip any other culling.
-    if(!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)){
+    if(gOrthoCam || !(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)){
+#else
+    if(gOrthoCam){
+#endif
         return TRUE;
     }
-#endif
 
 #ifdef VERTICAL_CULLING
     f32 vScreenEdge = -cameraToObjectDepth * gCurGraphNodeCamFrustum->halfFovVertical;
