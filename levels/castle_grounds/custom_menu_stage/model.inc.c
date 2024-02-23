@@ -6029,7 +6029,6 @@ Gfx custom_menu_stage_model_mesh_layer_1_tri_1[] = {
 Gfx mat_custom_menu_stage_box_bottom[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
     gsSPLightColor(LIGHT_1, 0xffffffff),
     gsSPLightColor(LIGHT_2, 0x7f7f7fff),
@@ -6038,12 +6037,6 @@ Gfx mat_custom_menu_stage_box_bottom[] = {
 	gsDPLoadBlock(7, 0, 0, 1023, 256),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 124),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_custom_menu_stage_box_bottom[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_CULL_BACK),
 	gsSPEndDisplayList(),
 };
 
@@ -6434,7 +6427,6 @@ Gfx custom_menu_stage_model_mesh_layer_5_after[] = {
 Gfx custom_menu_stage_model_mesh_layer_5_unlocked[] = {
 	gsSPDisplayList(mat_custom_menu_stage_box_bottom),
 	gsSPDisplayList(custom_menu_stage_model_mesh_layer_5_tri_0),
-	gsSPDisplayList(mat_revert_custom_menu_stage_box_bottom),
 	gsSPDisplayList(mat_custom_menu_stage_box_top),
 	gsSPDisplayList(custom_menu_stage_model_mesh_layer_5_tri_1),
 	gsSPEndDisplayList(),

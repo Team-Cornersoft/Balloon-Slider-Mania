@@ -47,7 +47,6 @@ extern Gfx custom_menu_stage_model_mesh_layer_5_tri_0[];
 extern Vtx custom_menu_stage_model_mesh_layer_5_vtx_1[9];
 extern Gfx custom_menu_stage_model_mesh_layer_5_tri_1[];
 extern Gfx mat_custom_menu_stage_box_bottom[];
-extern Gfx mat_revert_custom_menu_stage_box_bottom[];
 extern Gfx mat_custom_menu_stage_box_top[];
 extern Gfx mat_custom_menu_stage_box_locked_bottom[];
 extern Gfx mat_revert_custom_menu_stage_box_locked_bottom[];
