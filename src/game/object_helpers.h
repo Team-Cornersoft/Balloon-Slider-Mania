@@ -62,6 +62,8 @@ enum GeoUpdateLayerTransparencyModes {
 Gfx *geo_update_projectile_pos_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 Gfx *geo_update_layer_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_switch_anim_state(s32 callContext, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_switch_bparam2(s32 callContext, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_switch_area(s32 callContext, struct GraphNode *node, UNUSED void *context);
 void obj_update_pos_from_parent_transformation(Mat4 mtx, struct Object *obj);
 void create_transformation_from_matrices(Mat4 a0, Mat4 a1, Mat4 a2);

@@ -406,6 +406,39 @@ const BehaviorScript bhvNone[] = {
     BREAK(),
 };
 
+const BehaviorScript bhvBSMMenuButtonOrStage[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bsm_menu_button_or_stage_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_menu_button_or_stage_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBSMMenuLockOrToken[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bsm_menu_lock_or_token_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_menu_lock_or_token_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBSMMenuRankOrToken[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bsm_menu_rank_or_token_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_menu_rank_or_token_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),

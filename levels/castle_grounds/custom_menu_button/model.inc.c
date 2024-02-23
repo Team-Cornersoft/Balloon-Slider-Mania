@@ -1279,7 +1279,7 @@ Gfx custom_menu_button_model_mesh_layer_5[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx custom_menu_button_model_mesh_layer_1[] = {
+Gfx custom_menu_button_model_mesh_layer_1_stats[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPVertex(custom_menu_button_model_mesh_layer_1_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
@@ -1287,9 +1287,24 @@ Gfx custom_menu_button_model_mesh_layer_1[] = {
 	gsSPDisplayList(mat_custom_menu_button_credits_text),
 	gsSPDisplayList(custom_menu_button_model_mesh_layer_1_tri_0),
 	gsSPDisplayList(mat_revert_custom_menu_button_credits_text),
-	// gsSPDisplayList(mat_custom_menu_button_stats_text),
-	// gsSPDisplayList(custom_menu_button_model_mesh_layer_1_tri_1),
-	// gsSPDisplayList(mat_revert_custom_menu_button_stats_text),
+	gsDPPipeSync(),
+	gsSPSetGeometryMode(G_LIGHTING),
+	gsSPClearGeometryMode(G_TEXTURE_GEN),
+	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
+	gsSPTexture(65535, 65535, 0, 0, 0),
+	gsDPSetEnvColor(255, 255, 255, 255),
+	gsDPSetAlphaCompare(G_AC_NONE),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_button_model_mesh_layer_1_credits[] = {
+	gsSPClearGeometryMode(G_LIGHTING),
+	gsSPVertex(custom_menu_button_model_mesh_layer_1_vtx_cull + 0, 8, 0),
+	gsSPSetGeometryMode(G_LIGHTING),
+	gsSPCullDisplayList(0, 7),
+	gsSPDisplayList(mat_custom_menu_button_stats_text),
+	gsSPDisplayList(custom_menu_button_model_mesh_layer_1_tri_1),
+	gsSPDisplayList(mat_revert_custom_menu_button_stats_text),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),

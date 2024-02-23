@@ -7,6 +7,7 @@
 #include "audio/external.h"
 #include "behavior_actions.h"
 #include "behavior_data.h"
+#include "bsm_level_select_menu.h"
 #include "camera.h"
 #include "dialog_ids.h"
 #include "engine/behavior_script.h"
@@ -820,3 +821,7 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
 #include "behaviors/reds_star_marker.inc.c"
 #include "behaviors/triplet_butterfly.inc.c"
 #include "behaviors/bubba.inc.c"
+
+#include "behaviors/bsm_menu_button_or_stage.inc.c"
+#include "behaviors/bsm_menu_lock_or_token.inc.c"
+#include "behaviors/bsm_menu_rank_or_token.inc.c"

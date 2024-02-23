@@ -15,7 +15,7 @@
  * It is recommended to enable this if any significant changes to the save file are made that could cause issues with this or other hacks.
  * NOTE: Using save editors with this define will likely just end up wiping your save, since SM64 specific save editors most likely use hardcoded save magic.
  */
-// #define UNIQUE_SAVE_DATA
+#define UNIQUE_SAVE_DATA
 
 /**
  * Enables Rumble Pak Support.

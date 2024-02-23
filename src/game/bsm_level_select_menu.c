@@ -35,7 +35,7 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
             gBSMMenuLayoutBGState = (gBSMMenuLayoutBGState + 1) % BSM_MENU_LAYOUT_BG_COUNT;
         }
 
-        f32 xOffset = CAMERA_LAYOUT_FIRST + (gBSMMenuLayoutBGState * CAMERA_LAYOUT_OFFSET);
+        f32 xOffset = BSM_MENU_CAMERA_LAYOUT_FIRST + (gBSMMenuLayoutBGState * BSM_MENU_CAMERA_LAYOUT_INCREMENT);
 
         cameraNode->pos[0] = xOffset;
         cameraNode->focus[0] = xOffset;

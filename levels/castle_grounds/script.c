@@ -25,18 +25,18 @@
 
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript cgds_area1_jump[] = {
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1360, 40, 0, 0, 0, 0x00000000, bhvNone), // Stats
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1040, 40, 0, 0, 0, 0x00010000, bhvNone), // Credits
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1360, 40, 0, 0, 0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1040, 40, 0, 0, 0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
 
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1600, 40, 0, 0, 0, 0x00000000, bhvNone), // Course 1
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1120, 40, 0, 0, 0, 0x00010000, bhvNone), // Course 2
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  640, 40, 0, 0, 0, 0x00020000, bhvNone), // Course 3
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  160, 40, 0, 0, 0, 0x00030000, bhvNone), // Course 4
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1600, 40, 0, 0, 0, 0x00040000, bhvNone), // Course 5
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1120, 40, 0, 0, 0, 0x00050000, bhvNone), // Course 6
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  640, 40, 0, 0, 0, 0x00060000, bhvNone), // Course 7
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  160, 40, 0, 0, 0, 0x00070000, bhvNone), // Course 8
-	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  160, 40, 0, 0, 0, 0x00080000, bhvNone), // Course 9
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1600, 40, 0, 0, 0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1120, 40, 0, 0, 0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  640, 40, 0, 0, 0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  160, 40, 0, 0, 0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1600, 40, 0, 0, 0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1120, 40, 0, 0, 0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  640, 40, 0, 0, 0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  160, 40, 0, 0, 0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
+	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  160, 40, 0, 0, 0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
 
 	// Rank:     x:  340, y: 60 (Relative to button)
 	// CS Token: x: -340, y: 60 (Relative to button)

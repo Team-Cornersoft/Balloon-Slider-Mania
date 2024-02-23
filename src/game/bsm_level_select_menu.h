@@ -7,9 +7,6 @@
 #include "types.h"
 #include "engine/graph_node.h"
 
-#define CAMERA_LAYOUT_FIRST -6000.0f
-#define CAMERA_LAYOUT_OFFSET 6000.0f
-
 enum BSMMenuLayoutBGState {
     BSM_MENU_LAYOUT_BG_MINIMAL,
     BSM_MENU_LAYOUT_BG_STANDARD,
@@ -19,6 +16,10 @@ enum BSMMenuLayoutBGState {
 };
 
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
+
+#define BSM_MENU_CAMERA_LAYOUT_FIRST -6000.0f
+#define BSM_MENU_CAMERA_LAYOUT_INCREMENT 6000.0f
+#define BSM_MENU_CAMERA_LAYOUT_OFFSET (BSM_MENU_CAMERA_LAYOUT_FIRST + (gBSMMenuLayoutBGState * BSM_MENU_CAMERA_LAYOUT_INCREMENT))
 
 Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void *context);
 

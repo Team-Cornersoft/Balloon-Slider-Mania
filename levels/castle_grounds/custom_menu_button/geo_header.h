@@ -24,4 +24,5 @@ extern Gfx mat_revert_custom_menu_button_credits_text[];
 extern Gfx mat_custom_menu_button_stats_text[];
 extern Gfx mat_revert_custom_menu_button_stats_text[];
 extern Gfx custom_menu_button_model_mesh_layer_5[];
-extern Gfx custom_menu_button_model_mesh_layer_1[];
+extern Gfx custom_menu_button_model_mesh_layer_1_stats[];
+extern Gfx custom_menu_button_model_mesh_layer_1_credits[];
