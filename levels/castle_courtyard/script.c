@@ -39,7 +39,6 @@ const LevelScript level_ccy_title_screen[] = {
 	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSLOCK, custom_menu_tcslock_geo), 
 	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
 	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
-
 	AREA(1, castle_courtyard_area_1_custom_static),
 		JUMP_LINK(ccy_area1_jump),
 	END_AREA(),

@@ -7,6 +7,7 @@ const GeoLayout castle_courtyard_area_1_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, castle_courtyard_dl_A_Title_screen_mesh_layer_5),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 1200, -1207, castle_courtyard_dl_B_Title_screen_backdrop_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
