@@ -1,6 +1,4 @@
 extern const GeoLayout custom_menu_button_geo[];
-extern Lights1 custom_menu_button_blue_box_top_lights;
-extern Lights1 custom_menu_button_blue_box_bottom_lights;
 extern u8 custom_menu_button_box_top_rgba16_ia8[];
 extern u8 custom_menu_button_box_bottom_rgba16_ia8[];
 extern u8 custom_menu_button_credits_text_rgba16_ci8[];
