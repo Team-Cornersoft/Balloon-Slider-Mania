@@ -5,6 +5,7 @@
 #include "game/moving_texture.h"
 
 // geo
+extern const GeoLayout castle_courtyard_area_1_custom_static[];
 extern const GeoLayout castle_courtyard_geo_000200[];
 extern const GeoLayout castle_courtyard_geo_000218[];
 
@@ -19,6 +20,7 @@ extern const struct MovtexQuadCollection castle_courtyard_movtex_star_statue_wat
 
 // script
 extern const LevelScript level_castle_courtyard_entry[];
+extern const LevelScript level_ccy_title_screen[];
 
 
 #include "levels/castle_courtyard/header.inc.h"

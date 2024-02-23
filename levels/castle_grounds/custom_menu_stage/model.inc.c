@@ -1,3 +1,5 @@
+
+
 Gfx custom_menu_stage_box_bottom_rgba16_ia8_aligner[] = {gsSPEndDisplayList()};
 u8 custom_menu_stage_box_bottom_rgba16_ia8[] = {
 	0x00, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 
@@ -5910,14 +5912,14 @@ Vtx custom_menu_stage_model_mesh_layer_5_vtx_cull[8] = {
 };
 
 Vtx custom_menu_stage_model_mesh_layer_5_vtx_0[8] = {
-	{{ {-420, -24, 20}, 0, {-16, 1008}, {255, 255, 255, 255} }},
-	{{ {-340, 56, 20}, 0, {1008, -16}, {255, 255, 255, 255} }},
-	{{ {-420, 56, 20}, 0, {-16, -16}, {255, 255, 255, 255} }},
-	{{ {-340, -24, 20}, 0, {1008, 1008}, {255, 255, 255, 255} }},
-	{{ {320, -24, 20}, 0, {1008, 1008}, {255, 255, 255, 255} }},
-	{{ {320, 56, 20}, 0, {1008, -16}, {255, 255, 255, 255} }},
-	{{ {400, 56, 20}, 0, {2032, -16}, {255, 255, 255, 255} }},
-	{{ {400, -24, 20}, 0, {2032, 1008}, {255, 255, 255, 255} }},
+	{{ {-420, -24, 20}, 0, {-16, 1008}, {0, 0, 127, 255} }},
+	{{ {-340, 56, 20}, 0, {1008, -16}, {0, 0, 127, 255} }},
+	{{ {-420, 56, 20}, 0, {-16, -16}, {0, 0, 127, 255} }},
+	{{ {-340, -24, 20}, 0, {1008, 1008}, {0, 0, 127, 255} }},
+	{{ {320, -24, 20}, 0, {1008, 1008}, {0, 0, 127, 255} }},
+	{{ {320, 56, 20}, 0, {1008, -16}, {0, 0, 127, 255} }},
+	{{ {400, 56, 20}, 0, {2032, -16}, {0, 0, 127, 255} }},
+	{{ {400, -24, 20}, 0, {2032, 1008}, {0, 0, 127, 255} }},
 };
 
 Gfx custom_menu_stage_model_mesh_layer_5_tri_0[] = {
@@ -5929,15 +5931,15 @@ Gfx custom_menu_stage_model_mesh_layer_5_tri_0[] = {
 };
 
 Vtx custom_menu_stage_model_mesh_layer_5_vtx_1[9] = {
-	{{ {-420, 56, 20}, 0, {-16, 4080}, {255, 255, 255, 255} }},
-	{{ {-340, 396, 20}, 0, {1008, -16}, {255, 255, 255, 255} }},
-	{{ {-420, 396, 20}, 0, {-16, -16}, {255, 255, 255, 255} }},
-	{{ {-340, 56, 20}, 0, {1008, 4080}, {255, 255, 255, 255} }},
-	{{ {320, 56, 20}, 0, {1008, 4080}, {255, 255, 255, 255} }},
-	{{ {320, 396, 20}, 0, {1008, -16}, {255, 255, 255, 255} }},
-	{{ {320, 56, 20}, 0, {1008, 4080}, {255, 255, 255, 255} }},
-	{{ {400, 56, 20}, 0, {2032, 4080}, {255, 255, 255, 255} }},
-	{{ {400, 396, 20}, 0, {2032, -16}, {255, 255, 255, 255} }},
+	{{ {-420, 56, 20}, 0, {-16, 4080}, {0, 0, 127, 255} }},
+	{{ {-340, 396, 20}, 0, {1008, -16}, {0, 0, 127, 255} }},
+	{{ {-420, 396, 20}, 0, {-16, -16}, {0, 0, 127, 255} }},
+	{{ {-340, 56, 20}, 0, {1008, 4080}, {0, 0, 127, 255} }},
+	{{ {320, 56, 20}, 0, {1008, 4080}, {0, 0, 127, 255} }},
+	{{ {320, 396, 20}, 0, {1008, -16}, {0, 0, 127, 255} }},
+	{{ {320, 56, 20}, 0, {1008, 4080}, {0, 0, 127, 255} }},
+	{{ {400, 56, 20}, 0, {2032, 4080}, {0, 0, 127, 255} }},
+	{{ {400, 396, 20}, 0, {2032, -16}, {0, 0, 127, 255} }},
 };
 
 Gfx custom_menu_stage_model_mesh_layer_5_tri_1[] = {
@@ -6235,9 +6237,11 @@ Gfx custom_menu_stage_model_mesh_layer_1_tri_17[] = {
 
 Gfx mat_custom_menu_stage_box_bottom[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0),
+	gsSPGeometryMode(G_CULL_BACK, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, custom_menu_stage_box_bottom_rgba16_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
 	gsDPLoadBlock(7, 0, 0, 1023, 256),
@@ -6248,26 +6252,21 @@ Gfx mat_custom_menu_stage_box_bottom[] = {
 
 Gfx mat_revert_custom_menu_stage_box_bottom[] = {
 	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
+	gsSPGeometryMode(0, G_CULL_BACK),
 	gsSPEndDisplayList(),
 };
 
 Gfx mat_custom_menu_stage_box_top[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, custom_menu_stage_box_top_rgba16_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
 	gsDPLoadBlock(7, 0, 0, 1023, 256),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 124),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_custom_menu_stage_box_top[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
 	gsSPEndDisplayList(),
 };
 
@@ -6751,7 +6750,6 @@ Gfx custom_menu_stage_model_mesh_layer_5[] = {
 	gsSPDisplayList(mat_revert_custom_menu_stage_box_bottom),
 	gsSPDisplayList(mat_custom_menu_stage_box_top),
 	gsSPDisplayList(custom_menu_stage_model_mesh_layer_5_tri_1),
-	gsSPDisplayList(mat_revert_custom_menu_stage_box_top),
 	// gsSPDisplayList(mat_custom_menu_stage_box_locked_bottom),
 	// gsSPDisplayList(custom_menu_stage_model_mesh_layer_5_tri_2),
 	// gsSPDisplayList(mat_revert_custom_menu_stage_box_locked_bottom),

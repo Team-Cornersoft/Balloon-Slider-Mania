@@ -1,4 +1,6 @@
 extern const GeoLayout custom_menu_stage_geo[];
+extern Lights1 custom_menu_stage_box_bottom_lights;
+extern Lights1 custom_menu_stage_box_top_lights;
 extern u8 custom_menu_stage_box_bottom_rgba16_ia8[];
 extern u8 custom_menu_stage_box_top_rgba16_ia8[];
 extern u8 custom_menu_stage_box_locked_bottom_rgba16_ia8[];
@@ -88,11 +90,9 @@ extern Gfx custom_menu_stage_model_mesh_layer_1_tri_17[];
 extern Gfx mat_custom_menu_stage_box_bottom[];
 extern Gfx mat_revert_custom_menu_stage_box_bottom[];
 extern Gfx mat_custom_menu_stage_box_top[];
-extern Gfx mat_revert_custom_menu_stage_box_top[];
 extern Gfx mat_custom_menu_stage_box_locked_bottom[];
 extern Gfx mat_revert_custom_menu_stage_box_locked_bottom[];
 extern Gfx mat_custom_menu_stage_box_locked_top[];
-extern Gfx mat_revert_custom_menu_stage_box_locked_top[];
 extern Gfx mat_custom_menu_stage_stage_1_test_a[];
 extern Gfx mat_revert_custom_menu_stage_stage_1_test_a[];
 extern Gfx mat_custom_menu_stage_stage_1_test_b[];

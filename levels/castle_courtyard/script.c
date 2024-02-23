@@ -14,30 +14,91 @@
 #include "actors/common1.h"
 
 /* Fast64 begin persistent block [includes] */
+#include "levels/castle_grounds/header.h"
+#include "game/area.h"
+#include "game/texscroll.h"
 /* Fast64 end persistent block [includes] */
 
 #include "make_const_nonconst.h"
 #include "levels/castle_courtyard/header.h"
 
 /* Fast64 begin persistent block [scripts] */
+static const LevelScript ccy_area1_jump[] = {
+	RETURN(),
+};
+
+const LevelScript level_ccy_title_screen[] = {
+    INIT_LEVEL(),
+    LOAD_BEHAVIOR_DATA(),
+	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
+
+	ALLOC_LEVEL_POOL(),
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_BUTTON, custom_menu_button_geo), 
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_STAGE, custom_menu_stage_geo), 
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_LOCK, custom_menu_lock_geo), 
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSLOCK, custom_menu_tcslock_geo), 
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
+	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
+
+	AREA(1, castle_courtyard_area_1_custom_static),
+		JUMP_LINK(ccy_area1_jump),
+	END_AREA(),
+	FREE_LEVEL_POOL(),
+
+    LOAD_AREA(/*area*/ 1),
+	SET_MENU_MUSIC_WITH_REVERB(SEQ_MENU_TITLE_SCREEN, 0, 0),
+
+    CALL(/*arg*/ 0, /*func*/ load_mario_area),
+
+	SET_ORTHO_CAM(TRUE),
+
+    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    JUMP_LINK_PUSH_ARG(75),
+		UPDATE_OBJECTS(),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+    
+	// To compensate for the early sleep below
+	UPDATE_OBJECTS(),
+    CALL(/*arg*/ 0, /*func*/ scroll_textures),
+
+    LOOP_BEGIN(),
+		// This sleep comes early because of the way 'image_screen_press_button' is written.
+		// 'image_screen_cannot_press_button' needs to be called on the same frame if the first returns TRUE, or else the button flickers.
+        SLEEP(/*frames*/ 1),
+		UPDATE_OBJECTS(),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ -1, /*func*/ image_screen_press_button),
+    LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ TRUE),
+
+	// PLAY_SOUND_EFFECT(SOUND_MENU_CUSTOM_MENU_SOUND),
+
+	// To compensate for that early sleep above
+    CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
+    SLEEP(/*frames*/ 1),
+
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
+    JUMP_LINK_PUSH_ARG(16),
+		UPDATE_OBJECTS(),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+
+    UNLOAD_AREA(/*area*/ 1),
+    CLEAR_LEVEL(),
+    SLEEP(/*frames*/ 2),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+};
 /* Fast64 end persistent block [scripts] */
 
 const LevelScript level_castle_courtyard_entry[] = {
 	INIT_LEVEL(),
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
-	LOAD_YAY0(0x0A, _water_skybox_yay0SegmentRomStart, _water_skybox_yay0SegmentRomEnd), 
-	LOAD_YAY0_TEXTURE(0x09, _outside_yay0SegmentRomStart, _outside_yay0SegmentRomEnd), 
-	LOAD_YAY0(0x05, _group9_yay0SegmentRomStart, _group9_yay0SegmentRomEnd), 
-	LOAD_RAW(0x0C, _group9_geoSegmentRomStart, _group9_geoSegmentRomEnd), 
-	LOAD_YAY0(0x08, _common0_yay0SegmentRomStart, _common0_yay0SegmentRomEnd), 
-	LOAD_RAW(0x0F, _common0_geoSegmentRomStart, _common0_geoSegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
-	JUMP_LINK(script_func_global_1), 
-	JUMP_LINK(script_func_global_10), 
-	LOAD_MODEL_FROM_GEO(MODEL_COURTYARD_SPIKY_TREE, spiky_tree_geo), 
-	LOAD_MODEL_FROM_GEO(MODEL_COURTYARD_WOODEN_DOOR, wooden_door_geo), 
-	LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_03, castle_courtyard_geo_000200), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
@@ -53,6 +114,7 @@ const LevelScript level_castle_courtyard_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GRASS),
 		TERRAIN_TYPE(TERRAIN_STONE),
 		/* Fast64 begin persistent block [area commands] */
+		JUMP_LINK(ccy_area1_jump),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 

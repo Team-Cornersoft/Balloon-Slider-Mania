@@ -12,7 +12,7 @@
 
 #include "levels/scripts.h"
 #include "levels/menu/header.h"
-#include "levels/castle_grounds/header.h"
+#include "levels/castle_courtyard/header.h"
 
 #include "actors/common0.h"
 #include "actors/common1.h"
@@ -53,7 +53,7 @@ const LevelScript level_scam_warning_screen[] = {
     SLEEP(/*frames*/ 20),
 
     // NOTE: Remember to change ALL OF THESE if changing scripts/segments
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_courtyardSegmentRomStart, _castle_courtyardSegmentRomEnd, level_ccy_title_screen, _castle_courtyardSegmentBssStart, _castle_courtyardSegmentBssEnd),
 };
 
 const LevelScript level_intro_splash_screen[] = {
