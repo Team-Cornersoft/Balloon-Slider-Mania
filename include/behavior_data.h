@@ -5,6 +5,7 @@
 
 extern const BehaviorScript bhvNone[];
 extern const BehaviorScript bhvBSMMenuTitle[];
+extern const BehaviorScript bhvBSMMenuButtonManager[];
 extern const BehaviorScript bhvBSMMenuButtonOrStage[];
 extern const BehaviorScript bhvBSMMenuLockOrToken[];
 extern const BehaviorScript bhvBSMMenuRankOrToken[];

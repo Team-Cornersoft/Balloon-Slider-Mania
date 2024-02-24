@@ -19,7 +19,8 @@ enum CourseNum {
                 // one is clearer? Need to get rid of one of these.
     COURSE_MAX = COURSE_END - 1,
     COURSE_COUNT = COURSE_MAX,
-    COURSE_MIN = COURSE_NONE + 1
+    COURSE_MIN = COURSE_NONE + 1,
+    BSM_COURSE_COUNT = 9,
 };
 
 #undef DEFINE_COURSE

@@ -39,7 +39,7 @@ const GeoLayout castle_courtyard_area_1_custom_static[] = {
 		GEO_OPEN_NODE(),
 			GEO_CAMERA_FRUSTUM(45.0000, 100, 30000),
 			GEO_OPEN_NODE(),
-				GEO_CAMERA(CAMERA_MODE_NONE, 0, 1200, 200, 0, 1200, 0, 0x00000000),
+				GEO_CAMERA(CAMERA_MODE_NONE, 0, 1200, 1200, 0, 1200, 0, 0x00000000),
 				GEO_OPEN_NODE(),
 					GEO_BRANCH(1, castle_courtyard_area_1_geo),
 					GEO_RENDER_OBJ(),

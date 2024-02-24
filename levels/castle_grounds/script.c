@@ -25,20 +25,21 @@
 
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript cgds_area1_jump[] = {
-	OBJECT(MODEL_BSM_MENU_TITLE,   -980, 2020, 40, 0, 0, 15, 0x00000000, bhvBSMMenuTitle), // Title
+	OBJECT(MODEL_BSM_MENU_TITLE,   -980, 2020, 540, 0, 0, 15, 0x00000000, bhvBSMMenuTitle), // Title
+	OBJECT(MODEL_NONE,   			  0,    0,   0, 0, 0,  0, 0x00000000, bhvBSMMenuButtonManager), // Button Manager
 
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 40, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 40, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 540, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 540, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
 
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 40, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 40, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 40, 0, 0,  0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 40, 0, 0,  0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 40, 0, 0,  0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 40, 0, 0,  0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 40, 0, 0,  0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 40, 0, 0,  0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
-	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 40, 0, 0,  0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 540, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 540, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 540, 0, 0,  0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 540, 0, 0,  0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 540, 0, 0,  0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 540, 0, 0,  0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 540, 0, 0,  0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 540, 0, 0,  0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
+	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 540, 0, 0,  0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
 
 	// Rank:     x:  340, y: 60 (Relative to button)
 	// CS Token: x: -340, y: 60 (Relative to button)

@@ -19,31 +19,34 @@
 
 #define NUM_SAVE_FILES 4
 
+enum BSMStarFlags {
+    BSM_STAR_COMPLETED_COURSE,
+    BSM_STAR_COLLECTED_CS_TOKEN,
+    BSM_STAR_WATCHED_CUTSCENE,
+};
+
 struct SaveBlockSignature {
     u16 magic;
     u16 chksum;
 };
 
+struct BSMCourseData {
+    u16 score;
+    u16 bestTimeInFrames;
+};
+
 struct SaveFile {
-    // Location of lost cap.
-    // Note: the coordinates get set, but are never actually used, since the
-    // cap can always be found in a fixed spot within the course
-    u8 capLevel;
-    u8 capArea;
-    // Note: the coordinates get set, but are never actually used, since the
-    // cap can always be found in a fixed spot within the course
-    Vec3s capPos; // 48 bits
+    u32 flags; // 4B
 
-    u32 flags;
+    // Wasted space necessary for save file tracker
+    u8 courseStars[BSM_COURSE_COUNT]; // 9B
 
-    // Star flags for each course.
-    // The most significant bit of the byte *following* each course is set if the
-    // cannon is open.
-    u8 courseStars[COURSE_COUNT]; // 200 bits
+    // Useless
+    u8 pad[3]; // 3B
 
-    u8 courseCoinScores[COURSE_STAGES_COUNT]; // 120 bits
+    struct BSMCourseData bsmCourseData[BSM_COURSE_COUNT]; // 36B
 
-    struct SaveBlockSignature signature; // 32 bits
+    struct SaveBlockSignature signature; // 4B
 };
 
 enum SaveFileIndex {
@@ -196,6 +199,11 @@ void save_file_move_cap_to_default_location(void);
 void disable_warp_checkpoint(void);
 void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
 s32 check_warp_checkpoint(struct WarpNode *warpNode);
+
+struct BSMCourseData *save_file_get_bsm_data(s32 fileIndex);
+u8 *save_file_get_bsm_completion(s32 fileIndex);
+void save_file_update_bsm_score(s32 fileIndex, s32 courseIndex, s32 score, s32 timeInFrames);
+void save_file_update_bsm_completion(s32 fileIndex, s32 courseIndex, s8 completedCourse, s8 collectedTCSToken, s8 cutsceneWatched);
 
 #if MULTILANG
 enum EuLanguages {

@@ -6,6 +6,7 @@
 #include "audio/external.h"
 #include "engine/math_util.h"
 #include "area.h"
+#include "debug.h"
 #include "level_update.h"
 #include "save_file.h"
 #include "sound_init.h"
@@ -386,6 +387,13 @@ void save_file_load_all(void) {
                 restore_save_file_data(file, 1);
                 break;
         }
+
+        if (!save_file_exists(file)) {
+            gSaveBuffer.files[file][0].courseStars[0] = (1 << BSM_STAR_WATCHED_CUTSCENE); // No cutscene for first level
+            for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
+                gSaveBuffer.files[file][0].bsmCourseData[i].score = -1;
+            }
+        }
     }
 }
 
@@ -442,7 +450,7 @@ void save_file_reload(void) {
  * Update the current save file after collecting a star or a key.
  * If coin score is greater than the current high score, update it.
  */
-void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
+void save_file_collect_star_or_key(UNUSED s16 coinScore, s16 starIndex) {
     s32 fileIndex = gCurrSaveFileNum - 1;
     s32 courseIndex = COURSE_NUM_TO_INDEX(gCurrCourseNum);
 #ifdef GLOBAL_STAR_IDS
@@ -457,23 +465,23 @@ void save_file_collect_star_or_key(s16 coinScore, s16 starIndex) {
     sUnusedGotGlobalCoinHiScore = FALSE;
     gGotFileCoinHiScore = FALSE;
 
-    if (courseIndex >= COURSE_NUM_TO_INDEX(COURSE_MIN)
-        && courseIndex <= COURSE_NUM_TO_INDEX(COURSE_STAGES_MAX)) {
-        //! Compares the coin score as a 16 bit value, but only writes the 8 bit
-        // truncation. This can allow a high score to decrease.
+    // if (courseIndex >= COURSE_NUM_TO_INDEX(COURSE_MIN)
+    //     && courseIndex <= COURSE_NUM_TO_INDEX(COURSE_STAGES_MAX)) {
+    //     //! Compares the coin score as a 16 bit value, but only writes the 8 bit
+    //     // truncation. This can allow a high score to decrease.
 
-        if (coinScore > ((u16) save_file_get_max_coin_score(courseIndex) & 0xFFFF)) {
-            sUnusedGotGlobalCoinHiScore = TRUE;
-        }
+    //     if (coinScore > ((u16) save_file_get_max_coin_score(courseIndex) & 0xFFFF)) {
+    //         sUnusedGotGlobalCoinHiScore = TRUE;
+    //     }
 
-        if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
-            gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex] = coinScore;
-            touch_coin_score_age(fileIndex, courseIndex);
+    //     if (coinScore > save_file_get_course_coin_score(fileIndex, courseIndex)) {
+    //         gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex] = coinScore;
+    //         touch_coin_score_age(fileIndex, courseIndex);
 
-            gGotFileCoinHiScore = TRUE;
-            gSaveFileModified = TRUE;
-        }
-    }
+    //         gGotFileCoinHiScore = TRUE;
+    //         gSaveFileModified = TRUE;
+    //     }
+    // }
 
     switch (gCurrLevelNum) {
         case LEVEL_BOWSER_1:
@@ -620,6 +628,10 @@ u32 save_file_get_star_flags(UNUSED s32 fileIndex, UNUSED s32 courseIndex) {
 u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex) {
     u32 starFlags;
 
+    if (courseIndex >= BSM_COURSE_COUNT) {
+        return 0;
+    }
+
     if (courseIndex == COURSE_NUM_TO_INDEX(COURSE_NONE)) {
         starFlags = SAVE_FLAG_TO_STAR_FLAG(gSaveBuffer.files[fileIndex][0].flags);
     } else {
@@ -635,6 +647,10 @@ u32 save_file_get_star_flags(s32 fileIndex, s32 courseIndex) {
  * If course is COURSE_NONE, add to the bitset of obtained castle secret stars.
  */
 void save_file_set_star_flags(s32 fileIndex, s32 courseIndex, u32 starFlags) {
+    if (courseIndex >= BSM_COURSE_COUNT) {
+        return;
+    }
+
     if (courseIndex == COURSE_NUM_TO_INDEX(COURSE_NONE)) {
         gSaveBuffer.files[fileIndex][0].flags |= STAR_FLAG_TO_SAVE_FLAG(starFlags);
     } else {
@@ -650,8 +666,9 @@ s32 save_file_get_course_coin_score(UNUSED s32 fileIndex, UNUSED s32 courseIndex
     return MAX_NUM_COINS;
 }
 #else
-s32 save_file_get_course_coin_score(s32 fileIndex, s32 courseIndex) {
-    return gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex];
+s32 save_file_get_course_coin_score(UNUSED s32 fileIndex, UNUSED s32 courseIndex) {
+    // return gSaveBuffer.files[fileIndex][0].courseCoinScores[courseIndex];
+    return 0;
 }
 #endif
 
@@ -670,29 +687,29 @@ s32 save_file_is_cannon_unlocked(void) {
  * Sets the cannon status to unlocked in the current course.
  */
 void save_file_set_cannon_unlocked(void) {
-    gSaveBuffer.files[gCurrSaveFileNum - 1][0].courseStars[gCurrCourseNum] |= COURSE_FLAG_CANNON_UNLOCKED;
-    gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags |= SAVE_FLAG_FILE_EXISTS;
-    gSaveFileModified = TRUE;
+    // gSaveBuffer.files[gCurrSaveFileNum - 1][0].courseStars[gCurrCourseNum] |= COURSE_FLAG_CANNON_UNLOCKED;
+    // gSaveBuffer.files[gCurrSaveFileNum - 1][0].flags |= SAVE_FLAG_FILE_EXISTS;
+    // gSaveFileModified = TRUE;
 }
 
-void save_file_set_cap_pos(s16 x, s16 y, s16 z) {
-    struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][0];
+void save_file_set_cap_pos(UNUSED s16 x, UNUSED s16 y, UNUSED s16 z) {
+    // struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][0];
 
-    saveFile->capLevel = gCurrLevelNum;
-    saveFile->capArea = gCurrAreaIndex;
-    vec3s_set(saveFile->capPos, x, y, z);
-    save_file_set_flags(SAVE_FLAG_CAP_ON_GROUND);
+    // saveFile->capLevel = gCurrLevelNum;
+    // saveFile->capArea = gCurrAreaIndex;
+    // vec3s_set(saveFile->capPos, x, y, z);
+    // save_file_set_flags(SAVE_FLAG_CAP_ON_GROUND);
 }
 
-s32 save_file_get_cap_pos(Vec3s capPos) {
-    struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][0];
-    s32 flags = save_file_get_flags();
+s32 save_file_get_cap_pos(UNUSED Vec3s capPos) {
+    // struct SaveFile *saveFile = &gSaveBuffer.files[gCurrSaveFileNum - 1][0];
+    // s32 flags = save_file_get_flags();
 
-    if (saveFile->capLevel == gCurrLevelNum && saveFile->capArea == gCurrAreaIndex
-        && (flags & SAVE_FLAG_CAP_ON_GROUND)) {
-        vec3s_copy(capPos, saveFile->capPos);
-        return TRUE;
-    }
+    // if (saveFile->capLevel == gCurrLevelNum && saveFile->capArea == gCurrAreaIndex
+    //     && (flags & SAVE_FLAG_CAP_ON_GROUND)) {
+    //     vec3s_copy(capPos, saveFile->capPos);
+    //     return TRUE;
+    // }
     return FALSE;
 }
 
@@ -726,20 +743,20 @@ u32 save_file_get_sound_mode(void) {
 }
 
 void save_file_move_cap_to_default_location(void) {
-    if (save_file_get_flags() & SAVE_FLAG_CAP_ON_GROUND) {
-        switch (gSaveBuffer.files[gCurrSaveFileNum - 1][0].capLevel) {
-            case LEVEL_SSL:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
-                break;
-            case LEVEL_SL:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
-                break;
-            case LEVEL_TTM:
-                save_file_set_flags(SAVE_FLAG_CAP_ON_UKIKI);
-                break;
-        }
-        save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
-    }
+    // if (save_file_get_flags() & SAVE_FLAG_CAP_ON_GROUND) {
+    //     switch (gSaveBuffer.files[gCurrSaveFileNum - 1][0].capLevel) {
+    //         case LEVEL_SSL:
+    //             save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
+    //             break;
+    //         case LEVEL_SL:
+    //             save_file_set_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
+    //             break;
+    //         case LEVEL_TTM:
+    //             save_file_set_flags(SAVE_FLAG_CAP_ON_UKIKI);
+    //             break;
+    //     }
+    //     save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
+    // }
 }
 
 #if MULTILANG
@@ -796,4 +813,72 @@ s32 check_warp_checkpoint(struct WarpNode *warpNode) {
     }
 
     return warpCheckpointActive;
+}
+
+struct BSMCourseData *save_file_get_bsm_data(s32 fileIndex) {
+    return &gSaveBuffer.files[fileIndex][0].bsmCourseData[0];
+}
+
+u8 *save_file_get_bsm_completion(s32 fileIndex) {
+    return gSaveBuffer.files[fileIndex][0].courseStars;
+}
+
+void save_file_update_bsm_score(s32 fileIndex, s32 courseIndex, s32 score, s32 timeInFrames) {
+    if (courseIndex >= BSM_COURSE_COUNT) {
+        assert(courseIndex < BSM_COURSE_COUNT, "Tried to save invalid BSM course score!");
+        return;
+    }
+
+    // Failed the challenge!
+    if (score < 0) {
+        return;
+    }
+    
+    // Cap off time and score
+    if (score >= (u16) -1) {
+        score = ((u16) -1) - 1;
+    }
+    if (timeInFrames > (u16) -1) {
+        timeInFrames = (u16) -1;
+    }
+
+    if (score > gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score == (u16) -1)) {
+        gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score = score;
+        gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+        gSaveFileModified = TRUE;
+    }
+
+    if (timeInFrames < gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames == 0)) {
+        gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames = timeInFrames;
+        gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+        gSaveFileModified = TRUE;
+    }
+}
+
+void save_file_update_bsm_completion(s32 fileIndex, s32 courseIndex, s8 completedCourse, s8 collectedTCSToken, s8 cutsceneWatched) {
+    if (courseIndex >= BSM_COURSE_COUNT) {
+        assert(courseIndex < BSM_COURSE_COUNT, "Tried to save invalid BSM course completion!");
+        return;
+    }
+
+    // Completed the challenge!
+    if (completedCourse != FALSE) {
+        if (completedCourse == TRUE) {
+            gSaveBuffer.files[fileIndex][0].courseStars[courseIndex] |= (1 << BSM_STAR_COMPLETED_COURSE);
+            gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+            gSaveFileModified = TRUE;
+        }
+
+        if (collectedTCSToken == TRUE) {
+            gSaveBuffer.files[fileIndex][0].courseStars[courseIndex] |= (1 << BSM_STAR_COLLECTED_CS_TOKEN);
+            gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+            gSaveFileModified = TRUE;
+        }
+    }
+
+    if (cutsceneWatched == TRUE) {
+        gSaveBuffer.files[fileIndex][0].courseStars[courseIndex] |= (1 << BSM_STAR_WATCHED_CUTSCENE);
+        gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+        gSaveFileModified = TRUE;
+    }
 }
