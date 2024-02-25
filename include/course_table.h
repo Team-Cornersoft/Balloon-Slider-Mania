@@ -20,7 +20,6 @@ enum CourseNum {
     COURSE_MAX = COURSE_END - 1,
     COURSE_COUNT = COURSE_MAX,
     COURSE_MIN = COURSE_NONE + 1,
-    BSM_COURSE_COUNT = 9,
 };
 
 #undef DEFINE_COURSE

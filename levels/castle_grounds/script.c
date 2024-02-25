@@ -26,7 +26,6 @@
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript cgds_area1_jump[] = {
 	OBJECT(MODEL_BSM_MENU_TITLE,   -980, 2020, 540, 0, 0, 15, 0x00000000, bhvBSMMenuTitle), // Title
-	OBJECT(MODEL_NONE,   			  0,    0,   0, 0, 0,  0, 0x00000000, bhvBSMMenuButtonManager), // Button Manager
 
 	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 540, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
 	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 540, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
@@ -63,6 +62,7 @@ const LevelScript level_cgds_menu_select[] = {
 
 	AREA(1, castle_grounds_area_1_custom_static),
 		JUMP_LINK(cgds_area1_jump),
+		OBJECT(MODEL_NONE, 0, 0, 0, 0, 0, 0, 0x00000000, bhvBSMMenuButtonManager), // Button Manager
 	END_AREA(),
 	FREE_LEVEL_POOL(),
 

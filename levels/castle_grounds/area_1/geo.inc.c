@@ -1,4 +1,5 @@
 #include "src/game/envfx_snow.h"
+#include "src/game/bsm_level_select_menu.h"
 
 const GeoLayout castle_grounds_area_1_geo[] = {
 	GEO_NODE_START(),
@@ -15,9 +16,13 @@ const GeoLayout castle_grounds_area_1_geo[] = {
 		GEO_DISPLAY_LIST(LAYER_ALPHA, castle_grounds_dl_C_Menu_decoration_b_mesh_layer_4),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, castle_grounds_dl_C_Menu_decoration_c_mesh_layer_4),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, castle_grounds_dl_C_Menu_decoration_c_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_a_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_b_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_c_mesh_layer_1),
+		GEO_ASM(0, geo_bsm_make_way_for_credits),
+		GEO_TRANSLATE(LAYER_OPAQUE, 0, 0, 0),
+		GEO_OPEN_NODE(),
+			GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_a_mesh_layer_1),
+			GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_b_mesh_layer_1),
+			GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 0, 50, castle_grounds_dl_G_Menu_text_c_mesh_layer_1),
+		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

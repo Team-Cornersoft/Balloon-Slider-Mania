@@ -6,6 +6,7 @@
 #include "types.h"
 #include "area.h"
 #include "puppycam2.h"
+#include "bsm_level_select_menu.h"
 
 #include "course_table.h"
 

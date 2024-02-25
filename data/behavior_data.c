@@ -420,6 +420,7 @@ const BehaviorScript bhvBSMMenuTitle[] = {
 const BehaviorScript bhvBSMMenuButtonManager[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, OBJ_FLAG_ACTIVE_FROM_AFAR),
+    DELAY(1), // Ensure all standard buttons have been properly initialized first
     CALL_NATIVE(bhv_bsm_menu_button_manager_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_bsm_menu_button_manager_loop),
@@ -432,6 +433,7 @@ const BehaviorScript bhvBSMMenuButtonOrStage[] = {
     SET_INT(oOpacity, 255),
     SET_HOME(),
     CALL_NATIVE(bhv_bsm_menu_button_or_stage_init),
+    DELAY(1), // Allow sub-objects a chance to properly initialize
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_bsm_menu_button_or_stage_loop),
     END_LOOP(),
@@ -441,7 +443,6 @@ const BehaviorScript bhvBSMMenuLockOrToken[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     SET_INT(oOpacity, 255),
-    SET_HOME(),
     CALL_NATIVE(bhv_bsm_menu_lock_or_token_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_bsm_menu_lock_or_token_loop),
@@ -452,7 +453,6 @@ const BehaviorScript bhvBSMMenuRankOrToken[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     SET_INT(oOpacity, 255),
-    SET_HOME(),
     CALL_NATIVE(bhv_bsm_menu_rank_or_token_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_bsm_menu_rank_or_token_loop),

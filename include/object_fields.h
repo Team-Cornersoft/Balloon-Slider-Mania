@@ -1257,7 +1257,14 @@
 
 /* BSM Menu Title Logo */
 #define /*0x0F4*/ oBSMMenuTitleRollHome OBJECT_FIELD_S32(0x1B)
-#define /*0x0F4*/ oBSMMenuTitleSineFunc OBJECT_FIELD_S32(0x1C)
+#define /*0x0F8*/ oBSMMenuTitleSineFunc OBJECT_FIELD_S32(0x1C)
+
+/* BSM Menu Button Or Stage */
+#define /*0x0F4*/ oBSMMenuStageCutscene OBJECT_FIELD_S32(0x1B)
+#define /*0x0F8*/ oBSMMenuIsSelected    OBJECT_FIELD_S32(0x1C)
+#define /*0x0FC*/ oBSMMenuLockObj       OBJECT_FIELD_OBJ(0x1D)
+#define /*0x100*/ oBSMMenuRankObj       OBJECT_FIELD_OBJ(0x1E)
+#define /*0x104*/ oBSMMenuTCSTokenObj   OBJECT_FIELD_OBJ(0x1F)
 
 
 /*Custom general defines:

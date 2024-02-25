@@ -15,6 +15,38 @@ enum BSMMenuLayoutBGState {
     BSM_MENU_LAYOUT_BG_COUNT
 };
 
+enum BSMCourses {
+    BSM_COURSE_1_SNOWY_PEAK,
+    BSM_COURSE_2_LAVA_ISLE,
+    BSM_COURSE_3_FUNGI_CANYON,
+    BSM_COURSE_4_STARLIGHT_FEST,
+    BSM_COURSE_ROW_1_END,
+
+    BSM_COURSE_5_HOLIDAY_PEAK = BSM_COURSE_ROW_1_END,
+    BSM_COURSE_6_SCORCH_ISLE,
+    BSM_COURSE_7_SPORE_CANYON,
+    BSM_COURSE_8_CYBER_FEST,
+    BSM_COURSE_ROW_2_END,
+    
+    BSM_COURSE_9_TCS_CELEBRATION = BSM_COURSE_ROW_2_END,
+
+    BSM_COURSE_COUNT,
+};
+
+enum BSMMenuButtons {
+    BSM_BUTTON_STATS,
+    BSM_BUTTON_CREDITS,
+
+    BSM_BUTTON_COUNT,
+};
+
+enum BSMMenuSelectionTypes {
+    BSM_SELECTION_NONE,
+    BSM_SELECTION_STATS,
+    BSM_SELECTION_CREDITS,
+    BSM_SELECTION_STAGE_START_FIRST,
+};
+
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 
 #define BSM_MENU_CAMERA_LAYOUT_FIRST -6000.0f
@@ -22,5 +54,6 @@ extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 #define BSM_MENU_CAMERA_LAYOUT_OFFSET (BSM_MENU_CAMERA_LAYOUT_FIRST + (gBSMMenuLayoutBGState * BSM_MENU_CAMERA_LAYOUT_INCREMENT))
 
 Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void *context);
 
 #endif // BSM_LEVEL_SELECT_MENU_H
