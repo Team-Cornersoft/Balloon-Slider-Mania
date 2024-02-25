@@ -45,6 +45,7 @@ struct Object *bsmMenuButtonCredits;
 
 static s32 selectedButton = BSM_COURSE_1_SNOWY_PEAK;
 static enum BSMMenuSelectionTypes selectionShown = BSM_SELECTION_NONE;
+static u8 showStats = FALSE;
 
 static char strBuffer[128];
 static u8 inputStickFlags;
@@ -59,7 +60,7 @@ static struct StageProperties stageProperties[BSM_COURSE_COUNT] = {
     LEVEL_HMC, "Scorch\nIsle",
     LEVEL_LLL, "Spore\nCanyon",
     LEVEL_SSL, "Cyber\nFest",
-    LEVEL_DDD, "Cornersoft\nSecret",
+    LEVEL_DDD, "Cornersoft\nParade",
 };
 
 static char *creditsStr = {
@@ -120,7 +121,11 @@ static void bsm_manager_render_stats(void) {
         s32 y2 = y1 + 14;
 
         if (bsmData[i].bestTimeInFrames == 0) {
-            sprintf(strBuffer, "No Time");
+            if (selectedButton == i) {
+                sprintf(strBuffer, "<WAVE>No Time<WAVE>");
+            } else {
+                sprintf(strBuffer, "No Time");
+            }
         } else {
             s32 milliseconds = ((bsmData[i].bestTimeInFrames % 30) * 1000) / 30;
             s32 seconds = (bsmData[i].bestTimeInFrames / 30) % 60;
@@ -131,16 +136,29 @@ static void bsm_manager_render_stats(void) {
                 seconds = 59;
                 milliseconds = 999;
             }
-            sprintf(strBuffer, "%d:%02d.%03d", minutes, seconds, milliseconds);
+
+            if (selectedButton == i) {
+                sprintf(strBuffer, "<WAVE>%d:%02d.%03d<WAVE>", minutes, seconds, milliseconds);
+            } else {
+                sprintf(strBuffer, "%d:%02d.%03d", minutes, seconds, milliseconds);
+            }
         }
         
         print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered(x, y1, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         if (bsmData[i].score == (u16) -1) {
-            sprintf(strBuffer, "No Score");
+            if (selectedButton == i) {
+                sprintf(strBuffer, "<WAVE>No Score<WAVE>");
+            } else {
+                sprintf(strBuffer, "No Score");
+            }
         } else {
-            sprintf(strBuffer, "%d", bsmData[i].score);
+            if (selectedButton == i) {
+                sprintf(strBuffer, "<WAVE>%d<WAVE>", bsmData[i].score);
+            } else {
+                sprintf(strBuffer, "%d", bsmData[i].score);
+            }
         }
         print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered(x, y2, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
@@ -154,9 +172,10 @@ static void bsm_manager_render_credits(void) {
 
 static void bsm_manager_render_update(void) {
     if (
-        !obj_is_hidden(bsmMenuLevels[8]) && 
+        !obj_is_hidden(bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]) && 
         bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oBSMMenuLockObj && 
-        !bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oBSMMenuStageCutscene
+        !bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oBSMMenuStageCutscene &&
+        selectionShown != BSM_SELECTION_CREDITS
     ) {
         print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered((s32) (bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oHomeX * 0.1f) + SCREEN_CENTER_X + 1,
@@ -166,11 +185,13 @@ static void bsm_manager_render_update(void) {
     if (selectionShown != BSM_SELECTION_NONE) {
         if (selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
             bsm_manager_render_credits();
-        } else if (selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_STATS) {
-            bsm_manager_render_stats();
         }
     } else {
-        bsm_manager_render_stage_name();
+        if (showStats) {
+            bsm_manager_render_stats();
+        } else {
+            bsm_manager_render_stage_name();
+        }
     }
 }
 
@@ -462,6 +483,7 @@ static void attempt_selection_move(void) {
 void bhv_bsm_menu_button_manager_init(void) {
     inputStickFlags = 0;
     stickHistory = 0;
+    showStats = FALSE;
     locate_all_button_objects();
     bhv_bsm_menu_button_manager_update_selected_button();
 }
@@ -473,22 +495,31 @@ void bhv_bsm_menu_button_manager_loop(void) {
         return;
     }
 
-    if (gPlayer1Controller->buttonPressed & (A_BUTTON | START_BUTTON)) {
+    s32 soundToPlay = NO_SOUND;
+    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | START_BUTTON)) {
         if (selectionShown == BSM_SELECTION_NONE) {
-            switch (selectionShown) {
-                case BSM_BUTTON_STATS:
-                    selectionShown = BSM_SELECTION_STATS;
+            struct Object *obj = get_selcted_menu_object(selectedButton);
+            soundToPlay = SOUND_MENU_CLICK_FILE_SELECT;
+
+            switch (selectedButton) {
+                case (BSM_BUTTON_STATS + BSM_COURSE_COUNT):
+                    showStats ^= TRUE;
                     break;
-                case BSM_BUTTON_CREDITS:
+                case (BSM_BUTTON_CREDITS + BSM_COURSE_COUNT):
                     selectionShown = BSM_SELECTION_CREDITS;
                     break;
                 default:
-                    selectionShown = BSM_SELECTION_STAGE_START_FIRST;
+                    if (obj->oBSMMenuLockObj != NULL) {
+                        soundToPlay = SOUND_MENU_CAMERA_BUZZ;
+                    } else {
+                        selectionShown = BSM_SELECTION_STAGE_START_FIRST;
+                    }
                     break;
             }
+
+            obj->oBSMMenuPressed = 2; // Frame animation counter
         } else {
             switch (selectionShown) {
-                case BSM_SELECTION_STATS:
                 case BSM_SELECTION_CREDITS:
                     selectionShown = BSM_SELECTION_NONE;
                     break;
@@ -496,6 +527,10 @@ void bhv_bsm_menu_button_manager_loop(void) {
                     break;
             }
         }
+    }
+
+    if (soundToPlay != NO_SOUND) {
+        play_sound(soundToPlay, gGlobalSoundSource);
     }
 
     if (selectionShown == BSM_SELECTION_NONE) {
@@ -537,6 +572,7 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
         }
 
         // TODO: remove
+        print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT - 14, "<RAINBOW>Press L to swap perspective<RAINBOW>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 
@@ -556,6 +592,9 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
         if (selectionShown != BSM_SELECTION_NONE && selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
             translationNode->translation[1] += TRANSLATE_OFFSET;
+        
+            print_set_envcolour(159, 159, 159, 255);
+            print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT - 34, "<WAVE>A: Return<WAVE>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         }
     }
 

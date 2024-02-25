@@ -94,6 +94,13 @@ const LevelScript level_cgds_menu_select[] = {
     	CALL(/*arg*/ -1, /*func*/ image_screen_press_button),
     LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ TRUE),
 
+	// TODO: this loops infinitely
+	LOOP_BEGIN(),
+        SLEEP(/*frames*/ 1),
+		UPDATE_OBJECTS(),
+    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ FALSE),
+
 	// PLAY_SOUND_EFFECT(SOUND_MENU_CUSTOM_MENU_SOUND),
 
 	// To compensate for that early sleep above

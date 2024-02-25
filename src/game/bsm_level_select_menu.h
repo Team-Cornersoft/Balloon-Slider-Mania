@@ -42,7 +42,6 @@ enum BSMMenuButtons {
 
 enum BSMMenuSelectionTypes {
     BSM_SELECTION_NONE,
-    BSM_SELECTION_STATS,
     BSM_SELECTION_CREDITS,
     BSM_SELECTION_STAGE_START_FIRST,
 };
