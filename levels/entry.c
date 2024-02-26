@@ -2,6 +2,7 @@
 #include "sm64.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
+#include "game/game_init.h"
 
 #include "levels/intro/header.h"
 
@@ -13,6 +14,7 @@ extern const LevelScript level_main_scripts_entry[];
 const LevelScript level_script_entry[] = {
     INIT_LEVEL(),
     SLEEP(/*frames*/ 2),
+    CALL_LOOP(/*arg*/ 0, /*func*/ check_fbe),
     BLACKOUT(/*active*/ FALSE),
 #ifdef TEST_LEVEL
     SET_REG(/*value*/ TEST_LEVEL),

@@ -1,6 +1,7 @@
 #include <ultra64.h>
 
 #include "sm64.h"
+#include <string.h>
 #include <point_lights.h>
 #include "gfx_dimensions.h"
 #include "audio/external.h"
@@ -97,6 +98,11 @@ struct Controller* const gPlayer4Controller = &gControllers[3];
 struct DemoInput *gCurrDemoInput = NULL;
 u16 gDemoInputListID = 0;
 struct DemoInput gRecordedDemoInput = { 0 };
+
+u32 gMenuWarpCounter = 0;
+u8 gFBEEnabled = FALSE;
+static u8 checkingFBE = 0;
+static u8 fbeCheckFinished = FALSE;
 
 // Display
 // ----------------------------------------------------------------------------------------------------
@@ -405,6 +411,31 @@ void draw_reset_bars(void) {
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
 }
 
+// Check if we are emulating the framebuffer
+s32 check_fbe(UNUSED s16 arg0, UNUSED s32 arg1) {
+    if (fbeCheckFinished) {
+        return TRUE;
+    }
+
+    if (checkingFBE == 0) {
+        gFramebuffers[0][FBE_PIXEL_OFFSET] = FBE_CHECK;
+    }
+    
+    if (checkingFBE < 4) {
+        checkingFBE++;
+        return FALSE;
+    }
+    
+    if (gFramebuffers[0][FBE_PIXEL_OFFSET] == FBE_CHECK) {
+        gFBEEnabled = FALSE;
+    } else {
+        gFBEEnabled = TRUE;
+    }
+
+    fbeCheckFinished = TRUE;
+    return TRUE;
+}
+
 /**
  * Initial settings for the first rendered frame.
  */
@@ -442,6 +473,8 @@ void select_gfx_pool(void) {
     gGfxPoolEnd = (u8 *) (gGfxPool->buffer + GFX_POOL_SIZE);
 }
 
+u16 fbeWarpTransitionProps[SCREEN_HEIGHT][2];
+
 /**
  * This function:
  * - Sends the current master display list out to be rendered.
@@ -456,6 +489,48 @@ void display_and_vsync(void) {
         gGoddardVblankCallback = NULL;
     }
     exec_display_list(&gGfxPool->spTask);
+
+    if (gFBEEnabled && gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
+        RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
+        s32 pixelOffset = (gMenuWarpCounter * gMenuWarpCounter);
+        s32 vertOffset;
+        s32 width;
+        s32 invWidth;
+        s32 j;
+
+        for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
+            s32 lineOffset = fbeWarpTransitionProps[i][1];
+            if (pixelOffset <= lineOffset) {
+                continue;
+            }
+
+            vertOffset = i * SCREEN_WIDTH;
+            width = pixelOffset - lineOffset;
+            if (width > SCREEN_WIDTH) {
+                width = SCREEN_WIDTH;
+            }
+            invWidth = SCREEN_WIDTH - width;
+
+            if (fbeWarpTransitionProps[i][0]) {
+                // if (invWidth) {
+                    memcpy(&fb[vertOffset + width], &fb[vertOffset], invWidth << 1);
+                // }
+                for (j = vertOffset; j < (vertOffset + width); j++) {
+                    fb[j] = 0x0001;
+                }
+            } else {
+                // if (invWidth) {
+                    memcpy(&fb[vertOffset], &fb[vertOffset + width], invWidth << 1);
+                // }
+                for (j = vertOffset + invWidth; j < (vertOffset + SCREEN_WIDTH); j++) {
+                    fb[j] = 0x0001;
+                }
+            }
+        }
+
+        gMenuWarpCounter++;
+    }
+
 #ifndef UNLOCK_FPS
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
 #endif
@@ -780,6 +855,12 @@ void thread5_game_loop(UNUSED void *arg) {
 #ifdef PUPPYCAM
     puppycam_boot();
 #endif
+
+    for (s32 i = 0; i < ARRAY_COUNT(fbeWarpTransitionProps); i++) {
+        u16 rand = random_u16();
+        fbeWarpTransitionProps[i][0] = rand >> 15;
+        fbeWarpTransitionProps[i][1] = rand % 600;
+    }
 
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);
 

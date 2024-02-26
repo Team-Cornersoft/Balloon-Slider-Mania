@@ -30,6 +30,7 @@
 #include "level_table.h"
 #include "course_table.h"
 #include "rumble_init.h"
+#include "print.h"
 #include "puppycam2.h"
 #include "puppyprint.h"
 #include "level_commands.h"
