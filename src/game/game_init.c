@@ -490,40 +490,38 @@ void display_and_vsync(void) {
     }
     exec_display_list(&gGfxPool->spTask);
 
-    if (gFBEEnabled && gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
-        RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
-        s32 pixelOffset = (gMenuWarpCounter * gMenuWarpCounter);
-        s32 vertOffset;
-        s32 width;
-        s32 invWidth;
-        s32 j;
+    if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
+        if (gFBEEnabled) {
+            RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
+            s32 pixelOffset = (gMenuWarpCounter * gMenuWarpCounter);
+            s32 vertOffset;
+            s32 width;
+            s32 invWidth;
+            s32 j;
 
-        for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
-            s32 lineOffset = fbeWarpTransitionProps[i][1];
-            if (pixelOffset <= lineOffset) {
-                continue;
-            }
-
-            vertOffset = i * SCREEN_WIDTH;
-            width = pixelOffset - lineOffset;
-            if (width > SCREEN_WIDTH) {
-                width = SCREEN_WIDTH;
-            }
-            invWidth = SCREEN_WIDTH - width;
-
-            if (fbeWarpTransitionProps[i][0]) {
-                // if (invWidth) {
-                    memcpy(&fb[vertOffset + width], &fb[vertOffset], invWidth << 1);
-                // }
-                for (j = vertOffset; j < (vertOffset + width); j++) {
-                    fb[j] = 0x0001;
+            for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
+                s32 lineOffset = fbeWarpTransitionProps[i][1];
+                if (pixelOffset <= lineOffset) {
+                    continue;
                 }
-            } else {
-                // if (invWidth) {
+
+                vertOffset = i * SCREEN_WIDTH;
+                width = pixelOffset - lineOffset;
+                if (width > SCREEN_WIDTH) {
+                    width = SCREEN_WIDTH;
+                }
+                invWidth = SCREEN_WIDTH - width;
+
+                if (fbeWarpTransitionProps[i][0]) {
+                    memcpy(&fb[vertOffset + width], &fb[vertOffset], invWidth << 1);
+                    for (j = vertOffset; j < (vertOffset + width); j++) {
+                        fb[j] = 0x0001;
+                    }
+                } else {
                     memcpy(&fb[vertOffset], &fb[vertOffset + width], invWidth << 1);
-                // }
-                for (j = vertOffset + invWidth; j < (vertOffset + SCREEN_WIDTH); j++) {
-                    fb[j] = 0x0001;
+                    for (j = vertOffset + invWidth; j < (vertOffset + SCREEN_WIDTH); j++) {
+                        fb[j] = 0x0001;
+                    }
                 }
             }
         }
@@ -859,7 +857,7 @@ void thread5_game_loop(UNUSED void *arg) {
     for (s32 i = 0; i < ARRAY_COUNT(fbeWarpTransitionProps); i++) {
         u16 rand = random_u16();
         fbeWarpTransitionProps[i][0] = rand >> 15;
-        fbeWarpTransitionProps[i][1] = rand % 600;
+        fbeWarpTransitionProps[i][1] = rand % 750;
     }
 
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);

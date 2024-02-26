@@ -474,8 +474,31 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
         f32 scale = node->fov < 28.0f ? remap(MAX(node->fov, 15), 15, 28, 0.5f, 1.0f): 1.0f;
 
         if (gOrthoCam) {
-            const f32 baseHeight = 300.0f;
-            const f32 width = 300.0f * sAspectRatio;
+            static f32 widthConstant = 300.0f;
+            static f32 heightConstant = 300.0f;
+            f32 baseHeight = 300.0f;
+            f32 width = 300.0f * sAspectRatio;
+
+            if (gMenuWarpCounter) {
+                if (gFBEEnabled) {
+                    widthConstant *= 1.0f - (gMenuWarpCounter * 0.0025f);
+                    heightConstant *= 1.0125f;
+                } else {
+                    widthConstant *= 1.035f - (gMenuWarpCounter * 0.005f);
+                    heightConstant *= 1.09f;
+                }
+                if (widthConstant < 1.0f) {
+                    widthConstant = 1.0f;
+                }
+                if (heightConstant < 1.0f) {
+                    heightConstant = 1.0f;
+                }
+                baseHeight = heightConstant;
+                width = widthConstant;
+            } else {
+                widthConstant = width;
+            }
+
             guOrtho(mtx, -width, width, -baseHeight, baseHeight, node->near / WORLD_SCALE, node->far / WORLD_SCALE, 100.0f);
             gSPPerspNormalize(gDisplayListHead++, 0xFFFF);
         } else {
