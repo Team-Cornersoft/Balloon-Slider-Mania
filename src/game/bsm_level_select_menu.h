@@ -28,7 +28,7 @@ enum BSMCourses {
     BSM_COURSE_8_CYBER_FEST,
     BSM_COURSE_ROW_2_END,
     
-    BSM_COURSE_9_TCS_CELEBRATION = BSM_COURSE_ROW_2_END,
+    BSM_COURSE_9_CORNERSOFT_PARADE = BSM_COURSE_ROW_2_END,
 
     BSM_COURSE_COUNT,
 };
@@ -46,7 +46,14 @@ enum BSMMenuSelectionTypes {
     BSM_SELECTION_STAGE_START_FIRST,
 };
 
+struct BSMStageProperties {
+    u8 levelID;
+    char *courseName;
+};
+
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
+extern enum BSMMenuSelectionTypes gSelectionShown;
+extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
 
 #define BSM_MENU_CAMERA_LAYOUT_FIRST -6000.0f
 #define BSM_MENU_CAMERA_LAYOUT_INCREMENT 6000.0f

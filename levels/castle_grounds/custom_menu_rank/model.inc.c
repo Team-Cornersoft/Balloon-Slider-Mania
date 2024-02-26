@@ -3641,85 +3641,6 @@ Gfx custom_menu_rank_model_mesh_layer_5_tri_0[] = {
 	gsSPEndDisplayList(),
 };
 
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_1[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_1[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_1 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_2[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_2[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_2 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_3[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_3[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_3 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_4[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_4[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_4 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_5[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_5[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_5 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx custom_menu_rank_model_mesh_layer_5_vtx_6[4] = {
-	{{ {-160, -160, 0}, 0, {0, 1024}, {255, 255, 255, 255} }},
-	{{ {140, -160, 0}, 0, {1024, 1024}, {255, 255, 255, 255} }},
-	{{ {140, 140, 0}, 0, {1024, 0}, {255, 255, 255, 255} }},
-	{{ {-160, 140, 0}, 0, {0, 0}, {255, 255, 255, 255} }},
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5_tri_6[] = {
-	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_6 + 0, 4, 0),
-	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
-	gsSPEndDisplayList(),
-};
-
-
 Gfx mat_custom_menu_rank_rank_g[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
@@ -3755,13 +3676,6 @@ Gfx mat_custom_menu_rank_rank_s[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_custom_menu_rank_rank_s[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
-	gsSPEndDisplayList(),
-};
-
 Gfx mat_custom_menu_rank_rank_f[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
@@ -3773,13 +3687,6 @@ Gfx mat_custom_menu_rank_rank_f[] = {
 	gsDPLoadBlock(7, 0, 0, 1023, 128),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_32b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_custom_menu_rank_rank_f[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
 	gsSPEndDisplayList(),
 };
 
@@ -3797,13 +3704,6 @@ Gfx mat_custom_menu_rank_rank_d[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_custom_menu_rank_rank_d[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
-	gsSPEndDisplayList(),
-};
-
 Gfx mat_custom_menu_rank_rank_c[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
@@ -3815,13 +3715,6 @@ Gfx mat_custom_menu_rank_rank_c[] = {
 	gsDPLoadBlock(7, 0, 0, 1023, 128),
 	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_32b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_custom_menu_rank_rank_c[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
 	gsSPEndDisplayList(),
 };
 
@@ -3839,13 +3732,6 @@ Gfx mat_custom_menu_rank_rank_b[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_custom_menu_rank_rank_b[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
-	gsSPEndDisplayList(),
-};
-
 Gfx mat_custom_menu_rank_rank_a[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
@@ -3860,39 +3746,17 @@ Gfx mat_custom_menu_rank_rank_a[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_custom_menu_rank_rank_a[] = {
-	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
-	gsDPSetTextureFilter(G_TF_BILERP),
-	gsSPEndDisplayList(),
-};
-
-Gfx custom_menu_rank_model_mesh_layer_5[] = {
+Gfx custom_menu_rank_model_mesh_layer_5_before[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPCullDisplayList(0, 7),
-	gsSPDisplayList(mat_custom_menu_rank_rank_g),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_after[] = {
 	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_0),
 	gsSPDisplayList(mat_revert_custom_menu_rank_rank_g),
-	gsSPDisplayList(mat_custom_menu_rank_rank_s),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_1),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_s),
-	gsSPDisplayList(mat_custom_menu_rank_rank_f),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_2),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_f),
-	gsSPDisplayList(mat_custom_menu_rank_rank_d),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_3),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_d),
-	gsSPDisplayList(mat_custom_menu_rank_rank_c),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_4),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_c),
-	gsSPDisplayList(mat_custom_menu_rank_rank_b),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_5),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_b),
-	gsSPDisplayList(mat_custom_menu_rank_rank_a),
-	gsSPDisplayList(custom_menu_rank_model_mesh_layer_5_tri_6),
-	gsSPDisplayList(mat_revert_custom_menu_rank_rank_a),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
@@ -3903,3 +3767,37 @@ Gfx custom_menu_rank_model_mesh_layer_5[] = {
 	gsSPEndDisplayList(),
 };
 
+Gfx custom_menu_rank_model_mesh_layer_5_rank_g[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_g),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_s[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_s),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_a[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_a),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_b[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_b),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_c[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_c),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_d[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_d),
+	gsSPEndDisplayList(),
+};
+
+Gfx custom_menu_rank_model_mesh_layer_5_rank_f[] = {
+	gsSPDisplayList(mat_custom_menu_rank_rank_f),
+	gsSPEndDisplayList(),
+};

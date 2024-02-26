@@ -7,8 +7,14 @@ static void bhv_bsm_menu_button_or_stage_update_sub_objects(struct Object **obj)
     if (objRef) {
         if (objRef->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
             *obj = NULL; // Remove the actual source reference of the object that was passed in
-        } else {
-            objRef->oPosX = objRef->oHomeX + BSM_MENU_CAMERA_LAYOUT_OFFSET;
+        } else if (!(objRef == o->oBSMMenuLockObj && o->oBSMMenuStageCutscene) || o->oTimer < 3) {
+            vec3f_copy(objRef->header.gfx.scale, o->header.gfx.scale); // Copy scale
+
+            f32 xDiff = (objRef->oHomeX - o->oHomeX) * objRef->header.gfx.scale[0];
+            f32 yDiff = (objRef->oHomeY - o->oHomeY) * objRef->header.gfx.scale[1];
+
+            objRef->oPosX = o->oHomeX + xDiff + BSM_MENU_CAMERA_LAYOUT_OFFSET;
+            objRef->oPosY = o->oHomeY + yDiff;
             objRef->header.gfx.node.flags = o->header.gfx.node.flags;
         }
     }
@@ -42,17 +48,19 @@ void bhv_bsm_menu_button_or_stage_init(void) {
         return; // Process only stages below
     }
 
-    // if (FALSE) {
-    if (!(bsmCompletionFlags[buttonId] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+    if (FALSE) {
+    // if (!(bsmCompletionFlags[buttonId] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
         o->oAnimState = 1;
 
         if (buttonId < BSM_COURSE_ROW_1_END) {
             o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_LOCK, bhvBSMMenuLockOrToken);
+            // if (TRUE) {
             if (bsmCompletionFlags[buttonId - 1] & (1 << BSM_STAR_COMPLETED_COURSE)) {
                 o->oBSMMenuStageCutscene = TRUE;
             }
         } else if (buttonId < BSM_COURSE_ROW_2_END) {
             o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
+            // if (TRUE) {
             if (bsmCompletionFlags[buttonId - (BSM_COURSE_ROW_2_END - BSM_COURSE_ROW_1_END)] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) {
                 o->oBSMMenuStageCutscene = TRUE;
             }
@@ -68,31 +76,58 @@ void bhv_bsm_menu_button_or_stage_init(void) {
         vec3f_copy(&o->oBSMMenuLockObj->oHomeVec, &o->oBSMMenuLockObj->oPosVec); // Set home
     }
 
+    // if (TRUE) {
     if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COMPLETED_COURSE)) {
-        o->oBSMMenuRankObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_RANK, bhvBSMMenuRankOrToken);
+        o->oBSMMenuRankObj = spawn_object_relative(buttonId, 340, -140, 20, o, MODEL_BSM_MENU_RANK, bhvBSMMenuRankOrToken);
         vec3f_copy(&o->oBSMMenuRankObj->oHomeVec, &o->oBSMMenuRankObj->oPosVec); // Set home
     }
 
+    // if (TRUE) {
     if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) {
-        o->oBSMMenuTCSTokenObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSTOKEN, bhvBSMMenuRankOrToken);
+        o->oBSMMenuTCSTokenObj = spawn_object_relative(buttonId, -340, -140, 20, o, MODEL_BSM_MENU_TCSTOKEN, bhvBSMMenuRankOrToken);
         vec3f_copy(&o->oBSMMenuTCSTokenObj->oHomeVec, &o->oBSMMenuTCSTokenObj->oPosVec); // Set home
     }
 
     bhv_bsm_menu_button_or_stage_common();
 }
 
+#define UNLOCK_CUTSCENE_FRAMES 30
+#define UNLOCK_CUTSCENE_FRAMES_SCALE 35
+#define UNLOCK_CUTSCENE_IDLE_FRAMES 8
 void bhv_bsm_menu_button_or_stage_loop(void) {
     f32 scale = o->header.gfx.scale[0];
+    s32 buttonId = o->oBehParams2ndByte;
 
-    // s32 buttonId = o->oBehParams2ndByte;
-    bhv_bsm_menu_button_or_stage_common();
+    if (o->oBSMMenuStageCutscene) {
+        if (o->oBSMMenuPressed != 0) {
+            if (o->oBSMMenuPressed < 0) {
+                o->oBSMMenuPressed = UNLOCK_CUTSCENE_FRAMES + UNLOCK_CUTSCENE_IDLE_FRAMES;
+            }
 
-    if (obj_is_hidden(o)) {
-        o->oBSMMenuPressed = 0;
-        return;
-    }
+            s32 cutsceneFramesLeft = o->oBSMMenuPressed - UNLOCK_CUTSCENE_IDLE_FRAMES;
+            s32 cutsceneFramesLeftScale = cutsceneFramesLeft - (UNLOCK_CUTSCENE_FRAMES - UNLOCK_CUTSCENE_FRAMES_SCALE);
+            if (cutsceneFramesLeft < 0) {
+                scale = smoothstop(scale, 1.0f, 0.1f);
+                if (o->oBSMMenuPressed == 1) {
+                    o->oFaceAngleYaw = 0;
+                    o->oBSMMenuStageCutscene = FALSE;
+                    save_file_update_bsm_completion(gCurrSaveFileNum - 1, buttonId, -1, -1, TRUE);
+                }
+            } else {
+                f32 rot = coss(((f32) cutsceneFramesLeft / UNLOCK_CUTSCENE_FRAMES) * 0x8000);
+                if (rot >= 0) {
+                    o->oAnimState = 0;
+                } else {
+                    rot = -rot;
+                }
 
-    if (o->oBSMMenuIsSelected && o->oBSMMenuPressed == 0) {
+                o->oFaceAngleYaw = 0x4000 - (0x4000 * rot);
+
+                scale = sins(((f32) cutsceneFramesLeftScale / (UNLOCK_CUTSCENE_FRAMES_SCALE)) * 0x8000) * 0.15f + 1.0f;
+                cur_obj_scale(scale);
+            }
+        }
+    } else if (o->oBSMMenuIsSelected && o->oBSMMenuPressed == 0) {
         scale = smoothstop(scale, 1.2f, 0.2f);
     } else {
         scale = smoothstop(scale, 1.0f, 0.2f);
@@ -103,6 +138,8 @@ void bhv_bsm_menu_button_or_stage_loop(void) {
     if (o->oBSMMenuPressed != 0) {
         o->oBSMMenuPressed--;
     }
+
+    bhv_bsm_menu_button_or_stage_common();
 
     // struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum);
     // u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum);

@@ -6,6 +6,7 @@
 #include "dialog_ids.h"
 #include "audio/external.h"
 #include "audio/synthesis.h"
+#include "bsm_level_select_menu.h"
 #include "level_update.h"
 #include "game_init.h"
 #include "level_update.h"
@@ -1355,6 +1356,7 @@ s32 lvl_init_from_save_file(UNUSED s16 initOrUpdate, s32 levelNum) {
 
 s32 lvl_set_current_level(UNUSED s16 initOrUpdate, s32 levelNum) {
     s32 warpCheckpointActive = sWarpCheckpointActive;
+    return FALSE;
 
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
@@ -1396,6 +1398,7 @@ s32 init_image_screen_press_button(UNUSED s16 frames, UNUSED s32 arg1) {
     pressAFrames = 0;
     loadFrames = 0;
     renderPressA = FALSE;
+    gSelectionShown = BSM_SELECTION_NONE;
     return TRUE;
 }
 
@@ -1429,4 +1432,18 @@ s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
     pressAFrames++;
 
     return FALSE; // Don't continue in level script, call this function again next frame
+}
+
+s32 bsm_menu_selection_made(UNUSED s16 arg0, UNUSED s32 arg1) {
+    if (gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
+        return -1;
+    }
+
+    sWarpDest.levelNum = gBSMStageProperties[gSelectionShown - BSM_SELECTION_STAGE_START_FIRST].levelID;
+    sWarpDest.areaIdx = 1;
+    sWarpDest.nodeId = 0x0A;
+    sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
+    sWarpDest.arg = WARP_FLAGS_NONE;
+
+    return sWarpDest.levelNum;
 }

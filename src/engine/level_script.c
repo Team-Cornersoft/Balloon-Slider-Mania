@@ -338,6 +338,7 @@ static void level_cmd_init_level(void) {
     }
 
     gOrthoCam = FALSE;
+    gSelectionShown = BSM_SELECTION_NONE;
 
     sCurrentCmd = CMD_NEXT;
 }

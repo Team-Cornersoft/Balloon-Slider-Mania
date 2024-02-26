@@ -75,50 +75,29 @@ const LevelScript level_cgds_menu_select[] = {
 
     CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
-    JUMP_LINK_PUSH_ARG(75),
-		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
-        SLEEP(/*frames*/ 1),
-    JUMP_N_TIMES(),
-    
-	// To compensate for the early sleep below
-	UPDATE_OBJECTS(),
-    CALL(/*arg*/ 0, /*func*/ scroll_textures),
 
     LOOP_BEGIN(),
-		// This sleep comes early because of the way 'image_screen_press_button' is written.
-		// 'image_screen_cannot_press_button' needs to be called on the same frame if the first returns TRUE, or else the button flickers.
-        SLEEP(/*frames*/ 1),
 		UPDATE_OBJECTS(),
     	CALL(/*arg*/ 0, /*func*/ scroll_textures),
-    	CALL(/*arg*/ -1, /*func*/ image_screen_press_button),
-    LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ TRUE),
-
-	// TODO: this loops infinitely
-	LOOP_BEGIN(),
         SLEEP(/*frames*/ 1),
-		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
-    LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ FALSE),
+    	CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
+    LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ -1),
 
 	// PLAY_SOUND_EFFECT(SOUND_MENU_CUSTOM_MENU_SOUND),
+	STOP_MUSIC(60),
 
-	// To compensate for that early sleep above
-    CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
-    SLEEP(/*frames*/ 1),
-
-    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
-    JUMP_LINK_PUSH_ARG(16),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 45, /*color*/ 0x00, 0x00, 0x00),
+    JUMP_LINK_PUSH_ARG(45),
 		UPDATE_OBJECTS(),
     	CALL(/*arg*/ 0, /*func*/ scroll_textures),
-    	CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
 
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
-    SLEEP(/*frames*/ 2),
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_regular, _introSegmentBssStart, _introSegmentBssEnd),
+    CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
+    SLEEP(/*frames*/ 45),
+	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
 };
 /* Fast64 end persistent block [scripts] */
 

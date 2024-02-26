@@ -32,26 +32,10 @@
 #define STICK_RIGHT (1 << 3)
 #define STICK_DIRECTIONS 4
 
-struct StageProperties {
-    u8 levelID;
-    char *courseName;
-};
-
 enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
+enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
 
-struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
-struct Object *bsmMenuButtonStats;
-struct Object *bsmMenuButtonCredits;
-
-static s32 selectedButton = BSM_COURSE_1_SNOWY_PEAK;
-static enum BSMMenuSelectionTypes selectionShown = BSM_SELECTION_NONE;
-static u8 showStats = FALSE;
-
-static char strBuffer[128];
-static u8 inputStickFlags;
-static s8 stickHistory;
-
-static struct StageProperties stageProperties[BSM_COURSE_COUNT] = {
+struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     LEVEL_BOB, "Snowy\nPeak",
     LEVEL_WF,  "Lava\nIsle",
     LEVEL_JRB, "Fungi\nCanyon",
@@ -62,6 +46,17 @@ static struct StageProperties stageProperties[BSM_COURSE_COUNT] = {
     LEVEL_SSL, "Cyber\nFest",
     LEVEL_DDD, "Cornersoft\nParade",
 };
+
+struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
+struct Object *bsmMenuButtonStats;
+struct Object *bsmMenuButtonCredits;
+
+static s32 selectedButton = BSM_COURSE_1_SNOWY_PEAK;
+static u8 showStats = FALSE;
+
+static char strBuffer[128];
+static u8 inputStickFlags;
+static s8 stickHistory;
 
 static char *creditsStr = {
 "\
@@ -75,6 +70,21 @@ Courses, Models\n\
 HackerSM64, fast64\
 "
 };
+
+static struct Object *get_selcted_menu_object(u8 button) {
+    if (button < BSM_COURSE_COUNT) {
+        return bsmMenuLevels[button];
+    }
+    if (button == BSM_COURSE_COUNT + BSM_BUTTON_STATS) {
+        return bsmMenuButtonStats;
+    }
+    if (button == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        return bsmMenuButtonCredits;
+    }
+
+    error("Attempted to get invalid menu button!");
+    return NULL;
+}
 
 static void bsm_manager_render_stage_name(void) {
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
@@ -91,10 +101,10 @@ static void bsm_manager_render_stage_name(void) {
         s32 x = (obj->oHomeX * 0.1f) + SCREEN_CENTER_X;
         s32 y = SCREEN_HEIGHT - (s32) (obj->oHomeY * 0.1f) - 10;
 
-        if (selectedButton == i) {
-            sprintf(strBuffer, "<WAVE>%s<WAVE>", stageProperties[i].courseName);
+        if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+            sprintf(strBuffer, "<WAVE>%s<WAVE>", gBSMStageProperties[i].courseName);
         } else {
-            sprintf(strBuffer, "%s", stageProperties[i].courseName);
+            sprintf(strBuffer, "%s", gBSMStageProperties[i].courseName);
         }
         
         print_set_envcolour(255, 255, 255, 255);
@@ -121,7 +131,7 @@ static void bsm_manager_render_stats(void) {
         s32 y2 = y1 + 14;
 
         if (bsmData[i].bestTimeInFrames == 0) {
-            if (selectedButton == i) {
+            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>No Time<WAVE>");
             } else {
                 sprintf(strBuffer, "No Time");
@@ -137,7 +147,7 @@ static void bsm_manager_render_stats(void) {
                 milliseconds = 999;
             }
 
-            if (selectedButton == i) {
+            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>%d:%02d.%03d<WAVE>", minutes, seconds, milliseconds);
             } else {
                 sprintf(strBuffer, "%d:%02d.%03d", minutes, seconds, milliseconds);
@@ -148,13 +158,13 @@ static void bsm_manager_render_stats(void) {
         print_small_text_buffered(x, y1, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         if (bsmData[i].score == (u16) -1) {
-            if (selectedButton == i) {
+            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>No Score<WAVE>");
             } else {
                 sprintf(strBuffer, "No Score");
             }
         } else {
-            if (selectedButton == i) {
+            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>%d<WAVE>", bsmData[i].score);
             } else {
                 sprintf(strBuffer, "%d", bsmData[i].score);
@@ -171,43 +181,26 @@ static void bsm_manager_render_credits(void) {
 }
 
 static void bsm_manager_render_update(void) {
-    if (
-        !obj_is_hidden(bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]) && 
-        bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oBSMMenuLockObj && 
-        !bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oBSMMenuStageCutscene &&
-        selectionShown != BSM_SELECTION_CREDITS
-    ) {
-        print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered((s32) (bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oHomeX * 0.1f) + SCREEN_CENTER_X + 1,
-            SCREEN_HEIGHT - (s32) (bsmMenuLevels[BSM_COURSE_9_TCS_CELEBRATION]->oHomeY * 0.1f) - 4, "x 8", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-    }
-
-    if (selectionShown != BSM_SELECTION_NONE) {
-        if (selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
-            bsm_manager_render_credits();
+    if (gSelectionShown == BSM_SELECTION_NONE) {
+        if (
+            !obj_is_hidden(bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]) && 
+            bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oBSMMenuLockObj && 
+            !bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oBSMMenuStageCutscene &&
+            gSelectionShown != BSM_SELECTION_CREDITS
+        ) {
+            print_set_envcolour(255, 255, 255, 255);
+            print_small_text_buffered((s32) (bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oHomeX * 0.1f) + SCREEN_CENTER_X + 1,
+                SCREEN_HEIGHT - (s32) (bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oHomeY * 0.1f) - 4, "x 8", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         }
-    } else {
+
         if (showStats) {
             bsm_manager_render_stats();
         } else {
             bsm_manager_render_stage_name();
         }
+    } else if (selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        bsm_manager_render_credits();
     }
-}
-
-static struct Object *get_selcted_menu_object(u8 button) {
-    if (button < BSM_COURSE_COUNT) {
-        return bsmMenuLevels[button];
-    }
-    if (button == BSM_COURSE_COUNT + BSM_BUTTON_STATS) {
-        return bsmMenuButtonStats;
-    }
-    if (button == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
-        return bsmMenuButtonCredits;
-    }
-
-    error("Attempted to get invalid menu button!");
-    return NULL;
 }
 
 static void locate_all_button_objects(void) {
@@ -256,6 +249,12 @@ void bhv_bsm_menu_button_manager_update_selected_button(void) {
     }
     bsmMenuButtonStats->oBSMMenuIsSelected = FALSE;
     bsmMenuButtonCredits->oBSMMenuIsSelected = FALSE;
+
+    for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
+        if (bsmMenuLevels[i]->oBSMMenuStageCutscene) {
+            return;
+        }
+    }
 
     get_selcted_menu_object(selectedButton)->oBSMMenuIsSelected = TRUE;
 }
@@ -327,12 +326,12 @@ static void attempt_selection_move(void) {
             moveMade = TRUE;
             switch (selectedButton) {
                 case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
-                    selectedButton = BSM_COURSE_9_TCS_CELEBRATION;
+                    selectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
-                case BSM_COURSE_9_TCS_CELEBRATION:
+                case BSM_COURSE_9_CORNERSOFT_PARADE:
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
                     break;
                 /////////////////////////////////////////////////////////////////////////
@@ -364,9 +363,9 @@ static void attempt_selection_move(void) {
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
-                    selectedButton = BSM_COURSE_9_TCS_CELEBRATION;
+                    selectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
-                case BSM_COURSE_9_TCS_CELEBRATION:
+                case BSM_COURSE_9_CORNERSOFT_PARADE:
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
                 /////////////////////////////////////////////////////////////////////////
@@ -400,7 +399,7 @@ static void attempt_selection_move(void) {
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     selectedButton = BSM_COURSE_7_SPORE_CANYON;
                     break;
-                case BSM_COURSE_9_TCS_CELEBRATION:
+                case BSM_COURSE_9_CORNERSOFT_PARADE:
                     selectedButton = BSM_COURSE_8_CYBER_FEST;
                     break;
                 /////////////////////////////////////////////////////////////////////////
@@ -412,7 +411,7 @@ static void attempt_selection_move(void) {
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
                     break;
                 case BSM_COURSE_4_STARLIGHT_FEST:
-                    selectedButton = BSM_COURSE_9_TCS_CELEBRATION;
+                    selectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
                 /////////////////////////////////////////////////////////////////////////
                 case BSM_COURSE_5_HOLIDAY_PEAK:
@@ -434,7 +433,7 @@ static void attempt_selection_move(void) {
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     selectedButton = BSM_COURSE_3_FUNGI_CANYON;
                     break;
-                case BSM_COURSE_9_TCS_CELEBRATION:
+                case BSM_COURSE_9_CORNERSOFT_PARADE:
                     selectedButton = BSM_COURSE_4_STARLIGHT_FEST;
                     break;
                 /////////////////////////////////////////////////////////////////////////
@@ -453,7 +452,7 @@ static void attempt_selection_move(void) {
                     selectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
                     break;
                 case BSM_COURSE_8_CYBER_FEST:
-                    selectedButton = BSM_COURSE_9_TCS_CELEBRATION;
+                    selectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
                 /////////////////////////////////////////////////////////////////////////
                 default:
@@ -485,19 +484,18 @@ void bhv_bsm_menu_button_manager_init(void) {
     stickHistory = 0;
     showStats = FALSE;
     locate_all_button_objects();
-    bhv_bsm_menu_button_manager_update_selected_button();
 }
 
 void bhv_bsm_menu_button_manager_loop(void) {
     // Wait a little before processing stuff
-    if (o->oTimer < 10) {
+    if (o->oTimer < 5) {
         bsm_manager_render_update();
         return;
     }
 
     s32 soundToPlay = NO_SOUND;
     if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | START_BUTTON)) {
-        if (selectionShown == BSM_SELECTION_NONE) {
+        if (gSelectionShown == BSM_SELECTION_NONE) {
             struct Object *obj = get_selcted_menu_object(selectedButton);
             soundToPlay = SOUND_MENU_CLICK_FILE_SELECT;
 
@@ -506,22 +504,22 @@ void bhv_bsm_menu_button_manager_loop(void) {
                     showStats ^= TRUE;
                     break;
                 case (BSM_BUTTON_CREDITS + BSM_COURSE_COUNT):
-                    selectionShown = BSM_SELECTION_CREDITS;
+                    gSelectionShown = BSM_SELECTION_CREDITS;
                     break;
                 default:
                     if (obj->oBSMMenuLockObj != NULL) {
                         soundToPlay = SOUND_MENU_CAMERA_BUZZ;
                     } else {
-                        selectionShown = BSM_SELECTION_STAGE_START_FIRST;
+                        gSelectionShown = BSM_SELECTION_STAGE_START_FIRST + selectedButton;
                     }
                     break;
             }
 
             obj->oBSMMenuPressed = 2; // Frame animation counter
         } else {
-            switch (selectionShown) {
+            switch (gSelectionShown) {
                 case BSM_SELECTION_CREDITS:
-                    selectionShown = BSM_SELECTION_NONE;
+                    gSelectionShown = BSM_SELECTION_NONE;
                     break;
                 default:
                     break;
@@ -533,7 +531,7 @@ void bhv_bsm_menu_button_manager_loop(void) {
         play_sound(soundToPlay, gGlobalSoundSource);
     }
 
-    if (selectionShown == BSM_SELECTION_NONE) {
+    if (gSelectionShown == BSM_SELECTION_NONE) {
         attempt_selection_move();
     }
 
@@ -566,7 +564,7 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
         cameraNode->pos[2] = Z_POS_OFFSET;
         cameraNode->focus[2] = Z_FOC_OFFSET;
 
-        if (selectionShown != BSM_SELECTION_NONE && selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        if (gSelectionShown != BSM_SELECTION_NONE && selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
             cameraNode->pos[2] = Z_POS_OFFSET + Z_OFFSET_MOD;
             cameraNode->focus[2] = Z_FOC_OFFSET + Z_OFFSET_MOD;
         }
@@ -590,7 +588,7 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
         translationNode->translation[1] = 0;
 
-        if (selectionShown != BSM_SELECTION_NONE && selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        if (gSelectionShown != BSM_SELECTION_NONE && selectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
             translationNode->translation[1] += TRANSLATE_OFFSET;
         
             print_set_envcolour(159, 159, 159, 255);
