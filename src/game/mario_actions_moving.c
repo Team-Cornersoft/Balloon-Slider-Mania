@@ -191,9 +191,9 @@ void update_sliding_angle(struct MarioState *m, f32 accel, f32 lossFactor) {
 
     //! Speed is capped a frame late (butt slide HSG)
     m->forwardVel = sqrtf(sqr(m->slideVelX) + sqr(m->slideVelZ));
-    if (m->forwardVel > 100.0f) {
-        m->slideVelX = m->slideVelX * 100.0f / m->forwardVel;
-        m->slideVelZ = m->slideVelZ * 100.0f / m->forwardVel;
+    if (m->forwardVel > (100.0f * SLIDE_SPEED_MULTIPLIER)) {
+        m->slideVelX = m->slideVelX * (100.0f * SLIDE_SPEED_MULTIPLIER) / m->forwardVel;
+        m->slideVelZ = m->slideVelZ * (100.0f * SLIDE_SPEED_MULTIPLIER) / m->forwardVel;
     }
 
     if (newFacingDYaw < -0x4000 || newFacingDYaw > 0x4000) {
@@ -202,6 +202,8 @@ void update_sliding_angle(struct MarioState *m, f32 accel, f32 lossFactor) {
 }
 
 s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
+    static f32 lastSlideY = -100000.0f;
+
     f32 lossFactor;
     f32 accel;
     f32 oldSpeed;
@@ -239,6 +241,9 @@ s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
             lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
             break;
     }
+
+    accel *= (lastSlideY >= m->pos[1]) ? SLIDE_SPEED_MULTIPLIER : 1.0f;
+    lastSlideY = m->pos[1];
 
     oldSpeed = sqrtf(m->slideVelX * m->slideVelX + m->slideVelZ * m->slideVelZ);
 
@@ -1353,6 +1358,7 @@ void tilt_body_butt_slide(struct MarioState *m) {
 
 void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32 animation) {
     play_sound(SOUND_MOVING_TERRAIN_SLIDE + m->terrainSoundAddend, m->marioObj->header.gfx.cameraToObject);
+    gLastFrameSliding = TRUE;
 
 #if ENABLE_RUMBLE
     reset_rumble_timers_slip();
@@ -1363,7 +1369,7 @@ void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32
     switch (perform_ground_step(m)) {
         case GROUND_STEP_LEFT_GROUND:
             set_mario_action(m, airAction, 0);
-            if (m->forwardVel < -50.0f || 50.0f < m->forwardVel) {
+            if (m->forwardVel < (-50.0f * SLIDE_SPEED_MULTIPLIER) || (50.0f * SLIDE_SPEED_MULTIPLIER) < m->forwardVel) {
                 play_sound(SOUND_MARIO_HOOHOO, m->marioObj->header.gfx.cameraToObject);
             }
             break;
@@ -1401,6 +1407,7 @@ void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32
 
 s32 common_slide_action_with_jump(struct MarioState *m, u32 stopAction, u32 jumpAction, u32 airAction,
                                   s32 animation) {
+    gLastFrameSliding = TRUE;
 #ifdef SLOPE_BUFFER
     if (m->input & INPUT_A_PRESSED) {
         m->actionState = 1;
@@ -1516,17 +1523,23 @@ s32 act_slide_kick_slide(struct MarioState *m) {
 }
 
 s32 stomach_slide_action(struct MarioState *m, u32 stopAction, u32 airAction, s32 animation) {
+    static f32 lastSlideY = -100000.0f;
+
     if (m->actionTimer == 5) {
-        if (!(m->input & INPUT_ABOVE_SLIDE) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
+        if ((!(m->input & INPUT_ABOVE_SLIDE) || lastSlideY >= m->pos[1]) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
 #if ENABLE_RUMBLE
             queue_rumble_data(5, 80);
 #endif
+
+            lastSlideY = -100000.0f;
             return drop_and_set_mario_action(
                 m, m->forwardVel >= 0.0f ? ACT_FORWARD_ROLLOUT : ACT_BACKWARD_ROLLOUT, 0);
         }
     } else {
         m->actionTimer++;
     }
+
+    lastSlideY = m->pos[1];
 
     if (update_sliding(m, 4.0f)) {
         return set_mario_action(m, stopAction, 0);
@@ -1549,13 +1562,19 @@ s32 act_hold_stomach_slide(struct MarioState *m) {
 }
 
 s32 act_dive_slide(struct MarioState *m) {
-    if (!(m->input & INPUT_ABOVE_SLIDE) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
+    static f32 lastSlideY = -100000.0f;
+
+    if ((!(m->input & INPUT_ABOVE_SLIDE) || (lastSlideY >= m->pos[1] && m->actionTimer > 0)) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
 #if ENABLE_RUMBLE
         queue_rumble_data(5, 80);
 #endif
+        lastSlideY = -100000.0f;
         return set_mario_action(m, m->forwardVel > 0.0f ? ACT_FORWARD_ROLLOUT : ACT_BACKWARD_ROLLOUT,
                                 0);
     }
+    m->actionTimer = 1;
+
+    lastSlideY = m->pos[1];
 
     play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_BODY_HIT_GROUND);
 

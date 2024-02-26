@@ -2,6 +2,7 @@
 
 #include "sm64.h"
 #include "mario_actions_airborne.h"
+#include "mario_actions_moving.h"
 #include "area.h"
 #include "audio/external.h"
 #include "camera.h"
@@ -16,6 +17,8 @@
 #include "rumble_init.h"
 
 #include "config.h"
+
+u8 gLastFrameSliding = FALSE;
 
 void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) {
     s32 animFrame = m->marioObj->header.gfx.animInfo.animFrame;

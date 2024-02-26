@@ -1356,8 +1356,6 @@ s32 lvl_init_from_save_file(UNUSED s16 initOrUpdate, s32 levelNum) {
 
 s32 lvl_set_current_level(UNUSED s16 initOrUpdate, s32 levelNum) {
     s32 warpCheckpointActive = sWarpCheckpointActive;
-    return FALSE;
-
     sWarpCheckpointActive = FALSE;
     gCurrLevelNum = levelNum;
     gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
@@ -1384,6 +1382,32 @@ s32 lvl_set_current_level(UNUSED s16 initOrUpdate, s32 levelNum) {
     }
 
     return !gDebugLevelSelect;
+}
+
+s32 lvl_set_replace(UNUSED s16 initOrUpdate, s32 levelNum) {
+    sWarpCheckpointActive = FALSE;
+    gCurrLevelNum = levelNum;
+    gCurrCourseNum = gLevelToCourseNumTable[levelNum - 1];
+
+	if (gCurrLevelNum == LEVEL_BOB) return 0;
+
+    if (gCurrDemoInput != NULL || gCurrCreditsEntry != NULL || gCurrCourseNum == COURSE_NONE) {
+        return FALSE;
+    }
+
+    if (gCurrLevelNum != LEVEL_BOWSER_1 && gCurrLevelNum != LEVEL_BOWSER_2 && gCurrLevelNum != LEVEL_BOWSER_3) {
+        gMarioState->numCoins = 0;
+        gHudDisplay.coins = 0;
+        gCurrCourseStarFlags =
+            save_file_get_star_flags(gCurrSaveFileNum - 1, COURSE_NUM_TO_INDEX(gCurrCourseNum));
+    }
+
+    if (gSavedCourseNum != gCurrCourseNum) {
+        gSavedCourseNum = gCurrCourseNum;
+        disable_warp_checkpoint();
+    }
+
+    return FALSE;
 }
 
 /**

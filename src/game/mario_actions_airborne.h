@@ -78,6 +78,8 @@ enum ActionArgsFreefall { // act_freefall
     ACT_ARG_FREEFALL_FROM_SLIDE_KICK
 };
 
+extern u8 gLastFrameSliding;
+
 s32 mario_execute_airborne_action(struct MarioState *m);
 
 #endif // MARIO_ACTIONS_AIRBORNE_H

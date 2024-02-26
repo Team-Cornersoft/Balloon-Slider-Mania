@@ -66,7 +66,7 @@ const LevelScript level_main_menu_entry_act_select_exit[] = {
 };
 
 const LevelScript level_main_menu_entry_act_select[] = {
-    CALL(/*arg*/ 0, /*func*/ lvl_set_current_level),
+    CALL(/*arg*/ 0, /*func*/ lvl_set_replace),
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ FALSE, (level_main_menu_entry_act_select_exit)),
     INIT_LEVEL(),
     LOAD_GODDARD(),

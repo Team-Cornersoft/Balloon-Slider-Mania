@@ -743,6 +743,7 @@ void set_mario_y_vel_based_on_fspeed(struct MarioState *m, f32 initialVelY, f32 
  */
 u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
     f32 forwardVel;
+    f32 tmp;
 
     if ((m->squishTimer != 0 || m->quicksandDepth >= 1.0f)
         && (action == ACT_DOUBLE_JUMP || action == ACT_TWIRLING)) {
@@ -822,8 +823,9 @@ u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
             break;
 
         case ACT_DIVE:
-            if ((forwardVel = m->forwardVel + 15.0f) > 48.0f) {
-                forwardVel = 48.0f;
+            tmp = 48.0f * (gLastFrameSliding ? SLIDE_SPEED_MULTIPLIER : 1.0f);
+            if ((forwardVel = m->forwardVel + 15.0f) > tmp) {
+                forwardVel = tmp;
             }
             mario_set_forward_vel(m, forwardVel);
             break;
@@ -1745,6 +1747,10 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
         // If Mario is OOB, stop executing actions.
         if (gMarioState->floor == NULL) {
             return ACTIVE_PARTICLE_NONE;
+        }
+
+        if ((gMarioState->action & ACT_GROUP_MASK) != ACT_GROUP_AIRBORNE) {
+            gLastFrameSliding = FALSE;
         }
 
         // The function can loop through many action shifts in one frame,
