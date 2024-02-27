@@ -708,4 +708,17 @@ ALWAYS_INLINE f32 smoothstep(f32 from, f32 to, f32 amount) {
     return lerpf(from, to, amount);
 }
 
+// Cen64 dev suggested this might be faster (Create_Dirty_Exclusive)
+// Data should be 16-byte aligned and multiples of 16 (I think)
+ALWAYS_INLINE void InvalidateMatrixMemory(void* addr) {
+    asm volatile (
+        "cache 0xD, 0x00(%0);"
+        "cache 0xD, 0x10(%0);"
+        "cache 0xD, 0x20(%0);"
+        "cache 0xD, 0x30(%0);"
+        :            
+        : "r"(addr)        
+    );
+}
+
 #endif // MATH_UTIL_H
