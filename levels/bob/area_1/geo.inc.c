@@ -3,23 +3,23 @@
 const GeoLayout bob_area_1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(15, geo_switch_area),
+		GEO_SWITCH_CASE(4, geo_switch_area),
 		GEO_OPEN_NODE(),
-			GEO_BRANCH(1, bob_dl_0_SKY_0_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_1_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_2_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_3_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_4_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_5_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_6_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_7_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_8_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_9_geo),
-			GEO_BRANCH(1, bob_dl_0_SKY_SUN_geo),
 			GEO_BRANCH(1, bob_dl_1_area1_geo),
 			GEO_BRANCH(1, bob_dl_2_area1_geo),
 			GEO_BRANCH(1, bob_dl_3_area1_geo),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, 12937, 0, 0, 10, 0, bob_dl_0_SKY_0_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -16454, 8515, 15046, 0, 10, 0, bob_dl_0_SKY_1_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -17027, -3965, 15514, 0, 10, 0, bob_dl_0_SKY_2_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15046, 8515, -16454, 0, 10, 0, bob_dl_0_SKY_3_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15514, -3965, -17027, 0, 10, 0, bob_dl_0_SKY_4_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 16454, 8515, -15046, 0, 10, 0, bob_dl_0_SKY_5_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 17027, -3965, -15514, 0, 10, 0, bob_dl_0_SKY_6_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15046, 8515, 16454, 0, 10, 0, bob_dl_0_SKY_7_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15514, -3965, 17027, 0, 10, 0, bob_dl_0_SKY_8_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, -12022, 0, 0, 10, 0, bob_dl_0_SKY_9_mesh_layer_1),
+		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 30000, 31100, 16000, bob_dl_0_SKY_SUN_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 7975, 2413, 4566, bob_dl_A_forest_a_mesh_layer_4),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_A_forest_a_mesh_layer_1),
@@ -47,94 +47,17 @@ const GeoLayout bob_area_1_geo[] = {
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
-const GeoLayout bob_dl_0_SKY_0_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, 11803, 0, 0, 10, 0, bob_dl_0_SKY_0_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_1_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14958, 7782, 13678, 0, 10, 0, bob_dl_0_SKY_1_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_2_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15479, -3563, 14104, 0, 10, 0, bob_dl_0_SKY_2_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_3_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -13678, 7782, -14958, 0, 10, 0, bob_dl_0_SKY_3_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_4_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14104, -3563, -15479, 0, 10, 0, bob_dl_0_SKY_4_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_5_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 14958, 7782, -13678, 0, 10, 0, bob_dl_0_SKY_5_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_6_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15479, -3563, -14104, 0, 10, 0, bob_dl_0_SKY_6_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_7_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 13678, 7782, 14958, 0, 10, 0, bob_dl_0_SKY_7_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_8_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 14104, -3563, 15479, 0, 10, 0, bob_dl_0_SKY_8_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_9_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, -10888, 0, 0, 10, 0, bob_dl_0_SKY_9_mesh_layer_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout bob_dl_0_SKY_SUN_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 30000, 31100, 16000, bob_dl_0_SKY_SUN_mesh_layer_5),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
 const GeoLayout bob_dl_1_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_A_area1_slide_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -247, 4744, 1146, bob_dl_A_area1_slide_a_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout bob_dl_2_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_A_area1_slide_b_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2420, -4624, 562, bob_dl_A_area1_slide_b_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 5071, 2394, -4943, bob_dl_B_pine_tree_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_B_pine_tree_mesh_layer_4),
@@ -171,13 +94,17 @@ const GeoLayout bob_dl_2_area1_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_B_pine_tree_008_mesh_layer_4),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15600, -1006, 14125, bob_dl_B_pine_tree_018_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_B_pine_tree_018_mesh_layer_4),
+		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout bob_dl_3_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_A_area1_slide_c_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 5577, -4863, 4174, bob_dl_A_area1_slide_c_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15600, -1006, 14125, bob_dl_B_pine_tree_009_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_B_pine_tree_009_mesh_layer_4),
@@ -212,7 +139,7 @@ const GeoLayout bob_area_1[] = {
 		GEO_OPEN_NODE(),
 			GEO_CAMERA_FRUSTUM_WITH_FUNC(45.0000, 127, 65535, geo_camera_fov),
 			GEO_OPEN_NODE(),
-				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, 0, 0, 0, 0, -100, 0, geo_camera_main),
+				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, -70000, 0, 0, -70000, -100, 0, geo_camera_main),
 				GEO_OPEN_NODE(),
 					GEO_BRANCH(1, bob_area_1_geo),
 					GEO_RENDER_OBJ(),
