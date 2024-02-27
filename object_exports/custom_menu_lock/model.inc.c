@@ -143,10 +143,10 @@ Vtx custom_menu_lock_model_mesh_layer_5_vtx_cull[8] = {
 };
 
 Vtx custom_menu_lock_model_mesh_layer_5_vtx_0[4] = {
-	{{ {-160, -160, 0}, 0, {-16, 1008}, {0, 0, 127, 255} }},
-	{{ {140, -160, 0}, 0, {1008, 1008}, {0, 0, 127, 255} }},
-	{{ {140, 140, 0}, 0, {1008, -16}, {0, 0, 127, 255} }},
-	{{ {-160, 140, 0}, 0, {-16, -16}, {0, 0, 127, 255} }},
+	{{ {-160, -160, 0}, 0, {0, 1024}, {0, 0, 127, 255} }},
+	{{ {140, -160, 0}, 0, {1024, 1024}, {0, 0, 127, 255} }},
+	{{ {140, 140, 0}, 0, {1024, 0}, {0, 0, 127, 255} }},
+	{{ {-160, 140, 0}, 0, {0, 0}, {0, 0, 127, 255} }},
 };
 
 Gfx custom_menu_lock_model_mesh_layer_5_tri_0[] = {
@@ -159,6 +159,7 @@ Gfx custom_menu_lock_model_mesh_layer_5_tri_0[] = {
 Gfx mat_custom_menu_lock_lock[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
+	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, custom_menu_lock_lock_rgba32_ia8),
@@ -169,6 +170,12 @@ Gfx mat_custom_menu_lock_lock[] = {
 	gsSPEndDisplayList(),
 };
 
+Gfx mat_revert_custom_menu_lock_lock[] = {
+	gsDPPipeSync(),
+	gsDPSetTextureFilter(G_TF_BILERP),
+	gsSPEndDisplayList(),
+};
+
 Gfx custom_menu_lock_model_mesh_layer_5[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPVertex(custom_menu_lock_model_mesh_layer_5_vtx_cull + 0, 8, 0),
@@ -176,6 +183,7 @@ Gfx custom_menu_lock_model_mesh_layer_5[] = {
 	gsSPCullDisplayList(0, 7),
 	gsSPDisplayList(mat_custom_menu_lock_lock),
 	gsSPDisplayList(custom_menu_lock_model_mesh_layer_5_tri_0),
+	gsSPDisplayList(mat_revert_custom_menu_lock_lock),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
