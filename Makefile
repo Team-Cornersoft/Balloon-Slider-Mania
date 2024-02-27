@@ -257,7 +257,7 @@ endif
 # (library will be pulled into repo after building with this enabled for the first time)
 #   1 - includes code in ROM
 #   0 - does not
-LIBPL ?= 0
+LIBPL ?= 1
 LIBPL_DIR := lib/libpl
 $(eval $(call validate-option,LIBPL,0 1))
 ifeq ($(LIBPL),1)
@@ -350,7 +350,7 @@ ifeq ($(filter clean distclean print-%,$(MAKECMDGOALS)),)
 
   # Clone any needed submodules
   ifeq ($(LIBPL),1)
-    ifeq ($(wildcard $(LIBPL_DIR)),)
+    ifeq ($(wildcard $(LIBPL_DIR)/*.h),)
       $(info Cloning libpl submodule...)
       DUMMY != git submodule update --init $(LIBPL_DIR) > /dev/null || echo FAIL
       ifeq ($(DUMMY),FAIL)

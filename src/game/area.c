@@ -3,6 +3,8 @@
 #include "config.h"
 #include "area.h"
 #include "bsm_level_select_menu.h"
+#include "emutest.h"
+#include "lib/libpl/libpl-emu.h"
 #include "sm64.h"
 #include "gfx_dimensions.h"
 #include "behavior_data.h"

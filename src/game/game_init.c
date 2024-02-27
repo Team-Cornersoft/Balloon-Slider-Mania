@@ -493,7 +493,7 @@ void display_and_vsync(void) {
     if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
         if (gFBEEnabled) {
             RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
-            s32 pixelOffset = (gMenuWarpCounter * gMenuWarpCounter);
+            s32 pixelOffset = ((gMenuWarpCounter - 2) * gMenuWarpCounter) - 25;
             s32 vertOffset;
             s32 width;
             s32 invWidth;
@@ -507,7 +507,7 @@ void display_and_vsync(void) {
 
                 vertOffset = i * SCREEN_WIDTH;
                 width = pixelOffset - lineOffset;
-                if (width > SCREEN_WIDTH) {
+                if (width >= SCREEN_WIDTH) {
                     width = SCREEN_WIDTH;
                 }
                 invWidth = SCREEN_WIDTH - width;
@@ -857,7 +857,7 @@ void thread5_game_loop(UNUSED void *arg) {
     for (s32 i = 0; i < ARRAY_COUNT(fbeWarpTransitionProps); i++) {
         u16 rand = random_u16();
         fbeWarpTransitionProps[i][0] = rand >> 15;
-        fbeWarpTransitionProps[i][1] = rand % 750;
+        fbeWarpTransitionProps[i][1] = rand % 900;
     }
 
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);

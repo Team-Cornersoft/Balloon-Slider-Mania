@@ -1339,13 +1339,13 @@ void finish_blank_box(void) {
 void render_blank_box(s32 x1, s32 y1, s32 x2, s32 y2, u8 r, u8 g, u8 b, u8 a) {
     if (x2 < x1)
     {
-        u32 temp = x2;
+        s32 temp = x2;
         x2 = x1;
         x1 = temp;
     }
     if (y2 < y1)
     {
-        u32 temp = y2;
+        s32 temp = y2;
         y2 = y1;
         y1 = temp;
     }
