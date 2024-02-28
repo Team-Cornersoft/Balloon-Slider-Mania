@@ -75,7 +75,7 @@
             "sound": "custom_02b_sfx9_organ"
         },
         "inst2": {
-            "release_rate": 65,
+            "release_rate": 59,
             "envelope": "envelope2",
             "sound": "27_harpsichord"
         },
