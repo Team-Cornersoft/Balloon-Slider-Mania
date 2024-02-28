@@ -58,13 +58,16 @@ static char strBuffer[128];
 static u8 inputStickFlags;
 static s8 stickHistory;
 
-static char *creditsStr = {
+// NOTE: Puppyprint only supports 12 lines total (I think), with deferred prints only supporting under 254 characters (excluding newline)
+static char creditsStr[] = {
 "\
-<COL_FF5F5FFF> ArcticJaguar725<COL_--------> \n\
-Programming, Music\n\
-\n\
 <COL_5FFF5FFF> Mel<COL_--------> \n\
-Courses, Models\n\
+Courses, Models & Artwork,\n\
+Custom Soundtrack\n\
+\n\
+<COL_FF5F5FFF> ArcticJaguar725<COL_--------> \n\
+Programming, Sound Design,\n\
+Custom Soundtrack\n\
 \n\
 <COL_5F5FFFFF> Tools Used<COL_--------> \n\
 HackerSM64, fast64\
@@ -177,7 +180,7 @@ static void bsm_manager_render_stats(void) {
 
 static void bsm_manager_render_credits(void) {
     print_set_envcolour(255, 255, 255, 255);
-    print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT * 1 / 4 + 12, creditsStr, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA | (1 << 7) /*Stupid hack to render deferred black box*/);
+    print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT * 1 / 4 + 0, creditsStr, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA | (1 << 7) /*Stupid hack to render deferred black box*/);
 }
 
 static void bsm_manager_render_update(void) {
@@ -578,3 +581,5 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
     return NULL;
 }
+
+STATIC_ASSERT(sizeof(creditsStr) <= 0xFF, "creditsStr exceeds deferred print maximum length!");
