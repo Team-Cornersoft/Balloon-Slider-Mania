@@ -1419,11 +1419,39 @@ s32 lvl_play_the_end_screen_sound(UNUSED s16 initOrUpdate, UNUSED s32 levelNum) 
     return TRUE;
 }
 
+s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
+    gSelectionShown = BSM_SELECTION_NONE;
+    gCurrLevelNum = LEVEL_CASTLE_GROUNDS;
+
+#ifdef DEBUG_LEVEL_SELECT
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
+    return TRUE;
+#else
+    u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
+    for (s32 i = 0; i < BSM_COURSE_ROW_1_END; i++) {
+        if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+            return TRUE; // Need to complete first four courses to extra courses
+        }
+    }
+
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_STANDARD;
+    for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
+        if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+            return TRUE; // Need to complete all extra and main courses to display bonus course
+        }
+    }
+
+    // All non-bonus courses completed
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
+    return TRUE;
+#endif
+}
+
 s32 init_image_screen_press_button(UNUSED s16 frames, UNUSED s32 arg1) {
     pressAFrames = 0;
     loadFrames = 0;
     renderPressA = FALSE;
-    gSelectionShown = BSM_SELECTION_NONE;
     return TRUE;
 }
 

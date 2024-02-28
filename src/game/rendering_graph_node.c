@@ -482,7 +482,7 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
             if (gMenuWarpCounter) {
                 if (gFBEEnabled) {
                     if (gMenuWarpCounter > 2) {
-                        widthConstant *= 1.0f - (sqr(gMenuWarpCounter - 2) * 0.0001f);
+                        widthConstant *= 1.0f - ((gMenuWarpCounter - 2) * (gMenuWarpCounter - 3) * 0.00008f);
                         heightConstant *= 1.0f + (0.125f / (2.25f + gMenuWarpCounter));
                     }
                     // heightConstant *= 1.0125f;

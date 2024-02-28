@@ -60,6 +60,8 @@ const LevelScript level_cgds_menu_select[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TITLE, custom_menu_title_geo), 
+	
+    CALL(/*arg*/ 0, /*func*/ init_bsm_menu),
 
 	AREA(1, castle_grounds_area_1_custom_static),
 		JUMP_LINK(cgds_area1_jump),
@@ -74,7 +76,6 @@ const LevelScript level_cgds_menu_select[] = {
 
 	SET_ORTHO_CAM(TRUE),
 
-    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
 
     LOOP_BEGIN(),

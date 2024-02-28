@@ -37,35 +37,50 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
 }
 
 void bhv_bsm_menu_button_or_stage_init(void) {
-    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum);
     u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum);
-
-    o->oBSMMenuFrameColor = 0xFFFFFFFF;
-
     s32 buttonId = o->oBehParams2ndByte;
+    o->oBSMMenuFrameColor = 0xFFFFFFFF;
 
     if (!cur_obj_has_model(MODEL_BSM_MENU_STAGE)) {
         return; // Process only stages below
     }
 
-    // if (FALSE) {
+#ifdef DEBUG_LEVEL_SELECT
+    if (FALSE) {
+#else
     if (!(bsmCompletionFlags[buttonId] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+#endif
         o->oAnimState = 1;
 
         if (buttonId < BSM_COURSE_ROW_1_END) {
             o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_LOCK, bhvBSMMenuLockOrToken);
             // if (TRUE) {
-            if (bsmCompletionFlags[buttonId - 1] & (1 << BSM_STAR_COMPLETED_COURSE)) {
+            if (
+                gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_MINIMAL &&
+                bsmCompletionFlags[buttonId - 1] & (1 << BSM_STAR_COMPLETED_COURSE)
+            ) {
                 o->oBSMMenuStageCutscene = TRUE;
             }
         } else if (buttonId < BSM_COURSE_ROW_2_END) {
             o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
             // if (TRUE) {
-            if (bsmCompletionFlags[buttonId - (BSM_COURSE_ROW_2_END - BSM_COURSE_ROW_1_END)] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) { // TODO:
+            if (
+                gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_STANDARD &&
+                bsmCompletionFlags[buttonId - (BSM_COURSE_ROW_2_END - BSM_COURSE_ROW_1_END)] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)
+            ) {
                 o->oBSMMenuStageCutscene = TRUE;
             }
         } else {
-            if (bsmData[buttonId].score != (u16) -1) { // TODO:
+            s32 tcsTokensCollected = TRUE;
+            for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
+                if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+                    tcsTokensCollected = FALSE;
+                    break;
+                }
+            }
+
+            // if (TRUE) {
+            if (gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_BONUS && tcsTokensCollected) {
                 o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
                 o->oBSMMenuStageCutscene = TRUE;
             } else {
@@ -140,9 +155,6 @@ void bhv_bsm_menu_button_or_stage_loop(void) {
     }
 
     bhv_bsm_menu_button_or_stage_common();
-
-    // struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum);
-    // u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum);
 }
 
 Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context) {

@@ -542,11 +542,6 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
 
         f32 xOffset = BSM_MENU_CAMERA_LAYOUT_FIRST + (gBSMMenuLayoutBGState * BSM_MENU_CAMERA_LAYOUT_INCREMENT);
 
-        // TODO: remove
-        if (gPlayer1Controller->buttonPressed & L_TRIG) {
-            gBSMMenuLayoutBGState = (gBSMMenuLayoutBGState + 1) % BSM_MENU_LAYOUT_BG_COUNT;
-        }
-
         cameraNode->pos[0] = xOffset;
         cameraNode->focus[0] = xOffset;
 
@@ -557,10 +552,6 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
             cameraNode->pos[2] = Z_POS_OFFSET + Z_OFFSET_MOD;
             cameraNode->focus[2] = Z_FOC_OFFSET + Z_OFFSET_MOD;
         }
-
-        // TODO: remove
-        // print_set_envcolour(255, 255, 255, 255);
-        // print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT - 14, "<RAINBOW>Press L to swap perspective<RAINBOW>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 
     return NULL;

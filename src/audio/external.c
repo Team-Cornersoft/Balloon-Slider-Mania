@@ -12,6 +12,7 @@
 #include "game/level_update.h"
 #include "game/object_list_processor.h"
 #include "game/camera.h"
+#include "game/save_file.h"
 #include "engine/math_util.h"
 #include "seq_ids.h"
 #include "dialog_ids.h"
@@ -157,6 +158,15 @@ enum MusicDynConditionTypes {
 #define DYN3(cond1, val1, cond2, val2, cond3, val3, res)                                               \
     (s16)(1 << (15 - cond1) | 1 << (15 - cond2) | 1 << (15 - cond3) | res), val1, val2, val3
 
+s16 sDynCastleGrounds[] = {
+    SEQ_CUSTOM_LEVEL_SELECT,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+};
 s16 sDynBbh[] = {
     SEQ_LEVEL_SPOOKY, DYN1(MARIO_IS_IN_ROOM, BBH_OUTSIDE_ROOM, 6),
     DYN1(MARIO_IS_IN_ROOM, BBH_NEAR_MERRY_GO_ROUND_ROOM, 6), 5,
@@ -210,15 +220,15 @@ s16 *sLevelDynamics[LEVEL_COUNT] = {
 #undef DEFINE_LEVEL
 
 struct MusicDynamic {
-    /*0x0*/ s16 bits1;
+    /*0x0*/ u16 bits1;
     /*0x2*/ u16 volScale1;
     /*0x4*/ s16 dur1;
-    /*0x6*/ s16 bits2;
+    /*0x6*/ u16 bits2;
     /*0x8*/ u16 volScale2;
     /*0xA*/ s16 dur2;
 }; // size = 0xC
 
-struct MusicDynamic sMusicDynamics[8] = {
+struct MusicDynamic sMusicDynamics[] = {
     { 0x0000, 127, 100, 0x0e43, 0, 100 }, // SEQ_LEVEL_WATER
     { 0x0003, 127, 100, 0x0e40, 0, 100 }, // SEQ_LEVEL_WATER
     { 0x0e43, 127, 200, 0x0000, 0, 200 }, // SEQ_LEVEL_WATER
@@ -227,6 +237,13 @@ struct MusicDynamic sMusicDynamics[8] = {
     { 0x0070, 127, 10, 0x0000, 0, 100 },  // SEQ_LEVEL_SPOOKY
     { 0x0000, 127, 100, 0x0070, 0, 10 },  // SEQ_LEVEL_SPOOKY
     { 0xffff, 127, 100, 0x0000, 0, 100 }, // any (unused)
+
+    { 0b0000001000000011, 127, 75, 0b1111110111111100, 0, 75}, // BSM Menu Initial State
+    { 0b1000001000001111, 127, 75, 0b0111110111110000, 0, 75}, // BSM Menu Unlocked Stage 2
+    { 0b1100001000111111, 127, 75, 0b0011110111000000, 0, 75}, // BSM Menu Unlocked Stage 3
+    { 0b1100001011111111, 127, 75, 0b0011110100000000, 0, 75}, // BSM Menu Unlocked Stage 4
+    { 0b1100001111111111, 127, 75, 0b0011110000000000, 0, 75}, // BSM Menu Can See Extra Stages
+    { 0b1111111111111111, 127, 75, 0b0000000000000000, 0, 75}, // BSM Menu Unlocked Bonus Stage
 };
 
 #define STUB_LEVEL(_0, _1, _2, _3, echo1, echo2, echo3, _7, _8) { echo1, echo2, echo3 },
@@ -1677,6 +1694,46 @@ static void func_8031F96C(u8 player) {
     }
 }
 
+static u8 bsm_menu_get_music_state(void) {
+    if (sBackgroundMusicForDynamics != sDynCastleGrounds[0]) {
+        return 0xff;
+    }
+
+#ifdef DEBUG_LEVEL_SELECT
+    return sDynCastleGrounds[6];
+#else
+    u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+
+    // Is course 2 unlocked and has cutscene been watched? If not, return first music state.
+    if (!(bsmCompletionFlags[BSM_COURSE_2_LAVA_ISLE] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+        return sDynCastleGrounds[1];
+    }
+
+    // Is course 3 unlocked and has cutscene been watched? If not, return second music state.
+    if (!(bsmCompletionFlags[BSM_COURSE_3_FUNGI_CANYON] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+        return sDynCastleGrounds[2]; // Is course 3 unlocked and has cutscene been watched?
+    }
+
+    // Is course 4 unlocked and has cutscene been watched? If not, return third music state.
+    if (!(bsmCompletionFlags[BSM_COURSE_4_STARLIGHT_FEST] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+        return sDynCastleGrounds[3]; // Is course 4 unlocked and has cutscene been watched?
+    }
+
+    // Are extra courses visible? If not, return fourth music state.
+    if (gBSMMenuLayoutBGState < BSM_MENU_LAYOUT_BG_STANDARD) {
+        return sDynCastleGrounds[4];
+    }
+
+    // Is course 9 unlocked and has cutscene been watched? If not, return fifth music state.
+    if (!(bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+        return sDynCastleGrounds[5];
+    }
+
+    // Return complete music state
+    return sDynCastleGrounds[6];
+#endif
+}
+
 /**
  * Called from threads: thread4_sound, thread5_game_loop (EU only)
  */
@@ -1783,6 +1840,11 @@ void process_level_music_dynamics(void) {
         }
 
         conditionBits = tempBits;
+    }
+
+    u8 bsmMenuState = bsm_menu_get_music_state();
+    if (bsmMenuState != 0xFF) {
+        musicDynIndex = bsmMenuState;
     }
 
     if (sCurrentMusicDynamic != musicDynIndex) {
