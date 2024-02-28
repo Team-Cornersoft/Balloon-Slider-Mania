@@ -1,0 +1,13 @@
+extern const GeoLayout custom_menu_tcslock_x8_geo[];
+extern u8 custom_menu_tcslock_x8_tcstoken_lockx8_a_rgba32_rgba32[];
+extern u8 custom_menu_tcslock_x8_tcstoken_lockx8_b_rgba32_rgba32[];
+extern Vtx custom_menu_tcslock_x8_model_mesh_layer_5_vtx_cull[8];
+extern Vtx custom_menu_tcslock_x8_model_mesh_layer_5_vtx_0[4];
+extern Gfx custom_menu_tcslock_x8_model_mesh_layer_5_tri_0[];
+extern Vtx custom_menu_tcslock_x8_model_mesh_layer_5_vtx_1[4];
+extern Gfx custom_menu_tcslock_x8_model_mesh_layer_5_tri_1[];
+extern Gfx mat_custom_menu_tcslock_x8_part_a[];
+extern Gfx mat_revert_custom_menu_tcslock_x8_part_a[];
+extern Gfx mat_custom_menu_tcslock_x8_part_b[];
+extern Gfx mat_revert_custom_menu_tcslock_x8_part_b[];
+extern Gfx custom_menu_tcslock_x8_model_mesh_layer_5[];

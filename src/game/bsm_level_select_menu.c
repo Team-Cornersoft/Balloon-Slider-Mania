@@ -182,17 +182,6 @@ static void bsm_manager_render_credits(void) {
 
 static void bsm_manager_render_update(void) {
     if (gSelectionShown == BSM_SELECTION_NONE) {
-        if (
-            !obj_is_hidden(bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]) && 
-            bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oBSMMenuLockObj && 
-            !bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oBSMMenuStageCutscene &&
-            gSelectionShown != BSM_SELECTION_CREDITS
-        ) {
-            print_set_envcolour(255, 255, 255, 255);
-            print_small_text_buffered((s32) (bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oHomeX * 0.1f) + SCREEN_CENTER_X + 1,
-                SCREEN_HEIGHT - (s32) (bsmMenuLevels[BSM_COURSE_9_CORNERSOFT_PARADE]->oHomeY * 0.1f) - 4, "x 8", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-        }
-
         if (showStats) {
             bsm_manager_render_stats();
         } else {

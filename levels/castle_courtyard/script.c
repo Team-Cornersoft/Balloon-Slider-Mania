@@ -33,12 +33,6 @@ const LevelScript level_ccy_title_screen[] = {
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
 
 	ALLOC_LEVEL_POOL(),
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_BUTTON, custom_menu_button_geo), 
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_STAGE, custom_menu_stage_geo), 
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_LOCK, custom_menu_lock_geo), 
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSLOCK, custom_menu_tcslock_geo), 
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
-	// LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TCSTOKEN, custom_menu_tcstoken_geo), 
 	AREA(1, castle_courtyard_area_1_custom_static),
 		JUMP_LINK(ccy_area1_jump),
 	END_AREA(),

@@ -48,8 +48,8 @@ void bhv_bsm_menu_button_or_stage_init(void) {
         return; // Process only stages below
     }
 
-    if (FALSE) {
-    // if (!(bsmCompletionFlags[buttonId] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
+    // if (FALSE) {
+    if (!(bsmCompletionFlags[buttonId] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
         o->oAnimState = 1;
 
         if (buttonId < BSM_COURSE_ROW_1_END) {
@@ -61,15 +61,15 @@ void bhv_bsm_menu_button_or_stage_init(void) {
         } else if (buttonId < BSM_COURSE_ROW_2_END) {
             o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
             // if (TRUE) {
-            if (bsmCompletionFlags[buttonId - (BSM_COURSE_ROW_2_END - BSM_COURSE_ROW_1_END)] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) {
+            if (bsmCompletionFlags[buttonId - (BSM_COURSE_ROW_2_END - BSM_COURSE_ROW_1_END)] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) { // TODO:
                 o->oBSMMenuStageCutscene = TRUE;
             }
         } else {
-            o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
-            if (bsmData[buttonId].score != (u16) -1) {
+            if (bsmData[buttonId].score != (u16) -1) { // TODO:
+                o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK, bhvBSMMenuLockOrToken);
                 o->oBSMMenuStageCutscene = TRUE;
             } else {
-                o->oBSMMenuLockObj->oPosX -= 115.0f;
+                o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK_X8, bhvBSMMenuLockOrToken);
             }
         }
 
@@ -151,6 +151,11 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
     if (callContext == GEO_CONTEXT_RENDER) {
         struct Object *objectGraphNode = (struct Object *) gCurGraphNodeObject;
         struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+        struct Object *parentNode = objectGraphNode->parentObj;
+
+        if (!parentNode || objectGraphNode->behavior == segmented_to_virtual(bhvBSMMenuButtonOrStage)) {
+            parentNode = objectGraphNode;
+        }
 
         if (gCurGraphNodeHeldObject != NULL) {
             objectGraphNode = gCurGraphNodeHeldObject->objNode;
@@ -161,13 +166,13 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
         SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_TRANSPARENT);
         Gfx *dlHead = dlStart;
 
-        if (objectGraphNode->behavior == segmented_to_virtual(bhvBSMMenuButtonOrStage)) {
+        if (parentNode->behavior == segmented_to_virtual(bhvBSMMenuButtonOrStage)) {
             f32 r = 1.0f;
             f32 g = 1.0f;
             f32 b = 1.0f;
 
-            if (objectGraphNode->oBSMMenuIsSelected) {
-                if (objectGraphNode->oAnimState == 0) {
+            if (parentNode->oBSMMenuIsSelected) {
+                if (parentNode->oAnimState == 0) {
                     r = (coss(gGlobalTimer * 0x100) + 1) * 0.375f + 0.125f;
                     g = (coss((gGlobalTimer * 0x100) + (0x10000 / 3)) + 1) * 0.375f + 0.125f;
                     b = (coss((gGlobalTimer * 0x100) - (0x10000 / 3)) + 1) * 0.375f + 0.125f;

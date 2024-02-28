@@ -493,11 +493,15 @@ void display_and_vsync(void) {
     if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
         if (gFBEEnabled) {
             RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
-            s32 pixelOffset = ((gMenuWarpCounter - 2) * gMenuWarpCounter) - 25;
+            s32 pixelOffset = ((gMenuWarpCounter - 4) * (gMenuWarpCounter - 2)) - 25;
             s32 vertOffset;
             s32 width;
             s32 invWidth;
             s32 j;
+
+            if (gMenuWarpCounter < 5) {
+                pixelOffset = 0;
+            }
 
             for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
                 s32 lineOffset = fbeWarpTransitionProps[i][1];

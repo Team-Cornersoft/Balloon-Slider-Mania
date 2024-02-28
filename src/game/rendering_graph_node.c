@@ -481,9 +481,11 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
 
             if (gMenuWarpCounter) {
                 if (gFBEEnabled) {
-                    widthConstant *= 1.0f - ((gMenuWarpCounter * gMenuWarpCounter) * 0.0001f);
+                    if (gMenuWarpCounter > 2) {
+                        widthConstant *= 1.0f - (sqr(gMenuWarpCounter - 2) * 0.0001f);
+                        heightConstant *= 1.0f + (0.125f / (2.25f + gMenuWarpCounter));
+                    }
                     // heightConstant *= 1.0125f;
-                    heightConstant *= 1.0f + (0.125f / (2.25f + gMenuWarpCounter));
                 } else {
                     widthConstant *= 1.035f - (gMenuWarpCounter * 0.005f);
                     heightConstant *= 1.09f;
