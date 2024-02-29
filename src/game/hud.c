@@ -570,7 +570,7 @@ void render_hud_camera_status(void) {
  * excluding the cannon reticle which detects a camera preset for it.
  */
 void render_hud(void) {
-    s16 hudDisplayFlags = gHudDisplay.flags;
+    s16 hudDisplayFlags = gHudDisplay.flags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER;
 
     if (hudDisplayFlags == HUD_DISPLAY_NONE) {
         sPowerMeterHUD.animation = POWER_METER_HIDDEN;
