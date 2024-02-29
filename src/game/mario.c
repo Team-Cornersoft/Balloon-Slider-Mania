@@ -743,7 +743,6 @@ void set_mario_y_vel_based_on_fspeed(struct MarioState *m, f32 initialVelY, f32 
  */
 u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
     f32 forwardVel;
-    f32 tmp;
 
     if ((m->squishTimer != 0 || m->quicksandDepth >= 1.0f)
         && (action == ACT_DOUBLE_JUMP || action == ACT_TWIRLING)) {
@@ -823,9 +822,12 @@ u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
             break;
 
         case ACT_DIVE:
-            tmp = 48.0f * (gLastFrameSliding ? SLIDE_SPEED_MULTIPLIER : 1.0f);
-            if ((forwardVel = m->forwardVel + 15.0f) > tmp) {
-                forwardVel = tmp;
+            if (!gLastFrameSliding) {
+                if ((forwardVel = m->forwardVel + 15.0f) > 48.0f) {
+                    forwardVel = 48.0f;
+                }
+            } else {
+                forwardVel = m->forwardVel;
             }
             mario_set_forward_vel(m, forwardVel);
             break;
