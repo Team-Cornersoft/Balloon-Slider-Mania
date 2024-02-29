@@ -198,10 +198,12 @@ void update_air_with_turn(struct MarioState *m) {
             m->forwardVel += 2.0f;
         }
 
-        if (fvelOld >= 0.0f && m->forwardVel < 6.0f) {
-            m->forwardVel = 6.0f;
-        } else if (fvelOld >= -6.0f && m->forwardVel < 0.0f) {
-            m->forwardVel = -1.0f;
+        if (gLastFrameSliding) {
+            if (fvelOld >= 0.0f && m->forwardVel < 6.0f) {
+                m->forwardVel = 6.0f;
+            } else if (fvelOld >= -6.0f && m->forwardVel < 0.0f) {
+                m->forwardVel = -1.0f;
+            }
         }
 
         m->vel[0] = m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
@@ -237,10 +239,12 @@ void update_air_without_turn(struct MarioState *m) {
             m->forwardVel += 2.0f;
         }
 
-        if (fvelOld >= 0.0f && m->forwardVel < 6.0f) {
-            m->forwardVel = 6.0f;
-        } else if (fvelOld >= -6.0f && m->forwardVel < 0.0f) {
-            m->forwardVel = -1.0f;
+        if (gLastFrameSliding) {
+            if (fvelOld >= 0.0f && m->forwardVel < 6.0f) {
+                m->forwardVel = 6.0f;
+            } else if (fvelOld >= -6.0f && m->forwardVel < 0.0f) {
+                m->forwardVel = -1.0f;
+            }
         }
 
         m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
