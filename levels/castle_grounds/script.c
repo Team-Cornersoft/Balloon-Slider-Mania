@@ -48,6 +48,7 @@ static const LevelScript cgds_area1_jump[] = {
 
 const LevelScript level_cgds_menu_select[] = {
     INIT_LEVEL(),
+	CALL(/*arg*/ 0, /*func*/ init_menu_video_buffers),
     LOAD_BEHAVIOR_DATA(),
 	LOAD_YAY0(0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd), 
 
@@ -81,6 +82,7 @@ const LevelScript level_cgds_menu_select[] = {
     LOOP_BEGIN(),
 		UPDATE_OBJECTS(),
     	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ 0, /*func*/ update_menu_video_buffers),
         SLEEP(/*frames*/ 1),
     	CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
     LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ -1),
@@ -92,9 +94,11 @@ const LevelScript level_cgds_menu_select[] = {
     JUMP_LINK_PUSH_ARG(45),
 		UPDATE_OBJECTS(),
     	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	CALL(/*arg*/ 0, /*func*/ update_menu_video_buffers),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
 
+    CALL_LOOP(/*arg*/ 0, /*func*/ check_image_dma_complete),
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
     CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),

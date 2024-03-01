@@ -29,6 +29,7 @@ const GeoLayout custom_menu_stage_geo[] = {
 			GEO_CLOSE_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, custom_menu_stage_model_mesh_layer_1_after),
 		GEO_CLOSE_NODE(),
+		GEO_ASM(0, geo_bsm_menu_video_scene),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

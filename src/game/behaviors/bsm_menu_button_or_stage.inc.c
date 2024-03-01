@@ -224,9 +224,9 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
                 ((u8) g << 16) |
                 ((u8) b << 8);
 
-            gDPSetEnvColor(dlHead++, r, g, b, 0);
+            gDPSetEnvColor(dlHead++, r, g, b, objectGraphNode->oOpacity);
         } else {
-            gDPSetEnvColor(dlHead++, 255, 255, 255, 0);
+            gDPSetEnvColor(dlHead++, 255, 255, 255, objectGraphNode->oOpacity);
         }
 
         gSPEndDisplayList(dlHead);
