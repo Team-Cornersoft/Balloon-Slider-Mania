@@ -523,12 +523,18 @@ SECTIONS
    }
    END_SEG(assets)
 #ifdef HVQM
-   BEGIN_SEG(capcom, __romPos) SUBALIGN(2)
+   BEGIN_SEG(capcom, __romPos) SUBALIGN(16)
    {
       KEEP(BUILD_DIR/data/capcom.o(.data*));
    }
 	END_SEG(capcom)
 #endif
+   BEGIN_SEG(dmaData, __romPos) SUBALIGN(16)
+   {
+      KEEP(BUILD_DIR/dma_data/dma_data.o(.data*));
+      KEEP(BUILD_DIR/dma_data/dma_data.o(.rodata*));
+   }
+   END_SEG(dmaData)
 
 #ifdef DEBUG_MAP_STACKTRACE
    BEGIN_SEG(mapData, (RAM_END - 0x00100000)) {

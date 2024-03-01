@@ -63,6 +63,8 @@ extern u8 _zbufferSegmentBssStart[];
 extern u8 _zbufferSegmentBssEnd[];
 extern u8 _buffersSegmentBssStart[];
 extern u8 _buffersSegmentBssEnd[];
+extern u8 _dmaDataSegmentRomStart[];
+extern u8 _dmaDataSegmentRomEnd[];
 
 DECLARE_LEVEL_SEGMENT(menu)
 DECLARE_LEVEL_SEGMENT(intro)
