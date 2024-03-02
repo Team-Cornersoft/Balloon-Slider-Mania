@@ -3337,6 +3337,14 @@ void init_camera(struct Camera *c) {
 #ifdef PUPPYCAM
     puppycam_init();
 #endif
+
+    if (
+        COURSE_NUM_TO_INDEX(gCurrCourseNum) >= BSM_COURSE_1_SNOWY_PEAK &&
+        COURSE_NUM_TO_INDEX(gCurrCourseNum) < BSM_COURSE_COUNT
+    ) {
+        sSelectionFlags |= CAM_MODE_MARIO_ACTIVE;
+        gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
+    }
 }
 
 /**
