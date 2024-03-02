@@ -56,7 +56,9 @@ struct BSMStageProperties {
 extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 extern enum BSMMenuSelectionTypes gSelectionShown;
+extern u8 gBSMInitialized;
 extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
+extern struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
 
 #define BSM_MENU_CAMERA_LAYOUT_FIRST -6000.0f
 #define BSM_MENU_CAMERA_LAYOUT_INCREMENT 6000.0f
@@ -65,6 +67,8 @@ extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
 s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
+
+struct Object *get_selcted_menu_object(u8 button);
 
 Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void *context);

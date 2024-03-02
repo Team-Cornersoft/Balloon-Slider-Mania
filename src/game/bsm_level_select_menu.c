@@ -34,6 +34,7 @@
 
 enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
 enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
+u8 gBSMInitialized = FALSE;
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     LEVEL_BOB, "Snowy\nPeak",
@@ -74,7 +75,7 @@ HackerSM64, fast64\
 "
 };
 
-static struct Object *get_selcted_menu_object(u8 button) {
+struct Object *get_selcted_menu_object(u8 button) {
     if (button < BSM_COURSE_COUNT) {
         return bsmMenuLevels[button];
     }
@@ -476,6 +477,7 @@ void bhv_bsm_menu_button_manager_init(void) {
     stickHistory = 0;
     showStats = FALSE;
     locate_all_button_objects();
+    gBSMInitialized = TRUE;
 }
 
 void bhv_bsm_menu_button_manager_loop(void) {

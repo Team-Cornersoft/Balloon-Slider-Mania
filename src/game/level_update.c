@@ -1422,6 +1422,7 @@ s32 lvl_play_the_end_screen_sound(UNUSED s16 initOrUpdate, UNUSED s32 levelNum) 
 s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     gSelectionShown = BSM_SELECTION_NONE;
     gCurrLevelNum = LEVEL_CASTLE_GROUNDS;
+    gBSMInitialized = FALSE;
 
 #ifdef DEBUG_LEVEL_SELECT
     gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;

@@ -140,13 +140,20 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
 }
 
 s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
-    if (gSafeToLoadVideo == BSM_VIDEO_UNALLOCATED) {
+    if (gSafeToLoadVideo == BSM_VIDEO_UNALLOCATED || !gBSMInitialized) {
         return TRUE;
     }
 
-    if (gBSMSelectedButton != bsmCourseIndex) {
+    assert(get_selcted_menu_object(gBSMSelectedButton) != NULL, "gBSMSelectedButton is NULL!");
+
+    if (
+        !get_selcted_menu_object(gBSMSelectedButton)->oBSMMenuIsSelected
+        || gBSMSelectedButton != bsmCourseIndex
+    ) {
+        if (gBSMSelectedButton < BSM_COURSE_COUNT) {
+            bsmCourseIndex = gBSMSelectedButton;
+        }
         gSafeToLoadVideo = BSM_VIDEO_UNSAFE;
-        bsmCourseIndex = gBSMSelectedButton;
         sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
     }
 
@@ -334,7 +341,7 @@ ALIGNED16 static const Gfx *menu_cutscene_images[] = {
     bsm_menu_cutscene_image_7,
 };
 
-// TODO:
+// Geo to display the funny video
 Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED void *context) {
     Gfx *dlStart = NULL;
 
@@ -346,7 +353,7 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
             objectGraphNode->behavior != segmented_to_virtual(bhvBSMMenuButtonOrStage) ||
             !obj_has_model(objectGraphNode, MODEL_BSM_MENU_STAGE) ||
             gSafeToLoadVideo != BSM_VIDEO_SAFE ||
-            !objectGraphNode->oBSMMenuIsSelected ||
+            objectGraphNode->oBehParams2ndByte != bsmCourseIndex ||
             objectGraphNode->oAnimState != 0
         ) {
             return NULL;

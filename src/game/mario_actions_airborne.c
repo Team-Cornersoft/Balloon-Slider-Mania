@@ -19,6 +19,7 @@
 #include "config.h"
 
 u8 gLastFrameSliding = FALSE;
+u8 gAirWithTurnLast = FALSE;
 
 void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) {
     s32 animFrame = m->marioObj->header.gfx.animInfo.animFrame;
@@ -176,6 +177,8 @@ void update_air_with_turn(struct MarioState *m) {
     s16 intendedDYaw;
     f32 intendedMag;
 
+    gAirWithTurnLast = TRUE;
+
     if (!check_horizontal_wind(m)) {
         f32 fvelOld = m->forwardVel;
 
@@ -216,6 +219,11 @@ void update_air_without_turn(struct MarioState *m) {
     f32 dragThreshold;
     s16 intendedDYaw;
     f32 intendedMag;
+
+    if (gAirWithTurnLast) {
+        update_air_with_turn(m);
+        return;
+    }
 
     if (!check_horizontal_wind(m)) {
         f32 fvelOld = m->forwardVel;
@@ -1564,6 +1572,7 @@ s32 act_slide_kick(struct MarioState *m) {
         return set_mario_action(m, ACT_FREEFALL, 2);
     }
 
+    gAirWithTurnLast = FALSE;
     update_air_without_turn(m);
 
     switch (perform_air_step(m, 0)) {
@@ -1621,6 +1630,7 @@ s32 act_jump_kick(struct MarioState *m) {
         m->flags |= MARIO_KICKING;
     }
 
+    gAirWithTurnLast = FALSE;
     update_air_without_turn(m);
 
     switch (perform_air_step(m, 0)) {

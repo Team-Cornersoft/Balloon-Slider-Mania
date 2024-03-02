@@ -1753,6 +1753,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
 
         if ((gMarioState->action & ACT_GROUP_MASK) != ACT_GROUP_AIRBORNE) {
             gLastFrameSliding = FALSE;
+            gAirWithTurnLast = FALSE;
         }
 
         // The function can loop through many action shifts in one frame,
