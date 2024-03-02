@@ -258,6 +258,10 @@ void update_air_without_turn(struct MarioState *m) {
         m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
         m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
 
+        if (gLastFrameSliding) {
+            sidewaysSpeed *= 1.0f + (ABS(m->forwardVel) * 0.02f);
+        }
+
         m->slideVelX += sidewaysSpeed * sins(m->faceAngle[1] + 0x4000);
         m->slideVelZ += sidewaysSpeed * coss(m->faceAngle[1] + 0x4000);
 

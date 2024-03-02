@@ -1448,6 +1448,8 @@ s32 act_butt_slide(struct MarioState *m) {
 }
 
 s32 act_hold_butt_slide(struct MarioState *m) {
+    gLastFrameSliding = TRUE;
+
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
         return drop_and_set_mario_action(m, ACT_BUTT_SLIDE, 0);
     }
@@ -1459,6 +1461,8 @@ s32 act_hold_butt_slide(struct MarioState *m) {
 }
 
 s32 act_crouch_slide(struct MarioState *m) {
+    gLastFrameSliding = TRUE;
+
     if (m->input & INPUT_ABOVE_SLIDE) {
         return set_mario_action(m, ACT_BUTT_SLIDE, 0);
     }
@@ -1525,6 +1529,7 @@ s32 act_slide_kick_slide(struct MarioState *m) {
 
 s32 stomach_slide_action(struct MarioState *m, u32 stopAction, u32 airAction, s32 animation) {
     static f32 lastSlideY = -100000.0f;
+    gLastFrameSliding = TRUE;
 
     if (m->actionTimer == 5) {
         if ((!(m->input & INPUT_ABOVE_SLIDE) || lastSlideY >= m->pos[1]) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
@@ -1564,6 +1569,7 @@ s32 act_hold_stomach_slide(struct MarioState *m) {
 
 s32 act_dive_slide(struct MarioState *m) {
     static f32 lastSlideY = -100000.0f;
+    gLastFrameSliding = TRUE;
 
     if ((!(m->input & INPUT_ABOVE_SLIDE) || (lastSlideY >= m->pos[1] && m->actionTimer > 0)) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
 #if ENABLE_RUMBLE
