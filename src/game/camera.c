@@ -1992,12 +1992,17 @@ s16 update_default_camera(struct Camera *c) {
     if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
         //! In Mario mode, the camera is zoomed out further than in Lakitu mode (1400 vs 1200)
         if (set_cam_angle(0) == CAM_ANGLE_MARIO) {
-            zoomDist = gCameraZoomDist + 1050;
+            // zoomDist = gCameraZoomDist + 1050;
+            zoomDist = gCameraZoomDist + 1600;
         } else {
             zoomDist = gCameraZoomDist + 400;
         }
     } else {
-        zoomDist = gCameraZoomDist;
+        if (set_cam_angle(0) == CAM_ANGLE_MARIO) {
+            zoomDist = gCameraZoomDist + 700;
+        } else {
+            zoomDist = gCameraZoomDist;
+        }
     }
 
     if (sMarioCamState->action & ACT_FLAG_HANGING ||
@@ -2200,8 +2205,12 @@ s16 update_default_camera(struct Camera *c) {
             posHeight = 100.f;
         }
     }
-    if ((gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) && (sSelectionFlags & CAM_MODE_MARIO_ACTIVE)) {
-        posHeight = 610.f;
+    if (sSelectionFlags & CAM_MODE_MARIO_ACTIVE) {
+        if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
+            posHeight = 610.f;
+        } else {
+            posHeight = 250.f;
+        }
 #ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
         if (gCurrLevelArea == AREA_SSL_PYRAMID || gCurrLevelNum == LEVEL_CASTLE) {
             posHeight /= 2;
@@ -3343,7 +3352,7 @@ void init_camera(struct Camera *c) {
         COURSE_NUM_TO_INDEX(gCurrCourseNum) < BSM_COURSE_COUNT
     ) {
         sSelectionFlags |= CAM_MODE_MARIO_ACTIVE;
-        gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
+        gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT;
     }
 }
 
