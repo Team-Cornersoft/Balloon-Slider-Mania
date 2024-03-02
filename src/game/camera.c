@@ -2808,6 +2808,10 @@ void update_lakitu(struct Camera *c) {
         vec3f_copy(gLakituState.goalPos, c->pos);
         vec3f_copy(gLakituState.goalFocus, c->focus);
 
+        if ((sSelectionFlags & CAM_MODE_MARIO_ACTIVE) || c->mode != CAMERA_MODE_8_DIRECTIONS) {
+            s8DirModeYawOffset = snap_to_45_degrees(c->nextYaw);
+        }
+
         // Simulate Lakitu flying to the new position and turning towards the new focus
         set_or_approach_vec3f_asymptotic(gLakituState.curPos, newPos,
                                          gLakituState.posHSpeed, gLakituState.posVSpeed,
