@@ -50,7 +50,7 @@ void extractAndWriteFilenames(const char *videoPath, const char *directoryPath) 
     std::string videoFilename = cv::samples::findFile(videoPath);
     size_t lastindex = videoFilename.find_last_of(".");
     videoFilename = videoFilename.substr(0, lastindex);
-    std::string videoFilenameCFile = videoFilename + ".c";
+    std::string videoFilenameCFile = videoFilename + ".c.in";
 
     // Open the directory
     if ((dir = opendir(directoryPath)) != NULL) {
@@ -93,8 +93,6 @@ void extractAndWriteFilenames(const char *videoPath, const char *directoryPath) 
             return;
         }
 
-        fprintf(outputFile, "#include \"types.h\"\n");
-        fprintf(outputFile, "#include \"macros.h\"\n\n");
         fprintf(outputFile, "ALIGNED16 const Texture %s_video_data[] = {\n", videoFilename.c_str());
 
         // Write sorted filenames to output file

@@ -1,4 +1,4 @@
 */*.png
-*.c
+*.c.in
 split_video
 *.mp4

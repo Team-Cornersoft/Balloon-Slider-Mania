@@ -1,0 +1,7 @@
+#include "types.h"
+#include "macros.h"
+
+ALIGNED16 const Texture course7_video_data[] = {
+#include "dma_data/course7_0000.rgba16.inc.c"
+,
+};
