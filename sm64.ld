@@ -531,8 +531,13 @@ SECTIONS
 #endif
    BEGIN_SEG(dmaData, __romPos) SUBALIGN(16)
    {
+#if PRECOMPILED_DMA_DATA == 1
+      KEEP(lib/dma_data.o(.data*));
+      KEEP(lib/dma_data.o(.rodata*));
+#else
       KEEP(BUILD_DIR/dma_data/dma_data.o(.data*));
       KEEP(BUILD_DIR/dma_data/dma_data.o(.rodata*));
+#endif
    }
    END_SEG(dmaData)
 

@@ -271,5 +271,7 @@ IPL3_RAW_FILES              := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%,$(IP
 CRASH_TEXTURE_FILES         := $(wildcard $(TEXTURE_DIR)/crash_custom/*.png)
 CRASH_TEXTURE_C_FILES       := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(CRASH_TEXTURE_FILES)))
 
-DMA_TEXTURE_FILES           := $(wildcard dma_data/*.png)
-DMA_TEXTURE_C_FILES         := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(DMA_TEXTURE_FILES)))
+ifneq ($(PRECOMPILED_DMA_DATA), 1)
+  DMA_TEXTURE_FILES         := $(wildcard dma_data/*.png)
+  DMA_TEXTURE_C_FILES       := $(addprefix $(BUILD_DIR)/,$(patsubst %.png,%.inc.c,$(DMA_TEXTURE_FILES)))
+endif
