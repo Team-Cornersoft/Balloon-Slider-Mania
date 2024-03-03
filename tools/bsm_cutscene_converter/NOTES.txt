@@ -1,0 +1,7 @@
+PREREQUISITES:
+
+- $ sudo apt install libopencv-dev libpng-dev -y
+- g++ and some other random stuff probably idk
+
+RUN:
+- ./split_video <mp4 file>

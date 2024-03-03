@@ -1,0 +1,4 @@
+*/*.png
+*.c
+split_video
+*.mp4

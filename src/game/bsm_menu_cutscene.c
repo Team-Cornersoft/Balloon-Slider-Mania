@@ -31,7 +31,7 @@
 
 struct BSMDMAImageProperties {
     u32 frameStart;
-    u32 frameLoopStart;
+    u32 relativeLoopStart;
     u32 frameTotal;
 };
 
@@ -43,15 +43,15 @@ enum BSMVideoSafetyStates {
 };
 
 struct BSMDMAImageProperties bsmDMAProps[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = {.frameStart = 0, .frameLoopStart = 0, .frameTotal = 5},
-    [BSM_COURSE_2_LAVA_ISLE]         = {.frameStart = 1, .frameLoopStart = 1, .frameTotal = 1},
-    [BSM_COURSE_3_FUNGI_CANYON]      = {.frameStart = 2, .frameLoopStart = 2, .frameTotal = 1},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {.frameStart = 3, .frameLoopStart = 3, .frameTotal = 1},
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.frameStart = 4, .frameLoopStart = 4, .frameTotal = 1},
-    [BSM_COURSE_6_SCORCH_ISLE]       = {.frameStart = 5, .frameLoopStart = 5, .frameTotal = 1},
-    [BSM_COURSE_7_SPORE_CANYON]      = {.frameStart = 6, .frameLoopStart = 6, .frameTotal = 1},
-    [BSM_COURSE_8_CYBER_FEST]        = {.frameStart = 7, .frameLoopStart = 7, .frameTotal = 1},
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.frameStart = 8, .frameLoopStart = 8, .frameTotal = 1},
+    [BSM_COURSE_1_SNOWY_PEAK]        = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 110},
+    [BSM_COURSE_2_LAVA_ISLE]         = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_3_FUNGI_CANYON]      = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_7_SPORE_CANYON]      = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_8_CYBER_FEST]        = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.frameStart = 0, .relativeLoopStart = 0, .frameTotal = 1},
 };
 
 // NOTE: This has acceptable alignment, but should otherwise be taken into consideration with DMA usage.
@@ -106,7 +106,7 @@ static void add_menu_frame(void) {
     if (bsmCourseIndex < BSM_COURSE_COUNT) {
         bsmImageFrame++;
         if (bsmImageFrame >= (bsmDMAProps[bsmCourseIndex].frameStart + bsmDMAProps[bsmCourseIndex].frameTotal)) {
-            bsmImageFrame = bsmDMAProps[bsmCourseIndex].frameLoopStart;
+            bsmImageFrame = bsmDMAProps[bsmCourseIndex].frameStart + bsmDMAProps[bsmCourseIndex].relativeLoopStart;
         }
     }
 }
@@ -133,8 +133,8 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     gSafeToLoadVideo = BSM_VIDEO_UNSAFE;
     bsmDMATextures[0] = &memaddr[0];
     bsmDMATextures[1] = &memaddr[ALIGN16(TEXTURE_SIZE) + 16];
-    bsmDMAMisaligned[0] = FALSE;
-    bsmDMAMisaligned[1] = FALSE;
+    bsmDMAMisaligned[0] = 0;
+    bsmDMAMisaligned[1] = 0;
 
     return TRUE;
 }
@@ -200,52 +200,52 @@ s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1) {
 
 
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_0[4] = {
-	{{ {-371, 320, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 320, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 366, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 366, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 320, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 320, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 366, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 366, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_1[4] = {
-	{{ {-371, 274, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 274, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 320, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 320, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 274, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 274, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 320, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 320, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_2[4] = {
-	{{ {-371, 228, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 228, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 274, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 274, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 228, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 228, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 274, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 274, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_3[4] = {
-	{{ {-371, 182, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 182, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 228, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 228, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 182, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 182, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 228, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 228, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_4[4] = {
-	{{ {-371, 136, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 136, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 182, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 182, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 136, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 136, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 182, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 182, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_5[4] = {
-	{{ {-371,  90, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371,  90, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371, 136, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371, 136, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371,  90, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371,  90, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371, 136, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371, 136, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_6[4] = {
-	{{ {-371,  44, -20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371,  44, -20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
-	{{ { 371,  90, -20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
-	{{ {-371,  90, -20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
+	{{ {-371,  44, 20}, 0, {                 0, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371,  44, 20}, 0, {TEXTURE_WIDTH << 5, TEXTURE_HEIGHT_4K << 5}, {255, 255, 255, 255} }},
+	{{ { 371,  90, 20}, 0, {TEXTURE_WIDTH << 5,                      0}, {255, 255, 255, 255} }},
+	{{ {-371,  90, 20}, 0, {                 0,                      0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Vtx bsm_menu_cutscene_vtx_7[4] = {
-	{{ {-371,  23, -20}, 0, {                 0, (TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) << 5}, {255, 255, 255, 255} }},
-	{{ { 371,  23, -20}, 0, {TEXTURE_WIDTH << 5, (TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) << 5}, {255, 255, 255, 255} }},
-	{{ { 371,  44, -20}, 0, {TEXTURE_WIDTH << 5,                                               0}, {255, 255, 255, 255} }},
-	{{ {-371,  44, -20}, 0, {                 0,                                               0}, {255, 255, 255, 255} }},
+	{{ {-371,  23, 20}, 0, {                 0, (TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) << 5}, {255, 255, 255, 255} }},
+	{{ { 371,  23, 20}, 0, {TEXTURE_WIDTH << 5, (TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) << 5}, {255, 255, 255, 255} }},
+	{{ { 371,  44, 20}, 0, {TEXTURE_WIDTH << 5,                                               0}, {255, 255, 255, 255} }},
+	{{ {-371,  44, 20}, 0, {                 0,                                               0}, {255, 255, 255, 255} }},
 };
 ALIGNED16 static const Gfx bsm_menu_cutscene_tri_0[] = {
 	gsSPVertex(bsm_menu_cutscene_vtx_0 + 0, 4, 0),
