@@ -53,12 +53,21 @@ struct BSMStageProperties {
 
 #define BSM_VIDEO_FRAMES_TO_WAIT 15
 
+enum BSMVideoSafetyStates {
+    BSM_VIDEO_UNALLOCATED,
+    BSM_VIDEO_UNSAFE,
+    BSM_VIDEO_ACTIVE_DMA,
+    BSM_VIDEO_SAFE,
+};
+
 extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 extern enum BSMMenuSelectionTypes gSelectionShown;
 extern u8 gBSMInitialized;
 extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
 extern struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
+
+extern u8 gSafeToLoadVideo;
 
 #define BSM_MENU_CAMERA_LAYOUT_FIRST -6000.0f
 #define BSM_MENU_CAMERA_LAYOUT_INCREMENT 6000.0f

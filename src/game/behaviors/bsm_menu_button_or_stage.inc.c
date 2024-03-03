@@ -1,5 +1,8 @@
 #include "game/save_file.h"
 #include "game/puppyprint.h"
+#include "game/bsm_level_select_menu.h"
+
+#define FADE_FRAMES 17
 
 static void bhv_bsm_menu_button_or_stage_update_sub_objects(struct Object **obj) {
     struct Object *objRef = *obj;
@@ -40,6 +43,7 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum);
     s32 buttonId = o->oBehParams2ndByte;
     o->oBSMMenuFrameColor = 0xFFFFFFFF;
+    o->oBSMStageFadeTimer = 0;
 
     if (!cur_obj_has_model(MODEL_BSM_MENU_STAGE)) {
         return; // Process only stages below
@@ -233,4 +237,66 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
     }
 
     return dlStart;
+}
+
+Gfx *geo_bsm_menu_set_special_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    Gfx *dlStart = NULL;
+
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *objectGraphNode = (struct Object *) gCurGraphNodeObject; // TODO: change this to object pointer?
+        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+
+        if (gCurGraphNodeHeldObject != NULL) {
+            objectGraphNode = gCurGraphNodeHeldObject->objNode;
+        }
+
+        s32 objectOpacity = 255 - (objectGraphNode->oBSMStageFadeTimer * 255 / FADE_FRAMES);
+        objectOpacity = CLAMP_U8(objectOpacity);
+
+        dlStart = alloc_display_list(sizeof(Gfx) * 3);
+        Gfx *dlHead = dlStart;
+
+        if (objectOpacity == 0xFF) {
+            SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_OPAQUE);
+        } else {
+            SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_TRANSPARENT);
+        }
+    
+        gDPSetEnvColor(dlHead++, 255, 255, 255, objectOpacity);
+        gSPEndDisplayList(dlHead);
+    }
+
+    return dlStart;
+}
+
+Gfx *geo_bsm_menu_switch_alpha_stage(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *obj = gCurGraphNodeObjectNode;
+
+        // move to a local var because GraphNodes are passed in all geo functions.
+        // cast the pointer.
+        struct GraphNodeSwitchCase *switchCase = (struct GraphNodeSwitchCase *) node;
+
+        if (gCurGraphNodeHeldObject != NULL) {
+            obj = gCurGraphNodeHeldObject->objNode;
+        }
+
+        if (gSafeToLoadVideo != BSM_VIDEO_SAFE || !obj->oBSMMenuIsSelected) {
+            obj->oBSMStageFadeTimer = 0;
+            switchCase->selectedCase = 0;
+            return NULL;
+        }
+
+        if (obj->oBSMStageFadeTimer < FADE_FRAMES) {
+            obj->oBSMStageFadeTimer++;
+        }
+
+        if (obj->oBSMStageFadeTimer <= FADE_FRAMES) {
+            switchCase->selectedCase = 1;
+        } else {
+            switchCase->selectedCase = 2;
+        }
+    }
+
+    return NULL;
 }
