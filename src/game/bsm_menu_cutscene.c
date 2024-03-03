@@ -28,22 +28,25 @@
 #define TEXTURE_HEIGHT_4K 11
 #define TEXTURE_COUNT 8
 
+#define GAME_FRAMERATE 30
+
 struct BSMDMAImageProperties {
     const Texture *addr;
     u32 relativeLoopStart;
     u32 frameTotal;
+    u32 framerate;
 };
 
 struct BSMDMAImageProperties bsmDMAProps[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = {.addr = course1_video_data, .relativeLoopStart = 0, .frameTotal = 110},
-    [BSM_COURSE_2_LAVA_ISLE]         = {.addr = course2_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_3_FUNGI_CANYON]      = {.addr = course3_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {.addr = course4_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.addr = course5_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_6_SCORCH_ISLE]       = {.addr = course6_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_7_SPORE_CANYON]      = {.addr = course7_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_8_CYBER_FEST]        = {.addr = course8_video_data, .relativeLoopStart = 0, .frameTotal = 1},
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.addr = course9_video_data, .relativeLoopStart = 0, .frameTotal = 1},
+    [BSM_COURSE_1_SNOWY_PEAK]        = {.addr = course1_video_data, .relativeLoopStart = 0, .frameTotal = 110, .framerate = 30},
+    [BSM_COURSE_2_LAVA_ISLE]         = {.addr = course2_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_3_FUNGI_CANYON]      = {.addr = course3_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {.addr = course4_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.addr = course5_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {.addr = course6_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_7_SPORE_CANYON]      = {.addr = course7_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_8_CYBER_FEST]        = {.addr = course8_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.addr = course9_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .framerate = 30},
 };
 
 // NOTE: This has acceptable alignment, but should otherwise be taken into consideration with DMA usage.
@@ -62,7 +65,8 @@ s32 sImageDMACount = 0;
 Texture *bsmDMATextures[2];
 u8 bsmDMAMisaligned[2];
 
-u32 bsmImageFrame = 0;
+u32 bsmImageGameFrame = 0;
+u32 bsmImageVideoFrame = 0;
 s32 bsmCourseIndex = BSM_COURSE_1_SNOWY_PEAK;
 
 static void dma_read_image_noblock(u8 *dest, u8 *srcStart, u8 *srcEnd) {
@@ -96,16 +100,19 @@ static void dma_bsm_frame(const Texture *startingAddr, u32 imageIndex) {
 
 static void add_menu_frame(void) {
     if (bsmCourseIndex < BSM_COURSE_COUNT) {
-        bsmImageFrame++;
-        if (bsmImageFrame >= bsmDMAProps[bsmCourseIndex].frameTotal) {
-            bsmImageFrame = bsmDMAProps[bsmCourseIndex].relativeLoopStart;
+        bsmImageGameFrame++;
+        bsmImageVideoFrame = bsmImageGameFrame * bsmDMAProps[bsmCourseIndex].framerate / GAME_FRAMERATE;
+        if (bsmImageVideoFrame >= bsmDMAProps[bsmCourseIndex].frameTotal) {
+            bsmImageGameFrame = bsmDMAProps[bsmCourseIndex].relativeLoopStart * GAME_FRAMERATE / bsmDMAProps[bsmCourseIndex].framerate;
+            bsmImageVideoFrame = bsmImageGameFrame * bsmDMAProps[bsmCourseIndex].framerate / GAME_FRAMERATE;
         }
     }
 }
 
 s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     gSafeToLoadVideo = BSM_VIDEO_UNALLOCATED;
-    bsmImageFrame = 0;
+    bsmImageGameFrame = 0;
+    bsmImageVideoFrame = 0;
     bsmCourseIndex = BSM_COURSE_1_SNOWY_PEAK;
     sDoubleBufferIndex = 0;
     sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
@@ -168,7 +175,8 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     if (gSafeToLoadVideo == BSM_VIDEO_UNSAFE) {
         if (gBSMSelectedButton < BSM_COURSE_COUNT) {
             bsmCourseIndex = gBSMSelectedButton;
-            bsmImageFrame = 0;
+            bsmImageGameFrame = 0;
+            bsmImageVideoFrame = 0;
             gSafeToLoadVideo = BSM_VIDEO_ACTIVE_DMA;
         }
     } else {
@@ -176,7 +184,7 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
         add_menu_frame();
     }
 
-    dma_bsm_frame(bsmDMAProps[bsmCourseIndex].addr, bsmImageFrame);
+    dma_bsm_frame(bsmDMAProps[bsmCourseIndex].addr, bsmImageVideoFrame);
 
     return TRUE;
 }
