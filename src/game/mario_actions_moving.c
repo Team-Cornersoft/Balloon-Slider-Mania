@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+f32 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+
 struct LandingAction {
     s16 numFrames;
     s16 doubleJumpTimer;
@@ -191,9 +193,9 @@ void update_sliding_angle(struct MarioState *m, f32 accel, f32 lossFactor) {
 
     //! Speed is capped a frame late (butt slide HSG)
     m->forwardVel = sqrtf(sqr(m->slideVelX) + sqr(m->slideVelZ));
-    if (m->forwardVel > (100.0f * SLIDE_SPEED_MULTIPLIER)) {
-        m->slideVelX = m->slideVelX * (100.0f * SLIDE_SPEED_MULTIPLIER) / m->forwardVel;
-        m->slideVelZ = m->slideVelZ * (100.0f * SLIDE_SPEED_MULTIPLIER) / m->forwardVel;
+    if (m->forwardVel > (100.0f * slideSpeedMultiplier)) {
+        m->slideVelX = m->slideVelX * (100.0f * slideSpeedMultiplier) / m->forwardVel;
+        m->slideVelZ = m->slideVelZ * (100.0f * slideSpeedMultiplier) / m->forwardVel;
     }
 
     if (newFacingDYaw < -0x4000 || newFacingDYaw > 0x4000) {
@@ -243,7 +245,7 @@ s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
             break;
     }
 
-    accel *= (lastSlideY >= m->pos[1]) ? SLIDE_SPEED_MULTIPLIER : 1.0f;
+    accel *= (lastSlideY >= m->pos[1]) ? slideSpeedMultiplier : 1.0f;
     lastSlideY = m->pos[1];
 
     oldSpeed = sqrtf(m->slideVelX * m->slideVelX + m->slideVelZ * m->slideVelZ);
@@ -1370,7 +1372,7 @@ void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32
     switch (perform_ground_step(m)) {
         case GROUND_STEP_LEFT_GROUND:
             set_mario_action(m, airAction, 0);
-            if (m->forwardVel < (-50.0f * SLIDE_SPEED_MULTIPLIER) || (50.0f * SLIDE_SPEED_MULTIPLIER) < m->forwardVel) {
+            if (m->forwardVel < (-50.0f * slideSpeedMultiplier) || (50.0f * slideSpeedMultiplier) < m->forwardVel) {
                 play_sound(SOUND_MARIO_HOOHOO, m->marioObj->header.gfx.cameraToObject);
             }
             break;

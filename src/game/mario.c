@@ -1709,6 +1709,18 @@ void queue_rumble_particles(struct MarioState *m) {
 s32 execute_mario_action(UNUSED struct Object *obj) {
     s32 inLoop = TRUE;
 
+    switch(COURSE_NUM_TO_INDEX(gCurrCourseNum)) {
+        case BSM_COURSE_1_SNOWY_PEAK:
+            if (gCurrAreaIndex == 3) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.4f;
+                break;
+            }
+            FALL_THROUGH;
+        default:
+            slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+            break;
+    }
+
     // Updates once per frame:
     vec3f_get_dist_and_angle(gMarioState->prevPos, gMarioState->pos, &gMarioState->moveSpeed, &gMarioState->movePitch, &gMarioState->moveYaw);
     vec3f_get_lateral_dist(gMarioState->prevPos, gMarioState->pos, &gMarioState->lateralSpeed);
