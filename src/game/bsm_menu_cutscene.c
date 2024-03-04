@@ -51,19 +51,21 @@ struct BSMDMAImageProperties bsmDMAProps[BSM_COURSE_COUNT] = {
 
 // NOTE: This has acceptable alignment, but should otherwise be taken into consideration with DMA usage.
 #define TEXTURE_SIZE (TEXTURE_WIDTH * TEXTURE_HEIGHT * sizeof(RGBA16))
+#define ALIGNED_BUFFER_SIZE (ALIGN16(TEXTURE_SIZE) + 16)
 
 OSIoMesg bsmMenuImageDMAIoMesg[TEXTURE_COUNT];
 OSMesg bsmMenuImageDMAReceivedMesg[TEXTURE_COUNT];
 OSMesgQueue bsmMenuImageDMAQueue;
 
 u8 gSafeToLoadVideo = BSM_VIDEO_UNALLOCATED;
-u8 sDoubleBufferIndex = 0;
+u8 sTripleBufferIndex = 0;
+u8 bsmSafeBufferIndex = 0;
 u8 sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
 u8 hasInitializedMessageQueue = FALSE;
 s32 sImageDMACount = 0;
 
-Texture *bsmDMATextures[2];
-u8 bsmDMAMisaligned[2];
+Texture *bsmDMATextures[3];
+u8 bsmDMAMisaligned[ARRAY_COUNT(bsmDMATextures)];
 
 u32 bsmImageGameFrame = 0;
 u32 bsmImageVideoFrame = 0;
@@ -83,17 +85,19 @@ static void dma_read_image_noblock(u8 *dest, u8 *srcStart, u8 *srcEnd) {
         srcStart += copySize;
         size -= copySize;
     }
+
+    assert(sImageDMACount <= TEXTURE_COUNT, "sImageDMACount too large!");
 }
 
 static void dma_read_image_at_offset(u8 *dest, u8 *relativeAddr) {
-    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + TEXTURE_SIZE));
+    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + ALIGNED_BUFFER_SIZE));
 }
 
 static void dma_bsm_frame(const Texture *startingAddr, u32 imageIndex) {
     Texture *relativeAddr = (Texture *) ((u32) startingAddr + (imageIndex * TEXTURE_SIZE));
-    Texture *dest = bsmDMATextures[sDoubleBufferIndex];
-    bsmDMAMisaligned[sDoubleBufferIndex] = (0x10 - ((size_t) relativeAddr & 0xF)) & 0xF;
-    sDoubleBufferIndex ^= 1;
+    Texture *dest = bsmDMATextures[sTripleBufferIndex];
+    bsmDMAMisaligned[sTripleBufferIndex] = (0x10 - ((size_t) relativeAddr & 0xF)) & 0xF;
+    sTripleBufferIndex = (sTripleBufferIndex + 1) % ARRAY_COUNT(bsmDMATextures);
 
     dma_read_image_at_offset(dest, (u8 *) ((size_t) relativeAddr & ~0xF));
 }
@@ -114,10 +118,11 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     bsmImageGameFrame = 0;
     bsmImageVideoFrame = 0;
     bsmCourseIndex = BSM_COURSE_1_SNOWY_PEAK;
-    sDoubleBufferIndex = 0;
+    sTripleBufferIndex = 0;
+    bsmSafeBufferIndex = 0;
     sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
 
-    u8 *memaddr = main_pool_alloc((ALIGN16(TEXTURE_SIZE) + 16) * ARRAY_COUNT(bsmDMATextures), MEMORY_POOL_LEFT);
+    u8 *memaddr = main_pool_alloc(ALIGNED_BUFFER_SIZE * ARRAY_COUNT(bsmDMATextures), MEMORY_POOL_LEFT);
     if (memaddr == NULL) {
         assert(FALSE, "Out of memory! :(");
         return TRUE;
@@ -130,10 +135,11 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     }
 
     gSafeToLoadVideo = BSM_VIDEO_UNSAFE;
-    bsmDMATextures[0] = &memaddr[0];
-    bsmDMATextures[1] = &memaddr[ALIGN16(TEXTURE_SIZE) + 16];
-    bsmDMAMisaligned[0] = 0;
-    bsmDMAMisaligned[1] = 0;
+
+    for (s32 i = 0; i < ARRAY_COUNT(bsmDMATextures); i++) {
+        bsmDMATextures[i] = &memaddr[ALIGNED_BUFFER_SIZE * i];
+        bsmDMAMisaligned[i] = 0;
+    }
 
     return TRUE;
 }
@@ -177,21 +183,29 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
             bsmCourseIndex = gBSMSelectedButton;
             bsmImageGameFrame = 0;
             bsmImageVideoFrame = 0;
+            bsmSafeBufferIndex = sTripleBufferIndex;
             gSafeToLoadVideo = BSM_VIDEO_ACTIVE_DMA;
         }
     } else {
-        gSafeToLoadVideo = BSM_VIDEO_SAFE;
         add_menu_frame();
     }
 
     dma_bsm_frame(bsmDMAProps[bsmCourseIndex].addr, bsmImageVideoFrame);
 
+    if (gSafeToLoadVideo == BSM_VIDEO_ACTIVE_DMA && bsmSafeBufferIndex == sTripleBufferIndex) {
+        gSafeToLoadVideo = BSM_VIDEO_SAFE;
+    }
+
     return TRUE;
 }
 
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1) {
-    while (sImageDMACount != 0 && osRecvMesg(&bsmMenuImageDMAQueue, NULL, OS_MESG_NOBLOCK) == 0) {
+    while (osRecvMesg(&bsmMenuImageDMAQueue, NULL, OS_MESG_NOBLOCK) == 0) {
         sImageDMACount--;
+        assert(sImageDMACount >= 0, "Negative sImageDMACount detected!");
+        if (sImageDMACount < 0) {
+            sImageDMACount = 0;
+        }
     }
 
     return (sImageDMACount == 0);
@@ -347,7 +361,6 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
 
     if (callContext == GEO_CONTEXT_RENDER) {
         struct Object *objectGraphNode = (struct Object *) gCurGraphNodeObject;
-        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
 
         if (
             objectGraphNode->behavior != segmented_to_virtual(bhvBSMMenuButtonOrStage) ||
@@ -359,6 +372,12 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
             return NULL;
         }
 
+        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+        s32 renderIndex = sTripleBufferIndex - 1;
+        if (renderIndex < 0) {
+            renderIndex = ARRAY_COUNT(bsmDMATextures) - 1;
+        }
+
         SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_OPAQUE);
         dlStart = alloc_display_list(sizeof(Gfx) * (5 * ARRAY_COUNT(menu_cutscene_tris) + 3));
         Gfx *dlHead = dlStart;
@@ -367,7 +386,7 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
 
         for (s32 i = 0; i < ARRAY_COUNT(menu_cutscene_tris); i++) {
             gDPTileSync(dlHead++);
-            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, TEXTURE_WIDTH, bsmDMATextures[sDoubleBufferIndex] + bsmDMAMisaligned[sDoubleBufferIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(RGBA16))));
+            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, TEXTURE_WIDTH, bsmDMATextures[renderIndex] + bsmDMAMisaligned[renderIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(RGBA16))));
             gSPDisplayList(dlHead++, menu_cutscene_images[i]);
             gSPDisplayList(dlHead++, menu_cutscene_tris[i]);
 	        gDPPipeSync(dlHead++);
