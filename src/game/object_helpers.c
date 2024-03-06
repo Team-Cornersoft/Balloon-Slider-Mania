@@ -11,6 +11,7 @@
 #include "engine/geo_layout.h"
 #include "engine/math_util.h"
 #include "engine/surface_collision.h"
+#include "emutest.h"
 #include "game_init.h"
 #include "helper_macros.h"
 #include "ingame_menu.h"
@@ -129,14 +130,33 @@ Gfx *geo_switch_bparam2(s32 callContext, struct GraphNode *node, UNUSED void *co
             obj = gCurGraphNodeHeldObject->objNode;
         }
 
-        // if the case is greater than the number of cases, set to 0 to avoid overflowing
-        // the switch.
-        if (obj->oBehParams2ndByte >= switchCase->numCases) {
-            obj->oBehParams2ndByte = 0;
-        }
-
         // assign the case number for execution.
         switchCase->selectedCase = obj->oBehParams2ndByte;
+
+        // if the case is greater than the number of cases, set to 0 to avoid overflowing
+        // the switch.
+        if (switchCase->selectedCase >= switchCase->numCases) {
+            switchCase->selectedCase = 0;
+        }
+    }
+
+    return NULL;
+}
+
+Gfx *geo_switch_console(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    if (callContext == GEO_CONTEXT_RENDER) {
+        // move to a local var because GraphNodes are passed in all geo functions.
+        // cast the pointer.
+        struct GraphNodeSwitchCase *switchCase = (struct GraphNodeSwitchCase *) node;
+
+        // assign the case number for execution.
+        switchCase->selectedCase = (gEmulator & NO_CULLING_EMULATOR_BLACKLIST) ? 0 : 1; // 0: console, 1: emulator
+
+        // if the case is greater than the number of cases, set to 0 to avoid overflowing
+        // the switch.
+        if (switchCase->selectedCase >= switchCase->numCases) {
+            switchCase->selectedCase = 0;
+        }
     }
 
     return NULL;

@@ -1269,6 +1269,22 @@
 #define /*0x100*/ oBSMMenuRankObj       OBJECT_FIELD_OBJ(0x21)
 #define /*0x104*/ oBSMMenuTCSTokenObj   OBJECT_FIELD_OBJ(0x22)
 
+/* BSM Point Balloon */
+#define /*0x0F4*/ oPtBalloonOscillateXFreq                      OBJECT_FIELD_S16(0x1B, 0)
+#define /*0x0F6*/ oPtBalloonOscillateXOffset                    OBJECT_FIELD_S16(0x1B, 1)
+#define /*0x0F8*/ oPtBalloonOscillateXIntensity                 OBJECT_FIELD_F32(0x1C)
+#define /*0x0FC*/ oPtBalloonOscillateYFreq                      OBJECT_FIELD_S16(0x1D, 0)
+#define /*0x0FE*/ oPtBalloonOscillateYOffset                    OBJECT_FIELD_S16(0x1D, 1)
+#define /*0x100*/ oPtBalloonOscillateYIntensity                 OBJECT_FIELD_F32(0x1E)
+#define /*0x104*/ oPtBalloonOscillateZFreq                      OBJECT_FIELD_S16(0x1F, 0)
+#define /*0x106*/ oPtBalloonOscillateZOffset                    OBJECT_FIELD_S16(0x1F, 1)
+#define /*0x108*/ oPtBalloonOscillateZIntensity                 OBJECT_FIELD_F32(0x20)
+#define /*0x10C*/ oPtBalloonRelativePosVec                      OBJECT_FIELD_F32(0x21)
+#define /*0x10C*/ oPtBalloonRelativePosX                        OBJECT_FIELD_F32(0x21)
+#define /*0x110*/ oPtBalloonRelativePosY                        OBJECT_FIELD_F32(0x22)
+#define /*0x1AC*/ oPtBalloonRelativePosZ                        OBJECT_FIELD_F32(0x49)
+#define /*0x1B0*/ oPtBalloonAbsoluteTimer                       OBJECT_FIELD_S32(0x4A)
+
 
 /*Custom general defines:
 

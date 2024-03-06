@@ -406,6 +406,18 @@ const BehaviorScript bhvNone[] = {
     BREAK(),
 };
 
+const BehaviorScript bhvPointBalloon[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, 5000),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_point_balloon_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_point_balloon_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvBSMMenuTitle[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),

@@ -826,3 +826,5 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
 #include "behaviors/bsm_menu_lock_or_token.inc.c"
 #include "behaviors/bsm_menu_rank_or_token.inc.c"
 #include "behaviors/bsm_menu_title.inc.c"
+
+#include "behaviors/point_balloon.inc.c"

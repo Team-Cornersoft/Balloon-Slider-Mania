@@ -6,12 +6,14 @@
 #include "behavior_script.h"
 #include "game/area.h"
 #include "game/behavior_actions.h"
+#include "game/emutest.h"
 #include "game/game_init.h"
 #include "game/mario.h"
 #include "game/memory.h"
 #include "game/obj_behaviors_2.h"
 #include "game/object_helpers.h"
 #include "game/object_list_processor.h"
+#include "game/rendering_graph_node.h"
 #include "math_util.h"
 #include "graph_node.h"
 #include "surface_collision.h"
@@ -947,6 +949,7 @@ void cur_obj_update(void) {
         // If the object is in a room, only show it when Mario is in the room.
         if (
             (objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR)
+            || (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST) && (objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR))
             || distanceFromMario < o->oDrawingDistance
         ) {
             if (inRoom == MARIO_OUTSIDE_ROOM) {
@@ -963,6 +966,7 @@ void cur_obj_update(void) {
         o->collisionData == NULL
         &&  (objFlags & OBJ_FLAG_COMPUTE_DIST_TO_MARIO)
         && !(objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR)
+        && ((gEmulator & NO_CULLING_EMULATOR_BLACKLIST) || !(objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR))
     ) {
         // If the object has a render distance, check if it should be shown.
         if (distanceFromMario > o->oDrawingDistance) {

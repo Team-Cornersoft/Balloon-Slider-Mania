@@ -1,4 +1,5 @@
 extern const GeoLayout point_balloon_geo[];
+extern const GeoLayout point_balloon_balloon_geo[];
 extern u8 point_balloon_balloon_50_ia8[];
 extern u8 point_balloon_purple_foil_ci8[];
 extern u8 point_balloon_purple_foil_pal_rgba16[];
@@ -31,6 +32,7 @@ extern Gfx mat_point_balloon_balloon_25[];
 extern Gfx mat_point_balloon_balloon_50[];
 extern Gfx mat_point_balloon_balloon_100[];
 extern Gfx mat_revert_point_balloon_balloon[];
+extern Gfx mat_revert_point_balloon_balloon_decal[];
 extern Gfx point_balloon_Balloons_mesh_layer_5_before[];
 extern Gfx point_balloon_Balloons_mesh_layer_5_after[];
 extern Gfx point_balloon_Balloons_mesh_layer_1_before[];

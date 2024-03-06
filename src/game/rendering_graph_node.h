@@ -18,6 +18,8 @@ extern Vec3f globalLightDirection;
 #define GRAPH_ROOT_PERSP 0
 #define GRAPH_ROOT_ORTHO 1
 
+#define NO_CULLING_EMULATOR_BLACKLIST (EMU_CONSOLE | EMU_WIIVC | EMU_ARES | EMU_SIMPLE64 | EMU_CEN64)
+
 enum AnimType {
     // after processing an object, the type is reset to this
     ANIM_TYPE_NONE,
