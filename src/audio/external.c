@@ -1220,6 +1220,13 @@ static void update_game_sound(void) {
     f32 value;
 #endif
 
+    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) >= BSM_COURSE_1_SNOWY_PEAK && COURSE_NUM_TO_INDEX(gCurrCourseNum) < BSM_COURSE_COUNT) {
+        if (gAreas[gCurrAreaIndex].betterReverbPreset != gBetterReverbPresetValue) {
+            gBetterReverbPresetValue = gAreas[gCurrAreaIndex].betterReverbPreset;
+            init_reverb_us(0);
+        }
+    }
+
     process_all_sound_requests();
     process_level_music_dynamics();
 
