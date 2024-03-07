@@ -1,4 +1,6 @@
-extern void scroll_ccm_dl_A_Road_mesh_layer_1_vtx_3();
+extern void scroll_ccm_dl_A_Road_a_mesh_layer_1_vtx_2();
+extern void scroll_ccm_dl_A_Road_b_mesh_layer_1_vtx_2();
+extern void scroll_ccm_dl_A_Road_c_mesh_layer_1_vtx_1();
 extern void scroll_ccm_dl_C_railings_a_mesh_layer_1_vtx_0();
 extern void scroll_ccm_dl_C_railings_b_mesh_layer_1_vtx_0();
 extern void scroll_ccm_dl_C_railings_c_mesh_layer_1_vtx_0();
