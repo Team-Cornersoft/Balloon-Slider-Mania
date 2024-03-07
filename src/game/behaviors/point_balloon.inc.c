@@ -47,7 +47,7 @@ void bhv_point_balloon_init(void) {
     o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (35 * bProps[bType].scale)) + 5;
 
     o->oPtBalloonOscillateZFreq = (random_u16() % (u32) (60.0f * bProps[bType].scale)) + 120;
-    o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateXFreq;
+    o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateZFreq;
     o->oPtBalloonOscillateZIntensity = (f32) (random_u16() % (u32) (20 * bProps[bType].scale));
 
     assert(o->oPtBalloonOscillateXFreq != 0, "Balloon X freq is 0!");
