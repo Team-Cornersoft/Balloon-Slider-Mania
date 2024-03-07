@@ -573,15 +573,16 @@
 #endif
 
 enum CustomModelIDs {
-    MODEL_BSM_MENU_BUTTON = 0xE4, // castle grounds
-    MODEL_BSM_MENU_STAGE,         // castle grounds
-    MODEL_BSM_MENU_LOCK,          // castle grounds
-    MODEL_BSM_MENU_TCSLOCK,       // castle grounds
-    MODEL_BSM_MENU_TCSLOCK_X8,    // castle grounds
-    MODEL_BSM_MENU_RANK,          // castle grounds
-    MODEL_BSM_MENU_TCSTOKEN,      // castle grounds
-    MODEL_BSM_MENU_TITLE,         // castle grounds
-    MODEL_BSM_POINT_BALLOON,      // common1
+    MODEL_BSM_MENU_BUTTON = 0xE4,   // castle grounds
+    MODEL_BSM_MENU_STAGE,           // castle grounds
+    MODEL_BSM_MENU_LOCK,            // castle grounds
+    MODEL_BSM_MENU_TCSLOCK,         // castle grounds
+    MODEL_BSM_MENU_TCSLOCK_X8,      // castle grounds
+    MODEL_BSM_MENU_RANK,            // castle grounds
+    MODEL_BSM_MENU_TCSTOKEN,        // castle grounds
+    MODEL_BSM_MENU_TITLE,           // castle grounds
+    MODEL_BSM_POINT_BALLOON,        // common1
+    MODEL_BSM_POINT_BALLOON_POPPED, // common1
 
     MODEL_ID_COUNT
 };

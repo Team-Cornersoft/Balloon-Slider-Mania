@@ -26,6 +26,11 @@ struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
     [POINT_BALLOON_100] = {.scale = 3.0f, .points = 100},
 };
 
+static u8 point_balloon_check_if_interacted(void) {
+    // TODO:
+    return TRUE;
+}
+
 void bhv_point_balloon_init(void) {
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
@@ -51,9 +56,80 @@ void bhv_point_balloon_init(void) {
 }
 
 void bhv_point_balloon_loop(void) {
+    u32 bType = o->oBehParams2ndByte;
+    f32 scale = bProps[bType].scale;
+
+    if (o->oDistanceToMario <= (120.0f * scale) + 120.0f /*Mario's height*/) {
+        if (point_balloon_check_if_interacted()) {
+            if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
+                spawn_mist_particles_variable(16, -120.0f, 46.0f * scale);
+                struct Object *balloonPop = spawn_object(o, MODEL_BSM_POINT_BALLOON_POPPED, bhvPointBalloonPopped);
+                if (balloonPop) {
+                    obj_scale(balloonPop, scale * 0.25f);
+                    balloonPop->oBehParams = o->oBehParams;
+                    balloonPop->oBehParams2ndByte = o->oBehParams2ndByte;
+                }
+                spawn_mist_particles_variable(4, -120.0f, 46.0f * scale);
+            } else {
+                spawn_mist_particles_variable(8, -120.0f, 46.0f * scale);
+            }
+            obj_mark_for_deletion(o);
+        }
+    }
+
     o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
     o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
     o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
 
     o->oPtBalloonAbsoluteTimer++;
+}
+
+void bhv_point_balloon_popped_init(void) {
+    o->oPtBalloonPoppedScale = o->header.gfx.scale[0];
+    o->oOpacity = 105;
+}
+
+void bhv_point_balloon_popped_loop(void) {
+    o->oOpacity -= 15;
+    if (o->oOpacity <= 0) {
+        obj_mark_for_deletion(o);
+        return;
+    }
+
+    // TODO:
+    if (o->oTimer == 0) {
+        switch (o->oBehParams2ndByte) {
+            case POINT_BALLOON_5:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALLEST);
+                // play_sound(SOUND_EXTRA_POINTS_5, gGlobalSoundSource);
+                break;
+            case POINT_BALLOON_10:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALL);
+                // play_sound(SOUND_EXTRA_POINTS_10, gGlobalSoundSource);
+                break;
+            case POINT_BALLOON_25:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_MEDIUM);
+                // play_sound(SOUND_EXTRA_POINTS_25, gGlobalSoundSource);
+                break;
+            case POINT_BALLOON_50:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_LARGE);
+                // play_sound(SOUND_EXTRA_POINTS_50, gGlobalSoundSource);
+                break;
+            case POINT_BALLOON_100:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_HUGE);
+                // play_sound(SOUND_EXTRA_POINTS_100, gGlobalSoundSource);
+                break;
+            default:
+                assert(FALSE, "Missed pop condition for new balloon type!");
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALLEST);
+                // play_sound(SOUND_EXTRA_POINTS_5, gGlobalSoundSource);
+                break;
+        }
+    }
+
+    o->oPosX = o->oHomeX - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;
+    o->oPosY = o->oHomeY - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;
+    o->oPosZ = o->oHomeZ - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;
+
+    cur_obj_scale(o->oPtBalloonPoppedScale + ((o->oPtBalloonPoppedScale * 0.6f) * o->oTimer));
 }

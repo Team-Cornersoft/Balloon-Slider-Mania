@@ -90,3 +90,6 @@ UNUSED static const u64 binid_22 = 22;
 
 #include "point_balloon/model.inc.c"
 UNUSED static const u64 binid_23 = 23;
+
+#include "point_balloon_popped/model.inc.c"
+UNUSED static const u64 binid_24 = 24;

@@ -19,6 +19,8 @@ void cur_obj_spawn_strong_wind_particles(s32 windSpread, f32 scale, f32 relPosX,
 //! Lots of these are duplicates
 void bhv_point_balloon_init(void);
 void bhv_point_balloon_loop(void);
+void bhv_point_balloon_popped_init(void);
+void bhv_point_balloon_popped_loop(void);
 void bhv_bsm_menu_title_init(void);
 void bhv_bsm_menu_title_loop(void);
 void bhv_bsm_menu_button_manager_init(void);

@@ -1285,6 +1285,9 @@
 #define /*0x1AC*/ oPtBalloonRelativePosZ                        OBJECT_FIELD_F32(0x49)
 #define /*0x1B0*/ oPtBalloonAbsoluteTimer                       OBJECT_FIELD_S32(0x4A)
 
+/* BSM Point Balloon Popped */
+#define /*0x0F4*/ oPtBalloonPoppedScale                         OBJECT_FIELD_F32(0x1B)
+
 
 /*Custom general defines:
 

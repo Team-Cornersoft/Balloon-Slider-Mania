@@ -27,3 +27,4 @@
 #include "tree/geo.inc.c"
 
 #include "point_balloon/geo.inc.c"
+#include "point_balloon_popped/geo.inc.c"

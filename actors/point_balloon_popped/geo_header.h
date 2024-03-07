@@ -1,0 +1,10 @@
+extern const GeoLayout point_balloon_popped_geo[];
+extern Lights1 custom_sploosh_kaboom_Miss_Piece_lights;
+extern u8 custom_sploosh_kaboom_sploosh_hit_ci4[];
+extern u8 custom_sploosh_kaboom_sploosh_hit_ci4_pal_rgba16[];
+extern Vtx custom_sploosh_kaboom_miss_piece_mesh_layer_4_vtx_0[4];
+extern Gfx custom_sploosh_kaboom_miss_piece_mesh_layer_4_tri_0[];
+extern Gfx mat_custom_sploosh_kaboom_hit_piece[];
+extern Gfx mat_revert_custom_sploosh_kaboom_Miss_Piece[];
+extern Gfx custom_sploosh_kaboom_hit_piece_mesh_layer_4[];
+extern Gfx custom_sploosh_kaboom_material_revert_render_settings[];
