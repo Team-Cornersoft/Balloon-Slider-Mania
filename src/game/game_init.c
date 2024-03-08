@@ -517,12 +517,16 @@ void display_and_vsync(void) {
                 invWidth = SCREEN_WIDTH - width;
 
                 if (fbeWarpTransitionProps[i][0]) {
-                    memcpy(&fb[vertOffset + width], &fb[vertOffset], invWidth << 1);
+                    for (RGBA16 *addr = &fb[vertOffset + SCREEN_WIDTH - 1], *addr2 = addr - width; addr >= &fb[vertOffset + width]; addr--, addr2--) {
+                        *addr = *addr2;
+                    }
                     for (j = vertOffset; j < (vertOffset + width); j++) {
                         fb[j] = 0x0001;
                     }
                 } else {
-                    memcpy(&fb[vertOffset], &fb[vertOffset + width], invWidth << 1);
+                    for (RGBA16 *addr = &fb[vertOffset], *addr2 = addr + width; addr < &fb[vertOffset + SCREEN_WIDTH]; addr++, addr2++) {
+                        *addr = *addr2;
+                    }
                     for (j = vertOffset + invWidth; j < (vertOffset + SCREEN_WIDTH); j++) {
                         fb[j] = 0x0001;
                     }
