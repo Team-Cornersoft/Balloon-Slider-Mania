@@ -5,6 +5,8 @@
 
 #include "macros.h"
 
+#define MUSIC_NONE 0xFFFF
+
 enum SoundMenuFlags {
     SOUND_MENU_FLAG_HANDAPPEAR      = (1 << 0), // 0x001
     SOUND_MENU_FLAG_HANDISAPPEAR    = (1 << 1), // 0x002
@@ -16,6 +18,10 @@ enum SoundMenuFlags {
     SOUND_MENU_FLAG_CAMERAZOOMOUT   = (1 << 7), // 0x080
     SOUND_MENU_FLAG_EXTRA           = (1 << 8), // 0x100
 };
+
+extern u16 sCurrentMusic;
+extern u16 sCurrentShellMusic;
+extern u16 sCurrentCapMusic;
 
 void reset_volume(void);
 void raise_background_noise(s32 a);

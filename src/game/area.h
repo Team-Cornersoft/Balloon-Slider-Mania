@@ -181,6 +181,7 @@ extern s16 gCurrSaveFileNum;
 extern s16 gCurrLevelNum;
 
 
+void set_warp_transition_rgb(Color red, Color green, Color blue);
 void override_viewport_and_clip(Vp *a, Vp *b, u8 c, u8 d, u8 e);
 void print_intro_text(void);
 u32 get_mario_spawn_type(struct Object *obj);

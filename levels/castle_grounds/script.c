@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "sm64.h"
+#include "audio/external.h"
 #include "behavior_data.h"
 #include "model_ids.h"
 #include "seq_ids.h"
@@ -87,10 +88,10 @@ const LevelScript level_cgds_menu_select[] = {
     	CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
     LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ -1),
 
-	// PLAY_SOUND_EFFECT(SOUND_MENU_CUSTOM_MENU_SOUND),
-	STOP_MUSIC(240),
+	PLAY_SOUND_EFFECT(SOUND_EXTRA2_BSM_MENU_START_COURSE),
+	STOP_MUSIC_PLAYERS(240, (1 << SEQ_PLAYER_LEVEL)),
 
-    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 45, /*color*/ 0x00, 0x00, 0x00),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 45, /*color*/ 0xFF, 0xFF, 0xFF),
     JUMP_LINK_PUSH_ARG(45),
 		UPDATE_OBJECTS(),
     	CALL(/*arg*/ 0, /*func*/ scroll_textures),
@@ -101,8 +102,8 @@ const LevelScript level_cgds_menu_select[] = {
     CALL_LOOP(/*arg*/ 0, /*func*/ check_image_dma_complete),
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
-    CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
-    SLEEP(/*frames*/ 10),
+    SLEEP(/*frames*/ 30),
+    CALL(/*arg*/ 1, /*func*/ bsm_menu_selection_made),
 	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
 };
 /* Fast64 end persistent block [scripts] */

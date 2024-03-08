@@ -780,6 +780,7 @@ static void level_cmd_set_menu_music(void) {
 
 static void level_cmd_fadeout_music(void) {
     s16 dur = CMD_GET(s16, 2);
+    u8 playerFlags = CMD_GET(u8, 4);
     if (sCurrAreaIndex != -1 && dur == 0) {
         // Allow persistent block overrides for SET_BACKGROUND_MUSIC_WITH_REVERB
         gAreas[sCurrAreaIndex].musicParam = 0x00;
@@ -790,7 +791,13 @@ static void level_cmd_fadeout_music(void) {
     } else {
         if (dur < 0)
             dur = 0;
-        fadeout_music(dur);
+        func_803210D4(dur, playerFlags);
+
+        if (playerFlags & SEQ_PLAYER_LEVEL) {
+            sCurrentMusic = MUSIC_NONE;
+            sCurrentShellMusic = MUSIC_NONE;
+            sCurrentCapMusic = MUSIC_NONE;
+        }
     }
     sCurrentCmd = CMD_NEXT;
 }

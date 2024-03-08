@@ -20,8 +20,6 @@
 
 #include "config/config_audio.h"
 
-#define MUSIC_NONE 0xFFFF
-
 static OSMesgQueue sSoundMesgQueue;
 static OSMesg sSoundMesgBuf[1];
 static struct VblankHandler sSoundVblankHandler;
@@ -30,9 +28,9 @@ static struct VblankHandler sSoundVblankHandler;
 static u8 sMusicVolume = 0;
 
 static u8 sBgMusicDisabled = FALSE;
-static u16 sCurrentMusic = MUSIC_NONE;
-static u16 sCurrentShellMusic = MUSIC_NONE;
-static u16 sCurrentCapMusic = MUSIC_NONE;
+u16 sCurrentMusic = MUSIC_NONE;
+u16 sCurrentShellMusic = MUSIC_NONE;
+u16 sCurrentCapMusic = MUSIC_NONE;
 #ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
 static u8 sPlayingInfiniteStairs = FALSE;
 #endif
@@ -251,7 +249,7 @@ void set_background_music(u16 a, u16 seqArgs, s16 fadeTimer) {
  * Called from threads: thread3_main, thread5_game_loop
  */
 void fadeout_music(s16 fadeOutTime) {
-    func_803210D4(fadeOutTime);
+    func_803210D4(fadeOutTime, -1);
     sCurrentMusic = MUSIC_NONE;
     sCurrentShellMusic = MUSIC_NONE;
     sCurrentCapMusic = MUSIC_NONE;

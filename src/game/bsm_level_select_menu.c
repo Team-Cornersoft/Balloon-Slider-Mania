@@ -468,7 +468,7 @@ static void attempt_selection_move(void) {
         return;
 
     if (buttonLast != gBSMSelectedButton) {
-        play_sound(SOUND_MENU_CHANGE_SELECT, gGlobalSoundSource);
+        play_sound(SOUND_EXTRA1_BSM_MENU_CHANGE_SELECTION, gGlobalSoundSource);
     }
 }
 

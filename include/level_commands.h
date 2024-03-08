@@ -445,8 +445,12 @@ enum GoddardScene {
 #define SET_MENU_MUSIC(seq) \
     SET_MENU_MUSIC_WITH_REVERB(seq, 0x00, 0x00)
 
+#define STOP_MUSIC_PLAYERS(fadeOutTime, sequencePlayers) \
+    CMD_BBH(LEVEL_CMD_FADEOUT_MUSIC, 0x08, fadeOutTime), \
+    CMD_BBH(sequencePlayers, 0x00, 0x0000)
+
 #define STOP_MUSIC(fadeOutTime) \
-    CMD_BBH(LEVEL_CMD_FADEOUT_MUSIC, 0x04, fadeOutTime)
+    STOP_MUSIC_PLAYERS(fadeOutTime, -1)
 
 #define SET_ECHO(console, emulator) \
     CMD_BBBB(LEVEL_CMD_SET_ECHO, 0x04, console, emulator)

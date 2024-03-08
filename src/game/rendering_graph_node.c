@@ -451,7 +451,11 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
         f32 sAspectRatio;
         Mtx *mtx = alloc_display_list(sizeof(*mtx));
 #ifdef WIDE
-        if (gConfig.widescreen && gCurrLevelNum != LEVEL_UNKNOWN_2){
+        if (gConfig.widescreen && 
+           gCurrLevelNum != LEVEL_UNKNOWN_2 &&
+           gCurrLevelNum != LEVEL_CASTLE_GROUNDS &&
+           gCurrLevelNum != LEVEL_CASTLE_COURTYARD
+        ) {
             sAspectRatio = 16.0f / 9.0f; // 1.775f
         } else {
             sAspectRatio = 4.0f / 3.0f; // 1.33333f
@@ -500,6 +504,7 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
                 width = widthConstant;
             } else {
                 widthConstant = width;
+                heightConstant = baseHeight;
             }
 
             guOrtho(mtx, -width, width, -baseHeight, baseHeight, node->near / WORLD_SCALE, node->far / WORLD_SCALE, 100.0f);

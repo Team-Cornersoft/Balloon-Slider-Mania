@@ -12,7 +12,7 @@ seq_setmutescale 0
   seq_setvol 127
 #endif
 seq_settempo 120
-seq_initchannels 0x3ff
+seq_initchannels 0xfff
 seq_startchannel 0, .channel0
 seq_startchannel 1, .channel1
 seq_startchannel 2, .channel2
@@ -23,6 +23,8 @@ seq_startchannel 6, .channel6
 seq_startchannel 7, .channel7
 seq_startchannel 8, .channel38
 seq_startchannel 9, .channel59
+seq_startchannel 10, .channelA
+seq_startchannel 11, .channelB
 .seq_loop:
 seq_delay 20000
 seq_jump .seq_loop
@@ -69,6 +71,28 @@ chan_setval 0
 chan_iowriteval 5
 chan_stereoheadseteffects 1
 chan_setdyntable .channel59_table
+chan_jump .main_loop_023589
+
+.channelA:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setdyntable .channelA_table
+chan_jump .main_loop_023589
+
+.channelB:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setdyntable .channelB_table
 chan_jump .main_loop_023589
 
 // Main loop for standard, non-continuous sound effects
@@ -7902,6 +7926,48 @@ layer_note0 38, 0x3, 127, 127
 .layer_32BF:
 layer_delay 0x2a
 layer_jump .layer_32B7
+
+.channelA_table:
+sound_ref .sound_bsm_menu_change_selection
+
+
+.sound_bsm_menu_change_selection:
+chan_setbank 11
+chan_setinstr 0
+chan_setval 20
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_menu_change_selection
+chan_end
+
+.layer_bsm_menu_change_selection:
+layer_note1 39, 0x5, 127
+layer_end
+
+
+.channelB_table:
+sound_ref .sound_bsm_menu_start_course
+
+
+.sound_bsm_menu_start_course:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 12
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_menu_start_course_L
+chan_setlayer 1, .layer_bsm_menu_start_course_R
+chan_end
+
+.layer_bsm_menu_start_course_L:
+layer_setinstr 1
+layer_setpan 0
+layer_note1 39, 0x14f, 95
+layer_end
+
+.layer_bsm_menu_start_course_R:
+layer_setinstr 2
+layer_setpan 127
+layer_note1 39, 0x14f, 95
+layer_end
 
 .align 2, 0
 .envelope_32C4:

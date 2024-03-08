@@ -330,10 +330,10 @@ STATIC_ASSERT(ARRAY_COUNT(sBackgroundMusicDefaultVolume) == SEQ_COUNT,
 
 u8 sCurrentBackgroundMusicSeqId = SEQUENCE_NONE;
 u8 sMusicDynamicDelay = 0;
-u8 sSoundBankUsedListBack[SOUND_BANK_COUNT] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-u8 sSoundBankFreeListFront[SOUND_BANK_COUNT] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-u8 sNumSoundsInBank[SOUND_BANK_COUNT] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // only used for debugging
-u8 sMaxChannelsForSoundBank[SOUND_BANK_COUNT] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+u8 sSoundBankUsedListBack[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 0};
+u8 sSoundBankFreeListFront[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 1};
+u8 sNumSoundsInBank[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 0}; // only used for debugging
+u8 sMaxChannelsForSoundBank[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 1};
 
 // sBackgroundMusicMaxTargetVolume and sBackgroundMusicTargetVolume use the 0x80
 // bit to indicate that they are set, and the rest of the bits for the actual value
@@ -1371,6 +1371,8 @@ static void update_game_sound(void) {
                         case SOUND_BANK_AIR:
                         case SOUND_BANK_GENERAL2:
                         case SOUND_BANK_OBJ2:
+                        case SOUND_BANK_EXTRA1:
+                        case SOUND_BANK_EXTRA2:
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));
@@ -1537,6 +1539,8 @@ static void update_game_sound(void) {
                         case SOUND_BANK_AIR:
                         case SOUND_BANK_GENERAL2:
                         case SOUND_BANK_OBJ2:
+                        case SOUND_BANK_EXTRA1:
+                        case SOUND_BANK_EXTRA2:
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));
@@ -2455,14 +2459,12 @@ void func_80321080(u16 fadeTimer) {
 /**
  * Called from threads: thread3_main, thread5_game_loop
  */
-void func_803210D4(u16 fadeDuration) {
+void func_803210D4(u16 fadeDuration, u8 soundPlayerFlags) {
     u8 i;
 
-    if (sHasStartedFadeOut) {
-        return;
-    }
+    soundPlayerFlags &= ~sHasStartedFadeOut;
 
-    if (gSequencePlayers[SEQ_PLAYER_LEVEL].enabled == TRUE) {
+    if ((soundPlayerFlags & (1 << SEQ_PLAYER_LEVEL)) && gSequencePlayers[SEQ_PLAYER_LEVEL].enabled == TRUE) {
 #if defined(VERSION_EU) || defined(VERSION_SH)
         func_802ad74c(0x83000000, fadeDuration);
 #else
@@ -2470,7 +2472,7 @@ void func_803210D4(u16 fadeDuration) {
 #endif
     }
 
-    if (gSequencePlayers[SEQ_PLAYER_ENV].enabled == TRUE) {
+    if ((soundPlayerFlags & (1 << SEQ_PLAYER_ENV)) && gSequencePlayers[SEQ_PLAYER_ENV].enabled == TRUE) {
 #if defined(VERSION_EU) || defined(VERSION_SH)
         func_802ad74c(0x83010000, fadeDuration);
 #else
@@ -2478,13 +2480,15 @@ void func_803210D4(u16 fadeDuration) {
 #endif
     }
 
-    for (i = 0; i < SOUND_BANK_COUNT; i++) {
-        if (i != SOUND_BANK_MENU) {
-            fade_channel_volume_scale(SEQ_PLAYER_SFX, i, 0, fadeDuration / 16);
+    if (soundPlayerFlags & (1 << SEQ_PLAYER_SFX)) {
+        for (i = 0; i < SOUND_BANK_COUNT; i++) {
+            if (i != SOUND_BANK_MENU) {
+                fade_channel_volume_scale(SEQ_PLAYER_SFX, i, 0, fadeDuration / 16);
+            }
         }
     }
 
-    sHasStartedFadeOut = TRUE;
+    sHasStartedFadeOut |= soundPlayerFlags;
 }
 
 /**
@@ -2604,5 +2608,5 @@ void sound_reset(u8 reverbPresetId) {
         preload_sequence(SEQ_EVENT_CUTSCENE_STAR_SPAWN, PRELOAD_BANKS | PRELOAD_SEQUENCE);
     }
     seq_player_play_sequence(SEQ_PLAYER_SFX, SEQ_SOUND_PLAYER, 0);
-    sHasStartedFadeOut = FALSE;
+    sHasStartedFadeOut = 0;
 }

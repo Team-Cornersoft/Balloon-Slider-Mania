@@ -1,0 +1,32 @@
+{
+    "date": "1996-02-14",
+    "sample_bank": "bsm_custom",
+    "envelopes": {
+        "envelope0": [
+            [0, 32700],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "00_bsm_menu_change_selection"
+        },
+        "inst1": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "01_bsm_menu_start_course_L"
+        },
+        "inst2": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "02_bsm_menu_start_course_R"
+        }
+    },
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2"
+    ]
+}

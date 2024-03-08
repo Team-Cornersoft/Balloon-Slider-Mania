@@ -1500,5 +1500,9 @@ s32 bsm_menu_selection_made(UNUSED s16 arg0, UNUSED s32 arg1) {
     sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
     sWarpDest.arg = WARP_FLAGS_NONE;
 
+    if (gFBEEnabled) {
+        set_warp_transition_rgb(0x00, 0x00, 0x00);
+    }
+
     return sWarpDest.levelNum;
 }
