@@ -57,7 +57,7 @@ static u8 point_balloon_check_if_interacted(void) {
     objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
 
     requiredDist[0] = 95.0f * scale;
-    requiredDist[1] = 110.0f * scale;
+    requiredDist[1] = (110.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
     requiredDist[2] = 45.0f * scale;
 
     for (s32 i = 0; i < 3; i++) {
