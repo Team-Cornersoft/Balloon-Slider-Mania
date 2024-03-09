@@ -31,7 +31,61 @@ struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
 };
 
 static u8 point_balloon_check_if_interacted(void) {
-    // TODO:
+    if (!gMarioState || !gMarioState->marioObj) {
+        return FALSE;
+    }
+
+    f32 scale = bProps[o->oBehParams2ndByte].scale;
+
+    Vec3f marioPos;
+    Vec3f balloonPos;
+    Vec3f requiredDist;
+    Vec3f objDist;
+
+    vec3f_copy(balloonPos, &o->oPosVec);
+    balloonPos[1] -= 10.0f;
+
+    s16 relativeYaw = obj_angle_to_object(o, gMarioState->marioObj) - o->oFaceAngleYaw;
+    f32 dist = lateral_dist_between_objects(o, gMarioState->marioObj);
+
+    marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
+    marioPos[1] = gMarioState->pos[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+    marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
+
+    objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
+    objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+    objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
+
+    requiredDist[0] = 95.0f * scale;
+    requiredDist[1] = 110.0f * scale;
+    requiredDist[2] = 45.0f * scale;
+
+    for (s32 i = 0; i < 3; i++) {
+        if (objDist[i] < 0.0f) {
+            objDist[i] = 0.0f;
+        }
+        if (requiredDist[i] < 0.01f) {
+            requiredDist[i] = 0.01f;
+        }
+    }
+
+    // Serves as a div by zero check somewhat
+    if (
+       objDist[0] > requiredDist[0] ||
+       objDist[1] > requiredDist[1] ||
+       objDist[2] > requiredDist[2]
+    ) {
+        return FALSE;
+    }
+
+    if (
+        objDist[0] > (requiredDist[0] * coss(sqrtf(sqr(objDist[1]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[1]) + sqr(requiredDist[2])) * 0x4000)) ||
+        objDist[1] > (requiredDist[1] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[2])) * 0x4000)) ||
+        objDist[2] > (requiredDist[2] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[1])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[1])) * 0x4000))
+    ) {
+        return FALSE;
+    }
+
     return TRUE;
 }
 

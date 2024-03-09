@@ -24,6 +24,7 @@
 #include "obj_behaviors.h"
 #include "object_helpers.h"
 #include "object_list_processor.h"
+#include "print.h"
 #include "rendering_graph_node.h"
 #include "spawn_object.h"
 #include "spawn_sound.h"
