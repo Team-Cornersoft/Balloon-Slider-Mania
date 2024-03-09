@@ -7929,6 +7929,12 @@ layer_jump .layer_32B7
 
 .channelA_table:
 sound_ref .sound_bsm_menu_change_selection
+sound_ref .sound_bsm_balloon_pop_smallest
+sound_ref .sound_bsm_balloon_pop_small
+sound_ref .sound_bsm_balloon_pop_semismall
+sound_ref .sound_bsm_balloon_pop_semilarge
+sound_ref .sound_bsm_balloon_pop_large
+sound_ref .sound_bsm_balloon_pop_largest
 
 
 .sound_bsm_menu_change_selection:
@@ -7943,9 +7949,94 @@ chan_end
 layer_note1 39, 0x5, 111
 layer_end
 
+.sound_bsm_balloon_pop_smallest:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_smallest
+chan_end
+
+.layer_bsm_balloon_pop_smallest:
+layer_note1 42, 0x18, 75
+layer_end
+
+.sound_bsm_balloon_pop_small:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_small
+chan_end
+
+.layer_bsm_balloon_pop_small:
+layer_note1 40, 0x1b, 83
+layer_end
+
+.sound_bsm_balloon_pop_semismall:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_semismall
+chan_end
+
+.layer_bsm_balloon_pop_semismall:
+layer_note1 38, 0x1f, 88
+layer_end
+
+.sound_bsm_balloon_pop_semilarge:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_semilarge
+chan_end
+
+.layer_bsm_balloon_pop_semilarge:
+layer_note1 37, 0x21, 94
+layer_end
+
+.sound_bsm_balloon_pop_large:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_large
+chan_end
+
+.layer_bsm_balloon_pop_large:
+layer_note1 35, 0x24, 99
+layer_end
+
+.sound_bsm_balloon_pop_largest:
+chan_setbank 11
+chan_setinstr 29
+chan_setval 24
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_balloon_pop_largest
+chan_end
+
+.layer_bsm_balloon_pop_largest:
+layer_note1 32, 0x2b, 111
+layer_end
+
 
 .channelB_table:
 sound_ref .sound_bsm_menu_start_course
+sound_ref .sound_bsm_points_5
+sound_ref .sound_bsm_points_10
+sound_ref .sound_bsm_points_25
+sound_ref .sound_bsm_points_50
+sound_ref .sound_bsm_points_100
+sound_ref .sound_bsm_redcoin_0
+sound_ref .sound_bsm_redcoin_1
+sound_ref .sound_bsm_redcoin_2
+sound_ref .sound_bsm_redcoin_3
+sound_ref .sound_bsm_redcoin_4
+sound_ref .sound_bsm_redcoin_5
+sound_ref .sound_bsm_redcoin_6
+sound_ref .sound_bsm_redcoin_7
 
 
 .sound_bsm_menu_start_course:
@@ -7967,6 +8058,279 @@ layer_end
 layer_setinstr 2
 layer_setpan 127
 layer_note1 39, 0x14f, 95
+layer_end
+
+.sound_bsm_points_5:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_points_5_L
+chan_setlayer 1, .layer_bsm_points_5_R
+chan_end
+
+.layer_bsm_points_5_L:
+layer_setinstr 3
+layer_setpan 0
+layer_note1 39, 0x98, 95
+layer_end
+
+.layer_bsm_points_5_R:
+layer_setinstr 4
+layer_setpan 127
+layer_note1 39, 0x98, 95
+layer_end
+
+.sound_bsm_points_10:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_points_10_L
+chan_setlayer 1, .layer_bsm_points_10_R
+chan_end
+
+.layer_bsm_points_10_L:
+layer_setinstr 5
+layer_setpan 0
+layer_note1 39, 0x98, 95
+layer_end
+
+.layer_bsm_points_10_R:
+layer_setinstr 6
+layer_setpan 127
+layer_note1 39, 0x98, 95
+layer_end
+
+.sound_bsm_points_25:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_points_25_L
+chan_setlayer 1, .layer_bsm_points_25_R
+chan_end
+
+.layer_bsm_points_25_L:
+layer_setinstr 7
+layer_setpan 0
+layer_note1 39, 0xad, 95
+layer_end
+
+.layer_bsm_points_25_R:
+layer_setinstr 8
+layer_setpan 127
+layer_note1 39, 0xad, 95
+layer_end
+
+.sound_bsm_points_50:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_points_50_L
+chan_setlayer 1, .layer_bsm_points_50_R
+chan_end
+
+.layer_bsm_points_50_L:
+layer_setinstr 9
+layer_setpan 0
+layer_note1 39, 0xbb, 95
+layer_end
+
+.layer_bsm_points_50_R:
+layer_setinstr 10
+layer_setpan 127
+layer_note1 39, 0xbb, 95
+layer_end
+
+.sound_bsm_points_100:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_points_100_L
+chan_setlayer 1, .layer_bsm_points_100_R
+chan_end
+
+.layer_bsm_points_100_L:
+layer_setinstr 11
+layer_setpan 0
+layer_note1 39, 0xd1, 95
+layer_end
+
+.layer_bsm_points_100_R:
+layer_setinstr 12
+layer_setpan 127
+layer_note1 39, 0xd1, 95
+layer_end
+
+.sound_bsm_redcoin_0:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_0_L
+chan_setlayer 1, .layer_bsm_redcoin_0_R
+chan_end
+
+.layer_bsm_redcoin_0_L:
+layer_setinstr 13
+layer_setpan 0
+layer_note1 39, 0xb9, 95
+layer_end
+
+.layer_bsm_redcoin_0_R:
+layer_setinstr 14
+layer_setpan 127
+layer_note1 39, 0xb9, 95
+layer_end
+
+.sound_bsm_redcoin_1:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_1_L
+chan_setlayer 1, .layer_bsm_redcoin_1_R
+chan_end
+
+.layer_bsm_redcoin_1_L:
+layer_setinstr 15
+layer_setpan 0
+layer_note1 39, 0xbc, 95
+layer_end
+
+.layer_bsm_redcoin_1_R:
+layer_setinstr 16
+layer_setpan 127
+layer_note1 39, 0xbc, 95
+layer_end
+
+.sound_bsm_redcoin_2:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_2_L
+chan_setlayer 1, .layer_bsm_redcoin_2_R
+chan_end
+
+.layer_bsm_redcoin_2_L:
+layer_setinstr 17
+layer_setpan 0
+layer_note1 39, 0xb1, 95
+layer_end
+
+.layer_bsm_redcoin_2_R:
+layer_setinstr 18
+layer_setpan 127
+layer_note1 39, 0xb1, 95
+layer_end
+
+.sound_bsm_redcoin_3:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_3_L
+chan_setlayer 1, .layer_bsm_redcoin_3_R
+chan_end
+
+.layer_bsm_redcoin_3_L:
+layer_setinstr 19
+layer_setpan 0
+layer_note1 39, 0xab, 95
+layer_end
+
+.layer_bsm_redcoin_3_R:
+layer_setinstr 20
+layer_setpan 127
+layer_note1 39, 0xab, 95
+layer_end
+
+.sound_bsm_redcoin_4:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_4_L
+chan_setlayer 1, .layer_bsm_redcoin_4_R
+chan_end
+
+.layer_bsm_redcoin_4_L:
+layer_setinstr 21
+layer_setpan 0
+layer_note1 39, 0xa5, 95
+layer_end
+
+.layer_bsm_redcoin_4_R:
+layer_setinstr 22
+layer_setpan 127
+layer_note1 39, 0xa5, 95
+layer_end
+
+.sound_bsm_redcoin_5:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_5_L
+chan_setlayer 1, .layer_bsm_redcoin_5_R
+chan_end
+
+.layer_bsm_redcoin_5_L:
+layer_setinstr 23
+layer_setpan 0
+layer_note1 39, 0xa9, 95
+layer_end
+
+.layer_bsm_redcoin_5_R:
+layer_setinstr 24
+layer_setpan 127
+layer_note1 39, 0xa9, 95
+layer_end
+
+.sound_bsm_redcoin_6:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_6_L
+chan_setlayer 1, .layer_bsm_redcoin_6_R
+chan_end
+
+.layer_bsm_redcoin_6_L:
+layer_setinstr 25
+layer_setpan 0
+layer_note1 39, 0xa5, 95
+layer_end
+
+.layer_bsm_redcoin_6_R:
+layer_setinstr 26
+layer_setpan 127
+layer_note1 39, 0xa5, 95
+layer_end
+
+.sound_bsm_redcoin_7:
+chan_setbank 11
+chan_setpanmix 0
+chan_setval 18
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_redcoin_7_L
+chan_setlayer 1, .layer_bsm_redcoin_7_R
+chan_end
+
+.layer_bsm_redcoin_7_L:
+layer_setinstr 27
+layer_setpan 0
+layer_note1 39, 0x9a, 95
+layer_end
+
+.layer_bsm_redcoin_7_R:
+layer_setinstr 28
+layer_setpan 127
+layer_note1 39, 0x9a, 95
 layer_end
 
 .align 2, 0

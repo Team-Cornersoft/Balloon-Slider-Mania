@@ -17,17 +17,17 @@ enum BalloonTypes {
 struct BalloonTypeProperties {
     f32 scale;
     s32 points;
-    s32 popsfx; // TODO:
-    s32 popjingle; // TODO:
+    s32 popsfx;
+    s32 popjingle;
 };
 
 struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
-    [POINT_BALLOON_5]   = {.scale = 1.0f,  .points = 5  },
-    [POINT_BALLOON_10]  = {.scale = 1.2f,  .points = 10 },
-    [POINT_BALLOON_25]  = {.scale = 1.5f,  .points = 25 },
-    [POINT_BALLOON_50]  = {.scale = 2.0f,  .points = 50 },
-    [POINT_BALLOON_100] = {.scale = 3.0f,  .points = 100},
-    [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0  },
+    [POINT_BALLOON_5]   = {.scale = 1.0f,  .points = 5,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALLEST,  .popjingle = SOUND_EXTRA2_BSM_POINTS_5  },
+    [POINT_BALLOON_10]  = {.scale = 1.2f,  .points = 10,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALL,     .popjingle = SOUND_EXTRA2_BSM_POINTS_10 },
+    [POINT_BALLOON_25]  = {.scale = 1.5f,  .points = 25,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = SOUND_EXTRA2_BSM_POINTS_25 },
+    [POINT_BALLOON_50]  = {.scale = 2.0f,  .points = 50,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGE,     .popjingle = SOUND_EXTRA2_BSM_POINTS_50 },
+    [POINT_BALLOON_100] = {.scale = 3.0f,  .points = 100, .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGEST,   .popjingle = SOUND_EXTRA2_BSM_POINTS_100},
+    [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMILARGE, .popjingle = SOUND_EXTRA2_BSM_REDCOIN_0 },
 };
 
 static u8 point_balloon_check_if_interacted(void) {
@@ -102,37 +102,13 @@ void bhv_point_balloon_popped_loop(void) {
 
     // TODO:
     if (o->oTimer == 0) {
-        switch (o->oBehParams2ndByte) {
-            case POINT_BALLOON_5:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALLEST);
-                // play_sound(SOUND_EXTRA_POINTS_5, gGlobalSoundSource);
-                break;
-            case POINT_BALLOON_10:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALL);
-                // play_sound(SOUND_EXTRA_POINTS_10, gGlobalSoundSource);
-                break;
-            case POINT_BALLOON_25:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_MEDIUM);
-                // play_sound(SOUND_EXTRA_POINTS_25, gGlobalSoundSource);
-                break;
-            case POINT_BALLOON_50:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_LARGE);
-                // play_sound(SOUND_EXTRA_POINTS_50, gGlobalSoundSource);
-                break;
-            case POINT_BALLOON_100:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_HUGE);
-                // play_sound(SOUND_EXTRA_POINTS_100, gGlobalSoundSource);
-                break;
-            case POINT_BALLOON_RED:
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_HUGE);
-                // play_sound(SOUND_EXTRA_POINTS_100, gGlobalSoundSource);
-                break;
-            default:
-                assert(FALSE, "Missed pop condition for new balloon type!");
-                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALLEST);
-                // play_sound(SOUND_EXTRA_POINTS_5, gGlobalSoundSource);
-                break;
-        }
+        struct BalloonTypeProperties *props = &bProps[o->oBehParams2ndByte];
+        assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
+
+        cur_obj_play_sound_2(props->popsfx);
+
+        // TODO: Red Coins
+        play_sound(props->popjingle, gGlobalSoundSource);
     }
 
     o->oPosX = o->oHomeX - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;

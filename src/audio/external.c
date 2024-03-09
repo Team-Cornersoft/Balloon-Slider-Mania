@@ -46,11 +46,12 @@ struct SoundCharacteristics {
     f32 distance;
     u32 priority;
     u32 soundBits; // packed bits, same as first arg to play_sound
+    f32 pitchChange;
     u8 soundStatus;
     u8 freshness;
     u8 prev;
     u8 next;
-}; // size = 0x1C
+}; // size = 0x20
 
 // Also the number of frames a discrete sound can be in the WAITING state before being deleted
 #define SOUND_MAX_FRESHNESS 10
@@ -753,6 +754,9 @@ static void process_sound_request(u32 bits, f32 *pos) {
                     sSoundBanks[bank][soundIndex].soundBits = bits;
                     // In practice, the starting status is always WAITING
                     sSoundBanks[bank][soundIndex].soundStatus = bits & SOUNDARGS_MASK_STATUS;
+                    if ((bits & SOUND_VIBRATO) && (bits >> 28) >= SOUND_BANK_EXTRA1) {
+                        sSoundBanks[bank][soundIndex].pitchChange = random_float() * 4.0f;
+                    }
                 }
 
                 // Reset freshness:
@@ -798,6 +802,10 @@ static void process_sound_request(u32 bits, f32 *pos) {
         sSoundBankFreeListFront[bank] = sSoundBanks[bank][sSoundBankFreeListFront[bank]].next;
         sSoundBanks[bank][sSoundBankFreeListFront[bank]].prev = 0xff;
         sSoundBanks[bank][soundIndex].next = 0xff;
+
+        if ((bits & SOUND_VIBRATO) && (bits >> 28) >= SOUND_BANK_EXTRA1) {
+            sSoundBanks[bank][soundIndex].pitchChange = random_float() * 4.0f;
+        }
     }
 }
 
@@ -1138,7 +1146,11 @@ static f32 get_sound_freq_scale(u8 bank, u8 item) {
     if (!(sSoundBanks[bank][item].soundBits & SOUND_CONSTANT_FREQUENCY)) {
         amount = sSoundBanks[bank][item].distance / AUDIO_MAX_DISTANCE;
         if (sSoundBanks[bank][item].soundBits & SOUND_VIBRATO) {
-            amount += (f32)(gAudioRandom & 0xff) / 64.0f;
+            if ((sSoundBanks[bank][item].soundBits >> 28) >= SOUND_BANK_EXTRA1) {
+                amount += sSoundBanks[bank][item].pitchChange;
+            } else {
+                amount += (f32)(gAudioRandom & 0xff) / 64.0f;
+            }
         }
     } else {
         amount = 0.0f;
