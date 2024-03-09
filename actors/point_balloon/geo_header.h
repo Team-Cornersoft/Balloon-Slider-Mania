@@ -16,7 +16,7 @@ extern u8 point_balloon_balloon_100_ia8[];
 extern u8 point_balloon_gold_foil_ci8[];
 extern u8 point_balloon_gold_foil_pal_rgba16[];
 extern Vtx point_balloon_Balloons_mesh_layer_5_vtx_cull[8];
-extern Vtx point_balloon_Balloons_mesh_layer_5_vtx_0[26];
+extern Vtx point_balloon_Balloons_mesh_layer_5_vtx_0[28];
 extern Gfx point_balloon_Balloons_mesh_layer_5_tri_0[];
 extern Vtx point_balloon_Balloons_mesh_layer_1_vtx_cull[8];
 extern Vtx point_balloon_Balloons_mesh_layer_1_vtx_0[83];

@@ -3389,57 +3389,59 @@ u8 point_balloon_gold_foil_pal_rgba16[] = {
 };
 
 Vtx point_balloon_Balloons_mesh_layer_5_vtx_cull[8] = {
-	{{ {-95, -120, 55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {-95, 100, 55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {-95, 100, -55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {-95, -120, -55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {95, -120, 55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {95, 100, 55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {95, 100, -55}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {95, -120, -55}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {-95, -120, 50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {-95, 100, 50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {-95, 100, -50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {-95, -120, -50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {95, -120, 50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {95, 100, 50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {95, 100, -50}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {95, -120, -50}, 0, {0, 0}, {0, 0, 0, 0} }},
 };
 
-Vtx point_balloon_Balloons_mesh_layer_5_vtx_0[26] = {
-	{{ {0, 0, -55}, 0, {1008, 1008}, {0, 0, 129, 255} }},
-	{{ {0, -68, -45}, 0, {1008, 2072}, {0, 238, 130, 255} }},
-	{{ {-40, -55, -45}, 0, {1641, 1869}, {245, 241, 130, 255} }},
-	{{ {0, 0, 55}, 0, {1008, 1008}, {0, 0, 127, 255} }},
-	{{ {-40, 55, 45}, 0, {375, 147}, {245, 15, 126, 255} }},
-	{{ {-65, 21, 45}, 0, {-16, 679}, {239, 6, 126, 255} }},
-	{{ {40, 55, -45}, 0, {375, 147}, {11, 15, 130, 255} }},
-	{{ {65, 21, -45}, 0, {-16, 679}, {17, 6, 130, 255} }},
-	{{ {0, 0, -55}, 0, {1008, 1008}, {0, 0, 129, 255} }},
-	{{ {-65, -21, -45}, 0, {2032, 1337}, {239, 250, 130, 255} }},
-	{{ {0, 0, 55}, 0, {1008, 1008}, {0, 0, 127, 255} }},
-	{{ {40, -55, 45}, 0, {1641, 1869}, {11, 241, 126, 255} }},
-	{{ {65, -21, 45}, 0, {2032, 1337}, {17, 250, 126, 255} }},
-	{{ {0, -68, 45}, 0, {1008, 2072}, {0, 238, 126, 255} }},
-	{{ {0, 0, -55}, 0, {1008, 1008}, {0, 0, 129, 255} }},
-	{{ {65, -21, -45}, 0, {-16, 1337}, {17, 250, 130, 255} }},
-	{{ {40, -55, -45}, 0, {375, 1869}, {11, 241, 130, 255} }},
-	{{ {0, 0, 55}, 0, {1008, 1008}, {0, 0, 127, 255} }},
-	{{ {-40, -55, 45}, 0, {375, 1869}, {245, 241, 126, 255} }},
-	{{ {-65, -21, 45}, 0, {-16, 1337}, {239, 250, 126, 255} }},
-	{{ {0, 68, 45}, 0, {1008, -56}, {0, 18, 126, 255} }},
-	{{ {40, 55, 45}, 0, {1641, 147}, {11, 15, 126, 255} }},
-	{{ {65, 21, 45}, 0, {2032, 679}, {17, 6, 126, 255} }},
-	{{ {0, 68, -45}, 0, {1008, -56}, {0, 18, 130, 255} }},
-	{{ {-40, 55, -45}, 0, {1641, 147}, {245, 15, 130, 255} }},
-	{{ {-65, 21, -45}, 0, {2032, 679}, {239, 6, 130, 255} }},
+Vtx point_balloon_Balloons_mesh_layer_5_vtx_0[28] = {
+	{{ {0, 0, -50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {0, -68, -40}, 0, {1008, 2072}, {255, 255, 255, 255} }},
+	{{ {-40, -55, -40}, 0, {1641, 1869}, {255, 255, 255, 255} }},
+	{{ {0, 0, 50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {-40, 55, 40}, 0, {375, 147}, {255, 255, 255, 255} }},
+	{{ {-65, 21, 40}, 0, {-16, 679}, {255, 255, 255, 255} }},
+	{{ {0, 0, 50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {0, 68, 40}, 0, {1008, -56}, {255, 255, 255, 255} }},
+	{{ {0, 0, -50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {0, 68, -40}, 0, {1008, -56}, {255, 255, 255, 255} }},
+	{{ {40, 55, -40}, 0, {375, 147}, {255, 255, 255, 255} }},
+	{{ {65, 21, -40}, 0, {-16, 679}, {255, 255, 255, 255} }},
+	{{ {0, 0, -50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {-65, -21, -40}, 0, {2032, 1337}, {255, 255, 255, 255} }},
+	{{ {0, 0, 50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {40, -55, 40}, 0, {1641, 1869}, {255, 255, 255, 255} }},
+	{{ {65, -21, 40}, 0, {2032, 1337}, {255, 255, 255, 255} }},
+	{{ {0, -68, 40}, 0, {1008, 2072}, {255, 255, 255, 255} }},
+	{{ {0, 0, -50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {65, -21, -40}, 0, {-16, 1337}, {255, 255, 255, 255} }},
+	{{ {40, -55, -40}, 0, {375, 1869}, {255, 255, 255, 255} }},
+	{{ {0, 0, 50}, 0, {1008, 1008}, {255, 255, 255, 255} }},
+	{{ {-40, -55, 40}, 0, {375, 1869}, {255, 255, 255, 255} }},
+	{{ {-65, -21, 40}, 0, {-16, 1337}, {255, 255, 255, 255} }},
+	{{ {-40, 55, -40}, 0, {1641, 147}, {255, 255, 255, 255} }},
+	{{ {-65, 21, -40}, 0, {2032, 679}, {255, 255, 255, 255} }},
+	{{ {65, 21, 40}, 0, {2032, 679}, {255, 255, 255, 255} }},
+	{{ {40, 55, 40}, 0, {1641, 147}, {255, 255, 255, 255} }},
 };
 
 Gfx point_balloon_Balloons_mesh_layer_5_tri_0[] = {
-	gsSPVertex(point_balloon_Balloons_mesh_layer_5_vtx_0 + 0, 26, 0),
+	gsSPVertex(point_balloon_Balloons_mesh_layer_5_vtx_0 + 0, 28, 0),
 	gsSP2Triangles(0, 1, 2, 0, 3, 4, 5, 0),
-	gsSP2Triangles(0, 6, 7, 0, 8, 2, 9, 0),
-	gsSP2Triangles(10, 11, 12, 0, 3, 13, 11, 0),
-	gsSP2Triangles(14, 7, 15, 0, 14, 15, 16, 0),
-	gsSP2Triangles(14, 16, 1, 0, 17, 18, 13, 0),
-	gsSP2Triangles(17, 19, 18, 0, 17, 5, 19, 0),
-	gsSP2Triangles(17, 20, 4, 0, 17, 21, 20, 0),
-	gsSP2Triangles(17, 22, 21, 0, 17, 12, 22, 0),
-	gsSP2Triangles(14, 23, 6, 0, 14, 24, 23, 0),
-	gsSP2Triangles(14, 25, 24, 0, 14, 9, 25, 0),
+	gsSP2Triangles(6, 7, 4, 0, 8, 9, 10, 0),
+	gsSP2Triangles(0, 10, 11, 0, 12, 2, 13, 0),
+	gsSP2Triangles(14, 15, 16, 0, 3, 17, 15, 0),
+	gsSP2Triangles(18, 11, 19, 0, 18, 19, 20, 0),
+	gsSP2Triangles(18, 20, 1, 0, 21, 22, 17, 0),
+	gsSP2Triangles(21, 23, 22, 0, 21, 5, 23, 0),
+	gsSP2Triangles(18, 24, 9, 0, 18, 25, 24, 0),
+	gsSP2Triangles(18, 13, 25, 0, 21, 16, 26, 0),
+	gsSP2Triangles(21, 26, 27, 0, 21, 27, 7, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -3601,8 +3603,8 @@ Gfx point_balloon_Balloons_mesh_layer_1_tri_0[] = {
 
 Gfx mat_point_balloon_balloon_5_decal[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
+	gsDPSetCombineLERP(TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, point_balloon_balloon_5_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
@@ -3614,8 +3616,8 @@ Gfx mat_point_balloon_balloon_5_decal[] = {
 
 Gfx mat_point_balloon_balloon_10_decal[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
+	gsDPSetCombineLERP(TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, point_balloon_balloon_10_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
@@ -3627,8 +3629,8 @@ Gfx mat_point_balloon_balloon_10_decal[] = {
 
 Gfx mat_point_balloon_balloon_25_decal[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
+	gsDPSetCombineLERP(TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, point_balloon_balloon_25_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
@@ -3640,8 +3642,8 @@ Gfx mat_point_balloon_balloon_25_decal[] = {
 
 Gfx mat_point_balloon_balloon_50_decal[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
+	gsDPSetCombineLERP(TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, point_balloon_balloon_50_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
@@ -3653,8 +3655,8 @@ Gfx mat_point_balloon_balloon_50_decal[] = {
 
 Gfx mat_point_balloon_balloon_100_decal[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
-	gsSPGeometryMode(G_CULL_BACK, 0),
+	gsDPSetCombineLERP(TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, TEXEL0_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, point_balloon_balloon_100_ia8),
 	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
@@ -3758,7 +3760,7 @@ Gfx mat_revert_point_balloon_balloon[] = {
 
 Gfx mat_revert_point_balloon_balloon_decal[] = {
 	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_CULL_BACK),
+	gsSPGeometryMode(0, G_LIGHTING),
 	gsSPEndDisplayList(),
 };
 

@@ -1,16 +1,6 @@
 #include "src/game/envfx_snow.h"
 
 const GeoLayout point_balloon_balloon_geo[] = {
-	GEO_DISPLAY_LIST(LAYER_TRANSPARENT, point_balloon_Balloons_mesh_layer_5_before),
-	GEO_SWITCH_CASE(5, geo_switch_bparam2),
-	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, mat_point_balloon_balloon_5_decal),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, mat_point_balloon_balloon_10_decal),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, mat_point_balloon_balloon_25_decal),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, mat_point_balloon_balloon_50_decal),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, mat_point_balloon_balloon_100_decal),
-	GEO_CLOSE_NODE(),
-	GEO_DISPLAY_LIST(LAYER_TRANSPARENT, point_balloon_Balloons_mesh_layer_5_after),
 	GEO_DISPLAY_LIST(LAYER_OPAQUE, point_balloon_Balloons_mesh_layer_1_before),
 	GEO_SWITCH_CASE(5, geo_switch_bparam2),
 	GEO_OPEN_NODE(),
@@ -21,6 +11,16 @@ const GeoLayout point_balloon_balloon_geo[] = {
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, mat_point_balloon_balloon_100),
 	GEO_CLOSE_NODE(),
 	GEO_DISPLAY_LIST(LAYER_OPAQUE, point_balloon_Balloons_mesh_layer_1_after),
+	GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, point_balloon_Balloons_mesh_layer_5_before),
+	GEO_SWITCH_CASE(5, geo_switch_bparam2),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, mat_point_balloon_balloon_5_decal),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, mat_point_balloon_balloon_10_decal),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, mat_point_balloon_balloon_25_decal),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, mat_point_balloon_balloon_50_decal),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, mat_point_balloon_balloon_100_decal),
+	GEO_CLOSE_NODE(),
+	GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, point_balloon_Balloons_mesh_layer_5_after),
 	GEO_RETURN(),
 };
 

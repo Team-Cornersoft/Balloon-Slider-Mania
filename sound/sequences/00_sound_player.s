@@ -7940,7 +7940,7 @@ chan_setlayer 0, .layer_bsm_menu_change_selection
 chan_end
 
 .layer_bsm_menu_change_selection:
-layer_note1 39, 0x5, 127
+layer_note1 39, 0x5, 111
 layer_end
 
 

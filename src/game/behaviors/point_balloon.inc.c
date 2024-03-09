@@ -86,11 +86,11 @@ void bhv_point_balloon_loop(void) {
 
 void bhv_point_balloon_popped_init(void) {
     o->oPtBalloonPoppedScale = o->header.gfx.scale[0];
-    o->oOpacity = 105;
+    o->oOpacity = 127;
 }
 
 void bhv_point_balloon_popped_loop(void) {
-    o->oOpacity -= 15;
+    o->oOpacity -= 16;
     if (o->oOpacity <= 0) {
         obj_mark_for_deletion(o);
         return;
