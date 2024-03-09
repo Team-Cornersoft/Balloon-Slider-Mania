@@ -23,6 +23,8 @@ const GeoLayout ccm_area_1_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_Road_b_mesh_layer_5),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2378, -2249, -11979, ccm_dl_A_Road_c_mesh_layer_1),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 27, 27, 27, 0, 0, 0),
+		GEO_TRANSLATE_NODE(LAYER_OPAQUE, 70000, 0, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -36,6 +38,7 @@ const GeoLayout ccm_dl_1_area1_geo[] = {
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_dl_B_buildings_e_a1_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 70000, 0, 0, ccm_dl_Billboard_a_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -7716, 10662, 20139, ccm_dl_C_railings_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -6705, 11580, 20350, ccm_dl_C_start_line_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -7716, 9572, 13855, ccm_dl_D_Projector_a_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_D_Projector_a_mesh_layer_5),
@@ -89,6 +92,10 @@ const GeoLayout ccm_dl_2_area1_geo[] = {
 const GeoLayout ccm_dl_3_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -5600, -10914, 18869, ccm_dl_A_area1_wormhole_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_area1_wormhole_mesh_layer_5),
+		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, ccm_dl_B_buildings_g_a3_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2774, 3419, -14618, ccm_dl_C_railings_d_a1_3_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 4084, 2742, -17318, ccm_dl_D_Projector_d_3_mesh_layer_1),
