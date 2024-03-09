@@ -1,4 +1,5 @@
 #include "game/debug.h"
+extern void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ);
 
 #define BALLOON_FLOATING_CALC(relativePos, intensity, offset, freq) \
     (relativePos + intensity * sins((0x10000 * ((o->oPtBalloonAbsoluteTimer + offset) % freq)) / freq))
@@ -154,15 +155,19 @@ void bhv_point_balloon_popped_loop(void) {
         return;
     }
 
-    // TODO:
     if (o->oTimer == 0) {
         struct BalloonTypeProperties *props = &bProps[o->oBehParams2ndByte];
         assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
 
         cur_obj_play_sound_2(props->popsfx);
 
-        // TODO: Red Coins
-        play_sound(props->popjingle, gGlobalSoundSource);
+        if (o->oBehParams2ndByte == POINT_BALLOON_RED) {
+            play_sound(props->popjingle + gRedBalloonsPopped, gGlobalSoundSource);
+            gRedBalloonsPopped++;
+            spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
+        } else {
+            play_sound(props->popjingle, gGlobalSoundSource);
+        }
     }
 
     o->oPosX = o->oHomeX - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;

@@ -153,6 +153,8 @@ u8 renderPressA = FALSE;
 
 u8 gOrthoCam = FALSE;
 
+s16 gRedBalloonsPopped = 0;
+
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
 
@@ -1238,6 +1240,8 @@ s32 init_level(void) {
     }
 
     sTimerRunning = FALSE;
+
+    gRedBalloonsPopped = 0;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.nodeId >= WARP_NODE_CREDITS_MIN) {
