@@ -395,112 +395,112 @@ void scroll_gfx_mat_ccm_dl_Starry_tiles_layer1() {
 void scroll_gfx_mat_ccm_dl_Billboard_g2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_g2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_f2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_f2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_f1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_f1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_g1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_g1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_h1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_h1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_h2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_h2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_c1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_c1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_c2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_c2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_b1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_b1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_b2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_b2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_a2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_a2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_a1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_a1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_i1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_i1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_i2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_i2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_d1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_d1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_d2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_d2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
@@ -509,7 +509,7 @@ void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
 
 	static int interval_tex_ccm_dl_Star_projection_layer5 = 8;
 	static int cur_interval_tex_ccm_dl_Star_projection_layer5 = 8;
-	shift_t_down(mat, 10, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 10, PACK_TILESIZE(0, 3));
 
 	if (--cur_interval_tex_ccm_dl_Star_projection_layer5 <= 0) {
 		shift_s(mat, 15, PACK_TILESIZE(0, 64));
@@ -521,14 +521,14 @@ void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
 void scroll_gfx_mat_ccm_dl_Billboard_e2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e2_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
 void scroll_gfx_mat_ccm_dl_Billboard_e1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e1_layer5);
 
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 2));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
