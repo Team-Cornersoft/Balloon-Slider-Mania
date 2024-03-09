@@ -395,7 +395,14 @@ void scroll_gfx_mat_ccm_dl_Starry_tiles_layer1() {
 void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Star_projection_layer5);
 
+	static int interval_tex_ccm_dl_Star_projection_layer5 = 8;
+	static int cur_interval_tex_ccm_dl_Star_projection_layer5 = 8;
 	shift_t_down(mat, 10, PACK_TILESIZE(0, 2));
+
+	if (--cur_interval_tex_ccm_dl_Star_projection_layer5 <= 0) {
+		shift_s(mat, 15, PACK_TILESIZE(0, 64));
+		cur_interval_tex_ccm_dl_Star_projection_layer5 = interval_tex_ccm_dl_Star_projection_layer5;
+	}
 
 };
 
