@@ -1111,6 +1111,174 @@ void scroll_ccm_dl_A_wormhole_a4_mesh_layer_5_vtx_3() {
 	currentY += deltaY;
 }
 
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 184;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_0);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_1() {
+	int i = 0;
+	int count = 184;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_1);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_2() {
+	int i = 0;
+	int count = 184;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_2);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_3() {
+	int i = 0;
+	int count = 184;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_3);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_0);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_1() {
+	int i = 0;
+	int count = 16;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_1);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_2() {
+	int i = 0;
+	int count = 16;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_2);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_3() {
+	int i = 0;
+	int count = 16;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_3);
+
+	deltaY = (int)(2.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
 void scroll_ccm_dl_A_wormhole_b1_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 208;
@@ -2079,6 +2247,20 @@ void scroll_gfx_mat_ccm_dl_Billboard_d2_layer5() {
 
 };
 
+void scroll_gfx_mat_ccm_dl_Billboard_e1_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e1_layer5);
+
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
+
+};
+
+void scroll_gfx_mat_ccm_dl_Billboard_e2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e2_layer5);
+
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
+
+};
+
 void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Star_projection_layer5);
 
@@ -2090,20 +2272,6 @@ void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
 		shift_s(mat, 15, PACK_TILESIZE(0, 64));
 		cur_interval_tex_ccm_dl_Star_projection_layer5 = interval_tex_ccm_dl_Star_projection_layer5;
 	}
-
-};
-
-void scroll_gfx_mat_ccm_dl_Billboard_e2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e2_layer5);
-
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
-
-};
-
-void scroll_gfx_mat_ccm_dl_Billboard_e1_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Billboard_e1_layer5);
-
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
 };
 
@@ -2170,6 +2338,14 @@ void scroll_ccm() {
 	scroll_ccm_dl_A_wormhole_a4_mesh_layer_5_vtx_1();
 	scroll_ccm_dl_A_wormhole_a4_mesh_layer_5_vtx_2();
 	scroll_ccm_dl_A_wormhole_a4_mesh_layer_5_vtx_3();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_1();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_2();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_1_vtx_3();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_0();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_1();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_2();
+	scroll_ccm_dl_A_wormhole_a4_001_mesh_layer_5_vtx_3();
 	scroll_ccm_dl_A_wormhole_b1_mesh_layer_1_vtx_0();
 	scroll_ccm_dl_A_wormhole_b1_mesh_layer_1_vtx_1();
 	scroll_ccm_dl_A_wormhole_b1_mesh_layer_1_vtx_2();
@@ -2228,8 +2404,8 @@ void scroll_ccm() {
 	scroll_gfx_mat_ccm_dl_Billboard_i2_layer5();
 	scroll_gfx_mat_ccm_dl_Billboard_d1_layer5();
 	scroll_gfx_mat_ccm_dl_Billboard_d2_layer5();
-	scroll_gfx_mat_ccm_dl_Star_projection_layer5();
-	scroll_gfx_mat_ccm_dl_Billboard_e2_layer5();
 	scroll_gfx_mat_ccm_dl_Billboard_e1_layer5();
+	scroll_gfx_mat_ccm_dl_Billboard_e2_layer5();
+	scroll_gfx_mat_ccm_dl_Star_projection_layer5();
 	scroll_gfx_mat_ccm_dl_Wormhole_platform_layer5();
 };
