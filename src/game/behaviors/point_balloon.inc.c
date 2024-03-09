@@ -9,6 +9,7 @@ enum BalloonTypes {
     POINT_BALLOON_25,
     POINT_BALLOON_50,
     POINT_BALLOON_100,
+    POINT_BALLOON_RED,
 
     POINT_BALLOON_COUNT,
 };
@@ -16,14 +17,17 @@ enum BalloonTypes {
 struct BalloonTypeProperties {
     f32 scale;
     s32 points;
+    s32 popsfx; // TODO:
+    s32 popjingle; // TODO:
 };
 
 struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
-    [POINT_BALLOON_5]   = {.scale = 1.0f, .points = 5  },
-    [POINT_BALLOON_10]  = {.scale = 1.2f, .points = 10 },
-    [POINT_BALLOON_25]  = {.scale = 1.5f, .points = 25 },
-    [POINT_BALLOON_50]  = {.scale = 2.0f, .points = 50 },
-    [POINT_BALLOON_100] = {.scale = 3.0f, .points = 100},
+    [POINT_BALLOON_5]   = {.scale = 1.0f,  .points = 5  },
+    [POINT_BALLOON_10]  = {.scale = 1.2f,  .points = 10 },
+    [POINT_BALLOON_25]  = {.scale = 1.5f,  .points = 25 },
+    [POINT_BALLOON_50]  = {.scale = 2.0f,  .points = 50 },
+    [POINT_BALLOON_100] = {.scale = 3.0f,  .points = 100},
+    [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0  },
 };
 
 static u8 point_balloon_check_if_interacted(void) {
