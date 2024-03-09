@@ -1,0 +1,16 @@
+extern const GeoLayout red_balloon_geo[];
+extern u8 red_balloon_balloon_red_ia8[];
+extern u8 red_balloon_redder_foil_ci8[];
+extern u8 red_balloon_redder_foil_pal_rgba16[];
+extern Vtx red_balloon_Red_balloon_mesh_layer_6_vtx_cull[8];
+extern Vtx red_balloon_Red_balloon_mesh_layer_6_vtx_0[28];
+extern Gfx red_balloon_Red_balloon_mesh_layer_6_tri_0[];
+extern Vtx red_balloon_Red_balloon_mesh_layer_1_vtx_cull[8];
+extern Vtx red_balloon_Red_balloon_mesh_layer_1_vtx_0[83];
+extern Gfx red_balloon_Red_balloon_mesh_layer_1_tri_0[];
+extern Gfx mat_red_balloon_balloon_red_decal[];
+extern Gfx mat_revert_red_balloon_balloon_red_decal[];
+extern Gfx mat_red_balloon_balloon_red[];
+extern Gfx mat_revert_red_balloon_balloon_red[];
+extern Gfx red_balloon_Red_balloon_mesh_layer_6[];
+extern Gfx red_balloon_Red_balloon_mesh_layer_1[];
