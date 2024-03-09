@@ -392,6 +392,13 @@ void scroll_gfx_mat_ccm_dl_Starry_tiles_layer1() {
 
 };
 
+void scroll_gfx_mat_ccm_dl_Star_projection_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ccm_dl_Star_projection_layer5);
+
+	shift_t_down(mat, 10, PACK_TILESIZE(0, 2));
+
+};
+
 void scroll_ccm() {
 	scroll_ccm_dl_A_Road_a_mesh_layer_1_vtx_2();
 	scroll_ccm_dl_A_Road_b_mesh_layer_1_vtx_2();
@@ -413,4 +420,5 @@ void scroll_ccm() {
 	scroll_ccm_dl_D_star_gate_i_mesh_layer_1_vtx_0();
 	scroll_gfx_mat_ccm_dl_Starry_floor_layer1();
 	scroll_gfx_mat_ccm_dl_Starry_tiles_layer1();
+	scroll_gfx_mat_ccm_dl_Star_projection_layer5();
 };

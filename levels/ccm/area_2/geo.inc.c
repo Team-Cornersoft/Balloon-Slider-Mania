@@ -37,7 +37,7 @@ const GeoLayout ccm_area_2[] = {
 		GEO_OPEN_NODE(),
 			GEO_CAMERA_FRUSTUM_WITH_FUNC(45.0000, 127, 65535, geo_camera_fov),
 			GEO_OPEN_NODE(),
-				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, 70000, 0, 0, 70000, -100, 0, geo_camera_main),
+				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, 0, 0, 0, 0, -100, 0, geo_camera_main),
 				GEO_OPEN_NODE(),
 					GEO_BRANCH(1, ccm_area_2_geo),
 					GEO_RENDER_OBJ(),

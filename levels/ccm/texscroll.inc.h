@@ -18,4 +18,5 @@ extern void scroll_ccm_dl_D_star_gate_h_mesh_layer_1_vtx_0();
 extern void scroll_ccm_dl_D_star_gate_i_mesh_layer_1_vtx_0();
 extern void scroll_gfx_mat_ccm_dl_Starry_floor_layer1();
 extern void scroll_gfx_mat_ccm_dl_Starry_tiles_layer1();
+extern void scroll_gfx_mat_ccm_dl_Star_projection_layer5();
 extern void scroll_ccm();
