@@ -123,6 +123,10 @@ void bhv_point_balloon_popped_loop(void) {
                 // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_HUGE);
                 // play_sound(SOUND_EXTRA_POINTS_100, gGlobalSoundSource);
                 break;
+            case POINT_BALLOON_RED:
+                // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_HUGE);
+                // play_sound(SOUND_EXTRA_POINTS_100, gGlobalSoundSource);
+                break;
             default:
                 assert(FALSE, "Missed pop condition for new balloon type!");
                 // cur_obj_play_sound_2(SOUND_GENERAL2_BALLOON_POP_SMALLEST);
