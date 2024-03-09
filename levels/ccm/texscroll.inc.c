@@ -273,7 +273,7 @@ void scroll_ccm_dl_D_star_gate_d_mesh_layer_1_vtx_0() {
 
 void scroll_ccm_dl_D_star_gate_e_mesh_layer_1_vtx_0() {
 	int i = 0;
-	int count = 80;
+	int count = 44;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;

@@ -248,7 +248,7 @@ extern Gfx ccm_dl_D_star_gate_d_mesh_layer_1_tri_0[];
 extern Vtx ccm_dl_D_star_gate_d_mesh_layer_1_vtx_1[160];
 extern Gfx ccm_dl_D_star_gate_d_mesh_layer_1_tri_1[];
 extern Vtx ccm_dl_D_star_gate_e_mesh_layer_1_vtx_cull[8];
-extern Vtx ccm_dl_D_star_gate_e_mesh_layer_1_vtx_0[80];
+extern Vtx ccm_dl_D_star_gate_e_mesh_layer_1_vtx_0[44];
 extern Gfx ccm_dl_D_star_gate_e_mesh_layer_1_tri_0[];
 extern Vtx ccm_dl_D_star_gate_e_mesh_layer_1_vtx_1[160];
 extern Gfx ccm_dl_D_star_gate_e_mesh_layer_1_tri_1[];

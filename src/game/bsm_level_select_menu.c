@@ -38,12 +38,12 @@ u8 gBSMInitialized = FALSE;
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     LEVEL_BOB, "Snowy\nPeak",
-    LEVEL_WF,  "Lava\nIsle",
+    LEVEL_WF,  "Aqueduct\nFlow",
     LEVEL_JRB, "Fungi\nCanyon",
     LEVEL_CCM, "Starlight\nFest",
     LEVEL_BBH, "Holiday\nPeak",
-    LEVEL_HMC, "Scorch\nIsle",
-    LEVEL_LLL, "Spore\nCanyon",
+    LEVEL_HMC, "Dragon\nFlow",
+    LEVEL_LLL, "Twilight\nCanyon",
     LEVEL_SSL, "Cyber\nFest",
     LEVEL_DDD, "Cornersoft\nParade",
 };
