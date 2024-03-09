@@ -55,6 +55,8 @@ struct Object *bsmMenuButtonCredits;
 s32 gBSMSelectedButton = BSM_COURSE_1_SNOWY_PEAK;
 static u8 showStats = FALSE;
 
+static u16 warpTransitionOffsets[ARRAY_COUNT(gFBEWarpTransitionProps)];
+
 static char strBuffer[128];
 static u8 inputStickFlags;
 static s8 stickHistory;
@@ -487,6 +489,8 @@ void bhv_bsm_menu_button_manager_loop(void) {
         return;
     }
 
+    random_u16(); // Progress the RNG
+
     s32 soundToPlay = NO_SOUND;
     if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | START_BUTTON)) {
         if (gSelectionShown == BSM_SELECTION_NONE) {
@@ -504,6 +508,29 @@ void bhv_bsm_menu_button_manager_loop(void) {
                     if (obj->oBSMMenuLockObj != NULL) {
                         soundToPlay = SOUND_MENU_CAMERA_BUZZ;
                     } else {
+                        u16 rand, swap;
+                        u16 *wProps = &gFBEWarpTransitionProps[0][0];
+                        
+                        // Initialize array
+                        for (s32 i = 0; i < ARRAY_COUNT(warpTransitionOffsets); i++) {
+                            warpTransitionOffsets[i] =  i * ARRAY_COUNT(gFBEWarpTransitionProps[0]);
+                        }
+
+                        // Randomize array
+                        for (s32 i = ARRAY_COUNT(warpTransitionOffsets) - 1; i >= 0; i--) {
+                            rand = random_u16() % (i + 1);
+                            swap = warpTransitionOffsets[i];
+                            warpTransitionOffsets[i] = warpTransitionOffsets[rand];
+                            warpTransitionOffsets[rand] = swap;
+                        }
+
+                        // Randomize FBE transitions based on randomized array order because random_u16 sucks and is semi-deterministic and stuff
+                        for (s32 i = 0; i < ARRAY_COUNT(gFBEWarpTransitionProps); i++) {
+                            rand = random_u16();
+                            wProps[warpTransitionOffsets[i]] = rand >> 15;
+                            wProps[warpTransitionOffsets[i]+1] = rand % 900;
+                        }
+
                         gSelectionShown = BSM_SELECTION_STAGE_START_FIRST + gBSMSelectedButton;
                     }
                     break;

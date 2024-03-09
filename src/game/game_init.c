@@ -104,6 +104,8 @@ u8 gFBEEnabled = FALSE;
 static u8 checkingFBE = 0;
 static u8 fbeCheckFinished = FALSE;
 
+u16 gFBEWarpTransitionProps[SCREEN_HEIGHT][2];
+
 // Display
 // ----------------------------------------------------------------------------------------------------
 
@@ -473,8 +475,6 @@ void select_gfx_pool(void) {
     gGfxPoolEnd = (u8 *) (gGfxPool->buffer + GFX_POOL_SIZE);
 }
 
-u16 fbeWarpTransitionProps[SCREEN_HEIGHT][2];
-
 /**
  * This function:
  * - Sends the current master display list out to be rendered.
@@ -504,7 +504,7 @@ void display_and_vsync(void) {
             }
 
             for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
-                s32 lineOffset = fbeWarpTransitionProps[i][1];
+                s32 lineOffset = gFBEWarpTransitionProps[i][1];
                 if (pixelOffset <= lineOffset) {
                     continue;
                 }
@@ -516,7 +516,7 @@ void display_and_vsync(void) {
                 }
                 invWidth = SCREEN_WIDTH - width;
 
-                if (fbeWarpTransitionProps[i][0]) {
+                if (gFBEWarpTransitionProps[i][0]) {
                     for (RGBA16 *addr = &fb[vertOffset + SCREEN_WIDTH - 1], *addr2 = addr - width; addr >= &fb[vertOffset + width]; addr--, addr2--) {
                         *addr = *addr2;
                     }
@@ -861,12 +861,6 @@ void thread5_game_loop(UNUSED void *arg) {
 #ifdef PUPPYCAM
     puppycam_boot();
 #endif
-
-    for (s32 i = 0; i < ARRAY_COUNT(fbeWarpTransitionProps); i++) {
-        u16 rand = random_u16();
-        fbeWarpTransitionProps[i][0] = rand >> 15;
-        fbeWarpTransitionProps[i][1] = rand % 900;
-    }
 
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);
 

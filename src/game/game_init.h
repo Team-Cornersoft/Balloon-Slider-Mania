@@ -88,6 +88,8 @@ extern u32 gGlobalTimer;
 extern u32 gMenuWarpCounter;
 extern u8 gFBEEnabled;
 
+extern u16 gFBEWarpTransitionProps[SCREEN_HEIGHT][2];
+
 s32 check_fbe(s16 arg0, s32 arg1);
 void setup_game_memory(void);
 void thread5_game_loop(UNUSED void *arg);
