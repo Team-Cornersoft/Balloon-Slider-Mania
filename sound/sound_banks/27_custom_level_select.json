@@ -100,8 +100,8 @@
         },
         "inst6": {
             "release_rate": 255,
-            "normal_range_lo": 46,
-            "normal_range_hi": 62,
+            "normal_range_lo": 56,
+            "normal_range_hi": 72,
             "envelope": "envelope6",
             "sound_lo": "custom_25_low",
             "sound": "custom_25_mid",
@@ -116,9 +116,9 @@
         },
         "percussion": [
             {"release_rate": 35, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_smg_elct_kick_low", "tuning": 0.6890625}},
-            {"release_rate": 40, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_acst_snare", "tuning": 1.0}},
-            {"release_rate": 32, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_cmpr_snare", "tuning": 1.0}},
-            {"release_rate": 30, "pan": 29, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_chns_cymbal", "tuning": 1.0}},
+            {"release_rate": 40, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_acoustic_snare", "tuning": 1.0}},
+            {"release_rate": 32, "pan": 64, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_compressed_snare", "tuning": 1.0}},
+            {"release_rate": 30, "pan": 29, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_chinese_cymbal", "tuning": 1.0}},
             {"release_rate": 35, "pan": 13, "envelope": "envelope9", "sound": {"sample": "custom_mgtt_cabasa", "tuning": 1.378125}},
             {"release_rate": 75, "pan": 98, "envelope": "envelope9", "sound": {"sample": "custom_tp_revr_cymbal", "tuning": 1.0}},
             {"release_rate": 35, "pan": 115, "envelope": "envelope9", "sound": {"sample": "20_cabasa", "tuning": 1.0}}

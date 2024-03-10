@@ -61,8 +61,8 @@ const LevelScript level_bob_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_LEVEL_SNOW, 0x04, 0x04),
-		SET_ECHO(0xF8, 0xF8),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, 0x04, 0x04),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -80,7 +80,7 @@ const LevelScript level_bob_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_LEVEL_SNOW, 0x04, 0x04),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, 0x05, 0x05),
 		SET_ECHO(0x20, 0x20),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
@@ -99,8 +99,8 @@ const LevelScript level_bob_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_LEVEL_SNOW, 0x04, 0x04),
-		SET_ECHO(0xF8, 0xF8),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, 0x04, 0x04),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -117,8 +117,8 @@ const LevelScript level_bob_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_LEVEL_SNOW, 0x04, 0x04),
-		SET_ECHO(0xF8, 0xF8),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, 0x04, 0x04),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
