@@ -1,0 +1,18 @@
+extern const GeoLayout tcs_token_geo[];
+extern u8 tcs_token_CSglowB_rgba16[];
+extern u8 tcs_token_CSglow_rgba32[];
+extern u8 tcs_token_GLOW_v2_ia16[];
+extern Vtx tcs_token_000_displaylist_mesh_layer_1_vtx_0[682];
+extern Gfx tcs_token_000_displaylist_mesh_layer_1_tri_0[];
+extern Vtx tcs_token_000_displaylist_mesh_layer_1_vtx_1[180];
+extern Gfx tcs_token_000_displaylist_mesh_layer_1_tri_1[];
+extern Vtx tcs_token_002_bb_mesh_layer_5_vtx_0[4];
+extern Gfx tcs_token_002_bb_mesh_layer_5_tri_0[];
+extern Gfx mat_tcs_token_CORNERSOFT_WHITE[];
+extern Gfx mat_revert_tcs_token_CORNERSOFT_WHITE[];
+extern Gfx mat_tcs_token_CORNERSOFT_RED[];
+extern Gfx mat_revert_tcs_token_CORNERSOFT_RED[];
+extern Gfx mat_tcs_token_GLOW_001[];
+extern Gfx mat_revert_tcs_token_GLOW_001[];
+extern Gfx tcs_token_000_displaylist_mesh_layer_1[];
+extern Gfx tcs_token_002_bb_mesh_layer_5[];
