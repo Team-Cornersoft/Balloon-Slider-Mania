@@ -72,7 +72,7 @@ const LevelScript level_cgds_menu_select[] = {
 	FREE_LEVEL_POOL(),
 
     LOAD_AREA(/*area*/ 1),
-	SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_LEVEL_SELECT, 3, 3),
+	SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_LEVEL_SELECT, 0x03, 0x03),
 
     CALL(/*arg*/ 0, /*func*/ load_mario_area),
 

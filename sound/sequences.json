@@ -36,5 +36,6 @@
     "21_menu_file_select": ["25"],
     "22_cutscene_lakitu": {"ifdef": ["VERSION_US", "VERSION_EU", "VERSION_SH"], "banks": ["1C"]},
     "23_custom_level_select": ["27_custom_level_select"],
-    "24_custom_course2_waterways": ["28_custom_course2_waterways"]
+    "24_custom_course1_snowy": ["28_custom_course1_snowy"],
+    "25_custom_course2_waterways": ["29_custom_course2_waterways"]
 }
