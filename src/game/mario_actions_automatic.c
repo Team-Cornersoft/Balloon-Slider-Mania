@@ -21,6 +21,8 @@
 
 #define HANG_DISTANCE 144.0f
 
+#define CANNON_SHOOT_VELOCITY 100.0f
+
 void add_tree_leaf_particles(struct MarioState *m) {
     if (m->usedObj->behavior == segmented_to_virtual(bhvTree)) {
         // make leaf effect spawn higher on the Shifting Sand Land palm tree
@@ -730,15 +732,15 @@ s32 act_in_cannon(struct MarioState *m) {
             m->faceAngle[1] = (marioObj->oMarioCannonObjectYaw + marioObj->oMarioCannonInputYaw);
             if (m->input & INPUT_A_PRESSED) {
                 f32 cosPitch = coss(m->faceAngle[0]);
-                m->forwardVel = 100.0f * cosPitch;
+                m->forwardVel = CANNON_SHOOT_VELOCITY * cosPitch;
 
                 f32 sinPitch = sins(m->faceAngle[0]);
-                m->vel[1] = 100.0f * sinPitch;
+                m->vel[1] = CANNON_SHOOT_VELOCITY * sinPitch;
 
-                cosPitch *= 120.0f;
+                cosPitch *= CANNON_SHOOT_VELOCITY * (6.0f / 5.0f);
 
                 m->pos[0] += cosPitch * sins(m->faceAngle[1]);
-                m->pos[1] += 120.0f * sinPitch;
+                m->pos[1] += CANNON_SHOOT_VELOCITY * (6.0f / 5.0f) * sinPitch;
                 m->pos[2] += cosPitch * coss(m->faceAngle[1]);
 
                 play_sound(SOUND_ACTION_FLYING_FAST, marioObj->header.gfx.cameraToObject);

@@ -1044,6 +1044,14 @@ void init_reverb_us(s32 presetId) {
     s16 *mem;
     s32 i;
 
+#ifdef BETTER_REVERB
+    s32 reinitBetterReverbBuffers = TRUE;
+    if ((u32) (presetId >> 31) & 1) {
+        reinitBetterReverbBuffers = FALSE;
+        presetId = (s32) ((u32) presetId & ~(1 << 31));
+    }
+#endif
+
     s32 reverbWindowSize = gReverbSettings[presetId].windowSize;
     gReverbDownsampleRate = gReverbSettings[presetId].downsampleRate;
 #ifdef BETTER_REVERB
@@ -1122,7 +1130,9 @@ void init_reverb_us(s32 presetId) {
             gSynthesisReverb.items[1][i].toDownsampleRight = (mem + (DEFAULT_LEN_1CH / sizeof(s16)));
         }
     } else {
-        bzero(gSynthesisReverb.ringBuffer.left, (REVERB_WINDOW_SIZE_MAX * 2 * sizeof(s16)));
+        if (reinitBetterReverbBuffers) {
+            bzero(gSynthesisReverb.ringBuffer.left, (REVERB_WINDOW_SIZE_MAX * 2 * sizeof(s16)));
+        }
     }
 
     gSynthesisReverb.ringBuffer.right  = &gSynthesisReverb.ringBuffer.left[reverbWindowSize];
@@ -1142,7 +1152,9 @@ void init_reverb_us(s32 presetId) {
             bzero(gSynthesisReverb.unk28, (16 * sizeof(s16)));
 
             // All reverb downsample buffers are adjacent in memory, so clear them all in a single call
-            bzero(gSynthesisReverb.items[0][0].toDownsampleLeft, (DEFAULT_LEN_1CH * 4 * gAudioUpdatesPerFrame));
+            if (reinitBetterReverbBuffers) {
+                bzero(gSynthesisReverb.items[0][0].toDownsampleLeft, (DEFAULT_LEN_1CH * 4 * gAudioUpdatesPerFrame));
+            }
         }
     }
 
@@ -1158,7 +1170,9 @@ void init_reverb_us(s32 presetId) {
 
     // This does not have to be reset after being initialized for the first time, which would help speed up load times.
     // However, resetting this allows for proper clearing of the reverb buffers, as well as dynamic customization of the delays array.
-    set_better_reverb_buffers(betterReverbPreset->delaysL, betterReverbPreset->delaysR);
+    if (reinitBetterReverbBuffers) {
+        set_better_reverb_buffers(betterReverbPreset->delaysL, betterReverbPreset->delaysR);
+    }
 #endif
 }
 #endif

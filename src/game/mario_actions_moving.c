@@ -1417,7 +1417,7 @@ s32 common_slide_action_with_jump(struct MarioState *m, u32 stopAction, u32 jump
     } else if (!(m->input & INPUT_A_DOWN)) {
         m->actionState = 0;
     }
-    if (m->actionTimer == 5) {
+    if (m->actionTimer == 1) {
         if (m->actionState == 1) {
             return set_jumping_action(m, jumpAction, 0);
         }
@@ -1425,7 +1425,7 @@ s32 common_slide_action_with_jump(struct MarioState *m, u32 stopAction, u32 jump
         m->actionTimer++;
     }
 #else
-    if (m->actionTimer == 5) {
+    if (m->actionTimer == 1) {
         if (m->input & INPUT_A_PRESSED) {
             return set_jumping_action(m, jumpAction, 0);
         }
