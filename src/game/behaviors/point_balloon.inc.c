@@ -31,6 +31,8 @@ struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
     [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMILARGE, .popjingle = SOUND_EXTRA2_BSM_REDCOIN_0 },
 };
 
+struct BalloonTypeProperties keyBalloon = {.scale = 1.35f, .points = 0, .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = NO_SOUND /*TODO:*/ };
+
 static u8 point_balloon_check_if_interacted(void) {
     if (!gMarioState || !gMarioState->marioObj) {
         return FALSE;
@@ -70,7 +72,6 @@ static u8 point_balloon_check_if_interacted(void) {
         }
     }
 
-    // Serves as a div by zero check somewhat
     if (
        objDist[0] > requiredDist[0] ||
        objDist[1] > requiredDist[1] ||
@@ -83,6 +84,65 @@ static u8 point_balloon_check_if_interacted(void) {
         objDist[0] > (requiredDist[0] * coss(sqrtf(sqr(objDist[1]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[1]) + sqr(requiredDist[2])) * 0x4000)) ||
         objDist[1] > (requiredDist[1] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[2])) * 0x4000)) ||
         objDist[2] > (requiredDist[2] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[1])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[1])) * 0x4000))
+    ) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+static u8 key_balloon_check_if_interacted(void) {
+    if (!gMarioState || !gMarioState->marioObj) {
+        return FALSE;
+    }
+
+    f32 scale = keyBalloon.scale;
+
+    Vec3f marioPos;
+    Vec3f balloonPos;
+    Vec3f requiredDist;
+    Vec3f objDist;
+
+    vec3f_copy(balloonPos, &o->oPosVec);
+    balloonPos[1] -= 10.0f;
+
+    s16 relativeYaw = obj_angle_to_object(o, gMarioState->marioObj) - o->oFaceAngleYaw;
+    f32 dist = lateral_dist_between_objects(o, gMarioState->marioObj);
+
+    marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
+    marioPos[1] = gMarioState->pos[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+    marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
+
+    objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
+    objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+    objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
+
+    requiredDist[0] = 95.0f * scale;
+    requiredDist[1] = (225.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
+    requiredDist[2] = 50.0f * scale;
+
+    for (s32 i = 0; i < 3; i++) {
+        if (objDist[i] < 0.0f) {
+            objDist[i] = 0.0f;
+        }
+        if (requiredDist[i] < 0.01f) {
+            requiredDist[i] = 0.01f;
+        }
+    }
+
+    if (
+       objDist[0] > requiredDist[0] ||
+       objDist[1] > requiredDist[1] ||
+       objDist[2] > requiredDist[2]
+    ) {
+        return FALSE;
+    }
+
+    // Generously ignore Y elements of hitbox for key balloons
+    if (
+        objDist[0] > (requiredDist[0] * coss(objDist[2] / requiredDist[2] * 0x4000)) ||
+        objDist[1] > requiredDist[1] ||
+        objDist[2] > (requiredDist[2] * coss(objDist[0] / requiredDist[0] * 0x4000))
     ) {
         return FALSE;
     }
@@ -118,7 +178,7 @@ void bhv_point_balloon_loop(void) {
     u32 bType = o->oBehParams2ndByte;
     f32 scale = bProps[bType].scale;
 
-    if (o->oDistanceToMario <= (120.0f * scale) + 120.0f /*Mario's height*/) {
+    if (o->oDistanceToMario <= (120.0f * scale) + 160.0f /*About Mario's height*/) {
         if (point_balloon_check_if_interacted()) {
             if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
                 spawn_mist_particles_variable(16, -120.0f, 46.0f * scale);
@@ -131,6 +191,56 @@ void bhv_point_balloon_loop(void) {
                 spawn_mist_particles_variable(4, -120.0f, 46.0f * scale);
             } else {
                 spawn_mist_particles_variable(8, -120.0f, 46.0f * scale);
+            }
+            obj_mark_for_deletion(o);
+        }
+    }
+
+    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
+    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
+    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
+
+    o->oPtBalloonAbsoluteTimer++;
+}
+
+void bhv_key_balloon_init(void) {
+    vec3f_copy(&o->oPtBalloonRelativePosVec, &o->oHomeVec);
+    cur_obj_scale(keyBalloon.scale);
+
+    o->oPtBalloonOscillateXFreq = (random_u16() % (u32) (120.0f * keyBalloon.scale)) + 120;
+    o->oPtBalloonOscillateXOffset = random_u16() % o->oPtBalloonOscillateXFreq;
+    o->oPtBalloonOscillateXIntensity = (f32) (random_u16() % (u32) (20 * keyBalloon.scale));
+
+    o->oPtBalloonOscillateYFreq = random_u16() % (u32) (170.0f * keyBalloon.scale) + 75;
+    o->oPtBalloonOscillateYOffset = random_u16() % o->oPtBalloonOscillateYFreq;
+    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (35 * keyBalloon.scale)) + 5;
+
+    o->oPtBalloonOscillateZFreq = (random_u16() % (u32) (120.0f * keyBalloon.scale)) + 120;
+    o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateZFreq;
+    o->oPtBalloonOscillateZIntensity = (f32) (random_u16() % (u32) (20 * keyBalloon.scale));
+
+    assert(o->oPtBalloonOscillateXFreq != 0, "Balloon X freq is 0!");
+    assert(o->oPtBalloonOscillateYFreq != 0, "Balloon Y freq is 0!");
+    assert(o->oPtBalloonOscillateZFreq != 0, "Balloon Z freq is 0!");
+}
+
+void bhv_key_balloon_loop(void) {
+    f32 scale = keyBalloon.scale;
+
+    if (o->oDistanceToMario <= (225.0f * scale) + 160.0f /*About Mario's height*/) {
+        if (key_balloon_check_if_interacted()) {
+            if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
+                spawn_mist_particles_variable(16, -120.0f + (110.0f * scale), 46.0f * scale);
+                struct Object *balloonPop = spawn_object_relative(0xFF, 0, 110 * scale, 0, o, MODEL_BSM_POINT_BALLOON_POPPED, bhvPointBalloonPopped);
+                if (balloonPop) {
+                    obj_scale(balloonPop, scale * 0.25f);
+                    SET_BPARAM1(balloonPop->oBehParams, BPARAM1);
+                    SET_BPARAM3(balloonPop->oBehParams, BPARAM3);
+                    SET_BPARAM4(balloonPop->oBehParams, BPARAM4);
+                }
+                spawn_mist_particles_variable(4, -120.0f + (110.0f * scale), 46.0f * scale);
+            } else {
+                spawn_mist_particles_variable(8, -120.0f + (110.0f * scale), 46.0f * scale);
             }
             obj_mark_for_deletion(o);
         }
@@ -156,15 +266,24 @@ void bhv_point_balloon_popped_loop(void) {
     }
 
     if (o->oTimer == 0) {
-        struct BalloonTypeProperties *props = &bProps[o->oBehParams2ndByte];
-        assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
+        struct BalloonTypeProperties *props;
+
+        if (o->oBehParams2ndByte == 0xFF) {
+            props = &keyBalloon;
+        } else {
+            props = &bProps[o->oBehParams2ndByte];
+            assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
+        }
 
         cur_obj_play_sound_2(props->popsfx);
 
-        if (o->oBehParams2ndByte == POINT_BALLOON_RED) {
+        if (props == &bProps[POINT_BALLOON_RED]) {
             play_sound(props->popjingle + gRedBalloonsPopped, gGlobalSoundSource);
             gRedBalloonsPopped++;
             spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
+        } else if (props == &keyBalloon) {
+            // TODO: Key balloon shenanigans
+            // play_sound(props->popjingle, gGlobalSoundSource);
         } else {
             play_sound(props->popjingle, gGlobalSoundSource);
         }

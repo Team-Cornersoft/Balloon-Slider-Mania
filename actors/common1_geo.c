@@ -27,4 +27,6 @@
 #include "tree/geo.inc.c"
 
 #include "point_balloon/geo.inc.c"
+#include "key_balloon/geo.inc.c"
 #include "point_balloon_popped/geo.inc.c"
+#include "tcs_token/geo.inc.c"
