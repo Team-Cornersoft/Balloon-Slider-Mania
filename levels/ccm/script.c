@@ -53,7 +53,7 @@ const LevelScript level_ccm_entry[] = {
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
 
-	AREA(1, ccm_area_1),
+	AREA(3, ccm_area_3),
 		WARP_NODE(0x0A, LEVEL_CCM, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CCM, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF1, LEVEL_CCM, 0x01, 0xF1, WARP_NO_CHECKPOINT),
@@ -139,9 +139,9 @@ const LevelScript level_ccm_entry[] = {
 		OBJECT(MODEL_NONE, -7707, 11448, 28317, 0, -180, 0, 0x000A0000, bhvSpinAirborneWarp),
 		OBJECT(MODEL_NONE, -7707, 11448, 28317, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
 		OBJECT(MODEL_NONE, -7707, 11448, 28317, 0, -180, 0, 0x00F10000, bhvDeathWarp),
-		TERRAIN(ccm_area_1_collision),
-		ROOMS(ccm_area_1_collision_rooms),
-		MACRO_OBJECTS(ccm_area_1_macro_objs),
+		TERRAIN(ccm_area_3_collision),
+		ROOMS(ccm_area_3_collision_rooms),
+		MACRO_OBJECTS(ccm_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
@@ -169,20 +169,20 @@ const LevelScript level_ccm_entry[] = {
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
-	AREA(3, ccm_area_3),
+	AREA(1, ccm_area_1),
 		WARP_NODE(0x0A, LEVEL_CCM, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CCM, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF1, LEVEL_CCM, 0x01, 0xF1, WARP_NO_CHECKPOINT),
 		INSTANT_WARP(0x00, 0x04, 0, 14000, 0),
-		OBJECT(MODEL_NONE, -14000, -560, -3500, 0, 90, 0, 0x00DD0000, bhvCannon),
-		OBJECT(MODEL_NONE, -6209, -4410, 15944, 0, 90, 0, 0x00000000, bhvCannon),
-		OBJECT(MODEL_NONE, 17561, -2268, 5615, 0, 90, 0, 0x00440000, bhvCannon),
-		OBJECT(MODEL_NONE, -7500, 3621, -17300, 0, -180, 0, 0x000A0000, bhvSpinAirborneWarp),
-		OBJECT(MODEL_NONE, -7500, 3621, -17300, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
-		OBJECT(MODEL_NONE, -7500, 3621, -17300, 0, -180, 0, 0x00F10000, bhvDeathWarp),
-		TERRAIN(ccm_area_3_collision),
-		ROOMS(ccm_area_3_collision_rooms),
-		MACRO_OBJECTS(ccm_area_3_macro_objs),
+		OBJECT(MODEL_NONE, -14000, -535, -3500, 0, 90, 0, 0x00C00000, bhvCannon),
+		OBJECT(MODEL_NONE, -6209, -4385, 15944, 0, 90, 0, 0x00000000, bhvCannon),
+		OBJECT(MODEL_NONE, 16561, -2243, 5615, 0, 90, 0, 0x00400000, bhvCannon),
+		OBJECT(MODEL_NONE, -14000, 10232, -24876, 0, -180, 0, 0x000A0000, bhvSpinAirborneWarp),
+		OBJECT(MODEL_NONE, -14000, 10232, -24876, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
+		OBJECT(MODEL_NONE, -14000, 10232, -24876, 0, -180, 0, 0x00F10000, bhvDeathWarp),
+		TERRAIN(ccm_area_1_collision),
+		ROOMS(ccm_area_1_collision_rooms),
+		MACRO_OBJECTS(ccm_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */

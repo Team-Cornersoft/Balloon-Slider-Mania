@@ -15,7 +15,7 @@ const GeoLayout ccm_area_2_geo[] = {
 const GeoLayout ccm_dl_1_area2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -20976, -15512, 27424, ccm_dl_A_backdrop_a3_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -20976, -5512, 27424, ccm_dl_A_backdrop_a3_a_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -20000, 2843, -21338, ccm_dl_A_wormhole_a1_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_wormhole_a1_mesh_layer_5),

@@ -2119,14 +2119,56 @@ void scroll_ccm_dl_A_wormhole_a3a_mesh_layer_5_vtx_3() {
 	currentY += deltaY;
 }
 
-void scroll_ccm_dl_D_star_gate_a3_a_002_mesh_layer_1_vtx_0() {
+void scroll_ccm_dl_D_star_gate_a3_a_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 480;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ccm_dl_D_star_gate_a3_a_002_mesh_layer_1_vtx_0);
+	Vtx *vertices = segmented_to_virtual(ccm_dl_D_star_gate_a3_a_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ccm_dl_D_star_gate_a3_b_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 80;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_D_star_gate_a3_b_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ccm_dl_D_star_gate_a3_c_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 80;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_D_star_gate_a3_c_mesh_layer_1_vtx_0);
 
 	deltaX = (int)(0.10000000149011612 * 0x20) % width;
 
@@ -2666,7 +2708,9 @@ void scroll_ccm() {
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_5_vtx_1();
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_5_vtx_2();
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_5_vtx_3();
-	scroll_ccm_dl_D_star_gate_a3_a_002_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_D_star_gate_a3_a_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_D_star_gate_a3_b_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_D_star_gate_a3_c_mesh_layer_1_vtx_0();
 	scroll_ccm_dl_A_wormhole_a4a_mesh_layer_1_vtx_0();
 	scroll_ccm_dl_A_wormhole_a4a_mesh_layer_1_vtx_1();
 	scroll_ccm_dl_A_wormhole_a4a_mesh_layer_1_vtx_2();
