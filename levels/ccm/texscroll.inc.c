@@ -2121,7 +2121,7 @@ void scroll_ccm_dl_A_wormhole_a3a_mesh_layer_5_vtx_3() {
 
 void scroll_ccm_dl_D_star_gate_a3_a_mesh_layer_1_vtx_0() {
 	int i = 0;
-	int count = 480;
+	int count = 400;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;

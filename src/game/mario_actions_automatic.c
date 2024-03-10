@@ -21,7 +21,7 @@
 
 #define HANG_DISTANCE 144.0f
 
-#define CANNON_SHOOT_VELOCITY 130.0f
+#define CANNON_SHOOT_VELOCITY 125.0f
 
 void add_tree_leaf_particles(struct MarioState *m) {
     if (m->usedObj->behavior == segmented_to_virtual(bhvTree)) {

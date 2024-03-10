@@ -27,7 +27,7 @@ const GeoLayout ccm_dl_1_area3_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_wormhole_a3a_mesh_layer_5),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -14000, 1112, -1595, ccm_dl_D_star_gate_a3_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -14000, 227, -2750, ccm_dl_D_star_gate_a3_a_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
