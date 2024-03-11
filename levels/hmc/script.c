@@ -56,6 +56,7 @@ const LevelScript level_hmc_entry[] = {
 		WARP_NODE(0xF0, LEVEL_HMC, 0x01, 0xF0, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF1, LEVEL_HMC, 0x01, 0xF1, WARP_NO_CHECKPOINT),
 		MARIO_POS(0x01, -180, 0, 0, 1000),
+		OBJECT(MODEL_BSM_KEY_GATE, 8000, 0, 0, 0, 0, 0, 0x00000000, bhvKeyGate),
 		OBJECT(MODEL_NONE, 0, 0, 1000, 0, -180, 0, 0x000A0000, bhvSpinAirborneWarp),
 		OBJECT(MODEL_NONE, 0, 0, 1000, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
 		OBJECT(MODEL_NONE, 0, 0, 1000, 0, -180, 0, 0x00F10000, bhvDeathWarp),
