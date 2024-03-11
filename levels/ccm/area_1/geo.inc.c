@@ -23,8 +23,7 @@ const GeoLayout ccm_area_1_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_Road_b_mesh_layer_5),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2378, -2249, -11979, ccm_dl_A_Road_c_mesh_layer_1),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 27, 27, 27, 0, 0, 0),
-		GEO_TRANSLATE_NODE(LAYER_OPAQUE, 70000, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 100, 27, 150, 0, 0, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -132,7 +131,7 @@ const GeoLayout ccm_area_1[] = {
 		GEO_OPEN_NODE(),
 			GEO_CAMERA_FRUSTUM_WITH_FUNC(45.0000, 127, 65535, geo_camera_fov),
 			GEO_OPEN_NODE(),
-				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, -140000, 0, 0, -140000, -100, 0, geo_camera_main),
+				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, -210000, 0, 0, -210000, -100, 0, geo_camera_main),
 				GEO_OPEN_NODE(),
 					GEO_BRANCH(1, ccm_area_1_geo),
 					GEO_RENDER_OBJ(),
