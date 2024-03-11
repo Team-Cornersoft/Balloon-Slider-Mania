@@ -766,6 +766,19 @@ u32 interact_water_ring(struct MarioState *m, UNUSED u32 interactType, struct Ob
 u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 starIndex;
     u32 starGrabAction = ACT_STAR_DANCE_EXIT;
+
+    if (obj->behavior == segmented_to_virtual(bhvTCSToken)) {
+        gBSMTCSTokenCollected = TRUE;
+
+        play_sound(SOUND_MENU_STAR_SOUND, m->marioObj->header.gfx.cameraToObject);
+        spawn_object(obj, MODEL_NONE, bhvStarKeyCollectionPuffSpawner);
+        obj->oInteractStatus = INT_STATUS_INTERACTED;
+        m->interactObj       = obj;
+        m->usedObj           = obj;
+
+        return TRUE;
+    }
+
 #ifdef NON_STOP_STARS
  #ifdef KEYS_EXIT_LEVEL
     u32 noExit = !obj_has_model(obj, MODEL_BOWSER_KEY);

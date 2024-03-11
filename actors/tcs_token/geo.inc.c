@@ -5,7 +5,7 @@ const GeoLayout tcs_token_geo[] = {
 	GEO_OPEN_NODE(),
 		GEO_SHADOW(0, 155, 100),
 		GEO_OPEN_NODE(),
-			GEO_SCALE(LAYER_FORCE, 16384),
+			GEO_SCALE(LAYER_FORCE, 65536),
 			GEO_OPEN_NODE(),
 				GEO_DISPLAY_LIST(LAYER_OPAQUE, tcs_token_000_displaylist_mesh_layer_1),
 				GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 0, 0, 0, tcs_token_002_bb_mesh_layer_5),

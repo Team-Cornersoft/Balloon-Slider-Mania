@@ -433,7 +433,7 @@ const BehaviorScript bhvKeyBalloon[] = {
 const BehaviorScript bhvPointBalloonPopped[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    SET_FLOAT(oDrawingDistance, 5000),
+    SET_FLOAT(oDrawingDistance, 3500),
     SET_HOME(),
     BILLBOARD(),
     CALL_NATIVE(bhv_point_balloon_popped_init),
@@ -442,8 +442,20 @@ const BehaviorScript bhvPointBalloonPopped[] = {
     END_LOOP(),
 };
 
-const BehaviorScript bhvKeyGateLoop[] = {
-    BEGIN(OBJ_LIST_DEFAULT),
+const BehaviorScript bhvTCSToken[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, 8000),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_tcs_token_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_tcs_token_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvKeyGate[] = {
+    BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_FLOAT(oDrawingDistance, 12000),
     SET_INT(oOpacity, 255),

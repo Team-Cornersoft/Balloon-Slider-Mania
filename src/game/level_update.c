@@ -153,6 +153,7 @@ u8 renderPressA = FALSE;
 
 u8 gOrthoCam = FALSE;
 
+u8 gBSMTCSTokenCollected = FALSE;
 u8 gBSMKeyCollected = FALSE;
 s16 gRedBalloonsPopped = 0;
 
@@ -1242,6 +1243,7 @@ s32 init_level(void) {
 
     sTimerRunning = FALSE;
 
+    gBSMTCSTokenCollected = FALSE;
     gBSMKeyCollected = FALSE;
     gRedBalloonsPopped = 0;
 
@@ -1440,7 +1442,7 @@ s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
     
     for (s32 i = 0; i < BSM_COURSE_ROW_1_END; i++) {
-        if ((bsmCompletionFlags[i] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))) {
+        if (bsmCompletionFlags[i] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) {
             showStandard = TRUE;
             break;
         }
@@ -1449,7 +1451,7 @@ s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     if (!showStandard) {
         for (s32 i = 0; i < BSM_COURSE_ROW_1_END; i++) {
             if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
-                return TRUE; // Need to complete first four courses to extra courses
+                return TRUE; // Need to complete first four courses or have a CS Token to display extra courses
             }
         }
     }

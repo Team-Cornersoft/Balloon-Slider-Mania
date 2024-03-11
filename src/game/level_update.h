@@ -114,6 +114,7 @@ extern s16 sSourceWarpNodeId;
 extern s32 sDelayedWarpArg;
 extern s8 sTimerRunning;
 
+extern u8 gBSMTCSTokenCollected;
 extern u8 gBSMKeyCollected;
 extern s16 gRedBalloonsPopped;
 

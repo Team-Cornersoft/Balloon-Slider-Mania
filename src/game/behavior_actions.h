@@ -23,6 +23,8 @@ void bhv_key_balloon_init(void);
 void bhv_key_balloon_loop(void);
 void bhv_point_balloon_popped_init(void);
 void bhv_point_balloon_popped_loop(void);
+void bhv_tcs_token_init(void);
+void bhv_tcs_token_loop(void);
 void bhv_key_gate_loop(void);
 void bhv_bsm_menu_title_init(void);
 void bhv_bsm_menu_title_loop(void);
