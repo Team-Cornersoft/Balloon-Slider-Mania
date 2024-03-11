@@ -1435,11 +1435,22 @@ s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
     return TRUE;
 #else
+    u8 showStandard = FALSE;
     u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
     gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
+    
     for (s32 i = 0; i < BSM_COURSE_ROW_1_END; i++) {
-        if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
-            return TRUE; // Need to complete first four courses to extra courses
+        if ((bsmCompletionFlags[i] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))) {
+            showStandard = TRUE;
+            break;
+        }
+    }
+
+    if (!showStandard) {
+        for (s32 i = 0; i < BSM_COURSE_ROW_1_END; i++) {
+            if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+                return TRUE; // Need to complete first four courses to extra courses
+            }
         }
     }
 
