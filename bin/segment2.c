@@ -542,11 +542,11 @@ ALIGNED8 static const Texture texture_custom_bsm_hud_tcstoken_na[] = {
 };
 
 ALIGNED8 static const Texture texture_custom_bsm_hud_score[] = {
-#include "textures/segment2/custom_bsm_hud_score.rgba16.inc.c"
+#include "textures/segment2/custom_bsm_hud_score.rgba32.inc.c"
 };
 
 ALIGNED8 static const Texture texture_custom_bsm_hud_time[] = {
-#include "textures/segment2/custom_bsm_hud_time.rgba16.inc.c"
+#include "textures/segment2/custom_bsm_hud_time.rgba32.inc.c"
 };
 
 ALIGNED8 static const Texture texture_credits_char_3[] = {
@@ -2141,7 +2141,9 @@ const Texture *const main_hud_lut[] = {
                    0x0,                0x0, texture_hud_char_slash, texture_hud_char_minus,
     texture_hud_char_multiply, texture_hud_char_coin, texture_hud_char_red_coin, texture_hud_char_silver_coin,
     texture_hud_char_mario_head, texture_hud_char_star, texture_hud_char_decimal_point, texture_hud_char_beta_key,
-    texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut,
+    texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut, texture_custom_bsm_hud_balloon,
+    texture_custom_bsm_hud_key, texture_custom_bsm_hud_key_na, texture_custom_bsm_hud_tcstoken, texture_custom_bsm_hud_tcstoken_na,
+    texture_custom_bsm_hud_score, texture_custom_bsm_hud_time,
 };
 
 // Main small font print table 0x02008338-0x02008737
@@ -2431,6 +2433,39 @@ const Gfx dl_rgba16_load_tex_block[] = {
 
 // 0x0200ED68 - 0x0200EDA8
 const Gfx dl_rgba16_text_end[] = {
+    gsDPPipeSync(),
+    gsDPSetTexturePersp(G_TP_PERSP),
+    gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+    gsDPSetEnvColor(255, 255, 255, 255),
+    gsDPSetTextureFilter(G_TF_BILERP),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200ED00 - 0x0200ED38
+const Gfx dl_rgba32_64x16_text_begin[] = {
+    gsDPPipeSync(),
+    gsDPSetTexturePersp(G_TP_NONE),
+    gsDPSetCombineMode(G_CC_FADEA, G_CC_FADEA),
+    gsDPSetEnvColor(255, 255, 255, 255),
+    gsDPSetRenderMode(G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2),
+    gsDPSetTextureFilter(G_TF_POINT),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200ED38 - 0x0200ED68
+const Gfx dl_rgba32_64x16_load_tex_block[] = {
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 4, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 6, G_TX_NOLOD),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((16 * 64) - 1), CALC_DXT(64, G_IM_SIZ_32b_BYTES)),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 0, G_TX_RENDERTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 4, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 6, G_TX_NOLOD),
+    gsDPSetTileSize(0, 0, 0, ((16 - 1) << G_TEXTURE_IMAGE_FRAC), ((64 - 1) << G_TEXTURE_IMAGE_FRAC)),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200ED68 - 0x0200EDA8
+const Gfx dl_rgba32_64x16_text_end[] = {
     gsDPPipeSync(),
     gsDPSetTexturePersp(G_TP_PERSP),
     gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),

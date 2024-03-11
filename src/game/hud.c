@@ -2,6 +2,7 @@
 
 #include "sm64.h"
 #include "actors/common1.h"
+#include "emutest.h"
 #include "gfx_dimensions.h"
 #include "game_init.h"
 #include "level_update.h"
@@ -19,6 +20,8 @@
 #include "puppyprint.h"
 
 #include "config.h"
+
+#define EMULATOR_DIFF 6
 
 /* @file hud.c
  * This file implements HUD rendering and power meter animations.
@@ -530,9 +533,10 @@ void set_hud_camera_status(s16 status) {
  * the camera status called, a defined glyph is rendered.
  */
 void render_hud_camera_status(void) {
+    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     Texture *(*cameraLUT)[6] = segmented_to_virtual(&main_hud_camera_lut);
-    s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X);
-    s32 y = 205;
+    s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X) + consoleDiff;
+    s32 y = 205 + consoleDiff;
 
     if (sCameraHUD.status == CAM_STATUS_NONE) {
         return;
@@ -563,6 +567,92 @@ void render_hud_camera_status(void) {
     }
 
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
+}
+
+/**
+ * Render BSM related HUD icons.
+ */
+void render_hud_bsm_info(void) {
+    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
+
+    s32 scoreX = 22 - consoleDiff;
+    s32 scoreY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    s32 timeX = SCREEN_WIDTH - (22 + 64) + consoleDiff;
+    s32 timeY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    s32 redBalloonX = 22 - consoleDiff;
+    s32 redBalloonY = 205 + consoleDiff;
+    s32 keyX = SCREEN_CENTER_X - 18;
+    s32 keyY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    s32 tcsTokenX = SCREEN_CENTER_X + 2;
+    s32 tcsTokenY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    char strBuff[32];
+
+    void **hudLUT = segmented_to_virtual(main_hud_lut);
+    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_begin);
+
+    // SCORE
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
+    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, scoreX << 2, scoreY << 2, (scoreX + 64) << 2,
+                        (scoreY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    // TIME
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
+    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, timeX << 2, timeY << 2, (timeX + 64) << 2,
+                        (timeY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_end);
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+
+    // Red balloons
+    if (gRedBalloonsPopped > 0) {
+        gDPPipeSync(gDisplayListHead++);
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
+
+        for (s32 i = 0; i < gRedBalloonsPopped; i++) {
+            gDPPipeSync(gDisplayListHead++);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonY << 2, (redBalloonX + 16) << 2,
+                                (redBalloonY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            redBalloonX += 16;
+        }
+    }
+
+    // Key
+    gDPPipeSync(gDisplayListHead++);
+    if (gBSMKeyCollected) {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
+    } else {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
+    }
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, keyX << 2, keyY << 2, (keyX + 16) << 2,
+                        (keyY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    // TCS Token
+    gDPPipeSync(gDisplayListHead++);
+    if (gBSMTCSTokenCollected) {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
+    } else {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
+    }
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, tcsTokenX << 2, tcsTokenY << 2, (tcsTokenX + 16) << 2,
+                        (tcsTokenY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+
+    print_set_envcolour(255, 255, 255, 255); // TODO:
+    sprintf(strBuff, "%d", gBSMScoreCount);
+    print_small_text(scoreX + 32, scoreY + 19, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+    
+    print_set_envcolour(255, 255, 255, 255);
+    sprintf(strBuff, "%d:%02d.%02d", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30);
+    print_small_text(timeX + 32, timeY + 19, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 }
 
 /**
@@ -644,6 +734,8 @@ void render_hud(void) {
 #ifdef PUPPYCAM
             }
 #endif
+
+            render_hud_bsm_info();
         }
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_TIMER) {

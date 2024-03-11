@@ -32,6 +32,13 @@ enum PrintfGlyphs {
     GLYPH_APOSTROPHE      = 56,
     GLYPH_DOUBLE_QUOTE    = 57,
     GLYPH_UMLAUT          = 58,
+    GLYPH_BSM_RED_BALLOON = 59,
+    GLYPH_BSM_KEY         = 60,
+    GLYPH_BSM_KEY_NA      = 61,
+    GLYPH_BSM_TCS         = 62,
+    GLYPH_BSM_TCS_NA      = 63,
+    GLYPH_BSM_SCORE       = 64,
+    GLYPH_BSM_TIME        = 65,
 };
 
 void print_text_fmt_int(s32 x, s32 y, const char *str, s32 n);

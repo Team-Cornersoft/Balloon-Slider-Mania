@@ -116,9 +116,10 @@ extern s8 sTimerRunning;
 
 extern u8 gBSMTCSTokenCollected;
 extern u8 gBSMKeyCollected;
+extern u8 gBSMTimerActive;
 extern s16 gRedBalloonsPopped;
 extern u32 gBSMScoreCount;
-extern u32 gBSMTrameTimer;
+extern u32 gBSMFrameTimer;
 
 struct HudDisplay {
     /*0x00*/ s16 lives;

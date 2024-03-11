@@ -155,9 +155,10 @@ u8 gOrthoCam = FALSE;
 
 u8 gBSMTCSTokenCollected = FALSE;
 u8 gBSMKeyCollected = FALSE;
+u8 gBSMTimerActive = FALSE;
 s16 gRedBalloonsPopped = 0;
 u32 gBSMScoreCount = 0;
-u32 gBSMTrameTimer = 0;
+u32 gBSMFrameTimer = 0;
 
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
@@ -1009,6 +1010,10 @@ s32 play_mode_normal(void) {
     warp_area();
     check_instant_warp();
 
+    if (gBSMTimerActive && gBSMFrameTimer < 0xFFFFFFFF) {
+        gBSMFrameTimer++;
+    }
+
 #ifdef PUPPYPRINT_DEBUG
 #ifdef BETTER_REVERB
     if (sPPDebugPage != PUPPYPRINT_PAGE_RAM && sPPDebugPage != PUPPYPRINT_PAGE_LEVEL_SELECT && sPPDebugPage != PUPPYPRINT_PAGE_BETTER_REVERB) {
@@ -1249,7 +1254,8 @@ s32 init_level(void) {
     gBSMKeyCollected = FALSE;
     gRedBalloonsPopped = 0;
     gBSMScoreCount = 0;
-    gBSMTrameTimer = 0;
+    gBSMFrameTimer = 0;
+    gBSMTimerActive = TRUE;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.nodeId >= WARP_NODE_CREDITS_MIN) {
