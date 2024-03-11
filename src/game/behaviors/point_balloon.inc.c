@@ -300,9 +300,9 @@ void bhv_point_balloon_popped_loop(void) {
 }
 
 void bhv_key_gate_loop(void) {
-    if (gBSMKeyCollected) {
-        cur_obj_hide(); // TODO: UNLOCKED model
-    } else {
+    o->oAnimState = (gBSMKeyCollected == TRUE) ? 1 : 0;
+
+    if (o->oAnimState == 0) {
         load_object_collision_model();
     }
 }
