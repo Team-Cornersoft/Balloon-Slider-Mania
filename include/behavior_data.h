@@ -7,6 +7,7 @@ extern const BehaviorScript bhvNone[];
 extern const BehaviorScript bhvPointBalloon[];
 extern const BehaviorScript bhvKeyBalloon[];
 extern const BehaviorScript bhvPointBalloonPopped[];
+extern const BehaviorScript bhvKeyGate[];
 extern const BehaviorScript bhvBSMMenuTitle[];
 extern const BehaviorScript bhvBSMMenuButtonManager[];
 extern const BehaviorScript bhvBSMMenuButtonOrStage[];

@@ -282,7 +282,9 @@ void bhv_point_balloon_popped_loop(void) {
             gRedBalloonsPopped++;
             spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
         } else if (props == &keyBalloon) {
-            // TODO: Key balloon shenanigans
+            gBSMKeyCollected = TRUE;
+
+            // TODO: Key balloon sound and HUD texture
             // play_sound(props->popjingle, gGlobalSoundSource);
         } else {
             play_sound(props->popjingle, gGlobalSoundSource);
@@ -294,4 +296,12 @@ void bhv_point_balloon_popped_loop(void) {
     o->oPosZ = o->oHomeZ - (5.0f + 40.0f * random_float()) * o->oPtBalloonPoppedScale;
 
     cur_obj_scale(o->oPtBalloonPoppedScale + ((o->oPtBalloonPoppedScale * 0.6f) * o->oTimer));
+}
+
+void bhv_key_gate_loop(void) {
+    if (gBSMKeyCollected) {
+        cur_obj_hide(); // TODO: UNLOCKED model
+    } else {
+        load_object_collision_model();
+    }
 }

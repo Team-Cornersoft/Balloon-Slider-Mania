@@ -153,6 +153,7 @@ u8 renderPressA = FALSE;
 
 u8 gOrthoCam = FALSE;
 
+u8 gBSMKeyCollected = FALSE;
 s16 gRedBalloonsPopped = 0;
 
 struct MarioState *gMarioState = &gMarioStates[0];
@@ -1241,6 +1242,7 @@ s32 init_level(void) {
 
     sTimerRunning = FALSE;
 
+    gBSMKeyCollected = FALSE:
     gRedBalloonsPopped = 0;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {

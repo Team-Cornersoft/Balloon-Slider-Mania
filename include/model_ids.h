@@ -585,6 +585,7 @@ enum CustomModelIDs {
     MODEL_BSM_KEY_BALLOON,          // common1
     MODEL_BSM_POINT_BALLOON_POPPED, // common1
     MODEL_BSM_TCS_TOKEN,            // common1
+    MODEL_BSM_KEY_GATE,             // group0
 
     MODEL_ID_COUNT
 };
