@@ -1242,7 +1242,7 @@ s32 init_level(void) {
 
     sTimerRunning = FALSE;
 
-    gBSMKeyCollected = FALSE:
+    gBSMKeyCollected = FALSE;
     gRedBalloonsPopped = 0;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {

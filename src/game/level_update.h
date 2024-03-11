@@ -114,7 +114,7 @@ extern s16 sSourceWarpNodeId;
 extern s32 sDelayedWarpArg;
 extern s8 sTimerRunning;
 
-extern s16 gBSMKeyCollected;
+extern u8 gBSMKeyCollected;
 extern s16 gRedBalloonsPopped;
 
 struct HudDisplay {
