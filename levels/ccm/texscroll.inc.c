@@ -1951,6 +1951,90 @@ void scroll_ccm_dl_A_wormhole_c4_mesh_layer_5_vtx_3() {
 	currentY += deltaY;
 }
 
+void scroll_ccm_dl_a3_skybox_a_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 71;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_a3_skybox_a_mesh_layer_1_vtx_0);
+
+	deltaY = (int)(-0.10000000149011612 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_a3_skybox_b_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 71;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_a3_skybox_b_mesh_layer_1_vtx_0);
+
+	deltaY = (int)(-0.10000000149011612 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_a3_skybox_c_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 71;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_a3_skybox_c_mesh_layer_1_vtx_0);
+
+	deltaY = (int)(-0.10000000149011612 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ccm_dl_a3_skybox_d_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 76;
+	int height = 64 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ccm_dl_a3_skybox_d_mesh_layer_1_vtx_0);
+
+	deltaY = (int)(-0.10000000149011612 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
 void scroll_ccm_dl_A_wormhole_a3a_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 184;
@@ -2700,6 +2784,10 @@ void scroll_ccm() {
 	scroll_ccm_dl_A_wormhole_c4_mesh_layer_5_vtx_1();
 	scroll_ccm_dl_A_wormhole_c4_mesh_layer_5_vtx_2();
 	scroll_ccm_dl_A_wormhole_c4_mesh_layer_5_vtx_3();
+	scroll_ccm_dl_a3_skybox_a_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_a3_skybox_b_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_a3_skybox_c_mesh_layer_1_vtx_0();
+	scroll_ccm_dl_a3_skybox_d_mesh_layer_1_vtx_0();
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_1_vtx_0();
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_1_vtx_1();
 	scroll_ccm_dl_A_wormhole_a3a_mesh_layer_1_vtx_2();

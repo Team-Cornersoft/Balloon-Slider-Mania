@@ -9,10 +9,10 @@ const GeoLayout ccm_area_1_geo[] = {
 			GEO_BRANCH(1, ccm_dl_2_area3_geo),
 			GEO_BRANCH(1, ccm_dl_3_area3_geo),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -15036, 0, 0, ccm_dl_a3_skybox_a_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 16000, 0, 15036, ccm_dl_a3_skybox_b_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15036, 0, -15999, ccm_dl_a3_skybox_c_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -16000, 0, -15036, ccm_dl_a3_skybox_d_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 14072, 4141, 14072, ccm_dl_a3_skybox_a_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 14070, 4141, -14069, 0, 90, 0, ccm_dl_a3_skybox_b_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14071, 4141, -14068, 0, -180, 0, ccm_dl_a3_skybox_c_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14069, 4141, 14073, 0, -90, 0, ccm_dl_a3_skybox_d_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -49,7 +49,7 @@ const GeoLayout ccm_dl_3_area3_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_bowl_c_mesh_layer_5),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 16591, -412, 4007, ccm_dl_D_star_gate_a3_c_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 16561, -1512, 4607, ccm_dl_D_star_gate_a3_c_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
