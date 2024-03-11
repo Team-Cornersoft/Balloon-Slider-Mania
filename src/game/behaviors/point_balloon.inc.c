@@ -275,6 +275,7 @@ void bhv_point_balloon_popped_loop(void) {
             assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
         }
 
+        gBSMScoreCount += props->points;
         cur_obj_play_sound_2(props->popsfx);
 
         if (props == &bProps[POINT_BALLOON_RED]) {

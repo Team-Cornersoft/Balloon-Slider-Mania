@@ -156,6 +156,8 @@ u8 gOrthoCam = FALSE;
 u8 gBSMTCSTokenCollected = FALSE;
 u8 gBSMKeyCollected = FALSE;
 s16 gRedBalloonsPopped = 0;
+u32 gBSMScoreCount = 0;
+u32 gBSMTrameTimer = 0;
 
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
@@ -1246,6 +1248,8 @@ s32 init_level(void) {
     gBSMTCSTokenCollected = FALSE;
     gBSMKeyCollected = FALSE;
     gRedBalloonsPopped = 0;
+    gBSMScoreCount = 0;
+    gBSMTrameTimer = 0;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.nodeId >= WARP_NODE_CREDITS_MIN) {

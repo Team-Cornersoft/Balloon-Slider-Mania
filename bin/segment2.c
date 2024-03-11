@@ -521,6 +521,34 @@ ALIGNED8 static const Texture texture_hud_char_beta_key[] = {
 };
 #endif
 
+ALIGNED8 static const Texture texture_custom_bsm_hud_balloon[] = {
+#include "textures/segment2/custom_bsm_hud_balloon.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_key[] = {
+#include "textures/segment2/custom_bsm_hud_key.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_key_na[] = {
+#include "textures/segment2/custom_bsm_hud_key_na.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_tcstoken[] = {
+#include "textures/segment2/custom_bsm_hud_tcstoken.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_tcstoken_na[] = {
+#include "textures/segment2/custom_bsm_hud_tcstoken_na.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_score[] = {
+#include "textures/segment2/custom_bsm_hud_score.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_custom_bsm_hud_time[] = {
+#include "textures/segment2/custom_bsm_hud_time.rgba16.inc.c"
+};
+
 ALIGNED8 static const Texture texture_credits_char_3[] = {
 #include "textures/segment2/segment2.06200.rgba16.inc.c"
 };
