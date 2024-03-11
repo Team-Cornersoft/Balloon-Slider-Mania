@@ -1047,7 +1047,9 @@ void init_reverb_us(s32 presetId) {
 #ifdef BETTER_REVERB
     s32 reinitBetterReverbBuffers = TRUE;
     if ((u32) (presetId >> 31) & 1) {
-        reinitBetterReverbBuffers = FALSE;
+        if (sAudioIsInitialized) {
+            reinitBetterReverbBuffers = FALSE;
+        }
         presetId = (s32) ((u32) presetId & ~(1 << 31));
     }
 #endif
@@ -1068,6 +1070,15 @@ void init_reverb_us(s32 presetId) {
 
         assert(gBetterReverbPresetValue < gBetterReverbPresetCount, "BETTER_REVERB preset value exceeds total number of available presets!");
         betterReverbPreset = &gBetterReverbSettings[0];
+    }
+
+    if (
+       betterReverbDownsampleRate != betterReverbPreset->downsampleRate || // This one is somewhat debatable, but it IS used somewhere reliant on this boolean...
+       betterReverbLightweight != betterReverbPreset->useLightweightSettings ||
+       monoReverb != betterReverbPreset->isMono ||
+       (!betterReverbPreset->useLightweightSettings && reverbFilterCount != betterReverbPreset->filterCount)
+    )   {
+        reinitBetterReverbBuffers = TRUE;
     }
 
     betterReverbLightweight = betterReverbPreset->useLightweightSettings;
@@ -1131,7 +1142,10 @@ void init_reverb_us(s32 presetId) {
         }
     } else {
         if (reinitBetterReverbBuffers) {
-            bzero(gSynthesisReverb.ringBuffer.left, (REVERB_WINDOW_SIZE_MAX * 2 * sizeof(s16)));
+            bzero(gSynthesisReverb.ringBuffer.left, (REVERB_WINDOW_SIZE_MAX * SYNTH_CHANNEL_STEREO_COUNT * sizeof(s16)));
+        } else if (reverbWindowSize < REVERB_WINDOW_SIZE_MAX) {
+            bzero(gSynthesisReverb.ringBuffer.left + (reverbWindowSize * sizeof(s16)), ((REVERB_WINDOW_SIZE_MAX - reverbWindowSize) * sizeof(s16)));
+            bzero(gSynthesisReverb.ringBuffer.right + (reverbWindowSize * sizeof(s16)), ((REVERB_WINDOW_SIZE_MAX - reverbWindowSize) * sizeof(s16)));
         }
     }
 
