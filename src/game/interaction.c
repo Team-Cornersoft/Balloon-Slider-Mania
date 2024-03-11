@@ -14,6 +14,7 @@
 #include "interaction.h"
 #include "level_update.h"
 #include "mario.h"
+#include "mario_actions_moving.h"
 #include "mario_step.h"
 #include "memory.h"
 #include "obj_behaviors.h"
