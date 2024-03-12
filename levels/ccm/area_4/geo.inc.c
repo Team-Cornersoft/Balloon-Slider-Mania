@@ -7,6 +7,7 @@ const GeoLayout ccm_area_4_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, ccm_dl_1_area4_geo),
 		GEO_CLOSE_NODE(),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 20, 20, 50, 0, 0, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -40,7 +41,7 @@ const GeoLayout ccm_dl_1_area4_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -2200, -344, 12554, ccm_dl_B_planet_g_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 7007, 0, 14647, ccm_dl_B_planet_h_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -8000, 1100, 17000, ccm_dl_B_planet_i_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -8000, 4520, 14300, ccm_dl_B_rainbow_paths_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -2350, -1344, 757, ccm_dl_B_rainbow_paths_mesh_layer_5),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, ccm_dl_B_rainbow_paths_mesh_layer_4),
 		GEO_CLOSE_NODE(),
