@@ -25,7 +25,7 @@ const GeoLayout ccm_dl_1_area4_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 13060, -5996, -18586, ccm_dl_A_orbits_d_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -7000, -28000, ccm_dl_A_sun_mesh_layer_1),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 0, -7000, -28000, ccm_dl_A_sun_glow_mesh_layer_5),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -500, 9799, 25998, ccm_dl_A_wormhole_a4_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -500, 7799, 25998, ccm_dl_A_wormhole_a4_a_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ccm_dl_A_wormhole_a4_a_mesh_layer_5),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, ccm_dl_A_wormhole_a4_a_mesh_layer_4),
