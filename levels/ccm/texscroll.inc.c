@@ -1260,7 +1260,7 @@ void scroll_ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_2() {
 
 void scroll_ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_3() {
 	int i = 0;
-	int count = 120;
+	int count = 122;
 	int height = 64 * 0x20;
 
 	static int currentY = 0;

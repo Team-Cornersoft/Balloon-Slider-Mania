@@ -569,7 +569,7 @@ extern Vtx ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_1[120];
 extern Gfx ccm_dl_A_wormhole_b2_mesh_layer_1_tri_1[];
 extern Vtx ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_2[120];
 extern Gfx ccm_dl_A_wormhole_b2_mesh_layer_1_tri_2[];
-extern Vtx ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_3[120];
+extern Vtx ccm_dl_A_wormhole_b2_mesh_layer_1_vtx_3[122];
 extern Gfx ccm_dl_A_wormhole_b2_mesh_layer_1_tri_3[];
 extern Vtx ccm_dl_A_wormhole_b3_mesh_layer_1_vtx_cull[8];
 extern Vtx ccm_dl_A_wormhole_b3_mesh_layer_1_vtx_0[104];
