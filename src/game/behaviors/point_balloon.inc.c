@@ -279,9 +279,12 @@ void bhv_point_balloon_popped_loop(void) {
         cur_obj_play_sound_2(props->popsfx);
 
         if (props == &bProps[POINT_BALLOON_RED]) {
-            play_sound(props->popjingle + (gRedBalloonsPopped << SOUNDARGS_SHIFT_SOUNDID), gGlobalSoundSource);
-            gRedBalloonsPopped++;
-            spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
+            assert(gRedBalloonsPopped < 8, "Tried to collect more than 8 red balloons!");
+            if (gRedBalloonsPopped < 8) {
+                play_sound(props->popjingle + (gRedBalloonsPopped << SOUNDARGS_SHIFT_SOUNDID), gGlobalSoundSource);
+                gRedBalloonsPopped++;
+                spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
+            }
         } else if (props == &keyBalloon) {
             gBSMKeyCollected = TRUE;
 

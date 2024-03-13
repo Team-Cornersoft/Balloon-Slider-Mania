@@ -148,6 +148,7 @@ const LevelScript level_wf_entry[] = {
         OBJECT(/*model*/ MODEL_BSM_POINT_BALLOON, /*pos*/  1000, 4000,     0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00050000, /*beh*/ bhvPointBalloon),
         OBJECT(/*model*/   MODEL_BSM_KEY_BALLOON, /*pos*/     0, 4000, -1000, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/   bhvKeyBalloon),
         OBJECT(/*model*/     MODEL_BSM_TCS_TOKEN, /*pos*/     0, 4000,  1000, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/     bhvTCSToken),
+        OBJECT(/*model*/      MODEL_BSM_KEY_GATE, /*pos*/     0, 4000,  -750, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/      bhvKeyGate),
 
         OBJECT(/*model*/ MODEL_NONE, /*pos*/  2600, 1256,  5120, /*angle*/ 0, 90, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvSpinAirborneWarp),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ -2925, 2560,  -947, /*angle*/ 0, 19, 0, /*behParam*/ 0x000B0000, /*beh*/ bhvFadingWarp),
