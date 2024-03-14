@@ -49,6 +49,7 @@ enum SeqId {
     SEQ_CUSTOM_LEVEL_SELECT,          // 0x23
     SEQ_CUSTOM_COURSE1_SNOWY,         // 0x24
     SEQ_CUSTOM_COURSE2_WATERWAYS,     // 0x25
+    SEQ_CUSTOM_COURSE4_SPACE,         // 0x26
 
     SEQ_COUNT
 };
