@@ -69,3 +69,5 @@
 #include "levels/wf/areas/1/movtext.inc.c"
 
 #include "levels/wf/leveldata.inc.c"
+
+#include "levels/wf/custom_bell/model.inc.c"

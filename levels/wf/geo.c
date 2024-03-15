@@ -43,3 +43,5 @@
 #include "levels/wf/areas/1/geo.inc.c"
 
 #include "levels/wf/geo.inc.c"
+
+#include "levels/wf/custom_bell/geo.inc.c"

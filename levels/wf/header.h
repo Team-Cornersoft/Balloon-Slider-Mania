@@ -102,4 +102,6 @@ extern const LevelScript level_wf_entry[];
 
 #include "levels/wf/header.inc.h"
 
+#include "levels/wf/custom_bell/geo_header.h"
+
 #endif
