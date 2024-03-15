@@ -18,3 +18,4 @@
 #include "mario/geo.inc.c"
 
 #include "key_gate/geo.inc.c"
+#include "custom_moving_bridge/geo.inc.c"

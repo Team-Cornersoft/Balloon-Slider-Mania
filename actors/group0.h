@@ -337,4 +337,6 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "key_gate/collision_header.h"
 
+#include "custom_moving_bridge/geo_header.h"
+
 #endif
