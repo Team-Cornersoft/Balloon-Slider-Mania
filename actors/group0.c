@@ -34,3 +34,4 @@
 #include "key_gate/model.inc.c"
 #include "key_gate/collision.inc.c"
 #include "custom_moving_bridge/model.inc.c"
+#include "custom_moving_bridge/collision.inc.c"
