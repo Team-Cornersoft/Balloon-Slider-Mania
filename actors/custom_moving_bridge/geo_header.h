@@ -13,7 +13,7 @@ extern Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1[8];
 extern Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_1[];
 extern Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_2[5];
 extern Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_2[];
-extern Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_3[24];
+extern Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_3[40];
 extern Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_3[];
 extern Gfx mat_custom_moving_bridge_Stale[];
 extern Gfx mat_custom_moving_bridge_Aqueduct_a[];

@@ -23,7 +23,7 @@ const Collision custom_moving_bridge_collision[] = {
 	COL_VERTEX(690, 100, -266),
 	COL_VERTEX(773, 100, -66),
 	COL_VERTEX(2826, -300, -2119),
-	COL_TRI_INIT(SURFACE_DEFAULT, 22),
+	COL_TRI_INIT(SURFACE_DEFAULT, 30),
 	COL_TRI(0, 1, 2),
 	COL_TRI(3, 4, 0),
 	COL_TRI(2, 3, 0),
@@ -46,6 +46,14 @@ const Collision custom_moving_bridge_collision[] = {
 	COL_TRI(0, 19, 18),
 	COL_TRI(13, 12, 17),
 	COL_TRI(13, 17, 16),
+	COL_TRI(17, 12, 2),
+	COL_TRI(17, 2, 15),
+	COL_TRI(19, 4, 6),
+	COL_TRI(19, 6, 20),
+	COL_TRI(18, 21, 5),
+	COL_TRI(18, 5, 0),
+	COL_TRI(16, 14, 1),
+	COL_TRI(16, 1, 13),
 	COL_TRI_STOP(),
 	COL_END()
 };
