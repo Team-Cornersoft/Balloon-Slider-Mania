@@ -1288,6 +1288,11 @@
 /* BSM Point Balloon Popped */
 #define /*0x0F4*/ oPtBalloonPoppedScale                         OBJECT_FIELD_F32(0x1B)
 
+/* BSM Bridge */
+#define /*0x0F4*/ oRotatingBridgeYawHome                        OBJECT_FIELD_F32(0x1B)
+#define /*0x0F8*/ oRotatingBridgeYawRotated                     OBJECT_FIELD_F32(0x1C)
+#define /*0x0FC*/ oRotatingBridgeBalloonChild                   OBJECT_FIELD_OBJ(0x1D)
+
 
 /*Custom general defines:
 
