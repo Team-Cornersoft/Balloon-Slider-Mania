@@ -63,11 +63,11 @@ enum SurfaceTypes {
     SURFACE_HARD_VERY_SLIPPERY,         // 0x0036 // Hard and very slippery (Always has fall damage)
     SURFACE_HARD_NOT_SLIPPERY,          // 0x0037 // Hard and Non-slippery (Always has fall damage)
     SURFACE_VERTICAL_WIND,              // 0x0038 // Death at bottom with vertical wind. Warps to ID of force parameter's second byte if set, otherwise warps to 0xF3 if it exists, otherwise defaults to ID 0xF1.
-    SURFACE_0039,                       // 0x0039 // Unused
-    SURFACE_003A,                       // 0x003A // Unused
-    SURFACE_003B,                       // 0x003B // Unused
-    SURFACE_003C,                       // 0x003C // Unused
-    SURFACE_003D,                       // 0x003D // Unused
+    SURFACE_BSM_FLAG_1,                 // 0x0039 // Unused
+    SURFACE_BSM_FLAG_2,                 // 0x003A // Unused
+    SURFACE_BSM_FLAG_3,                 // 0x003B // Unused
+    SURFACE_BSM_FLAG_4,                 // 0x003C // Unused
+    SURFACE_BSM_FLAG_5,                 // 0x003D // Unused
     SURFACE_003E,                       // 0x003E // Unused
     SURFACE_003F,                       // 0x003F // Unused
     SURFACE_BOSS_FIGHT_CAMERA = 0x65,   // 0x0065 // Wide camera for BoB and WF bosses
