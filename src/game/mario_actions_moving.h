@@ -6,8 +6,10 @@
 #include "types.h"
 
 #define SLIDE_SPEED_MULTIPLIER_DEFAULT 1.67f
+#define TERMINAL_VELOCITY_MULTIPLIER_DEFAULT 1.67f
 
 extern f32 slideSpeedMultiplier;
+extern f32 terminalVelocityMultiplier;
 
 enum WalkSpeeds {
 	WALK_SPEED_START_TIPTOE,

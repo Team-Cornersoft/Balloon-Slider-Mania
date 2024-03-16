@@ -39,7 +39,7 @@ const LevelScript level_ccy_title_screen[] = {
 	FREE_LEVEL_POOL(),
 
     LOAD_AREA(/*area*/ 1),
-	SET_MENU_MUSIC_WITH_REVERB(SEQ_MENU_TITLE_SCREEN, 0, 0),
+	SET_MENU_MUSIC_WITH_REVERB(SEQ_MENU_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 
     CALL(/*arg*/ 0, /*func*/ load_mario_area),
 

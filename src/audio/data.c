@@ -2,6 +2,7 @@
 
 #include "data.h"
 #include "effects.h"
+#include "seq_ids.h"
 
 extern struct OSMesgQueue OSMesgQueue0;
 extern struct OSMesgQueue OSMesgQueue1;
@@ -92,7 +93,7 @@ u8 sReverbMultsArr[][NUM_ALLPASS / 3] = {
  * Please reference the HackerSM64 Wiki for more descriptive documentation of these parameters and usage of BETTER_REVERB in general.
  */
 struct BetterReverbSettings gBetterReverbSettings[] = {
-    { /* Preset 0 - Vanilla Reverb [Default Preset] */
+    [BRPRESET_DEFAULT_VANILLA] = { /* Vanilla Reverb [Default Preset] */
         .useLightweightSettings = FALSE,    // Ignored with vanilla reverb
         .downsampleRate = -1,               // Signifies use of vanilla reverb
         .isMono = FALSE,                    // Ignored with vanilla reverb
@@ -108,7 +109,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[0], // Ignored with vanilla reverb
         .reverbMultsR = sReverbMultsArr[0], // Ignored with vanilla reverb
     },
-    { /* Preset 1 - Sample Console Configuration */
+    [BRPRESET_DEFAULT_CONSOLE] = { /* Sample Console Configuration */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -124,7 +125,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    { /* Preset 2 - Sample Emulator Configuration (RCVI Hack or Emulator CPU Overclocking Required!) */
+    [BRPRESET_DEFAULT_EMULATOR] = { /* Sample Emulator Configuration (RCVI Hack or Emulator CPU Overclocking Required!) */
         .useLightweightSettings = FALSE,
         .downsampleRate = 1,
         .isMono = FALSE,
@@ -140,7 +141,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1],
         .reverbMultsR = sReverbMultsArr[2],
     },
-    { /* Preset 3 - Level Select Menu */
+    [BRPRESET_BSM_LEVEL_SELECT] = { /* Level Select Menu */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -156,7 +157,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    { /* Preset 4 - Course 1 General */
+    [BRPRESET_BSM_C1_GENERAL] = { /* Course 1 General */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -172,7 +173,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    { /* Preset 5 - Course 1 Area 2 */
+    [BRPRESET_BSM_C1_A2] = { /* Course 1 Area 2 */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -188,7 +189,23 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    { /* Preset 6 - Course 4 Area 1 */
+    [BRPRESET_BSM_C2_GENERAL] = { /* Course 2 General */
+        .useLightweightSettings = TRUE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 9),   // Ignored with lightweight settings
+
+        .windowSize = 0x1C00,
+        .gain = 0x27FF,
+        .gainIndex = 0xA0,                  // Ignored with lightweight settings
+        .reverbIndex = 0x30,                // Ignored with lightweight settings
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
+        .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
+    },
+    [BRPRESET_BSM_C4_GENERAL] = { /* Course 4 General */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -204,14 +221,14 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    { /* Preset 7 - Course 4 Area 2 */
+    [BRPRESET_BSM_C4_A2] = { /* Course 4 Area 2 */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
         .filterCount = (NUM_ALLPASS - 9),   // Ignored with lightweight settings
 
-        .windowSize = 0x2000,
-        .gain = 0x37FF,
+        .windowSize = 0x2400,
+        .gain = 0x3BFF,
         .gainIndex = 0xA0,                  // Ignored with lightweight settings
         .reverbIndex = 0x30,                // Ignored with lightweight settings
 
@@ -260,6 +277,7 @@ struct BetterReverbSettings gDebugBetterReverbSettings[2] = {
 };
 #endif // PUPPYPRINT_DEBUG
 
+STATIC_ASSERT(ARRAY_COUNT(gBetterReverbSettings) == BRPRESET_COUNT, "Mismatch of BETTER_REVERB presets vs count!");
 STATIC_ASSERT(ARRAY_COUNT(gBetterReverbSettings) > 0, "gBetterReverbSettings must contain presets!");
 STATIC_ASSERT(ARRAY_COUNT(sReverbDelaysArr) > 0, "sReverbDelaysArr must not be empty!");
 STATIC_ASSERT(ARRAY_COUNT(sReverbMultsArr) > 0, "sReverbMultsArr must not be empty!");

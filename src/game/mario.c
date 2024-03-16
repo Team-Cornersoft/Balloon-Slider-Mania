@@ -1712,12 +1712,21 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
     switch(COURSE_NUM_TO_INDEX(gCurrCourseNum)) {
         case BSM_COURSE_1_SNOWY_PEAK:
             if (gCurrAreaIndex == 3) {
-                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.4f;
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.35f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.5f;
+                break;
+            }
+            FALL_THROUGH;
+        case BSM_COURSE_2_LAVA_ISLE:
+            if (gCurrAreaIndex == 3) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.15f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.4f;
                 break;
             }
             FALL_THROUGH;
         default:
             slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+            terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
             break;
     }
 

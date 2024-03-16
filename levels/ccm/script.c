@@ -144,7 +144,7 @@ const LevelScript level_ccm_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, 0x06, 0x06),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
 		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
@@ -187,7 +187,7 @@ const LevelScript level_ccm_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, 0x07, 0x07),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, BRPRESET_BSM_C4_A2, BRPRESET_BSM_C4_A2),
 		SET_ECHO(0x22, 0x22),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
@@ -250,7 +250,7 @@ const LevelScript level_ccm_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, 0x06, 0x06),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
 		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
@@ -302,7 +302,7 @@ const LevelScript level_ccm_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, 0x06, 0x06),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
 		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
@@ -350,7 +350,7 @@ const LevelScript level_ccm_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_WATER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, 0x06, 0x06),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE4_SPACE, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
 		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
