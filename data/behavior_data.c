@@ -456,7 +456,8 @@ const BehaviorScript bhvTCSToken[] = {
 
 const BehaviorScript bhvKeyGate[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, 12000),
     SET_FLOAT(oDrawingDistance, 12000),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 0),
@@ -477,6 +478,33 @@ const BehaviorScript bhvKeyGateOpen[] = {
     SET_HOME(),
     BREAK(),
 };
+
+const BehaviorScript bhvRotatingBridge[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, 8000),
+    SET_FLOAT(oDrawingDistance, 20000),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    LOAD_COLLISION_DATA(custom_moving_bridge_collision),
+    CALL_NATIVE(bhv_rotating_bridge_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_rotating_bridge_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvBellGong[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bell_gong_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bell_gong_loop),
+    END_LOOP(),
+};
+
 
 const BehaviorScript bhvBSMMenuTitle[] = {
     BEGIN(OBJ_LIST_DEFAULT),
@@ -3689,6 +3717,10 @@ const BehaviorScript bhvLaunchDeathWarp[] = {
 };
 
 const BehaviorScript bhvSwimmingWarp[] = {
+    BREAK(),
+};
+
+const BehaviorScript bhvBSMCelebrationWarp[] = {
     BREAK(),
 };
 

@@ -586,6 +586,8 @@ enum CustomModelIDs {
     MODEL_BSM_POINT_BALLOON_POPPED, // common1
     MODEL_BSM_TCS_TOKEN,            // common1
     MODEL_BSM_KEY_GATE,             // group0
+    MODEL_BSM_BRIDGE,               // group0
+    MODEL_BSM_BELL,                 // whomp's fortress
 
     MODEL_ID_COUNT
 };

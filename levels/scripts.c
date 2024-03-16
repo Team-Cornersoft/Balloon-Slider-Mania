@@ -120,6 +120,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_BSM_POINT_BALLOON_POPPED, point_balloon_popped_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BSM_TCS_TOKEN,            tcs_token_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BSM_KEY_GATE,             key_gate_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_BSM_BRIDGE,               custom_moving_bridge_geo),
     FREE_LEVEL_POOL(),
     POP_POOL(),
     CALL(/*arg*/ 0, /*func*/ lvl_init_from_save_file),

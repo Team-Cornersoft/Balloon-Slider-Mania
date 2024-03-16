@@ -10,6 +10,7 @@
 
 extern f32 slideSpeedMultiplier;
 extern f32 terminalVelocityMultiplier;
+extern f32 deathBarrierMultiplier;
 
 enum WalkSpeeds {
 	WALK_SPEED_START_TIPTOE,

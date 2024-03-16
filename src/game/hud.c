@@ -624,8 +624,10 @@ void render_hud_bsm_info(void) {
     // Key
     gDPPipeSync(gDisplayListHead++);
     if (gBSMKeyCollected) {
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
     } else {
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
     }
     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
@@ -635,8 +637,10 @@ void render_hud_bsm_info(void) {
     // TCS Token
     gDPPipeSync(gDisplayListHead++);
     if (gBSMTCSTokenCollected) {
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
     } else {
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
     }
     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);

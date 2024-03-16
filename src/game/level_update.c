@@ -351,6 +351,10 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
         case MARIO_SPAWN_LAUNCH_DEATH:
             set_mario_action(m, ACT_SPECIAL_DEATH_EXIT, 0);
             break;
+        case MARIO_SPAWN_BSM_CELEBRATION:
+            // TODO:
+            set_mario_action(m, ACT_STAR_DANCE_NO_EXIT, 0);
+            break;
     }
 
 #ifdef PREVENT_DEATH_LOOP

@@ -19,6 +19,7 @@
 
 f32 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
 f32 terminalVelocityMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+f32 deathBarrierMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
 
 struct LandingAction {
     s16 numFrames;
