@@ -14,9 +14,9 @@ static void rotating_bridge_update_child_balloon(void) {
         return;
     }
     
-    obj->oPtBalloonRelativePosX = obj->oHomeX + (BRIDGE_LENGTH * 2 / 5) * sins(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
-    obj->oPtBalloonRelativePosY = obj->oHomeY - 100.0f;
-    obj->oPtBalloonRelativePosZ = obj->oHomeZ + (BRIDGE_LENGTH * 2 / 5) * coss(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
+    obj->oPtBalloonRelativePosX = obj->oHomeX + (BRIDGE_LENGTH * 3 / 5) * sins(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
+    obj->oPtBalloonRelativePosY = obj->oHomeY - 200.0f;
+    obj->oPtBalloonRelativePosZ = obj->oHomeZ + (BRIDGE_LENGTH * 3 / 5) * coss(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
 
     obj->oFaceAngleYaw = o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE;
 }
@@ -49,5 +49,5 @@ void bhv_rotating_bridge_loop(void) {
         cur_obj_play_sound_2(SOUND_ENV_METAL_BOX_PUSH);
     }
 
-    o->oFaceAngleYaw = o->oRotatingBridgeYawHome + o->oRotatingBridgeYawRotated;
+    o->oFaceAngleYaw = o->oRotatingBridgeYawHome - o->oRotatingBridgeYawRotated;
 }
