@@ -12,6 +12,7 @@
 #include "object_list_processor.h"
 #include "spawn_object.h"
 #include "types.h"
+#include "debug.h"
 
 /**
  * Attempt to allocate an object from freeList (singly linked) and append it
@@ -118,14 +119,15 @@ struct Object *allocate_object(struct ObjectNode *objList) {
     // If this happens, we first attempt to unload unimportant objects
     // in order to finish allocating the object.
     if (obj == NULL) {
+        assert(FALSE, "Nearing too closely to object limit, please increase!");
+
         // Look for an unimportant object to kick out.
         struct Object *unimportantObj = find_unimportant_object();
 
         // If no unimportant object exists, then the object pool is exhausted.
         if (unimportantObj == NULL) {
             // We've met with a terrible fate.
-            while (TRUE) {
-            }
+            error("Object pool limit exceeded!");
         } else {
             // If an unimportant object does exist, unload it and take its slot.
             unload_object(unimportantObj);
