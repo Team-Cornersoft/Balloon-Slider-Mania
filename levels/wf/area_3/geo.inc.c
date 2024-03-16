@@ -35,7 +35,7 @@ const GeoLayout wf_dl_1_area3_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, wf_dl_A_area3_trees_lower_c_mesh_layer_1),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -34209, 17517, -22427, wf_dl_A_Environment_a_a3_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -24209, 17517, -22427, wf_dl_A_Environment_a_a3_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -31185, -7798, -23909, wf_dl_A_Environment_a_a3_001_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -28650, 19117, 22032, wf_dl_A_Environment_b_a3_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -25632, -7257, 23085, wf_dl_A_Environment_b_a3_001_mesh_layer_1),
