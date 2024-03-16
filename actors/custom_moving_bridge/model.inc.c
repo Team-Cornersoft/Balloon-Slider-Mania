@@ -358,14 +358,60 @@ u8 custom_moving_bridge_aqueduct_bricks_pal_rgba16[] = {
 	
 };
 
+Gfx custom_moving_bridge_aqueduct_edge_2_ci4_aligner[] = {gsSPEndDisplayList()};
+u8 custom_moving_bridge_aqueduct_edge_2_ci4[] = {
+	0x01, 0x23, 0x33, 0x33, 0x24, 0x44, 0x44, 0x31, 
+	0x02, 0x44, 0x33, 0x33, 0x34, 0x43, 0x44, 0x41, 
+	0x01, 0x43, 0x34, 0x33, 0x43, 0x33, 0x44, 0x31, 
+	0x01, 0x24, 0x44, 0x44, 0x43, 0x44, 0x44, 0x41, 
+	0x52, 0x22, 0x43, 0x33, 0x34, 0x44, 0x33, 0x32, 
+	0x52, 0x24, 0x44, 0x33, 0x34, 0x42, 0x44, 0x32, 
+	0x55, 0x55, 0x15, 0x15, 0x51, 0x11, 0x11, 0x15, 
+	0x55, 0x15, 0x11, 0x15, 0x51, 0x11, 0x11, 0x15, 
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 
+	0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 
+	0x57, 0x77, 0x77, 0x68, 0x57, 0x77, 0x77, 0x68, 
+	0x67, 0x77, 0x77, 0x68, 0x57, 0x77, 0x77, 0x68, 
+	0x81, 0x11, 0x11, 0x99, 0x81, 0x11, 0x11, 0x99, 
+	0x81, 0x11, 0x11, 0x99, 0x81, 0x77, 0x11, 0x99, 
+	0x1a, 0x15, 0x1a, 0x18, 0x1a, 0x15, 0x2a, 0x18, 
+	0x1a, 0x15, 0x1a, 0x18, 0x1a, 0x1b, 0x1a, 0x19, 
+	0xa1, 0xcd, 0xe2, 0xaa, 0xa1, 0x8d, 0xe2, 0xaa, 
+	0xa2, 0x8d, 0xe4, 0x33, 0xa1, 0x8d, 0xe2, 0xaa, 
+	0x18, 0xdd, 0xde, 0x2a, 0x18, 0xdd, 0xce, 0x2a, 
+	0x18, 0xdd, 0xde, 0x2a, 0x18, 0xdd, 0xde, 0x2a, 
+	0x8c, 0xcc, 0xcc, 0xe1, 0x99, 0x8d, 0xdd, 0xe1, 
+	0x8c, 0x88, 0x88, 0xe1, 0x8c, 0x88, 0xcc, 0xe1, 
+	0xdd, 0xcc, 0xcd, 0xd8, 0xdd, 0xdd, 0xdd, 0xd8, 
+	0xcc, 0xdd, 0xcc, 0xc8, 0xdd, 0xdd, 0xcc, 0xc8, 
+	0x21, 0x11, 0x01, 0x11, 0x21, 0x15, 0x12, 0x22, 
+	0x15, 0x55, 0x01, 0x11, 0x21, 0x11, 0x12, 0x42, 
+	0x33, 0x33, 0xfa, 0xaa, 0xaa, 0xaa, 0x13, 0x33, 
+	0x33, 0x33, 0x73, 0x33, 0x33, 0x3a, 0x13, 0x33, 
+	0xaa, 0xaa, 0xf6, 0x66, 0x77, 0x77, 0x71, 0x11, 
+	0x1a, 0xa1, 0x77, 0x77, 0x11, 0x11, 0x11, 0x11, 
+	
+};
+
+Gfx custom_moving_bridge_aqueduct_edge_2_pal_rgba16_aligner[] = {gsSPEndDisplayList()};
+u8 custom_moving_bridge_aqueduct_edge_2_pal_rgba16[] = {
+	0x63, 0xa3, 0x9d, 0x2d, 0xad, 0xb1, 0xc6, 0x73, 
+	0xbe, 0x33, 0x6c, 0xab, 0x84, 0x1f, 0x8c, 0x63, 
+	0x03, 0xad, 0x01, 0xa7, 0xc6, 0x2f, 0x14, 0x2f, 
+	0x03, 0xef, 0x04, 0x31, 0x6d, 0x71, 0x73, 0x9d, 
+	
+};
+
 Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_cull[8] = {
 	{{ {66, -1100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {66, -100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {66, -100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {66, 100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {66, 100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {66, -1100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {2826, -1100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {2826, -100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
-	{{ {2826, -100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {2826, 100, -66}, 0, {0, 0}, {0, 0, 0, 0} }},
+	{{ {2826, 100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
 	{{ {2826, -1100, -2826}, 0, {0, 0}, {0, 0, 0, 0} }},
 };
 
@@ -384,19 +430,11 @@ Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_0[] = {
 	gsSPEndDisplayList(),
 };
 
-Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1[16] = {
+Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1[8] = {
 	{{ {2826, -500, -2119}, 0, {496, -16}, {90, 0, 90, 255} }},
 	{{ {773, -100, -66}, 0, {-3600, -16}, {90, 0, 90, 255} }},
 	{{ {773, -700, -66}, 0, {-3600, 496}, {90, 0, 90, 255} }},
 	{{ {2826, -1100, -2119}, 0, {496, 496}, {90, 0, 90, 255} }},
-	{{ {2119, -500, -2826}, 0, {496, -424}, {10, 126, 241, 255} }},
-	{{ {66, -100, -773}, 0, {-3600, -424}, {10, 126, 241, 255} }},
-	{{ {266, -100, -690}, 0, {-3483, -528}, {10, 126, 241, 255} }},
-	{{ {2261, -500, -2685}, 0, {497, -528}, {10, 126, 241, 255} }},
-	{{ {773, -100, -66}, 0, {-3600, -424}, {15, 126, 246, 255} }},
-	{{ {2826, -500, -2119}, 0, {496, -424}, {15, 126, 246, 255} }},
-	{{ {2685, -500, -2261}, 0, {497, -528}, {15, 126, 246, 255} }},
-	{{ {690, -100, -266}, 0, {-3483, -528}, {15, 126, 246, 255} }},
 	{{ {66, -100, -773}, 0, {-3600, -16}, {166, 0, 166, 255} }},
 	{{ {2119, -500, -2826}, 0, {496, -16}, {166, 0, 166, 255} }},
 	{{ {2119, -1100, -2826}, 0, {496, 496}, {166, 0, 166, 255} }},
@@ -404,11 +442,9 @@ Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1[16] = {
 };
 
 Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_1[] = {
-	gsSPVertex(custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1 + 0, 16, 0),
+	gsSPVertex(custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_1 + 0, 8, 0),
 	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
-	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-	gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -424,6 +460,44 @@ Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_2[] = {
 	gsSPVertex(custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_2 + 0, 5, 0),
 	gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
 	gsSP1Triangle(2, 4, 3, 0),
+	gsSPEndDisplayList(),
+};
+
+Vtx custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_3[24] = {
+	{{ {2826, -300, -2119}, 0, {496, -8}, {90, 0, 90, 255} }},
+	{{ {773, 100, -66}, 0, {-3600, -8}, {90, 0, 90, 255} }},
+	{{ {773, -100, -66}, 0, {-3600, 496}, {90, 0, 90, 255} }},
+	{{ {2826, -500, -2119}, 0, {496, 496}, {90, 0, 90, 255} }},
+	{{ {2119, -300, -2826}, 0, {496, -424}, {10, 126, 241, 255} }},
+	{{ {66, 100, -773}, 0, {-3600, -424}, {10, 126, 241, 255} }},
+	{{ {266, 100, -690}, 0, {-3483, -528}, {10, 126, 241, 255} }},
+	{{ {2261, -300, -2685}, 0, {497, -528}, {10, 126, 241, 255} }},
+	{{ {773, 100, -66}, 0, {-3600, -424}, {15, 126, 246, 255} }},
+	{{ {2826, -300, -2119}, 0, {496, -424}, {15, 126, 246, 255} }},
+	{{ {2685, -300, -2261}, 0, {497, -528}, {15, 126, 246, 255} }},
+	{{ {690, 100, -266}, 0, {-3483, -528}, {15, 126, 246, 255} }},
+	{{ {66, 100, -773}, 0, {-3600, -8}, {166, 0, 166, 255} }},
+	{{ {2119, -300, -2826}, 0, {496, -8}, {166, 0, 166, 255} }},
+	{{ {2119, -500, -2826}, 0, {496, 496}, {166, 0, 166, 255} }},
+	{{ {66, -100, -773}, 0, {-3600, 496}, {166, 0, 166, 255} }},
+	{{ {690, 100, -266}, 0, {-3484, -19}, {166, 0, 166, 255} }},
+	{{ {2685, -300, -2261}, 0, {496, 10}, {166, 0, 166, 255} }},
+	{{ {2685, -500, -2261}, 0, {496, 496}, {166, 0, 166, 255} }},
+	{{ {690, -100, -266}, 0, {-3484, 467}, {166, 0, 166, 255} }},
+	{{ {2261, -300, -2685}, 0, {496, 15}, {90, 0, 90, 255} }},
+	{{ {266, 100, -690}, 0, {-3484, -14}, {90, 0, 90, 255} }},
+	{{ {266, -100, -690}, 0, {-3484, 467}, {90, 0, 90, 255} }},
+	{{ {2261, -500, -2685}, 0, {496, 496}, {90, 0, 90, 255} }},
+};
+
+Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_3[] = {
+	gsSPVertex(custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_3 + 0, 24, 0),
+	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
+	gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
+	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
+	gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
+	gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
+	gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -484,6 +558,28 @@ Gfx mat_revert_custom_moving_bridge_Aqueduct_c[] = {
 	gsSPEndDisplayList(),
 };
 
+Gfx mat_custom_moving_bridge_Aqueduct_blue[] = {
+	gsDPPipeSync(),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
+	gsDPSetTextureLUT(G_TT_RGBA16),
+	gsSPTexture(65535, 65535, 0, 0, 1),
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, custom_moving_bridge_aqueduct_edge_2_pal_rgba16),
+	gsDPSetTile(0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadTLUTCmd(5, 15),
+	gsDPSetTextureImage(G_IM_FMT_CI, G_IM_SIZ_16b, 1, custom_moving_bridge_aqueduct_edge_2_ci4),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 127, 1024),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 2, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 4, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
+	gsDPSetTileSize(0, 0, 0, 124, 60),
+	gsSPEndDisplayList(),
+};
+
+Gfx mat_revert_custom_moving_bridge_Aqueduct_blue[] = {
+	gsDPPipeSync(),
+	gsDPSetTextureLUT(G_TT_NONE),
+	gsSPEndDisplayList(),
+};
+
 Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1[] = {
 	gsSPClearGeometryMode(G_LIGHTING),
 	gsSPVertex(custom_moving_bridge_Rotatable_platform_mesh_layer_1_vtx_cull + 0, 8, 0),
@@ -497,6 +593,9 @@ Gfx custom_moving_bridge_Rotatable_platform_mesh_layer_1[] = {
 	gsSPDisplayList(mat_custom_moving_bridge_Aqueduct_c),
 	gsSPDisplayList(custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_2),
 	gsSPDisplayList(mat_revert_custom_moving_bridge_Aqueduct_c),
+	gsSPDisplayList(mat_custom_moving_bridge_Aqueduct_blue),
+	gsSPDisplayList(custom_moving_bridge_Rotatable_platform_mesh_layer_1_tri_3),
+	gsSPDisplayList(mat_revert_custom_moving_bridge_Aqueduct_blue),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
