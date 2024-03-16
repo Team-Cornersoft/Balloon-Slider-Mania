@@ -303,9 +303,12 @@ void bhv_point_balloon_popped_loop(void) {
 }
 
 void bhv_key_gate_loop(void) {
-    o->oAnimState = (gBSMKeyCollected == TRUE) ? 1 : 0;
+    if (gBSMKeyCollected) {
+        struct Object *obj = spawn_object(o, MODEL_BSM_KEY_GATE, bhvKeyGateOpen);
+        if (obj) {
+            obj->parentObj = obj;
+        }
 
-    if (o->oAnimState == 0) {
-        load_object_collision_model();
+        obj_mark_for_deletion(o);
     }
 }

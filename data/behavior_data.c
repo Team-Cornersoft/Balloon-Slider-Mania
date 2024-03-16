@@ -459,11 +459,23 @@ const BehaviorScript bhvKeyGate[] = {
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_FLOAT(oDrawingDistance, 12000),
     SET_INT(oOpacity, 255),
+    SET_INT(oAnimState, 0),
     LOAD_COLLISION_DATA(key_gate_collision),
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_key_gate_loop),
+        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
+};
+
+const BehaviorScript bhvKeyGateOpen[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, 12000),
+    SET_INT(oOpacity, 255),
+    SET_INT(oAnimState, 1),
+    SET_HOME(),
+    BREAK(),
 };
 
 const BehaviorScript bhvBSMMenuTitle[] = {
