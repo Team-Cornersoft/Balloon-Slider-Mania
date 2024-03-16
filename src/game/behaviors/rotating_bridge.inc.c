@@ -15,7 +15,7 @@ static void rotating_bridge_update_child_balloon(void) {
     }
     
     obj->oPtBalloonRelativePosX = obj->oHomeX + (BRIDGE_LENGTH * 3 / 5) * sins(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
-    obj->oPtBalloonRelativePosY = obj->oHomeY - 200.0f;
+    obj->oPtBalloonRelativePosY = obj->oHomeY - 250.0f;
     obj->oPtBalloonRelativePosZ = obj->oHomeZ + (BRIDGE_LENGTH * 3 / 5) * coss(o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE);
 
     obj->oFaceAngleYaw = o->oFaceAngleYaw + BRIDGE_STARTING_ANGLE;
