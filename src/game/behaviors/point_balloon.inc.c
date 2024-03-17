@@ -4,17 +4,6 @@ extern void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ);
 #define BALLOON_FLOATING_CALC(relativePos, intensity, offset, freq) \
     (relativePos + intensity * sins((0x10000 * ((o->oPtBalloonAbsoluteTimer + offset) % freq)) / freq))
 
-enum BalloonTypes {
-    POINT_BALLOON_5,
-    POINT_BALLOON_10,
-    POINT_BALLOON_25,
-    POINT_BALLOON_50,
-    POINT_BALLOON_100,
-    POINT_BALLOON_RED,
-
-    POINT_BALLOON_COUNT,
-};
-
 struct BalloonTypeProperties {
     f32 scale;
     s32 points;
@@ -273,9 +262,12 @@ void bhv_point_balloon_popped_loop(void) {
         } else {
             props = &bProps[o->oBehParams2ndByte];
             assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
+            if (props->points != 0) {
+                gBSMScoreCount += props->points;
+                gBSMLastBalloonType = o->oBehParams2ndByte;
+            }
         }
 
-        gBSMScoreCount += props->points;
         cur_obj_play_sound_2(props->popsfx);
 
         if (props == &bProps[POINT_BALLOON_RED]) {

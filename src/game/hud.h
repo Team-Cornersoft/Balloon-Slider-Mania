@@ -42,7 +42,19 @@ enum CameraHUDLUT {
     GLYPH_CAM_ARROW_DOWN
 };
 
+enum BalloonTypes {
+    POINT_BALLOON_5,
+    POINT_BALLOON_10,
+    POINT_BALLOON_25,
+    POINT_BALLOON_50,
+    POINT_BALLOON_100,
+    POINT_BALLOON_RED,
+
+    POINT_BALLOON_COUNT,
+};
+
 void set_hud_camera_status(s16 status);
 void render_hud(void);
+void init_bsm_hud(void);
 
 #endif // HUD_H

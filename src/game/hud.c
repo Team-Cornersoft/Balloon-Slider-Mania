@@ -569,138 +569,269 @@ void render_hud_camera_status(void) {
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
 }
 
-/**
- * Render BSM related HUD icons.
- */
-void render_hud_bsm_info(void) {
+enum BSMHudTypes {
+    BSM_HUD_SCORE,
+    BSM_HUD_TIME,
+    BSM_HUD_REDBALLOONS,
+    BSM_HUD_KEY,
+    BSM_HUD_TCS,
+
+    BSM_HUD_COUNT,
+};
+
+struct BSMHudTypeProps {
+    s16 x;
+    s16 y;
+    s16 shadowX;
+    s16 shadowY;
+    s16 animTimer;
+    u32 lastValue;
+    u32 *trackValueAddr;
+};
+
+static const ColorRGBA sBSMBalloonScoreColorIndex[POINT_BALLOON_COUNT] = {
+    [POINT_BALLOON_5] = {175, 175, 175, 255},
+    [POINT_BALLOON_10] = {127, 255, 127, 255},
+    [POINT_BALLOON_25] = {151, 151, 255, 255},
+    [POINT_BALLOON_50] = {191, 127, 191, 255},
+    [POINT_BALLOON_100] = {255, 223, 127, 255},
+    [POINT_BALLOON_RED] = {255, 127, 127, 255},
+};
+
+struct BSMHudTypeProps bsmHudProps[BSM_HUD_COUNT];
+
+void init_bsm_hud(void) {
     s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
 
-    s32 scoreX = 22 - consoleDiff;
-    s32 scoreY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
-    s32 timeX = SCREEN_WIDTH - (22 + 64) + consoleDiff;
-    s32 timeY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
-    s32 redBalloonX = 22 - consoleDiff;
-    s32 redBalloonY = 205 + consoleDiff;
-    s32 keyX = SCREEN_CENTER_X - 18;
-    s32 keyY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
-    s32 tcsTokenX = SCREEN_CENTER_X + 2;
-    s32 tcsTokenY = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_SCORE].x = 22 - consoleDiff;
+    bsmHudProps[BSM_HUD_SCORE].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_SCORE].shadowX = bsmHudProps[BSM_HUD_SCORE].x - 2;
+    bsmHudProps[BSM_HUD_SCORE].shadowY = bsmHudProps[BSM_HUD_SCORE].y + 2;
+    bsmHudProps[BSM_HUD_SCORE].trackValueAddr = &gBSMScoreCount;
+
+    bsmHudProps[BSM_HUD_TIME].x = SCREEN_WIDTH - (22 + 64) + consoleDiff;
+    bsmHudProps[BSM_HUD_TIME].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_TIME].shadowX = bsmHudProps[BSM_HUD_TIME].x - 2;
+    bsmHudProps[BSM_HUD_TIME].shadowY = bsmHudProps[BSM_HUD_TIME].y + 2;
+    bsmHudProps[BSM_HUD_TIME].trackValueAddr = NULL;
+
+    bsmHudProps[BSM_HUD_REDBALLOONS].x = 22 - consoleDiff;
+    bsmHudProps[BSM_HUD_REDBALLOONS].y = 205 + consoleDiff;
+    bsmHudProps[BSM_HUD_REDBALLOONS].shadowX = bsmHudProps[BSM_HUD_REDBALLOONS].x - 1;
+    bsmHudProps[BSM_HUD_REDBALLOONS].shadowY = bsmHudProps[BSM_HUD_REDBALLOONS].y + 1;
+    bsmHudProps[BSM_HUD_REDBALLOONS].trackValueAddr = &gRedBalloonsPopped;
+
+    bsmHudProps[BSM_HUD_KEY].x = SCREEN_CENTER_X - 18;
+    bsmHudProps[BSM_HUD_KEY].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_KEY].shadowX = bsmHudProps[BSM_HUD_KEY].x - 1;
+    bsmHudProps[BSM_HUD_KEY].shadowY = bsmHudProps[BSM_HUD_KEY].y + 1;
+    bsmHudProps[BSM_HUD_KEY].trackValueAddr = &gBSMKeyCollected;
+
+    bsmHudProps[BSM_HUD_TCS].x = SCREEN_CENTER_X + 2;
+    bsmHudProps[BSM_HUD_TCS].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_TCS].shadowX = bsmHudProps[BSM_HUD_TCS].x - 1;
+    bsmHudProps[BSM_HUD_TCS].shadowY = bsmHudProps[BSM_HUD_TCS].y + 1;
+    bsmHudProps[BSM_HUD_TCS].trackValueAddr = &gBSMTCSTokenCollected;
+
+    for (s32 i = 0; i < BSM_HUD_COUNT; i++) {
+        bsmHudProps[i].animTimer = S16_MAX;
+        bsmHudProps[i].lastValue = 0;
+    }
+}
+
+#define STRINGCOL_ANIM_DURATION 50
+#define STRINGCOL_ANIM_FADEIN 2
+static void update_string_color(u8 *currentColor, const u8 *toColor, s32 timer) {
+    if (timer > STRINGCOL_ANIM_DURATION + 2) {
+        return;
+    }
+
+    f32 intensity = 0.0f;
+#if (STRINGCOL_ANIM_FADEIN != 0)
+    if (timer < STRINGCOL_ANIM_FADEIN) {
+        intensity = sins((s16) (u16) ((0x4000 * (timer + 1)) / (STRINGCOL_ANIM_FADEIN + 1)));
+    }
+    else {
+        intensity = coss((s16) (u16) ((0x4000 * (timer - STRINGCOL_ANIM_FADEIN)) / (STRINGCOL_ANIM_DURATION - STRINGCOL_ANIM_FADEIN)));
+    }
+#else
+        intensity = coss((s16) (u16) (0x4000 * timer / STRINGCOL_ANIM_DURATION));
+#endif
+
+    if (intensity < 0.0f)
+        intensity = 0.0f;
+    else if (intensity > 1.0f)
+        intensity = 1.0f;
+
+    for (u32 i = 0; i < sizeof(ColorRGBA); i++) {
+        u32 color = (u32) (((f32) toColor[i] * intensity + currentColor[i] * (1.0f - intensity)) + 0.5f);
+        if (color > 255)
+            color = 255;
+            
+        currentColor[i] = color;
+    }
+}
+
+#define BOUNCE_ANIM_TIME 3
+void render_hud_bsm_info(void) {
     char strBuff[32];
-
+    struct BSMHudTypeProps *props;
     void **hudLUT = segmented_to_virtual(main_hud_lut);
-    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_begin);
 
-    // SCORE
-    if (!(gEmulator & EMU_CONSOLE)) {
-        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-        gDPPipeSync(gDisplayListHead++);
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
-        gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
-        gSPTextureRectangle(gDisplayListHead++, (scoreX-2) << 2, (scoreY+2) << 2, ((scoreX-2) + 64) << 2,
-                            ((scoreY+2) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-    }
-    gDPPipeSync(gDisplayListHead++);
-    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
-    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, scoreX << 2, scoreY << 2, (scoreX + 64) << 2,
-                        (scoreY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    for (s32 i = 0; i < BSM_HUD_COUNT; i++) {
+        props = &bsmHudProps[i];
+        s32 animY = props->y;
+        if (props->animTimer < BOUNCE_ANIM_TIME) {
+            animY = props->y - (s32) (2.0f * sins((s16) (u16) (0x8000 * props->animTimer / BOUNCE_ANIM_TIME)));
+        }
+        s32 animShadowY = (props->shadowY - props->y) + animY;
 
-    // TIME
-    if (!(gEmulator & EMU_CONSOLE)) {
-        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-        gDPPipeSync(gDisplayListHead++);
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
-        gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
-        gSPTextureRectangle(gDisplayListHead++, (timeX-2) << 2, (timeY+2) << 2, ((timeX-2) + 64) << 2,
-                            ((timeY+2) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-    }
-    gDPPipeSync(gDisplayListHead++);
-    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
-    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, timeX << 2, timeY << 2, (timeX + 64) << 2,
-                        (timeY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-    gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_end);
-    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
-
-    // Red balloons
-    if (gRedBalloonsPopped > 0) {
-        gDPPipeSync(gDisplayListHead++);
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
-
-        if (!(gEmulator & EMU_CONSOLE)) {
-            s32 redBalloonXShadow = redBalloonX - 1;
-            s32 redBalloonYShadow = redBalloonY + 1;
-            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-            for (s32 i = 0; i < gRedBalloonsPopped; i++) {
-                gDPPipeSync(gDisplayListHead++);
-                gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-                gSPTextureRectangle(gDisplayListHead++, redBalloonXShadow << 2, redBalloonYShadow << 2, (redBalloonXShadow + 16) << 2,
-                                    (redBalloonYShadow + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-                redBalloonXShadow += 16;
-            }
-            gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+        if (props->animTimer < S16_MAX) {
+            props->animTimer++;
         }
 
-        for (s32 i = 0; i < gRedBalloonsPopped; i++) {
+        if (props->trackValueAddr && props->lastValue != *props->trackValueAddr) {
+            props->lastValue = *props->trackValueAddr;
+            props->animTimer = 0;
+        }
+
+        if (i == BSM_HUD_SCORE || i == BSM_HUD_TIME) {
+            gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_begin);
             gDPPipeSync(gDisplayListHead++);
+            if (i == BSM_HUD_SCORE) {
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
+                sprintf(strBuff, "%d", gBSMScoreCount);
+            } else {
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
+                sprintf(strBuff, "%d:%02d.%02d", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30);
+            }
+
+            if (!(gEmulator & EMU_CONSOLE)) {
+                gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+                gSPTextureRectangle(gDisplayListHead++, props->shadowX << 2, props->shadowY << 2, (props->shadowX + 64) << 2,
+                                    (props->shadowY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+                gDPPipeSync(gDisplayListHead++);
+            }
+            gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, props->x << 2, props->y << 2, (props->x + 64) << 2,
+                                (props->y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+            gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_end);
+
+            if (i == BSM_HUD_SCORE) {
+                ColorRGBA colorIndex = {255, 255, 255, 255};
+                update_string_color(colorIndex, sBSMBalloonScoreColorIndex[gBSMLastBalloonType], props->animTimer);
+                print_set_envcolour(colorIndex[0], colorIndex[1], colorIndex[2], colorIndex[3]);
+            } else {
+                print_set_envcolour(255, 255, 255, 255);
+            }
+            print_small_text(props->x + 32, animY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        } else if (i == BSM_HUD_REDBALLOONS) {
+            if (gRedBalloonsPopped > 0) {
+                s32 redBalloonX;
+
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+                gDPPipeSync(gDisplayListHead++);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
+
+                if (!(gEmulator & EMU_CONSOLE)) {
+                    redBalloonX = props->shadowX;
+                    gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+                    for (u32 j = 0; j < gRedBalloonsPopped; j++) {
+                        s32 redBalloonAnimY = props->shadowY;
+
+                        gDPPipeSync(gDisplayListHead++);
+                        gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+
+                        if (gRedBalloonsPopped != 8 && j + 1 == gRedBalloonsPopped) {
+                            redBalloonAnimY = animShadowY;
+                        } else if (
+                           gRedBalloonsPopped == 8 &&
+                           (gRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
+                        ) {
+                            redBalloonAnimY = props->shadowY - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
+                        }
+                        gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonAnimY << 2, (redBalloonX + 16) << 2,
+                                            (redBalloonAnimY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+                        redBalloonX += 16;
+                    }
+                    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+                }
+
+                redBalloonX = props->x;
+
+                ColorRGBA colorIndex = {255, 255, 255, 255};
+                update_string_color(colorIndex, sBSMBalloonScoreColorIndex[POINT_BALLOON_RED], props->animTimer);
+                gDPSetEnvColor(gDisplayListHead++, colorIndex[0], colorIndex[1], colorIndex[2], colorIndex[3]);
+                for (u32 j = 0; j < gRedBalloonsPopped; j++) {
+                    gDPPipeSync(gDisplayListHead++);
+                    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+                    s32 redBalloonAnimY = props->y;
+
+                    gDPPipeSync(gDisplayListHead++);
+                    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+
+                    if (gRedBalloonsPopped != 8 && j + 1 == gRedBalloonsPopped) {
+                        redBalloonAnimY = animY;
+                    } else if (
+                        gRedBalloonsPopped == 8 &&
+                        (gRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
+                    ) {
+                        redBalloonAnimY = props->y - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
+                    }
+                    gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonAnimY << 2, (redBalloonX + 16) << 2,
+                                        (redBalloonAnimY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+                    redBalloonX += 16;
+                }
+                
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+            }
+        } else {
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+            gDPPipeSync(gDisplayListHead++);
+            if (props->trackValueAddr && *props->trackValueAddr) {
+                if (i == BSM_HUD_KEY) {
+                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
+                } else {
+                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
+                }
+
+                if (!(gEmulator & EMU_CONSOLE)) {
+                    gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+                    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+                    gSPTextureRectangle(gDisplayListHead++, props->shadowX << 2, animShadowY << 2, (props->shadowX + 16) << 2,
+                                        (animShadowY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                    gDPPipeSync(gDisplayListHead++);
+                    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+                }
+
+                
+                ColorRGBA colorIndex = {255, 255, 255, 255};
+                if (i == BSM_HUD_KEY) {
+                    update_string_color(colorIndex, (ColorRGBA) {255, 255, 127, 255}, props->animTimer);
+                } else {
+                    update_string_color(colorIndex, (ColorRGBA) {255, 191, 159, 255}, props->animTimer);
+                }
+                gDPSetEnvColor(gDisplayListHead++, colorIndex[0], colorIndex[1], colorIndex[2], colorIndex[3]);
+            } else {
+                if (i == BSM_HUD_KEY) {
+                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
+                } else {
+                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
+                }
+                gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
+            }
             gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-            gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonY << 2, (redBalloonX + 16) << 2,
-                                (redBalloonY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-            redBalloonX += 16;
+            gSPTextureRectangle(gDisplayListHead++, props->x << 2, animY << 2, (props->x + 16) << 2,
+                                (animY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                                
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
         }
     }
-
-    // Key
-    gDPPipeSync(gDisplayListHead++);
-    if (gBSMKeyCollected) {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
-        if (!(gEmulator & EMU_CONSOLE)) {
-            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-            gSPTextureRectangle(gDisplayListHead++, (keyX-1) << 2, (keyY+1) << 2, ((keyX-1) + 16) << 2,
-                                ((keyY+1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-        }
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-    } else {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
-    }
-    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, keyX << 2, keyY << 2, (keyX + 16) << 2,
-                        (keyY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-    // TCS Token
-    gDPPipeSync(gDisplayListHead++);
-    if (gBSMTCSTokenCollected) {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
-        if (!(gEmulator & EMU_CONSOLE)) {
-            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-            gSPTextureRectangle(gDisplayListHead++, (tcsTokenX-1) << 2, (tcsTokenY+1) << 2, ((tcsTokenX-1) + 16) << 2,
-                                ((tcsTokenY+1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-        }
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-    } else {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
-    }
-    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, tcsTokenX << 2, tcsTokenY << 2, (tcsTokenX + 16) << 2,
-                        (tcsTokenY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
-
-    print_set_envcolour(255, 255, 255, 255); // TODO:
-    sprintf(strBuff, "%d", gBSMScoreCount);
-    print_small_text(scoreX + 32, scoreY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-
-    
-    print_set_envcolour(255, 255, 255, 255);
-    sprintf(strBuff, "%d:%02d.%02d", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30);
-    print_small_text(timeX + 32, timeY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 }
 
 /**

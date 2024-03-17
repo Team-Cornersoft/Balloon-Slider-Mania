@@ -119,11 +119,12 @@ extern s16 sSourceWarpNodeId;
 extern s32 sDelayedWarpArg;
 extern s8 sTimerRunning;
 
-extern u8 gBSMTCSTokenCollected;
-extern u8 gBSMKeyCollected;
 extern u8 gBSMTimerActive;
-extern s16 gRedBalloonsPopped;
+extern u32 gBSMTCSTokenCollected;
+extern u32 gBSMKeyCollected;
+extern u32 gRedBalloonsPopped;
 extern u32 gBSMScoreCount;
+extern u32 gBSMLastBalloonType;
 extern u32 gBSMFrameTimer;
 
 struct HudDisplay {

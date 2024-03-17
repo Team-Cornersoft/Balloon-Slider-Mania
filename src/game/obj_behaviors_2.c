@@ -15,6 +15,7 @@
 #include "engine/surface_collision.h"
 #include "engine/surface_load.h"
 #include "emutest.h"
+#include "hud.h"
 #include "game_init.h"
 #include "geo_misc.h"
 #include "ingame_menu.h"

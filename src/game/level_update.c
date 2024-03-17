@@ -7,9 +7,9 @@
 #include "audio/external.h"
 #include "audio/synthesis.h"
 #include "bsm_level_select_menu.h"
+#include "hud.h"
 #include "level_update.h"
 #include "game_init.h"
-#include "level_update.h"
 #include "main.h"
 #include "engine/level_script.h"
 #include "engine/math_util.h"
@@ -154,12 +154,13 @@ u8 renderPressA = FALSE;
 
 u8 gOrthoCam = FALSE;
 
-u8 gBSMTCSTokenCollected = FALSE;
-u8 gBSMKeyCollected = FALSE;
 u8 gBSMTimerActive = FALSE;
-s16 gRedBalloonsPopped = 0;
+u32 gBSMTCSTokenCollected = FALSE;
+u32 gBSMKeyCollected = FALSE;
+u32 gRedBalloonsPopped = 0;
 u32 gBSMScoreCount = 0;
 u32 gBSMFrameTimer = 0;
+u32 gBSMLastBalloonType = 0;
 
 s32 sLastLevel;
 
@@ -1241,6 +1242,8 @@ s32 init_level(void) {
     OSTime first = osGetTime();
 #endif
 
+    init_bsm_hud();
+
     set_play_mode(PLAY_MODE_NORMAL);
 
     sDelayedWarpOp = WARP_OP_NONE;
@@ -1272,6 +1275,7 @@ s32 init_level(void) {
     gRedBalloonsPopped = 0;
     gBSMScoreCount = 0;
     gBSMFrameTimer = 0;
+    gBSMLastBalloonType = 0;
     gBSMTimerActive = TRUE;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
