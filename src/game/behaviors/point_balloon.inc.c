@@ -245,7 +245,11 @@ void bhv_point_balloon_popped_loop(void) {
             props = &bProps[o->oBehParams2ndByte];
             assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");
             if (props->points != 0) {
-                gBSMScoreCount += props->points;
+                if (props->points < 0 && gBSMScoreCount < (u32) -props->points) {
+                    gBSMScoreCount = 0;
+                } else {
+                    gBSMScoreCount += props->points;
+                }
                 gBSMLastBalloonType = o->oBehParams2ndByte;
             }
         }

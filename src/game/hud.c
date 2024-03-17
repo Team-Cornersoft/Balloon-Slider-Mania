@@ -611,6 +611,18 @@ static const ColorRGBA sBSMBalloonScoreColorIndex[POINT_BALLOON_COUNT] = {
 
 struct BSMHudTypeProps bsmHudProps[BSM_HUD_COUNT];
 
+struct BSMPointDisplay {
+    ColorRGBA color;
+    s16 x;
+    s16 y;
+    s16 timer;
+    s16 points;
+    s16 speedupTimer;
+};
+
+struct BSMPointDisplay bsmPointColors[3];
+u8 bsmPointColorDisplayIndex = 0;
+
 void init_bsm_hud(void) {
     s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
 
@@ -648,6 +660,11 @@ void init_bsm_hud(void) {
         bsmHudProps[i].animTimer = S16_MAX;
         bsmHudProps[i].lastValue = 0;
     }
+
+    for (s32 i = 0; i < ARRAY_COUNT(bsmPointColors); i++) {
+        bsmPointColors->timer = S16_MAX;
+        bsmPointColors->speedupTimer = -1;
+    }
 }
 
 #define STRINGCOL_ANIM_DURATION 50
@@ -683,6 +700,90 @@ static void update_string_color(u8 *currentColor, const u8 *toColor, s32 timer) 
     }
 }
 
+#define NEWPOINTCOL_ONE_WAY_FADE_DUR 12
+#define NEWPOINTCOL_ANIM_HOLD 45
+#define NEWPOINTCOL_X_MOVEMENT 32.0f
+static void print_last_point_update(void) {
+    char str[16];
+    struct BSMPointDisplay *props;
+
+    for (s32 i = 0; i < ARRAY_COUNT(bsmPointColors); i++) {
+        props = &bsmPointColors[(i + bsmPointColorDisplayIndex) % ARRAY_COUNT(bsmPointColors)];
+
+        if (props->timer >= 2*NEWPOINTCOL_ONE_WAY_FADE_DUR + NEWPOINTCOL_ANIM_HOLD)
+            continue;            
+
+        if (i != ARRAY_COUNT(bsmPointColors) - 1 && props->speedupTimer < 0) {
+            props->speedupTimer = props->timer;
+        }
+
+        f32 intensity = 1.0f;
+        f32 mult = -1.0f;
+        s32 timer = props->timer;
+        s32 x = props->x;
+        
+        if (props->speedupTimer >= 0 && props->speedupTimer < NEWPOINTCOL_ONE_WAY_FADE_DUR) {
+            if (timer - props->speedupTimer >= NEWPOINTCOL_ONE_WAY_FADE_DUR) {
+                props->timer = S16_MAX;
+                continue;
+            }
+
+            f32 relativeIntensity = coss((s16) (u16) ((0x4000 * (timer - props->speedupTimer)) / NEWPOINTCOL_ONE_WAY_FADE_DUR));
+            intensity = sins((s16) (u16) ((0x4000 * props->speedupTimer) / NEWPOINTCOL_ONE_WAY_FADE_DUR)) * relativeIntensity;
+
+            f32 tmpXOffset = -(1.0f - intensity) * NEWPOINTCOL_X_MOVEMENT;
+            tmpXOffset += ((f32) (timer - props->speedupTimer) / NEWPOINTCOL_ONE_WAY_FADE_DUR) * (f32) (-tmpXOffset);
+            tmpXOffset += (1.0f - relativeIntensity) * NEWPOINTCOL_X_MOVEMENT;
+
+            x += tmpXOffset;
+        } else {
+            if (props->speedupTimer >= 0 && props->speedupTimer < NEWPOINTCOL_ONE_WAY_FADE_DUR + NEWPOINTCOL_ANIM_HOLD) {
+                props->speedupTimer = NEWPOINTCOL_ONE_WAY_FADE_DUR + NEWPOINTCOL_ANIM_HOLD;
+                timer = props->speedupTimer;
+                props->timer = timer;
+            }
+
+            if (timer > NEWPOINTCOL_ONE_WAY_FADE_DUR + NEWPOINTCOL_ANIM_HOLD) {
+                timer = (2*NEWPOINTCOL_ONE_WAY_FADE_DUR + NEWPOINTCOL_ANIM_HOLD) - timer;
+                mult = 1.0f;
+            }
+
+            if (timer < NEWPOINTCOL_ONE_WAY_FADE_DUR) {
+                intensity = sins((s16) (u16) ((0x4000 * timer) / NEWPOINTCOL_ONE_WAY_FADE_DUR));
+            }
+
+            x += mult * (1.0f - intensity) * NEWPOINTCOL_X_MOVEMENT;
+        }
+
+        print_set_envcolour(props->color[0], props->color[1], props->color[2], (u8) (props->color[3] * sqr(intensity)));
+        sprintf(str, "%s%d", props->points >= 0 ? "+" : "", props->points);
+        print_small_text(x, props->y, str, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        props->timer++;
+    }
+}
+
+#define NEWPOINTCOL_DARK_MULT 0.75f
+#define NEWPOINTCOL_TRANSPARENT_MULT 0.8f
+static void init_new_point_buffer(s32 x, s32 y, s32 points, const u8 *colorIndex) {
+    if (points == 0) {
+        return;
+    }
+
+    struct BSMPointDisplay *props = &bsmPointColors[bsmPointColorDisplayIndex];
+    props->x = x;
+    props->y = y;
+    props->points = points;
+    props->timer = 0;
+    props->speedupTimer = -1;
+    props->color[0] = colorIndex[0] * NEWPOINTCOL_DARK_MULT;
+    props->color[1] = colorIndex[1] * NEWPOINTCOL_DARK_MULT;
+    props->color[2] = colorIndex[2] * NEWPOINTCOL_DARK_MULT;
+    props->color[3] = colorIndex[3] * NEWPOINTCOL_TRANSPARENT_MULT;
+
+    bsmPointColorDisplayIndex = (bsmPointColorDisplayIndex + 1) % ARRAY_COUNT(bsmPointColors);
+}
+
 #define BOUNCE_ANIM_TIME 3
 void render_hud_bsm_info(void) {
     char strBuff[32];
@@ -704,6 +805,10 @@ void render_hud_bsm_info(void) {
         if (props->trackValueAddr && props->lastValue != *props->trackValueAddr) {
             props->lastValue = *props->trackValueAddr;
             props->animTimer = 0;
+
+            if (i == BSM_HUD_SCORE) {
+                init_new_point_buffer(props->x + 32, props->y + 32, bProps[gBSMLastBalloonType].points, sBSMBalloonScoreColorIndex[gBSMLastBalloonType]);
+            }
         }
 
         if (i == BSM_HUD_SCORE || i == BSM_HUD_TIME) {
@@ -843,6 +948,8 @@ void render_hud_bsm_info(void) {
             gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
         }
     }
+
+    print_last_point_update();
 }
 
 /**
