@@ -3,6 +3,7 @@
 #include "segment_symbols.h"
 #include "level_commands.h"
 #include "game/game_init.h"
+#include "game/level_update.h"
 #include "levels/castle_grounds/header.h"
 
 #include "levels/intro/header.h"

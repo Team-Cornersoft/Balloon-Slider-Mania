@@ -916,6 +916,14 @@ void initiate_delayed_warp(void) {
                 default:
                     warpNode = area_get_warp_node(sSourceWarpNodeId);
 
+                    if (sSourceWarpNodeId == WARP_NODE_DEATH) {
+                        // Make game think we're doing a level warp to reset the camera
+
+                        // warp_special(WARP_SPECIAL_BSM_RETRY);
+                        warp_special(WARP_SPECIAL_BSM_LEVEL_SELECT);
+                        break;
+                    }
+
                     initiate_warp(warpNode->node.destLevel & 0x7F, warpNode->node.destArea,
                                   warpNode->node.destNode, sDelayedWarpArg);
 
