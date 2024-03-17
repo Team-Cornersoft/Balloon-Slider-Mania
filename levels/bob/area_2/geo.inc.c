@@ -8,6 +8,8 @@ const GeoLayout bob_area_2_geo[] = {
 			GEO_BRANCH(1, bob_dl_1_area2_geo),
 			GEO_BRANCH(1, bob_dl_2_area2_geo),
 		GEO_CLOSE_NODE(),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 100, 90, 120, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 245, 250, 255, 127, 127, 127),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

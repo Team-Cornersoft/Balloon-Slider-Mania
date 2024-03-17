@@ -9,7 +9,7 @@ const GeoLayout bob_area_1_geo[] = {
 			GEO_BRANCH(1, bob_dl_2_area1_geo),
 			GEO_BRANCH(1, bob_dl_3_area1_geo),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, 12937, 0, 0, 10, 0, bob_dl_0_SKY_0_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 0, 19137, 0, 0, 10, 0, bob_dl_0_SKY_0_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -16454, 8515, 15046, 0, 10, 0, bob_dl_0_SKY_1_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -17027, -3965, 15514, 0, 10, 0, bob_dl_0_SKY_2_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15046, 8515, -16454, 0, 10, 0, bob_dl_0_SKY_3_mesh_layer_1),
@@ -51,6 +51,8 @@ const GeoLayout bob_area_1_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_C_warning_sign_001_mesh_layer_4),
 		GEO_CLOSE_NODE(),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 60, 68, 80, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 220, 220, 210, 127, 127, 127),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -58,6 +60,10 @@ const GeoLayout bob_dl_1_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -247, 4744, 1146, bob_dl_A_area1_slide_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -21038, 6506, 4320, bob_dl_C_start_line_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, bob_dl_C_start_line_mesh_layer_5),
+		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -111,7 +117,8 @@ const GeoLayout bob_dl_2_area1_geo[] = {
 const GeoLayout bob_dl_3_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 5577, -4863, 4174, bob_dl_A_area1_slide_c_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 3509, -2970, 2727, bob_dl_A_area1_slide_c_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 6057, -6575, 13435, bob_dl_A_area1_slide_c_001_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15600, -1006, 14125, bob_dl_B_pine_tree_009_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_B_pine_tree_009_mesh_layer_4),
