@@ -33,7 +33,8 @@ enum WarpOperation {
 };
 
 enum SpecialWarpDestinations {
-    WARP_SPECIAL_BSM_RETRY           = -11,
+    WARP_SPECIAL_BSM_RETRY           = -12,
+    WARP_SPECIAL_BSM_FAILURE         = -11,
     WARP_SPECIAL_BSM_LEVEL_SELECT    = -10,
     WARP_SPECIAL_LEVEL_SELECT        = -9,
     WARP_SPECIAL_INTRO_SPLASH_SCREEN = -8,
@@ -204,6 +205,6 @@ s32 init_bsm_menu(s16 frames, UNUSED s32 arg1);
 s32 init_image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1);
-s32 bsm_menu_selection_made(UNUSED s16 arg0, UNUSED s32 arg1);
+s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1);
 
 #endif // LEVEL_UPDATE_H

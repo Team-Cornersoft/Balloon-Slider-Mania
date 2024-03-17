@@ -11,6 +11,7 @@
 #include "game_init.h"
 #include "level_update.h"
 #include "main.h"
+#include "engine/level_script.h"
 #include "engine/math_util.h"
 #include "engine/graph_node.h"
 #include "area.h"
@@ -159,6 +160,8 @@ u8 gBSMTimerActive = FALSE;
 s16 gRedBalloonsPopped = 0;
 u32 gBSMScoreCount = 0;
 u32 gBSMFrameTimer = 0;
+
+s32 sLastLevel;
 
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
@@ -917,10 +920,7 @@ void initiate_delayed_warp(void) {
                     warpNode = area_get_warp_node(sSourceWarpNodeId);
 
                     if (sSourceWarpNodeId == WARP_NODE_DEATH) {
-                        // Make game think we're doing a level warp to reset the camera
-
-                        // warp_special(WARP_SPECIAL_BSM_RETRY);
-                        warp_special(WARP_SPECIAL_BSM_LEVEL_SELECT);
+                        warp_special(WARP_SPECIAL_BSM_FAILURE);
                         break;
                     }
 
@@ -1088,8 +1088,12 @@ s32 play_mode_paused(void) {
         raise_background_noise(1);
         gCameraMovementFlags &= ~CAM_MOVE_PAUSE_SCREEN;
         set_play_mode(PLAY_MODE_NORMAL);
+    } else if (gMenuOptSelectIndex == MENU_OPT_RESTART) {
+        fade_into_special_warp(WARP_SPECIAL_BSM_RETRY, 0);
+        gSavedCourseNum = COURSE_NONE;
+        gCameraMovementFlags &= ~CAM_MOVE_PAUSE_SCREEN;
 #ifndef DISABLE_EXIT_COURSE
-    } else { // MENU_OPT_EXIT_COURSE
+    } else if (gMenuOptSelectIndex == MENU_OPT_EXIT_COURSE) {
         if (gDebugLevelSelect) {
             fade_into_special_warp(WARP_SPECIAL_LEVEL_SELECT, 1);
         } else {
@@ -1099,8 +1103,9 @@ s32 play_mode_paused(void) {
             set_play_mode(PLAY_MODE_NORMAL);
             level_trigger_warp(gMarioState, WARP_OP_DEATH);
 #else
-            initiate_warp(EXIT_COURSE_LEVEL, EXIT_COURSE_AREA, EXIT_COURSE_NODE, WARP_FLAG_EXIT_COURSE);
-            fade_into_special_warp(WARP_SPECIAL_NONE, 0);
+            // initiate_warp(EXIT_COURSE_LEVEL, EXIT_COURSE_AREA, EXIT_COURSE_NODE, WARP_FLAG_EXIT_COURSE);
+            // fade_into_special_warp(WARP_SPECIAL_NONE, 0);
+            fade_into_special_warp(WARP_SPECIAL_BSM_LEVEL_SELECT, 0);
             gSavedCourseNum = COURSE_NONE;
 #endif
         }
@@ -1531,7 +1536,11 @@ s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
     return FALSE; // Don't continue in level script, call this function again next frame
 }
 
-s32 bsm_menu_selection_made(UNUSED s16 arg0, UNUSED s32 arg1) {
+s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
+    if (setToLastLevel) {
+        return sLastLevel;
+    }
+
     if (gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
         return -1;
     }
@@ -1546,5 +1555,6 @@ s32 bsm_menu_selection_made(UNUSED s16 arg0, UNUSED s32 arg1) {
         set_warp_transition_rgb(0x00, 0x00, 0x00);
     }
 
+    sLastLevel = sWarpDest.levelNum;
     return sWarpDest.levelNum;
 }

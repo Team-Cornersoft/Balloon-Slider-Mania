@@ -103,7 +103,7 @@ const LevelScript level_cgds_menu_select[] = {
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
     SLEEP(/*frames*/ 29),
-    CALL(/*arg*/ 1, /*func*/ bsm_menu_selection_made),
+    CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
     SLEEP(/*frames*/ 1),
 	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
 };
