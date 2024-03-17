@@ -53,6 +53,16 @@ enum BalloonTypes {
     POINT_BALLOON_COUNT,
 };
 
+struct BalloonTypeProperties {
+    f32 scale;
+    s32 points;
+    s32 popsfx;
+    s32 popjingle;
+};
+
+extern struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT];
+extern struct BalloonTypeProperties keyBalloon;
+
 void set_hud_camera_status(s16 status);
 void render_hud(void);
 void init_bsm_hud(void);

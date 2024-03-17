@@ -569,6 +569,17 @@ void render_hud_camera_status(void) {
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
 }
 
+struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
+    [POINT_BALLOON_5]   = {.scale = 1.0f,  .points = 5,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALLEST,  .popjingle = SOUND_EXTRA2_BSM_POINTS_5  },
+    [POINT_BALLOON_10]  = {.scale = 1.2f,  .points = 10,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALL,     .popjingle = SOUND_EXTRA2_BSM_POINTS_10 },
+    [POINT_BALLOON_25]  = {.scale = 1.5f,  .points = 25,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = SOUND_EXTRA2_BSM_POINTS_25 },
+    [POINT_BALLOON_50]  = {.scale = 2.0f,  .points = 50,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGE,     .popjingle = SOUND_EXTRA2_BSM_POINTS_50 },
+    [POINT_BALLOON_100] = {.scale = 3.0f,  .points = 100, .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGEST,   .popjingle = SOUND_EXTRA2_BSM_POINTS_100},
+    [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMILARGE, .popjingle = SOUND_EXTRA2_BSM_REDCOIN_0 },
+};
+
+struct BalloonTypeProperties keyBalloon = {.scale = 1.35f, .points = 0, .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = SOUND_MENU_STAR_SOUND};
+
 enum BSMHudTypes {
     BSM_HUD_SCORE,
     BSM_HUD_TIME,

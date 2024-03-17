@@ -89,6 +89,7 @@ const LevelScript level_cgds_menu_select[] = {
     LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ -1),
 
 	PLAY_SOUND_EFFECT(SOUND_EXTRA2_BSM_MENU_START_COURSE),
+	PLAY_SOUND_EFFECT(SOUND_MENU_STAR_SOUND),
 	STOP_MUSIC_PLAYERS(240, (1 << SEQ_PLAYER_LEVEL)),
 
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 45, /*color*/ 0xFF, 0xFF, 0xFF),

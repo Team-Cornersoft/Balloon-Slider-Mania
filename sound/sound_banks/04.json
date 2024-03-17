@@ -136,7 +136,7 @@
             "sound": "0B"
         },
         "inst12": {
-            "release_rate": 133,
+            "release_rate": 10,
             "envelope": "envelope9",
             "sound": "0C"
         },

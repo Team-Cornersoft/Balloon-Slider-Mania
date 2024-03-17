@@ -59,7 +59,11 @@ void bhv_bell_gong_loop(void) {
 
             o->oAction = BELL_GONG_RINGING;
             o->oFriction = 1.0f;
-            cur_obj_play_sound_2(SOUND_GENERAL2_1UP_APPEAR);
+            if (cur_obj_has_model(MODEL_BSM_BELL)) {
+                cur_obj_play_sound_2(SOUND_SPECIAL1_BSM_BELL);
+            } else {
+                cur_obj_play_sound_2(SOUND_SPECIAL1_BSM_GONG);
+            }
             break;
         case BELL_GONG_RINGING:
             bell_gong_ring();
