@@ -591,6 +591,15 @@ void render_hud_bsm_info(void) {
     gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_text_begin);
 
     // SCORE
+    if (!(gEmulator & EMU_CONSOLE)) {
+        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+        gDPPipeSync(gDisplayListHead++);
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
+        gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+        gSPTextureRectangle(gDisplayListHead++, (scoreX-2) << 2, (scoreY+2) << 2, ((scoreX-2) + 64) << 2,
+                            ((scoreY+2) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+    }
     gDPPipeSync(gDisplayListHead++);
     gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_SCORE]);
     gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
@@ -598,6 +607,15 @@ void render_hud_bsm_info(void) {
                         (scoreY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
     // TIME
+    if (!(gEmulator & EMU_CONSOLE)) {
+        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+        gDPPipeSync(gDisplayListHead++);
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
+        gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
+        gSPTextureRectangle(gDisplayListHead++, (timeX-2) << 2, (timeY+2) << 2, ((timeX-2) + 64) << 2,
+                            ((timeY+2) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+    }
     gDPPipeSync(gDisplayListHead++);
     gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, hudLUT[GLYPH_BSM_TIME]);
     gSPDisplayList(gDisplayListHead++, dl_rgba32_64x16_load_tex_block);
@@ -612,6 +630,20 @@ void render_hud_bsm_info(void) {
         gDPPipeSync(gDisplayListHead++);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
 
+        if (!(gEmulator & EMU_CONSOLE)) {
+            s32 redBalloonXShadow = redBalloonX - 1;
+            s32 redBalloonYShadow = redBalloonY + 1;
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+            for (s32 i = 0; i < gRedBalloonsPopped; i++) {
+                gDPPipeSync(gDisplayListHead++);
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+                gSPTextureRectangle(gDisplayListHead++, redBalloonXShadow << 2, redBalloonYShadow << 2, (redBalloonXShadow + 16) << 2,
+                                    (redBalloonYShadow + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                redBalloonXShadow += 16;
+            }
+            gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+        }
+
         for (s32 i = 0; i < gRedBalloonsPopped; i++) {
             gDPPipeSync(gDisplayListHead++);
             gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
@@ -624,11 +656,17 @@ void render_hud_bsm_info(void) {
     // Key
     gDPPipeSync(gDisplayListHead++);
     if (gBSMKeyCollected) {
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
+        if (!(gEmulator & EMU_CONSOLE)) {
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (keyX-1) << 2, (keyY+1) << 2, ((keyX-1) + 16) << 2,
+                                ((keyY+1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        }
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     } else {
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
     }
     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
     gSPTextureRectangle(gDisplayListHead++, keyX << 2, keyY << 2, (keyX + 16) << 2,
@@ -637,11 +675,17 @@ void render_hud_bsm_info(void) {
     // TCS Token
     gDPPipeSync(gDisplayListHead++);
     if (gBSMTCSTokenCollected) {
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
+        if (!(gEmulator & EMU_CONSOLE)) {
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (tcsTokenX-1) << 2, (tcsTokenY+1) << 2, ((tcsTokenX-1) + 16) << 2,
+                                ((tcsTokenY+1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        }
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     } else {
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
     }
     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
     gSPTextureRectangle(gDisplayListHead++, tcsTokenX << 2, tcsTokenY << 2, (tcsTokenX + 16) << 2,
@@ -651,12 +695,12 @@ void render_hud_bsm_info(void) {
 
     print_set_envcolour(255, 255, 255, 255); // TODO:
     sprintf(strBuff, "%d", gBSMScoreCount);
-    print_small_text(scoreX + 32, scoreY + 19, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    print_small_text(scoreX + 32, scoreY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
     
     print_set_envcolour(255, 255, 255, 255);
     sprintf(strBuff, "%d:%02d.%02d", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30);
-    print_small_text(timeX + 32, timeY + 19, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    print_small_text(timeX + 32, timeY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 }
 
 /**
