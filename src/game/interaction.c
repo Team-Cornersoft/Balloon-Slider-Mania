@@ -1930,11 +1930,11 @@ void mario_handle_special_floors(struct MarioState *m) {
                 break;
 
             case SURFACE_TIMER_START:
-                pss_begin_slide(m);
+                // pss_begin_slide(m);
                 break;
 
             case SURFACE_TIMER_END:
-                pss_end_slide(m);
+                // pss_end_slide(m);
                 break;
         }
 
