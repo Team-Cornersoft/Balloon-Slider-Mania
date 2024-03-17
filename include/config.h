@@ -19,6 +19,10 @@
 #include "config/config_objects.h"
 #include "config/config_rom.h"
 
+#if defined(LOCAL_CONFIG) && !defined(DISABLE_ALL)
+#include "config/config_local.h"
+#endif
+
 
 /* WARNING: Compatibility safeguards - don't remove this file unless you know what you're doing */
 #include "config/config_safeguards.h"
