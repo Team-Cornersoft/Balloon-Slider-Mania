@@ -131,10 +131,22 @@ void render_hud_tex_lut(s32 x, s32 y, Texture *texture) {
     gDisplayListHead = tempGfxHead;
 }
 
+void render_rgba16_tex_lut(s32 x, s32 y, Texture *texture) {
+    Gfx *tempGfxHead = gDisplayListHead;
+
+    gDPPipeSync(tempGfxHead++);
+    gDPSetTextureImage(tempGfxHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture);
+    gSPDisplayList(tempGfxHead++, &dl_rgba16_load_tex_block);                        
+    gSPTextureRectangle(tempGfxHead++, x << 2, y << 2, (x + 16) << 2,
+                        (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+    gDisplayListHead = tempGfxHead;
+}
+
 /**
  * Renders a rgba16 8x8 glyph texture from a table list.
  */
-void render_hud_small_tex_lut(s32 x, s32 y, Texture *texture) {
+void render_rgba16_small_tex_lut(s32 x, s32 y, Texture *texture) {
     Gfx *tempGfxHead = gDisplayListHead;
 
     gDPSetTile(tempGfxHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
@@ -147,8 +159,8 @@ void render_hud_small_tex_lut(s32 x, s32 y, Texture *texture) {
     gDPSetTextureImage(tempGfxHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture);
     gDPLoadSync(tempGfxHead++);
     gDPLoadBlock(tempGfxHead++, G_TX_LOADTILE, 0, 0, 8 * 8 - 1, CALC_DXT(8, G_IM_SIZ_16b_BYTES));
-    gSPTextureRectangle(tempGfxHead++, x << 2, y << 2, (x + 7) << 2, (y + 7) << 2, G_TX_RENDERTILE,
-                        0, 0, 4 << 10, 1 << 10);
+    gSPTextureRectangle(tempGfxHead++, x << 2, y << 2, (x + 8) << 2, (y + 8) << 2, G_TX_RENDERTILE,
+                        0, 0, 1 << 10, 1 << 10);
 
     gDisplayListHead = tempGfxHead;
 }
@@ -535,38 +547,58 @@ void set_hud_camera_status(s16 status) {
 void render_hud_camera_status(void) {
     s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     Texture *(*cameraLUT)[6] = segmented_to_virtual(&main_hud_camera_lut);
-    s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X) + consoleDiff;
-    s32 y = 205 + consoleDiff;
 
     if (sCameraHUD.status == CAM_STATUS_NONE) {
         return;
     }
 
-    gSPDisplayList(gDisplayListHead++, dl_hud_img_begin);
-    render_hud_tex_lut(x, y, (*cameraLUT)[GLYPH_CAM_CAMERA]);
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+    for (s32 i = 0; i < 2; i++) {
+        s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X) + consoleDiff;
+        s32 y = 205 + consoleDiff;
 
-    switch (sCameraHUD.status & CAM_STATUS_MODE_GROUP) {
-        case CAM_STATUS_MARIO:
-            render_hud_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_MARIO_HEAD]);
-            break;
-        case CAM_STATUS_LAKITU:
-            render_hud_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_LAKITU_HEAD]);
-            break;
-        case CAM_STATUS_FIXED:
-            render_hud_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_FIXED]);
-            break;
+        if (i == 0) {
+            if (gEmulator & EMU_CONSOLE) {
+                continue;
+            }
+
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
+            x -= 1;
+            y += 1;
+        } else {
+            gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+        }
+
+        switch (sCameraHUD.status & CAM_STATUS_C_MODE_GROUP) {
+            case CAM_STATUS_C_DOWN:
+                render_rgba16_small_tex_lut(x + 4, y + 16, (*cameraLUT)[GLYPH_CAM_ARROW_DOWN]);
+                break;
+            case CAM_STATUS_C_UP:
+                render_rgba16_small_tex_lut(x + 4, y - 8, (*cameraLUT)[GLYPH_CAM_ARROW_UP]);
+                break;
+        }
+
+        if (i == 0) {
+            x -= 1;
+            y += 1;
+        }
+
+        render_rgba16_tex_lut(x, y, (*cameraLUT)[GLYPH_CAM_CAMERA]);
+        switch (sCameraHUD.status & CAM_STATUS_MODE_GROUP) {
+            case CAM_STATUS_MARIO:
+                render_rgba16_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_MARIO_HEAD]);
+                break;
+            case CAM_STATUS_LAKITU:
+                render_rgba16_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_LAKITU_HEAD]);
+                break;
+            case CAM_STATUS_FIXED:
+                render_rgba16_tex_lut(x + 16, y, (*cameraLUT)[GLYPH_CAM_FIXED]);
+                break;
+        }
     }
 
-    switch (sCameraHUD.status & CAM_STATUS_C_MODE_GROUP) {
-        case CAM_STATUS_C_DOWN:
-            render_hud_small_tex_lut(x + 4, y + 16, (*cameraLUT)[GLYPH_CAM_ARROW_DOWN]);
-            break;
-        case CAM_STATUS_C_UP:
-            render_hud_small_tex_lut(x + 4, y - 8, (*cameraLUT)[GLYPH_CAM_ARROW_UP]);
-            break;
-    }
-
-    gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
+    gDPSetCombineMode(gDisplayListHead++, G_CC_SHADE, G_CC_SHADE);
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 }
 
 struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
