@@ -294,7 +294,7 @@ const LevelScript level_ccm_entry[] = {
 		OBJECT(MODEL_BSM_POINT_BALLOON, 5700, -2300, -1100, 0, 20, 0, 0x00050000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, -10400, 1200, 8600, 0, 30, 0, 0x00050000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, -2300, -1300, 5800, 0, -20, 0, 0x00050000, bhvPointBalloon),
-		OBJECT(MODEL_BSM_TCS_TOKEN, 1558, -2216, -9298, 0, 30, 0, 0x00000000, bhvTCSToken),
+		OBJECT(MODEL_BSM_TCS_TOKEN, 1558, -2366, -9298, 0, 30, 0, 0x00000000, bhvTCSToken),
 		OBJECT(MODEL_NONE, 0, 0, 0, 0, 0, 0, 0x000A0000, bhvSpinAirborneWarp),
 		TERRAIN(ccm_area_4_collision),
 		ROOMS(ccm_area_4_collision_rooms),
