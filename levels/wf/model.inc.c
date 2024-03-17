@@ -43255,7 +43255,7 @@ Gfx mat_revert_wf_dl_CS_logo_b[] = {
 
 Gfx mat_wf_dl_CS_logo_a[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, SHADE, SHADE_ALPHA, SHADE, 0, 0, 0, TEXEL0, TEXEL0, SHADE, SHADE_ALPHA, SHADE, 0, 0, 0, TEXEL0),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
 	gsSPGeometryMode(G_LIGHTING, 0),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, wf_dl_CSlogo_a_ia8),
