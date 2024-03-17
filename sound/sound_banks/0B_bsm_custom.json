@@ -14,142 +14,142 @@
             "sound": "00_bsm_menu_change_selection"
         },
         "inst1": {
-            "release_rate": 208,
+            "release_rate": 20,
             "envelope": "envelope0",
             "sound": "01_bsm_menu_start_course_L"
         },
         "inst2": {
-            "release_rate": 208,
+            "release_rate": 20,
             "envelope": "envelope0",
             "sound": "02_bsm_menu_start_course_R"
         },
         "inst3": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "03_bsm_points_5_L"
         },
         "inst4": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "04_bsm_points_5_R"
         },
         "inst5": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "05_bsm_points_10_L"
         },
         "inst6": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "06_bsm_points_10_R"
         },
         "inst7": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "07_bsm_points_25_L"
         },
         "inst8": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "08_bsm_points_25_R"
         },
         "inst9": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "09_bsm_points_50_L"
         },
         "inst10": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0A_bsm_points_50_R"
         },
         "inst11": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0B_bsm_points_100_L"
         },
         "inst12": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0C_bsm_points_100_R"
         },
         "inst13": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0D_bsm_redcoin_0_L"
         },
         "inst14": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0E_bsm_redcoin_0_R"
         },
         "inst15": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0F_bsm_redcoin_1_L"
         },
         "inst16": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "10_bsm_redcoin_1_R"
         },
         "inst17": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "11_bsm_redcoin_2_L"
         },
         "inst18": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "12_bsm_redcoin_2_R"
         },
         "inst19": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "13_bsm_redcoin_3_L"
         },
         "inst20": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "14_bsm_redcoin_3_R"
         },
         "inst21": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "15_bsm_redcoin_4_L"
         },
         "inst22": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "16_bsm_redcoin_4_R"
         },
         "inst23": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "17_bsm_redcoin_5_L"
         },
         "inst24": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "18_bsm_redcoin_5_R"
         },
         "inst25": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "19_bsm_redcoin_6_L"
         },
         "inst26": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "1A_bsm_redcoin_6_R"
         },
         "inst27": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "1B_bsm_redcoin_7_L"
         },
         "inst28": {
-            "release_rate": 20,
+            "release_rate": 10,
             "envelope": "envelope0",
             "sound": "1C_bsm_redcoin_7_R"
         },
@@ -157,6 +157,16 @@
             "release_rate": 208,
             "envelope": "envelope0",
             "sound": "1D_bsm_balloon_pop"
+        },
+        "inst30": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "1E_bsm_bell"
+        },
+        "inst31": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "1F_bsm_gong"
         }
     },
     "instrument_list": [
@@ -189,6 +199,8 @@
         "inst26",
         "inst27",
         "inst28",
-        "inst29"
+        "inst29",
+        "inst30",
+        "inst31"
     ]
 }

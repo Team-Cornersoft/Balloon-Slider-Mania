@@ -12,7 +12,7 @@ seq_setmutescale 0
   seq_setvol 127
 #endif
 seq_settempo 120
-seq_initchannels 0xfff
+seq_initchannels 0x1fff
 seq_startchannel 0, .channel0
 seq_startchannel 1, .channel1
 seq_startchannel 2, .channel2
@@ -25,6 +25,7 @@ seq_startchannel 8, .channel38
 seq_startchannel 9, .channel59
 seq_startchannel 10, .channelA
 seq_startchannel 11, .channelB
+seq_startchannel 12, .channelC
 .seq_loop:
 seq_delay 20000
 seq_jump .seq_loop
@@ -93,6 +94,17 @@ chan_setval 0
 chan_iowriteval 5
 chan_stereoheadseteffects 1
 chan_setdyntable .channelB_table
+chan_jump .main_loop_023589
+
+.channelC:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setdyntable .channelC_table
 chan_jump .main_loop_023589
 
 // Main loop for standard, non-continuous sound effects
@@ -3255,11 +3267,12 @@ layer_end
 .sound_menu_star_sound:
 chan_setbank 4
 chan_setinstr 14
+chan_setreverb 20
 chan_setlayer 0, .layer_1344
 chan_end
 
 .layer_1344:
-layer_note1 39, 0x7f, 115
+layer_note1 39, 0x6f, 95
 layer_end
 
 .sound_general_platform:
@@ -7927,6 +7940,7 @@ layer_note0 38, 0x3, 127, 127
 layer_delay 0x2a
 layer_jump .layer_32B7
 
+
 .channelA_table:
 sound_ref .sound_bsm_menu_change_selection
 sound_ref .sound_bsm_balloon_pop_smallest
@@ -8072,13 +8086,13 @@ chan_end
 .layer_bsm_points_5_L:
 layer_setinstr 3
 layer_setpan 0
-layer_note1 39, 0x98, 87
+layer_note1 39, 0x98, 79
 layer_end
 
 .layer_bsm_points_5_R:
 layer_setinstr 4
 layer_setpan 127
-layer_note1 39, 0x98, 87
+layer_note1 39, 0x98, 79
 layer_end
 
 .sound_bsm_points_10:
@@ -8093,13 +8107,13 @@ chan_end
 .layer_bsm_points_10_L:
 layer_setinstr 5
 layer_setpan 0
-layer_note1 39, 0x98, 87
+layer_note1 39, 0x98, 79
 layer_end
 
 .layer_bsm_points_10_R:
 layer_setinstr 6
 layer_setpan 127
-layer_note1 39, 0x98, 87
+layer_note1 39, 0x98, 79
 layer_end
 
 .sound_bsm_points_25:
@@ -8114,13 +8128,13 @@ chan_end
 .layer_bsm_points_25_L:
 layer_setinstr 7
 layer_setpan 0
-layer_note1 39, 0xad, 87
+layer_note1 39, 0xad, 79
 layer_end
 
 .layer_bsm_points_25_R:
 layer_setinstr 8
 layer_setpan 127
-layer_note1 39, 0xad, 87
+layer_note1 39, 0xad, 79
 layer_end
 
 .sound_bsm_points_50:
@@ -8135,13 +8149,13 @@ chan_end
 .layer_bsm_points_50_L:
 layer_setinstr 9
 layer_setpan 0
-layer_note1 39, 0xbb, 87
+layer_note1 39, 0xbb, 79
 layer_end
 
 .layer_bsm_points_50_R:
 layer_setinstr 10
 layer_setpan 127
-layer_note1 39, 0xbb, 87
+layer_note1 39, 0xbb, 79
 layer_end
 
 .sound_bsm_points_100:
@@ -8156,13 +8170,13 @@ chan_end
 .layer_bsm_points_100_L:
 layer_setinstr 11
 layer_setpan 0
-layer_note1 39, 0xd1, 87
+layer_note1 39, 0xd1, 79
 layer_end
 
 .layer_bsm_points_100_R:
 layer_setinstr 12
 layer_setpan 127
-layer_note1 39, 0xd1, 87
+layer_note1 39, 0xd1, 79
 layer_end
 
 .sound_bsm_redcoin_0:
@@ -8177,13 +8191,13 @@ chan_end
 .layer_bsm_redcoin_0_L:
 layer_setinstr 13
 layer_setpan 0
-layer_note1 39, 0xb9, 87
+layer_note1 39, 0xb9, 79
 layer_end
 
 .layer_bsm_redcoin_0_R:
 layer_setinstr 14
 layer_setpan 127
-layer_note1 39, 0xb9, 87
+layer_note1 39, 0xb9, 79
 layer_end
 
 .sound_bsm_redcoin_1:
@@ -8198,13 +8212,13 @@ chan_end
 .layer_bsm_redcoin_1_L:
 layer_setinstr 15
 layer_setpan 0
-layer_note1 39, 0xbc, 87
+layer_note1 39, 0xbc, 79
 layer_end
 
 .layer_bsm_redcoin_1_R:
 layer_setinstr 16
 layer_setpan 127
-layer_note1 39, 0xbc, 87
+layer_note1 39, 0xbc, 79
 layer_end
 
 .sound_bsm_redcoin_2:
@@ -8219,13 +8233,13 @@ chan_end
 .layer_bsm_redcoin_2_L:
 layer_setinstr 17
 layer_setpan 0
-layer_note1 39, 0xb1, 87
+layer_note1 39, 0xb1, 79
 layer_end
 
 .layer_bsm_redcoin_2_R:
 layer_setinstr 18
 layer_setpan 127
-layer_note1 39, 0xb1, 87
+layer_note1 39, 0xb1, 79
 layer_end
 
 .sound_bsm_redcoin_3:
@@ -8240,13 +8254,13 @@ chan_end
 .layer_bsm_redcoin_3_L:
 layer_setinstr 19
 layer_setpan 0
-layer_note1 39, 0xab, 87
+layer_note1 39, 0xab, 79
 layer_end
 
 .layer_bsm_redcoin_3_R:
 layer_setinstr 20
 layer_setpan 127
-layer_note1 39, 0xab, 87
+layer_note1 39, 0xab, 79
 layer_end
 
 .sound_bsm_redcoin_4:
@@ -8261,13 +8275,13 @@ chan_end
 .layer_bsm_redcoin_4_L:
 layer_setinstr 21
 layer_setpan 0
-layer_note1 39, 0xa5, 87
+layer_note1 39, 0xa5, 79
 layer_end
 
 .layer_bsm_redcoin_4_R:
 layer_setinstr 22
 layer_setpan 127
-layer_note1 39, 0xa5, 87
+layer_note1 39, 0xa5, 79
 layer_end
 
 .sound_bsm_redcoin_5:
@@ -8282,13 +8296,13 @@ chan_end
 .layer_bsm_redcoin_5_L:
 layer_setinstr 23
 layer_setpan 0
-layer_note1 39, 0xa9, 87
+layer_note1 39, 0xa9, 79
 layer_end
 
 .layer_bsm_redcoin_5_R:
 layer_setinstr 24
 layer_setpan 127
-layer_note1 39, 0xa9, 87
+layer_note1 39, 0xa9, 79
 layer_end
 
 .sound_bsm_redcoin_6:
@@ -8303,13 +8317,13 @@ chan_end
 .layer_bsm_redcoin_6_L:
 layer_setinstr 25
 layer_setpan 0
-layer_note1 39, 0xa5, 87
+layer_note1 39, 0xa5, 79
 layer_end
 
 .layer_bsm_redcoin_6_R:
 layer_setinstr 26
 layer_setpan 127
-layer_note1 39, 0xa5, 87
+layer_note1 39, 0xa5, 79
 layer_end
 
 .sound_bsm_redcoin_7:
@@ -8324,14 +8338,52 @@ chan_end
 .layer_bsm_redcoin_7_L:
 layer_setinstr 27
 layer_setpan 0
-layer_note1 39, 0x9a, 87
+layer_note1 39, 0x9a, 79
 layer_end
 
 .layer_bsm_redcoin_7_R:
 layer_setinstr 28
 layer_setpan 127
-layer_note1 39, 0x9a, 87
+layer_note1 39, 0x9a, 79
 layer_end
+
+
+.channelC_table:
+sound_ref .sound_bsm_bell
+sound_ref .sound_bsm_gong
+
+
+.sound_bsm_bell:
+chan_setbank 11
+chan_setinstr 30
+chan_setval 20
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_bell_delay
+chan_setlayer 1, .layer_bsm_bell
+chan_end
+
+.layer_bsm_bell:
+layer_delay 0x2
+layer_note1 39, 0x2a0, 127
+layer_end
+
+.layer_bsm_bell_delay:
+layer_delay 0x50
+layer_note1 39, 0x2a0, 103
+layer_end
+
+.sound_bsm_gong:
+chan_setbank 11
+chan_setinstr 31
+chan_setval 20
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_gong
+chan_end
+
+.layer_bsm_gong:
+layer_note1 39, 0x2a0, 111
+layer_end
+
 
 .align 2, 0
 .envelope_32C4:

@@ -4,24 +4,6 @@ extern void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ);
 #define BALLOON_FLOATING_CALC(relativePos, intensity, offset, freq) \
     (relativePos + intensity * sins((0x10000 * ((o->oPtBalloonAbsoluteTimer + offset) % freq)) / freq))
 
-struct BalloonTypeProperties {
-    f32 scale;
-    s32 points;
-    s32 popsfx;
-    s32 popjingle;
-};
-
-struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT] = {
-    [POINT_BALLOON_5]   = {.scale = 1.0f,  .points = 5,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALLEST,  .popjingle = SOUND_EXTRA2_BSM_POINTS_5  },
-    [POINT_BALLOON_10]  = {.scale = 1.2f,  .points = 10,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SMALL,     .popjingle = SOUND_EXTRA2_BSM_POINTS_10 },
-    [POINT_BALLOON_25]  = {.scale = 1.5f,  .points = 25,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = SOUND_EXTRA2_BSM_POINTS_25 },
-    [POINT_BALLOON_50]  = {.scale = 2.0f,  .points = 50,  .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGE,     .popjingle = SOUND_EXTRA2_BSM_POINTS_50 },
-    [POINT_BALLOON_100] = {.scale = 3.0f,  .points = 100, .popsfx = SOUND_EXTRA1_BSM_BALLOON_LARGEST,   .popjingle = SOUND_EXTRA2_BSM_POINTS_100},
-    [POINT_BALLOON_RED] = {.scale = 1.75f, .points = 0,   .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMILARGE, .popjingle = SOUND_EXTRA2_BSM_REDCOIN_0 },
-};
-
-struct BalloonTypeProperties keyBalloon = {.scale = 1.35f, .points = 0, .popsfx = SOUND_EXTRA1_BSM_BALLOON_SEMISMALL, .popjingle = NO_SOUND /*TODO:*/ };
-
 static u8 point_balloon_check_if_interacted(void) {
     if (!gMarioState || !gMarioState->marioObj) {
         return FALSE;
@@ -279,9 +261,7 @@ void bhv_point_balloon_popped_loop(void) {
             }
         } else if (props == &keyBalloon) {
             gBSMKeyCollected = TRUE;
-
-            // TODO: Key balloon sound and HUD texture
-            // play_sound(props->popjingle, gGlobalSoundSource);
+            play_sound(props->popjingle, gGlobalSoundSource);
         } else {
             play_sound(props->popjingle, gGlobalSoundSource);
         }
