@@ -2354,6 +2354,7 @@ ALIGNED8 static const Texture texture_font_char_us_button_C_right[] = {
 };
 #endif
 
+/*
 ALIGNED8 static const Texture texture_hud_char_camera[] = {
 #include "textures/segment2/segment2.07B50.rgba16.inc.c"
 };
@@ -2372,6 +2373,27 @@ ALIGNED8 static const Texture texture_hud_char_arrow_up[] = {
 
 ALIGNED8 static const Texture texture_hud_char_arrow_down[] = {
 #include "textures/segment2/segment2.081D0.rgba16.inc.c"
+};
+*/
+
+ALIGNED8 static const Texture texture_hud_char_camera[] = {
+#include "textures/segment2/custom.camera.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_lakitu[] = {
+#include "textures/segment2/custom.lakitu.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_no_camera[] = {
+#include "textures/segment2/custom.no_camera.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_arrow_up[] = {
+#include "textures/segment2/custom.uparrow.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture texture_hud_char_arrow_down[] = {
+#include "textures/segment2/custom.downarrow.rgba16.inc.c"
 };
 
 // Main HUD print table 0x02008250-0x02008337
