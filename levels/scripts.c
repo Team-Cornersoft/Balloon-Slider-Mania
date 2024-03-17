@@ -49,6 +49,8 @@ static const LevelScript goto_ending[6];
 static const LevelScript goto_mario_head_regular[6];
 static const LevelScript goto_mario_head_dizzy[6];
 static const LevelScript goto_debug_level_select[6];
+static const LevelScript goto_bsm_level_select[6];
+static const LevelScript goto_bsm_retry[6];
 
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8)
 #define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) static const LevelScript script_exec_ ## folder [6 + 1];
@@ -134,6 +136,8 @@ const LevelScript level_main_scripts_entry[] = {
     JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_MARIO_HEAD_DIZZY,    goto_mario_head_dizzy),
     JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_INTRO_SPLASH_SCREEN, goto_intro_splash_screen),
     JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_LEVEL_SELECT,        goto_debug_level_select),
+    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_BSM_LEVEL_SELECT,    goto_bsm_level_select),
+    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_BSM_RETRY,           goto_bsm_retry),
 };
 
 static const LevelScript goto_intro_splash_screen[] = {
@@ -154,6 +158,14 @@ static const LevelScript goto_mario_head_dizzy[] = {
 
 static const LevelScript goto_debug_level_select[] = {
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
+static const LevelScript goto_bsm_level_select[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+};
+
+static const LevelScript goto_bsm_retry[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
 };
 
 // Include the level jumptable.
