@@ -268,6 +268,11 @@ ifeq ($(LIBPL),1)
   SRC_DIRS += $(LIBPL_DIR)
 endif
 
+# does local config file exist?
+ifneq ($(wildcard include/config/config_local.h),)
+  DEFINES += LOCAL_CONFIG=1
+endif
+
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(VERSION)_$(CONSOLE)

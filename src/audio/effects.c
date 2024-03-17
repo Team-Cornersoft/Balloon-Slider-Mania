@@ -66,10 +66,22 @@ static void sequence_channel_process_sound(struct SequenceChannel *seqChannel) {
             if (!hasProcessedChannel) {
                 hasProcessedChannel = TRUE;
 
+#ifdef MUTE_MUSIC_PLAYERS
+                if (seqChannel->seqPlayer == &gSequencePlayers[SEQ_PLAYER_LEVEL]
+                    || seqChannel->seqPlayer == &gSequencePlayers[SEQ_PLAYER_ENV]) {
+                    channelVolume = 0;
+                } else {
+                    channelVolume = seqChannel->volume * seqChannel->volumeScale * seqChannel->seqPlayer->fadeVolume;
+                    if (seqChannel->seqPlayer->muted && (seqChannel->muteBehavior & MUTE_BEHAVIOR_SOFTEN) != 0) {
+                        channelVolume *= seqChannel->seqPlayer->muteVolumeScale;
+                    }
+                }
+#else
                 channelVolume = seqChannel->volume * seqChannel->volumeScale * seqChannel->seqPlayer->fadeVolume;
                 if (seqChannel->seqPlayer->muted && (seqChannel->muteBehavior & MUTE_BEHAVIOR_SOFTEN) != 0) {
                     channelVolume *= seqChannel->seqPlayer->muteVolumeScale;
                 }
+#endif
 
                 panFromChannel = seqChannel->pan * seqChannel->panChannelWeight;
                 panLayerWeight = 1.0f - seqChannel->panChannelWeight;

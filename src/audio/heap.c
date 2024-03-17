@@ -1144,8 +1144,14 @@ void init_reverb_us(s32 presetId) {
         if (reinitBetterReverbBuffers) {
             bzero(gSynthesisReverb.ringBuffer.left, (REVERB_WINDOW_SIZE_MAX * SYNTH_CHANNEL_STEREO_COUNT * sizeof(s16)));
         } else if (reverbWindowSize < REVERB_WINDOW_SIZE_MAX) {
-            bzero(gSynthesisReverb.ringBuffer.left + (reverbWindowSize * sizeof(s16)), ((REVERB_WINDOW_SIZE_MAX - reverbWindowSize) * sizeof(s16)));
-            bzero(gSynthesisReverb.ringBuffer.right + (reverbWindowSize * sizeof(s16)), ((REVERB_WINDOW_SIZE_MAX - reverbWindowSize) * sizeof(s16)));
+            // This does and always will sound bad if the window size changes
+            for (s32 i = 0; i < reverbWindowSize; i++) {
+                gSynthesisReverb.ringBuffer.left[reverbWindowSize + i] = gSynthesisReverb.ringBuffer.right[i];
+            }
+
+            if (reverbWindowSize < REVERB_WINDOW_SIZE_MAX) {
+                bzero(gSynthesisReverb.ringBuffer.left + SYNTH_CHANNEL_STEREO_COUNT * (reverbWindowSize * sizeof(s16)), SYNTH_CHANNEL_STEREO_COUNT * ((REVERB_WINDOW_SIZE_MAX - reverbWindowSize) * sizeof(s16)));
+            }
         }
     }
 
