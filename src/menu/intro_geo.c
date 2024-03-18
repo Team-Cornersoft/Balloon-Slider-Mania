@@ -11,6 +11,7 @@
 #include "types.h"
 #include "buffers/framebuffers.h"
 #include "game/game_init.h"
+#include "game/level_update.h"
 #include "audio/external.h"
 
 // frame counts for the zoom in, hold, and zoom out of title model
@@ -36,6 +37,49 @@ static s32 sGameOverTableIndex;
 static s16 sIntroFrameCounter;
 static s32 sTmCopyrightAlpha;
 
+Gfx *render_blank_box_rounded_local_dl(Gfx *dl, s32 x1, s32 y1, s32 x2, s32 y2, u8 r, u8 g, u8 b, u8 a) {
+    if (x2 < x1)
+    {
+        u32 temp = x2;
+        x2 = x1;
+        x1 = temp;
+    }
+    if (y2 < y1)
+    {
+        u32 temp = y2;
+        y2 = y1;
+        y1 = temp;
+    }
+    if (x1 < 0) x1 = 0;
+    if (y1 < 0) y1 = 0;
+    if (x2 > SCREEN_WIDTH) x2 = SCREEN_WIDTH;
+    if (y2 > SCREEN_HEIGHT) y2 = SCREEN_HEIGHT;
+    s32 cycleadd = 0;
+    gDPSetCycleType(dl++, G_CYC_1CYCLE);
+    if (a == 255) {
+        gDPSetRenderMode(dl++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+    } else {
+        gDPSetRenderMode(dl++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    }
+    gDPSetFillColor(dl++, GPACK_RGBA5551(r, g, b, 1) << 16 | GPACK_RGBA5551(r, g, b, 1));
+    gDPSetEnvColor(dl++, r, g, b, a);
+    gDPFillRectangle(dl++, x1+4, y1, x2-4, y1+1);
+    gDPFillRectangle(dl++, x1+2, y1+1, x2-2, y1+2);
+    gDPFillRectangle(dl++, x1+1, y1+2, x2-1, y1+4);
+    gDPFillRectangle(dl++, x1+1, y2-4, x2-1, y2-2);
+    gDPFillRectangle(dl++, x1+2, y2-2, x2-2, y2-1);
+    gDPFillRectangle(dl++, x1+4, y2-1, x2-4, y2);
+    // if (ABS(x1 - x2) % 4 == 0 && a == 255) {
+    //     gDPSetCycleType(dl++, G_CYC_FILL);
+    //     gDPSetRenderMode(dl++, G_RM_NOOP, G_RM_NOOP);
+    //     cycleadd = 1;
+    // }
+    gDPFillRectangle(dl++, x1, y1+4, x2 - cycleadd, y2-4 - cycleadd);
+    gDPPipeSync(dl++);
+
+    return dl;
+}
+
 Gfx *geo_scam_warning_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
     if (state == GEO_CONTEXT_RENDER) {
         gSPDisplayList(gDisplayListHead++, dl_hud_img_begin);
@@ -45,6 +89,53 @@ Gfx *geo_scam_warning_screen(s32 state, UNUSED struct GraphNode *node, UNUSED vo
     }
 
     return NULL;
+}
+
+#define BOX_HALF_WIDTH ((SCREEN_WIDTH / 2) * (0.67f * gBSMRetryMenuScale))
+#define BOX_HALF_HEIGHT ((SCREEN_HEIGHT / 2) * (0.67f * gBSMRetryMenuScale))
+#define BOX_HALF_WIDTH_EXCESS (BOX_HALF_WIDTH + (8.0f * gBSMRetryMenuScale))
+#define BOX_HALF_HEIGHT_EXCESS (BOX_HALF_HEIGHT + (8.0f * gBSMRetryMenuScale))
+Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
+    Gfx *head = NULL;
+
+    if (state == GEO_CONTEXT_RENDER) {
+        Gfx *dl = alloc_display_list(sizeof(*dl) * 15 * 4 + 4);
+        head = dl;
+
+        if (!dl || gBSMRetryMenuScale == 0) {
+            return NULL;
+        }
+
+        gDPSetCombineMode(dl++, BLANK, BLANK);
+
+        s32 x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH_EXCESS;
+        s32 y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT_EXCESS;
+        s32 x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH_EXCESS;
+        s32 y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT_EXCESS;
+        u8 r = 79;
+        u8 g = 79;
+        u8 b = 225;
+
+        dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+
+        x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH;
+        y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT;
+        x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH;
+        y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT;
+        r = 47;
+        g = 47;
+        b = 191;
+
+        dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+
+        gDPSetEnvColor(dl++, 255, 255, 255, 255);
+        gSPDisplayList(dl++, dl_hud_img_end);
+        gSPEndDisplayList(dl++);
+    }
+
+    return head;
 }
 
 /**

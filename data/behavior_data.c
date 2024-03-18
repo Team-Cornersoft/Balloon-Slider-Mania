@@ -505,6 +505,16 @@ const BehaviorScript bhvBellGong[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvBSMRetryMenu[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_bsm_retry_menu_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_retry_menu_loop),
+    END_LOOP(),
+};
 
 const BehaviorScript bhvBSMMenuTitle[] = {
     BEGIN(OBJ_LIST_DEFAULT),

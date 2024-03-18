@@ -453,8 +453,9 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
 #ifdef WIDE
         if (gConfig.widescreen && 
            gCurrLevelNum != LEVEL_UNKNOWN_2 &&
-           gCurrLevelNum != LEVEL_CASTLE_GROUNDS &&
-           gCurrLevelNum != LEVEL_CASTLE_COURTYARD
+           !gOrthoCam
+        //    gCurrLevelNum != LEVEL_CASTLE_GROUNDS &&
+        //    gCurrLevelNum != LEVEL_CASTLE_COURTYARD
         ) {
             sAspectRatio = 16.0f / 9.0f; // 1.775f
         } else {

@@ -13,6 +13,7 @@ enum IntroContexts {
 };
 
 Gfx *geo_scam_warning_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *context);
+Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *context);
 Gfx *geo_intro_super_mario_64_logo(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_intro_tm_copyright(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_intro_regular_backdrop(s32 callContext, struct GraphNode *node, UNUSED void *context);

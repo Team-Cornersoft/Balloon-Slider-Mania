@@ -167,7 +167,7 @@ static const LevelScript goto_bsm_level_select[] = {
 };
 
 static const LevelScript goto_bsm_failure[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_retry_menu, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
 static const LevelScript goto_bsm_retry[] = {

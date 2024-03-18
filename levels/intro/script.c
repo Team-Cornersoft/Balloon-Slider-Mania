@@ -13,6 +13,7 @@
 #include "levels/scripts.h"
 #include "levels/menu/header.h"
 #include "levels/castle_courtyard/header.h"
+#include "levels/castle_grounds/header.h"
 
 #include "actors/common0.h"
 #include "actors/common1.h"
@@ -54,6 +55,60 @@ const LevelScript level_scam_warning_screen[] = {
 
     // NOTE: Remember to change ALL OF THESE if changing scripts/segments
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_courtyardSegmentRomStart, _castle_courtyardSegmentRomEnd, level_ccy_title_screen, _castle_courtyardSegmentBssStart, _castle_courtyardSegmentBssEnd),
+};
+
+const LevelScript level_intro_retry_menu_yes[] = {
+    CALL(/*arg*/ 1, /*func*/ bsm_menu_selection_made),
+	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
+};
+
+const LevelScript level_intro_retry_menu[] = {
+    // INIT_LEVEL(),
+    // LOAD_GODDARD(),
+    // LOAD_BEHAVIOR_DATA(),
+    // LOAD_LEVEL_DATA(intro),
+
+    // // Load Scam Warning Screen
+    // ALLOC_LEVEL_POOL(),
+    
+    // AREA(/*index*/ 1, intro_retry_menu),
+    //     OBJECT(/*model*/ MODEL_NONE, /*pos*/ 1600, 1200, 0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBSMRetryMenu),
+    // END_AREA(),
+    // FREE_LEVEL_POOL(),
+
+    // // Start animation
+    // LOAD_AREA(/*area*/ 1),
+    // CALL(/*arg*/ 0, /*func*/ load_mario_area),
+
+	// SET_ORTHO_CAM(TRUE),
+
+    // CALL(/*arg*/ 0, /*func*/ retry_menu_state),
+    // TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 1, /*color*/ 0x00, 0x00, 0x00),
+    // SLEEP(/*frames*/ 10),
+
+    // PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_APPEAR),
+
+    // LOOP_BEGIN(),
+    //     UPDATE_OBJECTS(),
+    //     CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    //     SLEEP(/*frames*/ 1),
+    //     CALL(/*arg*/ 1, /*func*/ retry_menu_state),
+    //     CALL(/*arg*/ 1, /*func*/ retry_menu_state),
+    // LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ 0),
+
+    // PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_DISAPPEAR),
+
+    // SLEEP(/*frames*/ 15),
+    // TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 1, /*color*/ 0x00, 0x00, 0x00),
+    // UNLOAD_AREA(/*area*/ 1),
+    // CLEAR_LEVEL(),
+
+    // SLEEP(/*frames*/ 10),
+    // CALL(/*arg*/ 2, /*func*/ retry_menu_state), // TODO: dialog prompt return
+    // JUMP_IF(/*op*/ OP_EQ, /*arg*/ 0,  level_intro_retry_menu_yes), // Jump if first result is selected (Retry)
+
+    // Otherwise exit to menu select
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
 };
 
 const LevelScript level_intro_splash_screen[] = {

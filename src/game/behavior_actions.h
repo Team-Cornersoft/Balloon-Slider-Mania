@@ -32,6 +32,8 @@ void bhv_bell_gong_loop(void);
 void bhv_key_gate_loop(void);
 void bhv_bsm_menu_title_init(void);
 void bhv_bsm_menu_title_loop(void);
+void bhv_bsm_retry_menu_init(void);
+void bhv_bsm_retry_menu_loop(void);
 void bhv_bsm_menu_button_manager_init(void);
 void bhv_bsm_menu_button_manager_loop(void);
 void bhv_bsm_menu_button_or_stage_init(void);

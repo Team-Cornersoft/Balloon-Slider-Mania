@@ -155,6 +155,8 @@ u8 renderPressA = FALSE;
 
 u8 gOrthoCam = FALSE;
 
+f32 gBSMRetryMenuScale = 0.0f;
+
 u8 gBSMTimerActive = FALSE;
 u32 gBSMTCSTokenCollected = FALSE;
 u32 gBSMKeyCollected = FALSE;
@@ -1570,4 +1572,21 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
 
     sLastLevel = sWarpDest.levelNum;
     return sWarpDest.levelNum;
+}
+
+s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
+    // Initialize
+    if (callType == 0) {
+        gBSMRetryMenuScale = 0.0f;
+        return TRUE;
+    }
+
+    // Deinitialize
+    if (callType == 2) {
+        return TRUE;
+    }
+
+    // Loop stuff
+
+    return FALSE;
 }

@@ -1321,8 +1321,6 @@ s32 print_set_envcolour(u8 r, u8 g, u8 b, u8 a) {
     return FALSE;
 }
 
-#define BLANK 0, 0, 0, ENVIRONMENT, 0, 0, 0, ENVIRONMENT
-
 void prepare_blank_box(void) {
     gDPSetCombineMode(gDisplayListHead++, BLANK, BLANK);
 }

@@ -97,6 +97,8 @@ extern u8 renderPressA;
 
 extern u8 gOrthoCam;
 
+extern f32 gBSMRetryMenuScale;
+
 extern s16 sCurrPlayMode;
 extern s16 sTransitionTimer;
 extern void (*sTransitionUpdate)(s16 *);
@@ -207,5 +209,6 @@ s32 init_image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1);
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1);
+s32 retry_menu_state(s16 callType, UNUSED s32 arg1);
 
 #endif // LEVEL_UPDATE_H

@@ -12,6 +12,7 @@ extern const BehaviorScript bhvKeyGate[];
 extern const BehaviorScript bhvKeyGateOpen[];
 extern const BehaviorScript bhvRotatingBridge[];
 extern const BehaviorScript bhvBellGong[];
+extern const BehaviorScript bhvBSMRetryMenu[];
 extern const BehaviorScript bhvBSMMenuTitle[];
 extern const BehaviorScript bhvBSMMenuButtonManager[];
 extern const BehaviorScript bhvBSMMenuButtonOrStage[];
