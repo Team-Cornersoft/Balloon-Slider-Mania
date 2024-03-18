@@ -1509,26 +1509,87 @@ void geo_process_held_object(struct GraphNodeHeldObject *node) {
     }
 }
 
+#define TRANSITION_TIME 45
+struct LightHistory gFromDirLight = {.overrideable = TRUE, .timer = U8_MAX};
+struct LightHistory gTransitioningDirLight = {.overrideable = TRUE, .timer = U8_MAX};
+struct LightHistory gToDirLight = {.overrideable = TRUE, .timer = U8_MAX};
+
+struct LightHistory gFromAmbLight = {.overrideable = TRUE, .timer = U8_MAX};
+struct LightHistory gTransitioningAmbLight = {.overrideable = TRUE, .timer = U8_MAX};
+struct LightHistory gToAmbLight = {.overrideable = TRUE, .timer = U8_MAX};
+
+struct GraphNodeSceneLight *gLastDirLightingNode;
+struct GraphNodeSceneLight *gLastAmbLightingNode;
+
 /**
  * Advanced lighting engine
  * Processes a scene light, setting its position and other properties
  */
 void geo_process_scene_light(struct GraphNodeSceneLight *node)
 {    
+    s32 color[3];
+    s32 direction[3];
+    f32 transAmount;
+
     switch (node->lightType)
     {
         case LIGHT_TYPE_DIRECTIONAL:
             if (!gOverrideDirectionalLight)
             {
+                if (gLastDirLightingNode != node) {
+                    gLastDirLightingNode = node;
+
+                    gToDirLight.color[0] = node->color[0];
+                    gToDirLight.color[1] = node->color[1];
+                    gToDirLight.color[2] = node->color[2];
+
+                    gToDirLight.direction[0] = node->a;
+                    gToDirLight.direction[1] = node->b;
+                    gToDirLight.direction[2] = node->c;
+
+                    if (gTransitioningDirLight.overrideable) {
+                        gTransitioningDirLight = gToDirLight;
+                        gTransitioningDirLight.timer = U8_MAX;
+                    } else {
+                        gTransitioningDirLight.timer = 0;
+                    }
+
+                    gFromDirLight = gTransitioningDirLight;
+                    gTransitioningDirLight.overrideable = FALSE;
+                }
+
+                if (gTransitioningDirLight.timer < TRANSITION_TIME) {
+                    gTransitioningDirLight.timer++;
+                    transAmount = (f32) gTransitioningDirLight.timer / TRANSITION_TIME;
+
+                    for (s32 i = 0; i < ARRAY_COUNT(color); i++) {
+                        color[i] = gFromDirLight.color[i] * (1.0f - transAmount) + gToDirLight.color[i] * transAmount;
+                        direction[i] = gFromDirLight.direction[i] * (1.0f - transAmount) + gToDirLight.direction[i] * transAmount;
+                        if (color[i] > U8_MAX) {
+                            color[i] = U8_MAX;
+                        } else if (color[i] < 0) {
+                            color[i] = 0;
+                        }
+
+                        if (direction[i] > S8_MAX) {
+                            direction[i] = S8_MAX;
+                        } else if (direction[i] < S8_MIN) {
+                            direction[i] = S8_MIN;
+                        }
+
+                        gTransitioningDirLight.color[i] = color[i];
+                        gTransitioningDirLight.direction[i] = direction[i];
+                    }
+                }
                 // Set the directional light color
-                gCurDirectionalLight->l->l.colc[0] = gCurDirectionalLight->l->l.col[0] = node->color[0];
-                gCurDirectionalLight->l->l.colc[1] = gCurDirectionalLight->l->l.col[1] = node->color[1];
-                gCurDirectionalLight->l->l.colc[2] = gCurDirectionalLight->l->l.col[2] = node->color[2];
+                gCurDirectionalLight->l->l.colc[0] = gCurDirectionalLight->l->l.col[0] = gTransitioningDirLight.color[0];
+                gCurDirectionalLight->l->l.colc[1] = gCurDirectionalLight->l->l.col[1] = gTransitioningDirLight.color[1];
+                gCurDirectionalLight->l->l.colc[2] = gCurDirectionalLight->l->l.col[2] = gTransitioningDirLight.color[2];
 
                 // Set the pre transformed light direction
-                gLightDir[0] = node->a;
-                gLightDir[1] = node->b;
-                gLightDir[2] = node->c;
+                gLightDir[0] = gTransitioningDirLight.direction[0];
+                gLightDir[1] = gTransitioningDirLight.direction[1];
+                gLightDir[2] = gTransitioningDirLight.direction[2];
             }
             break;
         case LIGHT_TYPE_POINT:
@@ -1553,10 +1614,44 @@ void geo_process_scene_light(struct GraphNodeSceneLight *node)
         case LIGHT_TYPE_AMBIENT:
             if (!gOverrideAmbientLight)
             {
+                if (gLastAmbLightingNode != node) {
+                    gLastAmbLightingNode = node;
+
+                    gToAmbLight.color[0] = node->color[0];
+                    gToAmbLight.color[1] = node->color[1];
+                    gToAmbLight.color[2] = node->color[2];
+
+                    if (gTransitioningAmbLight.overrideable) {
+                        gTransitioningAmbLight = gToAmbLight;
+                        gTransitioningAmbLight.timer = U8_MAX;
+                    } else {
+                        gTransitioningAmbLight.timer = 0;
+                    }
+
+                    gFromAmbLight = gTransitioningAmbLight;
+                    gTransitioningAmbLight.overrideable = FALSE;
+                }
+
+                if (gTransitioningAmbLight.timer < TRANSITION_TIME) {
+                    gTransitioningAmbLight.timer++;
+                    transAmount = (f32) gTransitioningAmbLight.timer / TRANSITION_TIME;
+
+                    for (s32 i = 0; i < ARRAY_COUNT(color); i++) {
+                        color[i] = gFromAmbLight.color[i] * (1.0f - transAmount) + gToAmbLight.color[i] * transAmount;
+                        if (color[i] > U8_MAX) {
+                            color[i] = U8_MAX;
+                        } else if (color[i] < 0) {
+                            color[i] = 0;
+                        }
+
+                        gTransitioningAmbLight.color[i] = color[i];
+                    }
+                }
+
                 // Set the ambient light color
-                gCurDirectionalLight->a.l.colc[0] = gCurDirectionalLight->a.l.col[0] = node->color[0];
-                gCurDirectionalLight->a.l.colc[1] = gCurDirectionalLight->a.l.col[1] = node->color[1];
-                gCurDirectionalLight->a.l.colc[2] = gCurDirectionalLight->a.l.col[2] = node->color[2];
+                gCurDirectionalLight->a.l.colc[0] = gCurDirectionalLight->a.l.col[0] = gTransitioningAmbLight.color[0];
+                gCurDirectionalLight->a.l.colc[1] = gCurDirectionalLight->a.l.col[1] = gTransitioningAmbLight.color[1];
+                gCurDirectionalLight->a.l.colc[2] = gCurDirectionalLight->a.l.col[2] = gTransitioningAmbLight.color[2];
             }
             break;
     }

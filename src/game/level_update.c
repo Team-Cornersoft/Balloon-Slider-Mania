@@ -22,6 +22,7 @@
 #include "object_list_processor.h"
 #include "ingame_menu.h"
 #include "obj_behaviors.h"
+#include "rendering_graph_node.h"
 #include "save_file.h"
 #if MULTILANG
 #include "memory.h"
@@ -1277,6 +1278,14 @@ s32 init_level(void) {
     gBSMFrameTimer = 0;
     gBSMLastBalloonType = 0;
     gBSMTimerActive = TRUE;
+
+    gTransitioningDirLight.overrideable = TRUE;
+    gTransitioningDirLight.timer = U8_MAX;
+    gLastDirLightingNode = NULL;
+
+    gTransitioningAmbLight.overrideable = TRUE;
+    gTransitioningAmbLight.timer = U8_MAX;
+    gLastAmbLightingNode = NULL;
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.nodeId >= WARP_NODE_CREDITS_MIN) {

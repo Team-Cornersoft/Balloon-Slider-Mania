@@ -5,12 +5,30 @@
 
 #include "engine/graph_node.h"
 
+struct LightHistory {
+    u8 overrideable;
+    u8 timer;
+    u8 color[3];
+    s8 direction[3];
+};
+
 extern struct GraphNodeRoot        *gCurGraphNodeRoot;
 extern struct GraphNodeMasterList  *gCurGraphNodeMasterList;
 extern struct GraphNodePerspective *gCurGraphNodeCamFrustum;
 extern struct GraphNodeCamera      *gCurGraphNodeCamera;
 extern struct GraphNodeObject      *gCurGraphNodeObject;
 extern struct GraphNodeHeldObject  *gCurGraphNodeHeldObject;
+
+extern struct LightHistory gFromDirLight;
+extern struct LightHistory gTransitioningDirLight;
+extern struct LightHistory gToDirLight;
+extern struct GraphNodeSceneLight *gLastDirLightingNode;
+
+extern struct LightHistory gFromAmbLight;
+extern struct LightHistory gTransitioningAmbLight;
+extern struct LightHistory gToAmbLight;
+extern struct GraphNodeSceneLight *gLastAmbLightingNode;
+
 #define gCurGraphNodeObjectNode ((struct Object *)gCurGraphNodeObject)
 extern u16 gAreaUpdateCounter;
 extern Vec3f globalLightDirection;
