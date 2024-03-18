@@ -205,3 +205,6 @@ const GeoLayout intro_geo_debug_level_select[] = {
    GEO_END(),
 };
 
+
+#include "levels/intro/custom_retry_button/geo.inc.c"
+#include "levels/intro/custom_quit_button/geo.inc.c"
