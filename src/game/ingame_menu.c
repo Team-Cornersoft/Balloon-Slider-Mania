@@ -1914,8 +1914,10 @@ s32 render_pause_courses_and_castle(void) {
             render_pause_red_coins();
 
             gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (gDialogTextAlpha * 95) >> 8);
+            print_hud_lut_string(HUD_LUT_GLOBAL, 118, 82, textPause);
+    
             gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
-
             print_hud_lut_string(HUD_LUT_GLOBAL, 120, 80, textPause);
 
             gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
