@@ -63,6 +63,8 @@ Color gWarpTransBlue = 0;
 s16 gCurrSaveFileNum = 1;
 s16 gCurrLevelNum = LEVEL_MIN;
 
+u8 gRenderBSMSuccessMenu = FALSE;
+
 /*
  * The following two tables are used in get_mario_spawn_type() to determine spawn type
  * from warp behavior.
@@ -144,7 +146,7 @@ u32 get_mario_spawn_type(struct Object *obj) {
     s32 i;
     const BehaviorScript *behavior = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, obj->behavior);
 
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < ARRAY_COUNT(sSpawnTypeFromWarpBhv); i++) {
         if (sWarpBhvSpawnTable[i] == behavior) {
             return sSpawnTypeFromWarpBhv[i];
         }
@@ -389,6 +391,15 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
 #endif
 }
 
+static u32 successMenuTimer = 0;
+void bsm_render_success_menu(void) {
+
+
+    if (successMenuTimer < 0x7FFF) {
+        successMenuTimer++;
+    }
+}
+
 /*
  * Sets up the information needed to play a warp transition, including the
  * transition type, time in frames, and the RGB color that will fill the screen.
@@ -416,6 +427,13 @@ void render_game(void) {
         render_hud();
 
         gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        if (gRenderBSMSuccessMenu) {
+            bsm_render_success_menu();
+        } else {
+            successMenuTimer = 0;
+        }
+
         render_text_labels();
 #ifdef PUPPYPRINT
         puppyprint_print_deferred();

@@ -1911,6 +1911,21 @@ void pss_end_slide(struct MarioState *m) {
     }
 }
 
+void bsm_begin_track(UNUSED struct MarioState *m) {
+    gBSMTimerActive = TRUE;
+}
+
+void bsm_end_track(struct MarioState *m) {
+    if (gBSMTimerActive) {
+        if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_2_LAVA_ISLE && m->pos[1] > -19000.0f) {
+            return;
+        }
+
+        gBSMTimerActive = FALSE;
+        level_trigger_warp(m, WARP_OP_BSM_LEVEL_COMPLETE);
+    }
+}
+
 void mario_handle_special_floors(struct MarioState *m) {
     if ((m->action & ACT_GROUP_MASK) == ACT_GROUP_CUTSCENE) {
         return;
@@ -1931,10 +1946,12 @@ void mario_handle_special_floors(struct MarioState *m) {
 
             case SURFACE_TIMER_START:
                 // pss_begin_slide(m);
+                bsm_begin_track(m);
                 break;
 
             case SURFACE_TIMER_END:
                 // pss_end_slide(m);
+                bsm_end_track(m);
                 break;
         }
 

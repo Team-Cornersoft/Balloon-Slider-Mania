@@ -15,6 +15,7 @@ enum ActionStatesReadingSign { // act_reading_sign
 enum ActionStatesStarDance { // general_star_dance_handler, act_star_dance, act_star_dance_water
     ACT_STATE_STAR_DANCE_CUTSCENE,
     ACT_STATE_STAR_DANCE_DO_SAVE,
+    ACT_STATE_STAR_DANCE_BSM_CUTSCENE,
     ACT_STATE_STAR_DANCE_RETURN
 };
 

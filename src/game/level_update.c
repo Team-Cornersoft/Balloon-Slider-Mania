@@ -359,8 +359,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_SPECIAL_DEATH_EXIT, 0);
             break;
         case MARIO_SPAWN_BSM_CELEBRATION:
-            // TODO:
-            set_mario_action(m, ACT_STAR_DANCE_NO_EXIT, 0);
+            set_mario_action(m, ACT_BSM_CELEBRATION, 0);
             break;
     }
 
@@ -817,6 +816,13 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 sDelayedWarpTimer = 20;
                 sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
                 fadeMusic = !music_unchanged_through_warp(sSourceWarpNodeId);
+                play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0xFF, 0xFF, 0xFF);
+                break;
+
+            case WARP_OP_BSM_LEVEL_COMPLETE:
+                sDelayedWarpTimer = 15;
+                sSourceWarpNodeId = WARP_NODE_BSM_VICTORY;
+                fadeMusic = TRUE;
                 play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0xFF, 0xFF, 0xFF);
                 break;
 
@@ -1279,7 +1285,8 @@ s32 init_level(void) {
     gBSMScoreCount = 0;
     gBSMFrameTimer = 0;
     gBSMLastBalloonType = 0;
-    gBSMTimerActive = TRUE;
+    gBSMTimerActive = FALSE;
+    gRenderBSMSuccessMenu = FALSE;
 
     gTransitioningDirLight.overrideable = TRUE;
     gTransitioningDirLight.timer = U8_MAX;

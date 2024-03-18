@@ -582,12 +582,15 @@ s32 act_debug_free_move(struct MarioState *m) {
     return FALSE;
 }
 
-void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
+void general_star_dance_handler(struct MarioState *m, s32 isInWater, s32 bsmCutscene) {
     struct Object *celebStar = NULL;
 
     if (m->actionState == ACT_STATE_STAR_DANCE_CUTSCENE) {
         switch (++m->actionTimer) {
             case 1:
+                if (bsmCutscene) {
+                    break;
+                }
                 celebStar = spawn_object(m->marioObj, MODEL_STAR, bhvCelebrationStar);
 #ifdef STAR_DANCE_USES_STARS_MODEL
                 obj_set_model(celebStar, gStarModelLastCollected);
@@ -616,7 +619,10 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
                 break;
 
             case 80:
-                if (!(m->actionArg & 1)) {
+                if (bsmCutscene) {
+                    m->actionState = ACT_STATE_STAR_DANCE_BSM_CUTSCENE;
+                    gRenderBSMSuccessMenu = TRUE;
+                } else if (!(m->actionArg & 1)) {
                     level_trigger_warp(m, WARP_OP_STAR_EXIT);
                 } else {
                     enable_time_stop();
@@ -625,6 +631,8 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
                 }
                 break;
         }
+    } else if (m->actionState == ACT_STATE_STAR_DANCE_BSM_CUTSCENE) {
+        // empty
     } else if (m->actionState == ACT_STATE_STAR_DANCE_DO_SAVE && gDialogResponse != DIALOG_RESPONSE_NONE) {
         if (gDialogResponse == DIALOG_RESPONSE_YES) {
             save_file_do_save(gCurrSaveFileNum - 1);
@@ -647,7 +655,18 @@ s32 act_star_dance(struct MarioState *m) {
     m->faceAngle[1] = m->area->camera->yaw;
     set_mario_animation(m, m->actionState == ACT_STATE_STAR_DANCE_RETURN ? MARIO_ANIM_RETURN_FROM_STAR_DANCE
                                                                          : MARIO_ANIM_STAR_DANCE);
-    general_star_dance_handler(m, FALSE);
+    general_star_dance_handler(m, FALSE, FALSE);
+    if (m->actionState != ACT_STATE_STAR_DANCE_RETURN && m->actionTimer >= 40) {
+        m->marioBodyState->handState = MARIO_HAND_PEACE_SIGN;
+    }
+    stop_and_set_height_to_floor(m);
+    return FALSE;
+}
+
+s32 act_bsm_victory(struct MarioState *m) {
+    set_mario_animation(m, m->actionState == ACT_STATE_STAR_DANCE_RETURN ? MARIO_ANIM_RETURN_FROM_STAR_DANCE
+                                                                         : MARIO_ANIM_STAR_DANCE);
+    general_star_dance_handler(m, FALSE, TRUE);
     if (m->actionState != ACT_STATE_STAR_DANCE_RETURN && m->actionTimer >= 40) {
         m->marioBodyState->handState = MARIO_HAND_PEACE_SIGN;
     }
@@ -661,7 +680,7 @@ s32 act_star_dance_water(struct MarioState *m) {
                                                                          : MARIO_ANIM_WATER_STAR_DANCE);
     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
-    general_star_dance_handler(m, TRUE);
+    general_star_dance_handler(m, TRUE, FALSE);
     if (m->actionState != ACT_STATE_STAR_DANCE_RETURN && m->actionTimer >= 62) {
         m->marioBodyState->handState = MARIO_HAND_PEACE_SIGN;
     }
@@ -2652,6 +2671,7 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_STAR_DANCE_EXIT:            cancel = act_star_dance(m);                 break;
         case ACT_STAR_DANCE_NO_EXIT:         cancel = act_star_dance(m);                 break;
         case ACT_STAR_DANCE_WATER:           cancel = act_star_dance_water(m);           break;
+        case ACT_BSM_CELEBRATION:            cancel = act_bsm_victory(m);                break;
         case ACT_FALL_AFTER_STAR_GRAB:       cancel = act_fall_after_star_grab(m);       break;
         case ACT_READING_AUTOMATIC_DIALOG:   cancel = act_reading_automatic_dialog(m);   break;
         case ACT_READING_NPC_DIALOG:         cancel = act_reading_npc_dialog(m);         break;

@@ -4948,6 +4948,9 @@ u8 get_cutscene_from_mario_status(struct Camera *c) {
             case ACT_STAR_DANCE_NO_EXIT:
                 cutscene = CUTSCENE_DANCE_DEFAULT;
                 break;
+            case ACT_BSM_CELEBRATION:
+                cutscene = CUTSCENE_DANCE_BSM_VICTORY;
+                break;
         }
         switch (sMarioCamState->cameraEvent) {
             case CAM_EVENT_START_INTRO:
@@ -7352,6 +7355,16 @@ void cutscene_dance_move_to_mario(struct Camera *c) {
     vec3f_set_dist_and_angle(sMarioCamState->pos, c->pos, dist, pitch, yaw);
 }
 
+void cutscene_dance_move_to_mario_far(struct Camera *c) {
+    s16 pitch, yaw;
+    f32 dist;
+
+    vec3f_get_dist_and_angle(sMarioCamState->pos, c->pos, &dist, &pitch, &yaw);
+    approach_f32_asymptotic_bool(&dist, 1500.f, 0.5f);
+    approach_s16_asymptotic_bool(&pitch, 0x600, 0x18);
+    vec3f_set_dist_and_angle(sMarioCamState->pos, c->pos, dist, pitch, sMarioCamState->faceAngle[1]);
+}
+
 void cutscene_dance_rotate(struct Camera *c) {
     rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, 0x200);
 }
@@ -7375,6 +7388,10 @@ UNUSED static void cutscene_dance_unused(UNUSED struct Camera *c) {
  */
 void cutscene_dance_default_focus_mario(struct Camera *c) {
     focus_in_front_of_mario(c, -100.f, 0.2f);
+}
+
+void cutscene_dance_default_focus_mario_far(struct Camera *c) {
+    focus_in_front_of_mario(c, 750.0f, 0.5f);
 }
 
 /**
@@ -7418,6 +7435,28 @@ void cutscene_dance_default_rotate(struct Camera *c) {
             transition_next_state(c, 20);
             sStatusFlags |= CAM_FLAG_UNUSED_CUTSCENE_ACTIVE;
         }
+    }
+}
+
+/**
+ * Handles both the default and rotate dance cutscenes.
+ * In the default dance: the camera moves closer to Mario, then stays in place.
+ * In the rotate dance: the camera moves closer and rotates clockwise around Mario.
+ */
+void cutscene_dance_bsm_victory(struct Camera *c) {
+    sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
+    sYawSpeed = 0;
+    set_fov_function(CAM_FOV_DEFAULT);
+    cutscene_event(cutscene_dance_default_focus_mario_far, c, 0, 20);
+    cutscene_event(cutscene_dance_move_to_mario_far, c, 0, 39);
+    // Shake the camera on the 4th beat of the music, when Mario gives the peace sign.
+    cutscene_event(cutscene_dance_shake_fov, c, 40, 40);
+
+    if (sMarioCamState->action != ACT_BSM_CELEBRATION) {
+        gCutsceneTimer = CUTSCENE_STOP;
+        c->cutscene = 0;
+        transition_next_state(c, 20);
+        sStatusFlags |= CAM_FLAG_UNUSED_CUTSCENE_ACTIVE;
     }
 }
 
@@ -10276,6 +10315,10 @@ struct Cutscene sCutsceneDanceDefaultRotate[] = {
     { cutscene_dance_default_rotate, CUTSCENE_LOOP }
 };
 
+struct Cutscene sCutsceneDanceBSMVictory[] = {
+    { cutscene_dance_bsm_victory, CUTSCENE_LOOP }
+};
+
 /**
  * Star dance cutscene.
  * The camera moves closer and rotates clockwise around Mario.
@@ -10807,6 +10850,7 @@ void play_cutscene(struct Camera *c) {
         CUTSCENE(CUTSCENE_ENTER_BOWSER_ARENA,   sCutsceneEnterBowserArena)
         CUTSCENE(CUTSCENE_DANCE_ROTATE,         sCutsceneDanceDefaultRotate)
         CUTSCENE(CUTSCENE_DANCE_DEFAULT,        sCutsceneDanceDefaultRotate)
+        CUTSCENE(CUTSCENE_DANCE_BSM_VICTORY,    sCutsceneDanceBSMVictory)
         CUTSCENE(CUTSCENE_DANCE_FLY_AWAY,       sCutsceneDanceFlyAway)
         CUTSCENE(CUTSCENE_DANCE_CLOSEUP,        sCutsceneDanceCloseup)
         CUTSCENE(CUTSCENE_KEY_DANCE,            sCutsceneKeyDance)
