@@ -102,7 +102,7 @@ const GeoLayout bob_dl_1_area4_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 13580, -8600, -12600, bob_dl_C_flag_set_004_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1961, -871, 22467, bob_dl_C_super_large_tree_mesh_layer_1),
 		GEO_TRANSLATE_NODE(LAYER_OPAQUE, 4961, -1310, 25567),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 9671, -1857, 25297, bob_dl_C_super_large_tree_002_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 9671, -1857, 25397, bob_dl_C_super_large_tree_002_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 14661, -2492, 25167, bob_dl_C_super_large_tree_003_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 16001, -3022, 20837, bob_dl_C_super_large_tree_004_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 4871, -1320, 25597, bob_dl_C_super_large_tree_005_mesh_layer_1),
