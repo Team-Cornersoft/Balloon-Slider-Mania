@@ -7,10 +7,12 @@
 #include "course_table.h"
 #include "dialog_ids.h"
 #include "engine/math_util.h"
+#include "emutest.h"
 #include "eu_translation.h"
 #include "segment_symbols.h"
 #include "game_init.h"
 #include "gfx_dimensions.h"
+#include "hud.h"
 #include "ingame_menu.h"
 #include "level_update.h"
 #include "levels/castle_grounds/header.h"
@@ -359,7 +361,7 @@ void render_multi_text_string(s8 multiTextID) {
  * Prints a generic white string.
  * In JP/EU a IA1 texture is used but in US a IA4 texture is used.
  */
-void print_generic_string(s16 x, s16 y, const u8 *str) {
+void print_generic_string_alpha(s16 x, s16 y, const u8 *str, s16 alpha) {
     s8 mark = DIALOG_MARK_NONE; // unused in EU
     s32 strPos = 0;
     u8 lineNum = 1;
@@ -374,6 +376,7 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
     while (str[strPos] != DIALOG_CHAR_TERMINATOR) {
         switch (str[strPos]) {
             case DIALOG_CHAR_COLOR:
+                // Not the most elegant code but it'll have to do for now.
                 customColor = 1;
                 strPos++;
                 for (colorLoop = (strPos + 8); strPos < colorLoop; ++strPos) {
@@ -400,6 +403,11 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
                         rgbaColors[(8 - (colorLoop - strPos)) / 2] += ((str[strPos] - diffTmp) & 0x0F);
                     }
                 }
+
+                if (alpha >= 0 && alpha < 256) {
+                    rgbaColors[3] = (u8) (((u32) alpha * rgbaColors[3]) / 255);
+                }
+
                 strPos--;
                 if (customColor == 1) {
                     gDPSetEnvColor(gDisplayListHead++, rgbaColors[0],
@@ -407,7 +415,13 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
                                                     rgbaColors[2],
                                                     rgbaColors[3]);
                 } else if (customColor == 2) {
-                    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255); // TODO: Is it possible to retrieve the original color that was set before print_generic_string was called?
+                    // Just assume the envcolor when calling this function originally was full white.
+                    // If it wasn't, then that'll need to be handled in the string with another color command.
+                    if (alpha >= 0 && alpha < 256) {
+                        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, alpha);
+                    } else {
+                        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+                    }
                     customColor = 0;
                 }
                 break;
@@ -459,6 +473,9 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 }
 
+void print_generic_string(s16 x, s16 y, const u8 *str) {
+    print_generic_string_alpha(x, y, str, -1);
+}
 
 /**
  * Prints a hud string depending of the hud table list defined.
@@ -1549,14 +1566,16 @@ void render_pause_red_coins(void) {
 
 #if defined(WIDE) && !defined(PUPPYCAM)
 void render_widescreen_setting(void) {
+    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
+
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
     if (!gConfig.widescreen) {
-        print_generic_string(10, 20, textCurrRatio43);
-        print_generic_string(10,  7, textPressL);
+        print_generic_string_alpha(200 + consoleDiff, 50 - consoleDiff, textCurrRatio43, gDialogTextAlpha);
+        print_generic_string_alpha(200 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
     } else {
-        print_generic_string(10, 20, textCurrRatio169);
-        print_generic_string(10,  7, textPressL);
+        print_generic_string_alpha(196 + consoleDiff, 50 - consoleDiff, textCurrRatio169, gDialogTextAlpha);
+        print_generic_string_alpha(196 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
     }
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
     if (gPlayer1Controller->buttonPressed & L_TRIG){
@@ -1866,6 +1885,8 @@ s32 gCourseCompleteCoins = 0;
 s8 gHudFlash = HUD_FLASH_NONE;
 
 s32 render_pause_courses_and_castle(void) {
+    const u8 textPause[] = { TEXT_PAUSE };
+
 #ifdef PUPPYCAM
     puppycam_check_pause_buttons();
     if (!gPCOptionOpen) {
@@ -1889,8 +1910,16 @@ s32 render_pause_courses_and_castle(void) {
 
         case DIALOG_STATE_VERTICAL:
             shade_screen();
-            render_pause_my_score_coins();
+            // render_pause_my_score_coins();
             render_pause_red_coins();
+
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+            gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
+
+            print_hud_lut_string(HUD_LUT_GLOBAL, 120, 80, textPause);
+
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+
 // #ifndef DISABLE_EXIT_COURSE
 // #ifdef EXIT_COURSE_WHILE_MOVING
 //             if ((gMarioStates[0].action & (ACT_FLAG_SWIMMING | ACT_FLAG_METAL_WATER | ACT_FLAG_PAUSE_EXIT))
@@ -1898,7 +1927,7 @@ s32 render_pause_courses_and_castle(void) {
 // #else
 //             if (gMarioStates[0].action & ACT_FLAG_PAUSE_EXIT) {
 // #endif
-            render_pause_course_options(99, 93, &gDialogLineNum, 15);
+            render_pause_course_options(114, 116, &gDialogLineNum, 15);
 //             }
 // #endif
 

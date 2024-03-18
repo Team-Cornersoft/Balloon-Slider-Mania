@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#define EMULATOR_DIFF 6
-
 /* @file hud.c
  * This file implements HUD rendering and power meter animations.
  * That includes stars, lives, coins, camera status, power meter, timer
