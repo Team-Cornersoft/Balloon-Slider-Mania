@@ -18,7 +18,11 @@ void bhv_bsm_retry_menu_loop(void) {
 
         gBSMRetryMenuScale = 1.0f;
 
-        print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 48, "TOO BAD!");
+        gClownFontColor[0] = 255;
+        gClownFontColor[1] = 255;
+        gClownFontColor[2] = 255;
+        gClownFontColor[3] = 255;
+        print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 48, "TOO BAD...");
         print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 16, "SCORE:");
     }
 }

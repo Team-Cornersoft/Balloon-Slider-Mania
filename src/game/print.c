@@ -1,6 +1,7 @@
 #include <ultra64.h>
 
 #include "config.h"
+#include "emutest.h"
 #include "game_init.h"
 #include "hud.h"
 #include "memory.h"
@@ -26,7 +27,7 @@ const u8 clownFontKerning[][2] = {
     {1, 14}, // 7
     {1, 14}, // 8
     {1, 13}, // 9
-    {0, 15}, // A
+    {1, 15}, // A
     {0, 14}, // B
     {0, 13}, // C
     {0, 15}, // D
@@ -43,7 +44,7 @@ const u8 clownFontKerning[][2] = {
     {0, 15}, // O
     {0, 13}, // P
     {0, 15}, // Q
-    {0, 15}, // R
+    {0, 14}, // R
     {0, 13}, // S
     {0, 14}, // T
     {0, 14}, // U
@@ -52,34 +53,34 @@ const u8 clownFontKerning[][2] = {
     {0, 15}, // X
     {0, 15}, // Y
     {0, 13}, // Z
-    {0, 14}, // !
-    {0, 14}, // !!
-    {0, 14}, // ?
-    {0, 14}, // &
-    {0, 14}, // %
-    {0, 14}, // A Button
-    {0, 14}, // D-Pad Button
-    {0, 14}, // C Button
-    {0,  8}, // :
-    {0, 14}, // [NULL]
-    {0, 14}, // /
-    {0, 14}, // -
-    {0, 14}, // x
+    {2,  9}, // !
+    {1, 12}, // !!
+    {1, 12}, // ?
+    {0, 15}, // &
+    {0, 15}, // %
+    {0, 15}, // A Button
+    {1, 15}, // D-Pad Button
+    {2, 14}, // C Button
+    {1,  8}, // :
+    {0,  0}, // [NULL]
+    {1, 11}, // /
+    {2, 13}, // -
+    {0, 15}, // x
     {0, 14}, // Coin
     {0, 14}, // Red Coin
     {0, 14}, // Silver Coin
     {0, 14}, // Mario Head
     {0, 14}, // Star
-    {0,  8}, // .
+    {4, 10}, // .
     {0, 14}, // Beta Key
-    {0, 14}, // '
-    {0, 14}, // "
+    {3,  9}, // '
+    {1, 11}, // "
     {0, 14}, // Umlaut
-    {0, 14}, // BSM Balloon
-    {0, 14}, // BSM Key
-    {0, 14}, // BSM Key Invis
-    {0, 14}, // BSM TCS Token
-    {0, 14}, // BSM TCS Token Invis
+    {1, 14}, // BSM Balloon
+    {1, 13}, // BSM Key
+    {1, 13}, // BSM Key Invis
+    {0, 15}, // BSM TCS Token
+    {0, 15}, // BSM TCS Token Invis
     {0,  0}, // BSM Score (DO NOT USE)
     {0,  0}, // BSM TIME (DO NOT USE)
 };
@@ -104,7 +105,7 @@ s32 get_clown_font_right_kerning(s32 c) {
     }
 
     if (c == GLYPH_SPACE) {
-        return 12;
+        return 10;
     }
 
     return 14;
@@ -539,22 +540,41 @@ void render_text_labels(void) {
     gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
 
-    for (i = 0; i < sTextLabelsCount; i++) {
-        s32 x = sTextLabels[i]->x;
-        s32 y = (SCREEN_HEIGHT - 16) - sTextLabels[i]->y;
-        for (j = 0; j < sTextLabels[i]->length; j++) {
-            glyphIndex = char_to_glyph_index(sTextLabels[i]->buffer[j]);
-
-            x -= get_clown_font_left_kerning(glyphIndex);
-
-            if (glyphIndex != GLYPH_SPACE) {
-                render_rgba16_tex_lut(x, y, glyphs[glyphIndex]);
+    for (s32 renderWithShadow = 0; renderWithShadow < 2; renderWithShadow++) {
+        if (renderWithShadow == 0) {
+            if (gEmulator & EMU_CONSOLE) {
+                continue;
             }
-
-            x += get_clown_font_right_kerning(glyphIndex);
+            gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (gClownFontColor[3] * 95) >> 8);
+        } else {
+            gDPSetEnvColor(gDisplayListHead++, gClownFontColor[0], gClownFontColor[1], gClownFontColor[2], gClownFontColor[3]);
         }
 
-        mem_pool_free(gEffectsMemoryPool, sTextLabels[i]);
+        for (i = 0; i < sTextLabelsCount; i++) {
+            s32 x = sTextLabels[i]->x;
+            s32 y = (SCREEN_HEIGHT - 16) - sTextLabels[i]->y;
+
+            if (renderWithShadow == 0) {
+                x -= 2;
+                y += 2;
+            }
+    
+            for (j = 0; j < sTextLabels[i]->length; j++) {
+                glyphIndex = char_to_glyph_index(sTextLabels[i]->buffer[j]);
+
+                x -= get_clown_font_left_kerning(glyphIndex);
+
+                if (glyphIndex != GLYPH_SPACE) {
+                    render_rgba16_tex_lut(x, y, glyphs[glyphIndex]);
+                }
+
+                x += get_clown_font_right_kerning(glyphIndex);
+            }
+
+            if (renderWithShadow != 0) {
+                mem_pool_free(gEffectsMemoryPool, sTextLabels[i]);
+            }
+        }
     }
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
