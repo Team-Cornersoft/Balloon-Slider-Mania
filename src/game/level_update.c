@@ -3,6 +3,7 @@
 
 #include "sm64.h"
 #include "seq_ids.h"
+#include "string.h"
 #include "dialog_ids.h"
 #include "audio/external.h"
 #include "audio/synthesis.h"
@@ -1287,6 +1288,7 @@ s32 init_level(void) {
     gBSMLastBalloonType = 0;
     gBSMTimerActive = FALSE;
     gRenderBSMSuccessMenu = FALSE;
+    memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
 
     gTransitioningDirLight.overrideable = TRUE;
     gTransitioningDirLight.timer = U8_MAX;

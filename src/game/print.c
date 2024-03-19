@@ -2,6 +2,7 @@
 
 #include "config.h"
 #include "game_init.h"
+#include "hud.h"
 #include "memory.h"
 #include "print.h"
 #include "segment2.h"
@@ -10,6 +11,78 @@
  * This file handles printing and formatting the colorful text that
  * appears when printing things such as "PRESS START".
  */
+
+ColorRGBA gClownFontColor = {0xFF, 0xFF, 0xFF, 0xFF};
+
+// left kerning, right kerning
+const u8 clownFontKerning[][2] = {
+    {1, 14}, // 0
+    {2, 13}, // 1
+    {1, 14}, // 2
+    {1, 13}, // 3
+    {1, 14}, // 4
+    {1, 13}, // 5
+    {1, 14}, // 6
+    {1, 14}, // 7
+    {1, 14}, // 8
+    {1, 13}, // 9
+    {0, 15}, // A
+    {0, 14}, // B
+    {0, 13}, // C
+    {0, 15}, // D
+    {0, 12}, // E
+    {0, 12}, // F
+    {0, 14}, // G
+    {0, 14}, // H
+    {1, 11}, // I
+    {0, 11}, // J
+    {0, 14}, // K
+    {0, 12}, // L
+    {0, 15}, // M
+    {0, 14}, // N
+    {0, 15}, // O
+    {0, 13}, // P
+    {0, 15}, // Q
+    {0, 15}, // R
+    {0, 13}, // S
+    {0, 14}, // T
+    {0, 14}, // U
+    {0, 15}, // V
+    {0, 15}, // W
+    {0, 15}, // X
+    {0, 15}, // Y
+    {0, 13}, // Z
+    {0, 14}, // !
+    {0, 14}, // !!
+    {0, 14}, // ?
+    {0, 14}, // &
+    {0, 14}, // %
+    {0, 14}, // A Button
+    {0, 14}, // D-Pad Button
+    {0, 14}, // C Button
+    {0,  8}, // :
+    {0, 14}, // [NULL]
+    {0, 14}, // /
+    {0, 14}, // -
+    {0, 14}, // x
+    {0, 14}, // Coin
+    {0, 14}, // Red Coin
+    {0, 14}, // Silver Coin
+    {0, 14}, // Mario Head
+    {0, 14}, // Star
+    {0,  8}, // .
+    {0, 14}, // Beta Key
+    {0, 14}, // '
+    {0, 14}, // "
+    {0, 14}, // Umlaut
+    {0, 14}, // BSM Balloon
+    {0, 14}, // BSM Key
+    {0, 14}, // BSM Key Invis
+    {0, 14}, // BSM TCS Token
+    {0, 14}, // BSM TCS Token Invis
+    {0,  0}, // BSM Score (DO NOT USE)
+    {0,  0}, // BSM TIME (DO NOT USE)
+};
 
 struct TextLabel {
     u32 x;
@@ -24,6 +97,26 @@ struct TextLabel {
  */
 struct TextLabel *sTextLabels[52];
 s16 sTextLabelsCount = 0;
+
+s32 get_clown_font_right_kerning(s32 c) {
+    if (c >= 0 && c < ARRAY_COUNT(clownFontKerning)) {
+        return clownFontKerning[c][1];
+    }
+
+    if (c == GLYPH_SPACE) {
+        return 12;
+    }
+
+    return 14;
+}
+
+s32 get_clown_font_left_kerning(s32 c) {
+    if (c >= 0 && c < ARRAY_COUNT(clownFontKerning)) {
+        return clownFontKerning[c][0];
+    }
+
+    return 0;
+}
 
 /**
  * Returns n to the exponent power, only for non-negative powers.
@@ -257,6 +350,7 @@ void print_text_centered(s32 x, s32 y, const char *str) {
     char c = 0;
     s32 length = 0;
     s32 srcIndex = 0;
+    s32 xOffset = 0;
 
     // Don't continue if there is no memory to do so.
     if ((sTextLabels[sTextLabelsCount] = mem_pool_alloc(gEffectsMemoryPool,
@@ -269,13 +363,15 @@ void print_text_centered(s32 x, s32 y, const char *str) {
     // Set the array with the text to print while finding length.
     while (c != 0) {
         sTextLabels[sTextLabelsCount]->buffer[length] = c;
+        xOffset -= get_clown_font_left_kerning(char_to_glyph_index(c));
+        xOffset += get_clown_font_right_kerning(char_to_glyph_index(c));
         length++;
         srcIndex++;
         c = str[srcIndex];
     }
 
     sTextLabels[sTextLabelsCount]->length = length;
-    sTextLabels[sTextLabelsCount]->x = x - length * 6; // * 12 / 2;
+    sTextLabels[sTextLabelsCount]->x = x - (xOffset / 2);
     sTextLabels[sTextLabelsCount]->y = y;
     sTextLabelsCount++;
 }
@@ -326,6 +422,10 @@ s32 char_to_glyph_index(char c) {
 
     if (c == '*') {
         return GLYPH_MULTIPLY; // x
+    }
+
+    if (c == ':') {
+        return GLYPH_COLON; // :
     }
 
     if (c == '$') {
@@ -419,8 +519,9 @@ void render_textrect(s32 x, s32 y, s32 pos) {
 void render_text_labels(void) {
     s32 i;
     s32 j;
-    s8 glyphIndex;
+    s32 glyphIndex;
     Mtx *mtx;
+    Texture **glyphs = segmented_to_virtual(main_hud_lut);
 
     if (sTextLabelsCount == 0) {
         return;
@@ -436,37 +537,27 @@ void render_text_labels(void) {
     guOrtho(mtx, 0.0f, SCREEN_WIDTH, 0.0f, SCREEN_HEIGHT, -10.0f, 10.0f, 1.0f);
     gSPPerspNormalize((Gfx *) (gDisplayListHead++), 0xFFFF);
     gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
-    gSPDisplayList(gDisplayListHead++, dl_hud_img_begin);
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
 
     for (i = 0; i < sTextLabelsCount; i++) {
+        s32 x = sTextLabels[i]->x;
+        s32 y = (SCREEN_HEIGHT - 16) - sTextLabels[i]->y;
         for (j = 0; j < sTextLabels[i]->length; j++) {
             glyphIndex = char_to_glyph_index(sTextLabels[i]->buffer[j]);
 
-            if (glyphIndex != GLYPH_SPACE) {
-#ifdef VERSION_EU
-                // Beta Key was removed by EU, so glyph slot reused.
-                // This produces a colorful Ü.
-                if (glyphIndex == GLYPH_BETA_KEY) {
-                    add_glyph_texture(GLYPH_U);
-                    render_textrect(sTextLabels[i]->x, sTextLabels[i]->y, j);
+            x -= get_clown_font_left_kerning(glyphIndex);
 
-                    add_glyph_texture(GLYPH_UMLAUT);
-                    render_textrect(sTextLabels[i]->x, sTextLabels[i]->y + 3, j);
-                } else {
-                    add_glyph_texture(glyphIndex);
-                    render_textrect(sTextLabels[i]->x, sTextLabels[i]->y, j);
-                }
-#else
-                add_glyph_texture(glyphIndex);
-                render_textrect(sTextLabels[i]->x, sTextLabels[i]->y, j);
-#endif
+            if (glyphIndex != GLYPH_SPACE) {
+                render_rgba16_tex_lut(x, y, glyphs[glyphIndex]);
             }
+
+            x += get_clown_font_right_kerning(glyphIndex);
         }
 
         mem_pool_free(gEffectsMemoryPool, sTextLabels[i]);
     }
 
-    gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 
     sTextLabelsCount = 0;
 }

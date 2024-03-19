@@ -714,13 +714,29 @@ ALIGNED8 static const Texture texture_hud_char_c_button[] = {
 #include "textures/segment2/custom.c_button.rgba16.inc.c"
 };
 
+ALIGNED8 static const Texture texture_hud_char_colon[] = {
+#include "textures/segment2/custom.colon.rgba16.inc.c"
+};
+
 ALIGNED8 static const Texture texture_hud_char_slash[] = {
 #include "textures/segment2/custom.slash.rgba16.inc.c"
 };
 
-ALIGNED8 static const Texture texture_hud_char_minus[] = {
-#include "textures/segment2/segment2.minus.rgba16.inc.c"
+ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
+#include "textures/segment2/custom.decimal_point.rgba16.inc.c"
 };
+
+ALIGNED8 static const Texture texture_hud_char_minus[] = {
+#include "textures/segment2/custom.minus.rgba16.inc.c"
+};
+
+// ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
+// #include "textures/segment2/segment2.decimal_point.rgba16.inc.c"
+// };
+
+// ALIGNED8 static const Texture texture_hud_char_minus[] = {
+// #include "textures/segment2/segment2.minus.rgba16.inc.c"
+// };
 
 ALIGNED8 static const Texture texture_hud_char_multiply[] = {
 #include "textures/segment2/custom.multiply.rgba16.inc.c"
@@ -761,9 +777,6 @@ ALIGNED8 static const Texture texture_hud_char_beta_key[] = {
 #include "textures/segment2/segment2.06000.rgba16.inc.c"
 };
 #else
-ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
-#include "textures/segment2/segment2.decimal_point.rgba16.inc.c"
-};
 
 ALIGNED8 static const Texture texture_hud_char_beta_key[] = {
 #include "textures/segment2/segment2.beta_key.rgba16.inc.c"
@@ -2409,7 +2422,7 @@ const Texture *const main_hud_lut[] = {
     texture_hud_char_W, texture_hud_char_X, texture_hud_char_Y, texture_hud_char_Z,
     texture_hud_char_exclamation, texture_hud_char_double_exclamation, texture_hud_char_question, texture_hud_char_ampersand,
     texture_hud_char_percent, texture_hud_char_A_button, texture_hud_char_dpad_button, texture_hud_char_c_button,
-                   0x0,                0x0, texture_hud_char_slash, texture_hud_char_minus,
+    texture_hud_char_colon,            0x0, texture_hud_char_slash, texture_hud_char_minus,
     texture_hud_char_multiply, texture_hud_char_coin, texture_hud_char_red_coin, texture_hud_char_silver_coin,
     texture_hud_char_mario_head, texture_hud_char_star, texture_hud_char_decimal_point, texture_hud_char_beta_key,
     texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut, texture_custom_bsm_hud_balloon,

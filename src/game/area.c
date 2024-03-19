@@ -394,7 +394,6 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
 static u32 successMenuTimer = 0;
 void bsm_render_success_menu(void) {
 
-
     if (successMenuTimer < 0x7FFF) {
         successMenuTimer++;
     }

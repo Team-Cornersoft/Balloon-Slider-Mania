@@ -8,6 +8,8 @@
 #define TEXRECT_MIN_Y 5
 #define TEXRECT_MAX_Y 220
 
+extern ColorRGBA gClownFontColor;
+
 enum PrintfGlyphs {
     GLYPH_SPACE           = -1,
     GLYPH_U               = 30,
@@ -19,6 +21,7 @@ enum PrintfGlyphs {
     GLYPH_A_BUTTON        = 41,
     GLYPH_DPAD_BUTTON     = 42,
     GLYPH_C_BUTTON        = 43,
+    GLYPH_COLON           = 44,
     GLYPH_SLASH           = 46,
     GLYPH_MINUS           = 47,
     GLYPH_MULTIPLY        = 48,
@@ -41,6 +44,8 @@ enum PrintfGlyphs {
     GLYPH_BSM_TIME        = 65,
 };
 
+s32 get_clown_font_right_kerning(s32 c);
+s32 get_clown_font_left_kerning(s32 c);
 void print_text_fmt_int(s32 x, s32 y, const char *str, s32 n);
 void print_text(s32 x, s32 y, const char *str);
 void print_text_centered(s32 x, s32 y, const char *str);

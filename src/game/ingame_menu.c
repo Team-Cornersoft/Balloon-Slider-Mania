@@ -487,18 +487,11 @@ void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
     u32 curX = x;
     u32 curY = y;
 
-    u32 xStride; // X separation
-
-    if (hudLUT == HUD_LUT_JPMENU) {
-        xStride = 16;
-    } else { // HUD_LUT_GLOBAL
-        xStride = 12; //? Shindou uses this.
-    }
-
     while (str[strPos] != GLOBAR_CHAR_TERMINATOR) {
+        s32 leftKerning = get_clown_font_left_kerning(str[strPos]);
+        curX -= leftKerning;
         switch (str[strPos]) {
             case GLOBAL_CHAR_SPACE:
-                curX += 8;
                 break;
             default:
                 gDPPipeSync(gDisplayListHead++);
@@ -514,9 +507,9 @@ void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
                 gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
                 gSPTextureRectangle(gDisplayListHead++, curX << 2, curY << 2, (curX + 16) << 2,
                                     (curY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-                curX += xStride;
         }
+
+        curX += get_clown_font_right_kerning(str[strPos]);
         strPos++;
     }
 }

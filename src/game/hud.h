@@ -65,6 +65,7 @@ struct BalloonTypeProperties {
 extern struct BalloonTypeProperties bProps[POINT_BALLOON_COUNT];
 extern struct BalloonTypeProperties keyBalloon;
 
+void render_rgba16_tex_lut(s32 x, s32 y, Texture *texture);
 void set_hud_camera_status(s16 status);
 void render_hud(void);
 void init_bsm_hud(void);
