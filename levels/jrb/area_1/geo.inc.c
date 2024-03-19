@@ -1,0 +1,66 @@
+#include "src/game/envfx_snow.h"
+
+const GeoLayout jrb_area_1_geo[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(4, geo_switch_area),
+		GEO_OPEN_NODE(),
+			GEO_BRANCH(1, jrb_dl_1_area1_geo),
+			GEO_BRANCH(1, jrb_dl_2_area1_geo),
+			GEO_BRANCH(1, jrb_dl_3_area1_geo),
+		GEO_CLOSE_NODE(),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 60, 40, 80, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 230, 220, 210, 0, 127, 127),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout jrb_dl_1_area1_geo[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -14802, -1335, 5912, jrb_dl_A_environment_a1_a_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 6748, 50, 22670, jrb_dl_A_environment_a1_b_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 15281, -3425, -2778, jrb_dl_A_environment_a1_c_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 408, -6649, -18155, jrb_dl_A_environment_a1_d_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -2783, -3370, 6622, jrb_dl_Bridge_a_mesh_layer_4),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 7385, -6344, -8775, jrb_dl_Bridge_b_mesh_layer_4),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -14716, 11016, 19459, jrb_dl_C_sart_line_mesh_layer_5),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout jrb_dl_2_area1_geo[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout jrb_dl_3_area1_geo[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout jrb_area_1[] = {
+	GEO_NODE_SCREEN_AREA(10, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, SCREEN_HEIGHT/2),
+	GEO_OPEN_NODE(),
+		GEO_ZBUFFER(0),
+		GEO_OPEN_NODE(),
+			GEO_NODE_ORTHO(100.0000),
+			GEO_OPEN_NODE(),
+				GEO_BACKGROUND_COLOR(0x431B),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+		GEO_ZBUFFER(1),
+		GEO_OPEN_NODE(),
+			GEO_CAMERA_FRUSTUM_WITH_FUNC(45.0000, 127, 65535, geo_camera_fov),
+			GEO_OPEN_NODE(),
+				GEO_CAMERA(CAMERA_MODE_8_DIRECTIONS, 0, 0, 0, 0, -100, 0, geo_camera_main),
+				GEO_OPEN_NODE(),
+					GEO_BRANCH(1, jrb_area_1_geo),
+					GEO_RENDER_OBJ(),
+					GEO_ASM(ENVFX_MODE_NONE, geo_envfx_main),
+				GEO_CLOSE_NODE(),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_END(),
+};
