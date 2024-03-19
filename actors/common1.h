@@ -294,6 +294,7 @@ extern const Gfx wooden_signpost_seg3_dl_0302DCD0[];
 extern const Gfx wooden_signpost_seg3_dl_0302DD08[];
 extern const Collision wooden_signpost_seg3_collision_0302DD80[];
 
+#include "custom_menu_rank/geo_header.h"
 #include "point_balloon/geo_header.h"
 #include "key_balloon/geo_header.h"
 #include "point_balloon_popped/geo_header.h"

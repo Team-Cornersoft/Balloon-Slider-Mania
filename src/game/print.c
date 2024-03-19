@@ -16,7 +16,7 @@
 ColorRGBA gClownFontColor = {0xFF, 0xFF, 0xFF, 0xFF};
 
 // left kerning, right kerning
-const u8 clownFontKerning[][2] = {
+const s8 clownFontKerning[][2] = {
     {1, 14}, // 0
     {2, 13}, // 1
     {1, 14}, // 2
@@ -61,7 +61,7 @@ const u8 clownFontKerning[][2] = {
     {0, 15}, // A Button
     {1, 15}, // D-Pad Button
     {2, 14}, // C Button
-    {1,  8}, // :
+    {-1,  8}, // :
     {0,  0}, // [NULL]
     {1, 11}, // /
     {2, 13}, // -

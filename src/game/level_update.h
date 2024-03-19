@@ -128,6 +128,8 @@ extern u32 gRedBalloonsPopped;
 extern u32 gBSMScoreCount;
 extern u32 gBSMLastBalloonType;
 extern u32 gBSMFrameTimer;
+extern s32 gBSMLastLevel;
+extern s32 gBSMLastCourse;
 
 struct HudDisplay {
     /*0x00*/ s16 lives;

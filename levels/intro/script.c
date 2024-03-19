@@ -67,14 +67,17 @@ const LevelScript level_intro_retry_menu[] = {
     INIT_LEVEL(),
     LOAD_GODDARD(),
     LOAD_BEHAVIOR_DATA(),
+    LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,  _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
 	LOAD_YAY0(0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
 
     // Load Retry Menu
     ALLOC_LEVEL_POOL(),
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
     
     CALL(/*arg*/ 0, /*func*/ retry_menu_state),
     AREA(/*index*/ 1, intro_retry_menu),
-        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 1600, 1200, 0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBSMRetryMenu),
+        OBJECT(/*model*/ MODEL_NONE, /*pos*/ 0, 1200, 0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBSMRetryMenu),
     END_AREA(),
     FREE_LEVEL_POOL(),
 

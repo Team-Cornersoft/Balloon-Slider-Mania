@@ -21,7 +21,10 @@ void bhv_bsm_menu_rank_or_token_init(void) {
         u16 score = bsmData[buttonId].score;
         u8 rank = 0;
 
-        if (score != (u16) -1)
+        if (score == (u16) -1) {
+            obj_mark_for_deletion(o);
+        }
+
         for (s32 i = 0; i < ARRAY_COUNT(BSMRankMinimumScores[0]); i++) {
             if (score < BSMRankMinimumScores[buttonId][i]) {
                 break;
@@ -36,4 +39,27 @@ void bhv_bsm_menu_rank_or_token_init(void) {
 
 void bhv_bsm_menu_rank_or_token_loop(void) {
     
+}
+
+void bhv_bsm_retry_menu_rank_init(void) {
+    u16 score = gBSMScoreCount;
+    u8 rank = 0;
+
+    if (score == (u16) -1) {
+        obj_mark_for_deletion(o);
+    }
+
+    for (s32 i = 0; i < ARRAY_COUNT(BSMRankMinimumScores[0]); i++) {
+        if (score < BSMRankMinimumScores[gBSMLastCourse][i]) {
+            break;
+        }
+
+        rank++;
+    }
+
+    o->oAnimState = rank;
+}
+
+void bhv_bsm_retry_menu_rank_loop(void) {
+
 }

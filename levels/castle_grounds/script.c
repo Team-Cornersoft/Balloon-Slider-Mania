@@ -51,6 +51,8 @@ const LevelScript level_cgds_menu_select[] = {
     INIT_LEVEL(),
 	CALL(/*arg*/ 0, /*func*/ init_menu_video_buffers),
     LOAD_BEHAVIOR_DATA(),
+    LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,   _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
 	LOAD_YAY0(0x07, _castle_grounds_segment_7SegmentRomStart, _castle_grounds_segment_7SegmentRomEnd), 
 
 	ALLOC_LEVEL_POOL(),

@@ -26,6 +26,7 @@
 #include "wooden_signpost/geo.inc.c"
 #include "tree/geo.inc.c"
 
+#include "custom_menu_rank/geo.inc.c"
 #include "point_balloon/geo.inc.c"
 #include "key_balloon/geo.inc.c"
 #include "point_balloon_popped/geo.inc.c"

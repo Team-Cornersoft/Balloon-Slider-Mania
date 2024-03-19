@@ -3643,8 +3643,7 @@ Gfx custom_menu_rank_model_mesh_layer_5_tri_0[] = {
 
 Gfx mat_custom_menu_rank_rank_g[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_g_rgba32_rgba32),
@@ -3657,15 +3656,13 @@ Gfx mat_custom_menu_rank_rank_g[] = {
 
 Gfx mat_revert_custom_menu_rank_rank_g[] = {
 	gsDPPipeSync(),
-	gsSPGeometryMode(0, G_LIGHTING),
 	gsDPSetTextureFilter(G_TF_BILERP),
 	gsSPEndDisplayList(),
 };
 
 Gfx mat_custom_menu_rank_rank_s[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_s_rgba32_rgba32),
@@ -3678,8 +3675,7 @@ Gfx mat_custom_menu_rank_rank_s[] = {
 
 Gfx mat_custom_menu_rank_rank_f[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_f_rgba32_rgba32),
@@ -3692,8 +3688,7 @@ Gfx mat_custom_menu_rank_rank_f[] = {
 
 Gfx mat_custom_menu_rank_rank_d[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_d_rgba32_rgba32),
@@ -3706,8 +3701,7 @@ Gfx mat_custom_menu_rank_rank_d[] = {
 
 Gfx mat_custom_menu_rank_rank_c[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_c_rgba32_rgba32),
@@ -3720,8 +3714,7 @@ Gfx mat_custom_menu_rank_rank_c[] = {
 
 Gfx mat_custom_menu_rank_rank_b[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_b_rgba32_rgba32),
@@ -3734,8 +3727,7 @@ Gfx mat_custom_menu_rank_rank_b[] = {
 
 Gfx mat_custom_menu_rank_rank_a[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
-	gsSPGeometryMode(G_LIGHTING, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetTextureFilter(G_TF_POINT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_32b_LOAD_BLOCK, 1, custom_menu_rank_rank_a_rgba32_rgba32),
@@ -3751,6 +3743,7 @@ Gfx custom_menu_rank_model_mesh_layer_5_before[] = {
 	gsSPVertex(custom_menu_rank_model_mesh_layer_5_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPCullDisplayList(0, 7),
+	gsDPSetEnvColor(255, 255, 255, 255),
 	gsSPEndDisplayList(),
 };
 

@@ -42,6 +42,8 @@ void bhv_bsm_menu_lock_or_token_init(void);
 void bhv_bsm_menu_lock_or_token_loop(void);
 void bhv_bsm_menu_rank_or_token_init(void);
 void bhv_bsm_menu_rank_or_token_loop(void);
+void bhv_bsm_retry_menu_rank_init(void);
+void bhv_bsm_retry_menu_rank_loop(void);
 
 void bhv_cap_switch_loop(void);
 void bhv_tiny_star_particles_init(void);

@@ -166,7 +166,8 @@ u32 gBSMScoreCount = 0;
 u32 gBSMFrameTimer = 0;
 u32 gBSMLastBalloonType = 0;
 
-s32 sLastLevel;
+s32 gBSMLastLevel = 0;
+s32 gBSMLastCourse = 0;
 
 struct MarioState *gMarioState = &gMarioStates[0];
 s8 sWarpCheckpointActive = FALSE;
@@ -1563,7 +1564,7 @@ s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
 
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
     if (setToLastLevel) {
-        return sLastLevel;
+        return gBSMLastLevel;
     }
 
     if (gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
@@ -1580,7 +1581,8 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
         set_warp_transition_rgb(0x00, 0x00, 0x00);
     }
 
-    sLastLevel = sWarpDest.levelNum;
+    gBSMLastCourse = gSelectionShown - BSM_SELECTION_STAGE_START_FIRST;
+    gBSMLastLevel = sWarpDest.levelNum;
     return sWarpDest.levelNum;
 }
 

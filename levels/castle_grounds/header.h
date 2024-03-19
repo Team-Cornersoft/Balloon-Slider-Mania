@@ -54,8 +54,6 @@ extern const LevelScript level_cgds_menu_select[];
 
 #include "levels/castle_grounds/custom_menu_tcslock_x8/geo_header.h"
 
-#include "levels/castle_grounds/custom_menu_rank/geo_header.h"
-
 #include "levels/castle_grounds/custom_menu_lock/geo_header.h"
 
 #include "levels/castle_grounds/custom_menu_button/geo_header.h"

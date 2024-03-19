@@ -1293,6 +1293,11 @@
 #define /*0x0F8*/ oRotatingBridgeYawRotated                     OBJECT_FIELD_F32(0x1C)
 #define /*0x0FC*/ oRotatingBridgeBalloonChild                   OBJECT_FIELD_OBJ(0x1D)
 
+/* BSM Retry Menu */
+#define /*0x0F4*/ oBSMRetryMenuRetryObj                         OBJECT_FIELD_OBJ(0x1B)
+#define /*0x0F8*/ oBSMRetryMenuQuitObj                          OBJECT_FIELD_OBJ(0x1C)
+#define /*0x0FC*/ oBSMRetryMenuRankObj                          OBJECT_FIELD_OBJ(0x1D)
+
 
 /*Custom general defines:
 

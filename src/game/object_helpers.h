@@ -67,6 +67,7 @@ Gfx *geo_switch_console(s32 callContext, struct GraphNode *node, UNUSED void *co
 Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_menu_set_special_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_menu_switch_alpha_stage(s32 callContext, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_bsm_retry_menu_set_clownfont_color(s32 callContext, UNUSED struct GraphNode *node, UNUSED void *context);
 Gfx *geo_switch_area(s32 callContext, struct GraphNode *node, UNUSED void *context);
 void obj_update_pos_from_parent_transformation(Mat4 mtx, struct Object *obj);
 void create_transformation_from_matrices(Mat4 a0, Mat4 a1, Mat4 a2);

@@ -4,6 +4,7 @@ const GeoLayout custom_menu_rank_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, custom_menu_rank_model_mesh_layer_5_before),
+		GEO_ASM(0, geo_bsm_retry_menu_set_clownfont_color),
 		GEO_SWITCH_CASE(7, geo_switch_anim_state),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, custom_menu_rank_model_mesh_layer_5_rank_f),

@@ -569,6 +569,16 @@ const BehaviorScript bhvBSMMenuRankOrToken[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvBSMRetryMenuRank[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    CALL_NATIVE(bhv_bsm_retry_menu_rank_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bsm_retry_menu_rank_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),
