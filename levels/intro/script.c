@@ -67,11 +67,12 @@ const LevelScript level_intro_retry_menu[] = {
     INIT_LEVEL(),
     LOAD_GODDARD(),
     LOAD_BEHAVIOR_DATA(),
-    LOAD_LEVEL_DATA(intro),
+	LOAD_YAY0(0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
 
-    // Load Scam Warning Screen
+    // Load Retry Menu
     ALLOC_LEVEL_POOL(),
     
+    CALL(/*arg*/ 0, /*func*/ retry_menu_state),
     AREA(/*index*/ 1, intro_retry_menu),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ 1600, 1200, 0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBSMRetryMenu),
     END_AREA(),
