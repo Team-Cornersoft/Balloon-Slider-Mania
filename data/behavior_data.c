@@ -479,6 +479,15 @@ const BehaviorScript bhvKeyGateOpen[] = {
     BREAK(),
 };
 
+const BehaviorScript bhvSkiFlagSpawner[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, OBJ_FLAG_ACTIVE_FROM_AFAR),
+    SET_HOME(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_ski_flag_spawner_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvRotatingBridge[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),

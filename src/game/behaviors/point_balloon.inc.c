@@ -125,8 +125,10 @@ void bhv_point_balloon_init(void) {
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
 
-    cur_obj_scale(bProps[bType].scale);
-    o->oHomeY += bProps[bType].scale * 110.0f + (15.0f * bProps[bType].scale);
+    if (!obj_has_behavior(o->parentObj, bhvSkiFlagSpawner)) {
+        cur_obj_scale(bProps[bType].scale);
+    }
+    o->oHomeY += bProps[bType].scale * 120.0f + (15.0f * bProps[bType].scale) + 15.0f;
 
     vec3f_copy(&o->oPosVec, &o->oHomeVec);
     vec3f_copy(&o->oPtBalloonRelativePosVec, &o->oHomeVec);
@@ -137,7 +139,7 @@ void bhv_point_balloon_init(void) {
 
     o->oPtBalloonOscillateYFreq = random_u16() % (u32) (40.0f * bProps[bType].scale) + 75;
     o->oPtBalloonOscillateYOffset = random_u16() % o->oPtBalloonOscillateYFreq;
-    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (28 * bProps[bType].scale)) + 7;
+    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (25 * bProps[bType].scale)) + 10;
 
     o->oPtBalloonOscillateZFreq = (random_u16() % (u32) (60.0f * bProps[bType].scale)) + 120;
     o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateZFreq;
@@ -260,11 +262,11 @@ void bhv_point_balloon_popped_loop(void) {
         cur_obj_play_sound_2(props->popsfx);
 
         if (props == &bProps[POINT_BALLOON_RED]) {
-            assert(gRedBalloonsPopped < 8, "Tried to collect more than 8 red balloons!");
-            if (gRedBalloonsPopped < 8) {
-                play_sound(props->popjingle + (gRedBalloonsPopped << SOUNDARGS_SHIFT_SOUNDID), gGlobalSoundSource);
-                gRedBalloonsPopped++;
-                spawn_orange_number(gRedBalloonsPopped, 0, 0, 0);
+            assert(gBSMRedBalloonsPopped < 8, "Tried to collect more than 8 red balloons!");
+            if (gBSMRedBalloonsPopped < 8) {
+                play_sound(props->popjingle + (gBSMRedBalloonsPopped << SOUNDARGS_SHIFT_SOUNDID), gGlobalSoundSource);
+                gBSMRedBalloonsPopped++;
+                spawn_orange_number(gBSMRedBalloonsPopped, 0, 0, 0);
             }
         } else if (props == &keyBalloon) {
             gBSMKeyCollected = TRUE;

@@ -1299,7 +1299,9 @@
 #define /*0x0FC*/ oBSMRetryMenuSelection                        OBJECT_FIELD_S32(0x1D)
 #define /*0x100*/ oBSMRetryMenuStickInput                       OBJECT_FIELD_S32(0x1E)
 
-/* BSM Retry Selection */
+/* BSM Ski Flag Spawner */
+#define /*0x0F4*/ oSkiFlagSpawnerBalloon                        OBJECT_FIELD_OBJ(0x1B)
+#define /*0x0F8*/ oSkiFlagSpawnerBalloonReferenceScale          OBJECT_FIELD_F32(0x1C)
 
 
 /*Custom general defines:

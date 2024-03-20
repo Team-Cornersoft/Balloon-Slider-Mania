@@ -10,6 +10,7 @@ extern const BehaviorScript bhvPointBalloonPopped[];
 extern const BehaviorScript bhvTCSToken[];
 extern const BehaviorScript bhvKeyGate[];
 extern const BehaviorScript bhvKeyGateOpen[];
+extern const BehaviorScript bhvSkiFlagSpawner[];
 extern const BehaviorScript bhvRotatingBridge[];
 extern const BehaviorScript bhvBellGong[];
 extern const BehaviorScript bhvBSMRetryMenu[];

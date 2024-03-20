@@ -833,5 +833,6 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
 #include "behaviors/point_balloon.inc.c"
 #include "behaviors/tcs_token.inc.c"
 
+#include "behaviors/ski_flag_spawner.inc.c"
 #include "behaviors/rotating_bridge.inc.c"
 #include "behaviors/bell_gong.inc.c"

@@ -26,6 +26,7 @@ void bhv_point_balloon_popped_loop(void);
 void bhv_tcs_token_init(void);
 void bhv_tcs_token_loop(void);
 void bhv_rotating_bridge_init(void);
+void bhv_ski_flag_spawner_loop(void);
 void bhv_rotating_bridge_loop(void);
 void bhv_bell_gong_init(void);
 void bhv_bell_gong_loop(void);
