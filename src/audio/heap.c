@@ -1197,36 +1197,97 @@ void init_reverb_us(s32 presetId) {
 }
 #endif
 
+/**
+ * Waits until a specified number of audio frames have been created
+ */
+void wait_for_audio_frames(s32 frames) {
+    // VC emulator stubs this function because busy loops are not supported
+    // Technically we can put infinite loop that _looks_ like -O0 for emu but this is cleaner
+    gAudioFrameCount = 0;
+    // Sound thread will update gAudioFrameCount
+    while (gAudioFrameCount < frames) {
+        // spin
+    }
+}
 
 #if defined(VERSION_JP) || defined(VERSION_US)
 void audio_reset_session(s32 reverbPresetId) {
     if (sAudioIsInitialized) {
         if (gAudioLoadLock != AUDIO_LOCK_UNINITIALIZED) {
-            gAudioLoadLock = AUDIO_LOCK_LOADING;
-
-            if (!(gEmulator & EMU_WIIVC)) {
-                gAudioFrameCount = 0;
-                while (gAudioFrameCount < 1) {
-                    // spin
+            s32 frames;
+            s32 remainingDmas;
+            s32 i;
+        
+            decrease_reverb_gain();
+            for (i = 0; i < gMaxSimultaneousNotes; i++) {
+                if (gNotes[i].enabled && gNotes[i].adsr.state != ADSR_STATE_DISABLED) {
+                    gNotes[i].adsr.fadeOutVel = 0x8000 / gAudioUpdatesPerFrame;
+                    gNotes[i].adsr.action |= ADSR_ACTION_RELEASE;
                 }
             }
 
-            for (s32 i = 0; i < gMaxSimultaneousNotes; i++) {
-                gNotes[i].enabled = FALSE;
+            if (!(gEmulator & EMU_WIIVC)) {
+                // Wait for all notes to stop playing
+                frames = 0;
+                for (;;) {
+                    wait_for_audio_frames(1);
+                    frames++;
+                    if (frames > 15) {
+                        // Break after 15 frames
+                        break;
+                    }
+
+                    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+                        if (gNotes[i].enabled)
+                            break;
+                    }
+
+                    if (i == gMaxSimultaneousNotes) {
+                        // All zero, break early
+                        break;
+                    }
+                }
+            } else {
+                for (i = 0; i < gMaxSimultaneousNotes; i++) {
+                    gNotes[i].enabled = FALSE;
+                }
             }
 
-            persistent_pool_clear(&gSeqLoadedPool.persistent);
-            persistent_pool_clear(&gBankLoadedPool.persistent);
-            temporary_pool_clear( &gSeqLoadedPool.temporary);
-            temporary_pool_clear( &gBankLoadedPool.temporary);
-            reset_bank_and_seq_load_status();
-
-            init_reverb_us(reverbPresetId);
-            bzero(&gAiBuffers[0][0], (AIBUFFER_LEN * NUMAIBUFFERS));
-
-            if (gAudioLoadLock != AUDIO_LOCK_UNINITIALIZED) {
-                gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
+            // Wait for the reverb to finish as well
+            decrease_reverb_gain();
+            if (!(gEmulator & EMU_WIIVC)) {
+                wait_for_audio_frames(8);
             }
+
+            // The audio interface is double buffered; thus, we have to take the
+            // load lock for 2 frames for the buffers to free up before we can
+            // repurpose memory. Make that 3 frames, just in case.
+            gAudioLoadLock = AUDIO_LOCK_LOADING;
+            if (!(gEmulator & EMU_WIIVC)) {
+                wait_for_audio_frames(3);
+            }
+
+            remainingDmas = gCurrAudioFrameDmaCount;
+            while (remainingDmas > 0) {
+                for (i = 0; i < gCurrAudioFrameDmaCount; i++) {
+                    if (osRecvMesg(&gCurrAudioFrameDmaQueue, NULL, OS_MESG_NOBLOCK) == 0)
+                        remainingDmas--;
+                }
+            }
+            gCurrAudioFrameDmaCount = 0;
+        }
+
+        persistent_pool_clear(&gSeqLoadedPool.persistent);
+        persistent_pool_clear(&gBankLoadedPool.persistent);
+        temporary_pool_clear( &gSeqLoadedPool.temporary);
+        temporary_pool_clear( &gBankLoadedPool.temporary);
+        reset_bank_and_seq_load_status();
+
+        init_reverb_us(reverbPresetId);
+        bzero(&gAiBuffers[0][0], (AIBUFFER_LEN * NUMAIBUFFERS));
+
+        if (gAudioLoadLock != AUDIO_LOCK_UNINITIALIZED) {
+            gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
         }
         return;
     }

@@ -99,7 +99,8 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
     Gfx *head = NULL;
 
     if (state == GEO_CONTEXT_RENDER) {
-        Gfx *dl = alloc_display_list(sizeof(*dl) * 15 * 4 + 4);
+        // Gfx *dl = alloc_display_list(sizeof(*dl) * 15 * 4 + 4);
+        Gfx *dl = alloc_display_list(sizeof(*dl) * 15 + 4);
         head = dl;
 
         if (!dl || gBSMRetryMenuScale == 0) {
@@ -108,27 +109,46 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
 
         gDPSetCombineMode(dl++, BLANK, BLANK);
 
+        // s32 x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH_EXCESS;
+        // s32 y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT_EXCESS;
+        // s32 x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH_EXCESS;
+        // s32 y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT_EXCESS;
+        // u8 r = 79;
+        // u8 g = 79;
+        // u8 b = 225;
+
+        // dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
+        // dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+
+        // x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH;
+        // y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT;
+        // x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH;
+        // y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT;
+        // r = 47;
+        // g = 47;
+        // b = 191;
+
+        // dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
+        // dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+
         s32 x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH_EXCESS;
         s32 y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT_EXCESS;
         s32 x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH_EXCESS;
         s32 y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT_EXCESS;
-        u8 r = 79;
-        u8 g = 79;
-        u8 b = 225;
+        
+        f32 mult = gBSMRetryMenuScale;
+        if (mult > 1.0f) {
+            mult = 1.0f;
+        } else if (mult < 0.0f) {
+            mult = 0.0f;
+        }
 
-        dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
-        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+        u8 r = 47;
+        u8 g = 47;
+        u8 b = 191;
+        u8 a = 255 * mult;
 
-        x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH;
-        y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT;
-        x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH;
-        y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT;
-        r = 47;
-        g = 47;
-        b = 191;
-
-        dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
-        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, a);
 
         gDPSetEnvColor(dl++, 255, 255, 255, 255);
         gSPDisplayList(dl++, dl_hud_img_end);

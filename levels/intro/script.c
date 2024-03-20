@@ -74,24 +74,29 @@ const LevelScript level_intro_retry_menu[] = {
     // Load Retry Menu
     ALLOC_LEVEL_POOL(),
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK, custom_menu_rank_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_RETRY_MENU_RETRY, custom_retry_button_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_RETRY_MENU_QUIT, custom_quit_button_geo), 
     
     CALL(/*arg*/ 0, /*func*/ retry_menu_state),
     AREA(/*index*/ 1, intro_retry_menu),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ 0, 1200, 0, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvBSMRetryMenu),
+        SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_SOUND_PLAYER, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+        SET_ECHO(0x00, 0x00),
     END_AREA(),
     FREE_LEVEL_POOL(),
-
-    // Start animation
-    LOAD_AREA(/*area*/ 1),
-    CALL(/*arg*/ 0, /*func*/ load_mario_area),
 
 	SET_ORTHO_CAM(TRUE),
 
     CALL(/*arg*/ 0, /*func*/ retry_menu_state),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 1, /*color*/ 0x00, 0x00, 0x00),
-    SLEEP(/*frames*/ 10),
+    SLEEP(/*frames*/ 8),
 
-    PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_APPEAR),
+    // Start animation
+    LOAD_AREA(/*area*/ 1),
+    CALL(/*arg*/ 0, /*func*/ load_mario_area),
+    SET_MENU_MUSIC_WITH_REVERB(SEQ_SOUND_PLAYER, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+
+    PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_DISAPPEAR),
 
     LOOP_BEGIN(),
         UPDATE_OBJECTS(),
@@ -100,18 +105,29 @@ const LevelScript level_intro_retry_menu[] = {
         CALL(/*arg*/ 1, /*func*/ retry_menu_state),
     LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ 0),
 
-    PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_DISAPPEAR),
+    JUMP_LINK_PUSH_ARG(8),
+        UPDATE_OBJECTS(),
+        CALL(/*arg*/ 0, /*func*/ scroll_textures),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
 
-    SLEEP(/*frames*/ 15),
-    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 1, /*color*/ 0x00, 0x00, 0x00),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 10, /*color*/ 0x00, 0x00, 0x00),
+
+    JUMP_LINK_PUSH_ARG(10),
+        UPDATE_OBJECTS(),
+        CALL(/*arg*/ 0, /*func*/ scroll_textures),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
 
-    SLEEP(/*frames*/ 10),
+    SLEEP(/*frames*/ 2),
     CALL(/*arg*/ 2, /*func*/ retry_menu_state), // TODO: dialog prompt return
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ 0,  level_intro_retry_menu_yes), // Jump if first result is selected (Retry)
 
     // Otherwise exit to menu select
+    SLEEP(/*frames*/ 15),
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
 };
 

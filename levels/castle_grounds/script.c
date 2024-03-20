@@ -41,6 +41,9 @@ static const LevelScript cgds_area1_jump[] = {
 	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 540, 0, 0,  0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
 	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 540, 0, 0,  0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
 
+	SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+	SET_ECHO(0x00, 0x00),
+
 	// Rank:     x:  340, y: 60 (Relative to button)
 	// CS Token: x: -340, y: 60 (Relative to button)
 
@@ -105,7 +108,7 @@ const LevelScript level_cgds_menu_select[] = {
     CALL_LOOP(/*arg*/ 0, /*func*/ check_image_dma_complete),
     UNLOAD_AREA(/*area*/ 1),
     CLEAR_LEVEL(),
-    SLEEP(/*frames*/ 29),
+    SLEEP(/*frames*/ 25),
     CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
     SLEEP(/*frames*/ 1),
 	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),

@@ -157,6 +157,7 @@ u8 renderPressA = FALSE;
 u8 gOrthoCam = FALSE;
 
 f32 gBSMRetryMenuScale = 0.0f;
+s32 gBSMRetryMenuSelection = 0;
 
 u8 gBSMTimerActive = FALSE;
 u32 gBSMTCSTokenCollected = FALSE;
@@ -361,6 +362,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_SPECIAL_DEATH_EXIT, 0);
             break;
         case MARIO_SPAWN_BSM_CELEBRATION:
+            init_bsm_hud(FALSE);
             set_mario_action(m, ACT_BSM_CELEBRATION, 0);
             break;
     }
@@ -1253,7 +1255,7 @@ s32 init_level(void) {
     OSTime first = osGetTime();
 #endif
 
-    init_bsm_hud();
+    init_bsm_hud(TRUE);
 
     set_play_mode(PLAY_MODE_NORMAL);
 
@@ -1589,16 +1591,20 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
     // Initialize
     if (callType == 0) {
+        gBSMRetryMenuSelection = -1;
         gBSMRetryMenuScale = 0.0f;
         return TRUE;
     }
 
-    // Deinitialize
+    // Get selection data
     if (callType == 2) {
-        return TRUE;
+        return gBSMRetryMenuSelection;
     }
 
     // Loop stuff
+    if (gBSMRetryMenuSelection < 0) {
+        return FALSE;
+    }
 
-    return FALSE;
+    return TRUE;
 }

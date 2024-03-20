@@ -212,7 +212,7 @@ chan_bltz .main_loop_7
 chan_freelayers
 chan_setval 0
 chan_iowriteval 5
-chan_setreverb 0
+chan_setreverb 10
 chan_setpan 64
 chan_setpanmix 127
 chan_ioreadval 4

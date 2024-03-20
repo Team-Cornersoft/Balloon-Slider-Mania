@@ -653,7 +653,7 @@ struct BSMPointDisplay {
 struct BSMPointDisplay bsmPointColors[3];
 u8 bsmPointColorDisplayIndex = 0;
 
-void init_bsm_hud(void) {
+void init_bsm_hud(s32 updateLastValue) {
     s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
 
     bsmHudProps[BSM_HUD_SCORE].x = 22 - consoleDiff;
@@ -688,12 +688,14 @@ void init_bsm_hud(void) {
 
     for (s32 i = 0; i < BSM_HUD_COUNT; i++) {
         bsmHudProps[i].animTimer = S16_MAX;
-        bsmHudProps[i].lastValue = 0;
+        if (updateLastValue) {
+            bsmHudProps[i].lastValue = 0;
+        }
     }
 
     for (s32 i = 0; i < ARRAY_COUNT(bsmPointColors); i++) {
-        bsmPointColors->timer = S16_MAX;
-        bsmPointColors->speedupTimer = -1;
+        bsmPointColors[i].timer = S16_MAX;
+        bsmPointColors[i].speedupTimer = -1;
     }
 }
 

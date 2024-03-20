@@ -1294,9 +1294,12 @@
 #define /*0x0FC*/ oRotatingBridgeBalloonChild                   OBJECT_FIELD_OBJ(0x1D)
 
 /* BSM Retry Menu */
-#define /*0x0F4*/ oBSMRetryMenuRetryObj                         OBJECT_FIELD_OBJ(0x1B)
-#define /*0x0F8*/ oBSMRetryMenuQuitObj                          OBJECT_FIELD_OBJ(0x1C)
-#define /*0x0FC*/ oBSMRetryMenuRankObj                          OBJECT_FIELD_OBJ(0x1D)
+#define /*0x0F4*/ oBSMRetryMenuRankObj                          OBJECT_FIELD_OBJ(0x1B)
+#define /*0x0F8*/ oBSMRetryMenuButtonPressed                    OBJECT_FIELD_S32(0x1C)
+#define /*0x0FC*/ oBSMRetryMenuSelection                        OBJECT_FIELD_S32(0x1D)
+#define /*0x100*/ oBSMRetryMenuStickInput                       OBJECT_FIELD_S32(0x1E)
+
+/* BSM Retry Selection */
 
 
 /*Custom general defines:

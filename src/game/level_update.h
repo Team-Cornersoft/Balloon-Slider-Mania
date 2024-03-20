@@ -98,6 +98,7 @@ extern u8 renderPressA;
 extern u8 gOrthoCam;
 
 extern f32 gBSMRetryMenuScale;
+extern s32 gBSMRetryMenuSelection;
 
 extern s16 sCurrPlayMode;
 extern s16 sTransitionTimer;
