@@ -16,7 +16,7 @@ static const u16 BSMRankMinimumScores[BSM_COURSE_COUNT][6] = {
 
 void bhv_bsm_menu_rank_or_token_init(void) {
     if (cur_obj_has_model(MODEL_BSM_MENU_RANK)) {
-        struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum);
+        struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
         s32 buttonId = o->parentObj->oBehParams2ndByte;
         u16 score = bsmData[buttonId].score;
         u8 rank = 0;

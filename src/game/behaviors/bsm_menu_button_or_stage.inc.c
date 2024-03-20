@@ -40,7 +40,8 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
 }
 
 void bhv_bsm_menu_button_or_stage_init(void) {
-    u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum);
+    u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
     s32 buttonId = o->oBehParams2ndByte;
     o->oBSMMenuFrameColor = 0xFFFFFFFF;
     o->oBSMStageFadeTimer = 0;
@@ -96,7 +97,7 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     }
 
     // if (TRUE) {
-    if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COMPLETED_COURSE)) {
+    if (bsmData[buttonId].score != (u16) -1) {
         o->oBSMMenuRankObj = spawn_object_relative(buttonId, 340, -140, 20, o, MODEL_BSM_MENU_RANK, bhvBSMMenuRankOrToken);
         vec3f_copy(&o->oBSMMenuRankObj->oHomeVec, &o->oBSMMenuRankObj->oPosVec); // Set home
     }

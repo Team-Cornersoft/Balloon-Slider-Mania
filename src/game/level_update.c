@@ -1591,6 +1591,7 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
     // Initialize
     if (callType == 0) {
+        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMScoreCount, 0);
         gBSMRetryMenuSelection = -1;
         gBSMRetryMenuScale = 0.0f;
         return TRUE;

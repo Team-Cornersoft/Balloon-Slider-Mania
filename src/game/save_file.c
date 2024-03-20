@@ -830,9 +830,9 @@ void save_file_update_bsm_score(s32 fileIndex, s32 courseIndex, s32 score, s32 t
     }
 
     // Failed the challenge!
-    if (score < 0) {
-        return;
-    }
+    // if (score < 0) {
+    //     return;
+    // }
     
     // Cap off time and score
     if (score >= (u16) -1) {
@@ -848,10 +848,12 @@ void save_file_update_bsm_score(s32 fileIndex, s32 courseIndex, s32 score, s32 t
         gSaveFileModified = TRUE;
     }
 
-    if (timeInFrames < gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames == 0)) {
-        gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames = timeInFrames;
-        gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
-        gSaveFileModified = TRUE;
+    if (timeInFrames != 0) {
+        if (timeInFrames < gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames == 0)) {
+            gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].bestTimeInFrames = timeInFrames;
+            gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
+            gSaveFileModified = TRUE;
+        }
     }
 }
 

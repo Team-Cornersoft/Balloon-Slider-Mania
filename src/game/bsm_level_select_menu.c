@@ -119,7 +119,7 @@ static void bsm_manager_render_stage_name(void) {
 }
 
 static void bsm_manager_render_stats(void) {
-    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum);
+    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
 
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
         struct Object *obj = bsmMenuLevels[i];
