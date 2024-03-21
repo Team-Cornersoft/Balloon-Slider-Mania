@@ -55,6 +55,7 @@ extern Gfx dl_hud_img_begin[];
 extern Gfx dl_hud_img_end[];
 extern void *main_font_lut[];
 extern Gfx dl_ia_text_tex_settings[];
+extern Gfx dl_rgba32_32x32_load_vert[];
 extern Gfx dl_rgba16_load_tex_block[];
 extern Gfx dl_rgba32_64x16_load_tex_block[];
 extern Gfx dl_rgba32_32x32_load_tex_block[];

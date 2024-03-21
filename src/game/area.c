@@ -436,6 +436,10 @@ static void bsm_print_if_time_allows(s32 requiredTime, s32 fadeDuration, char *s
     } else {
         gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
         bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+        if (!(gEmulator & EMU_CONSOLE)) {
+            print_set_envcolour(0, 0, 0, (95 * (u32) (alpha * gClownFontColor[3])) >> 8);
+            print_hud_lut_string_translated(x - 2, y + 2, str, centered);
+        }
         print_set_envcolour(255, 255, 255, alpha * gClownFontColor[3]);
         print_hud_lut_string_translated(x, y, str, centered);
         gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
@@ -594,36 +598,42 @@ void bsm_render_success_menu(void) {
 
             bsm_print_if_time_allows(140, 15, "RANK: ", SCREEN_CENTER_X - 12, PRINT_Y_BASE + 178, FALSE, TRUE);
 
-            #define FADE_ALPHA_RANK_FRAMES 30
-            #define FADE_ALPHA_RANK_START 185
+            #define FADE_ALPHA_RANK_FRAMES 20
+            #define FADE_ALPHA_RANK_START 180
             if (successMenuTimer >= FADE_ALPHA_RANK_START) {
                 f32 rankAlpha = 1.0f;
+                f32 rankAlphaSqr = 1.0f;
                 s32 rank = calculate_bsm_rank(gBSMLastCourse, gBSMFinalScoreCount);
                 if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES > successMenuTimer) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
+                    rankAlphaSqr = sqr(rankAlpha);
                 }
 
-                s32 x = ((SCREEN_CENTER_X + 32) - 8) << 2;
-                s32 y = ((PRINT_Y_BASE + 178) - 8) << 2;
+                f32 x = (SCREEN_CENTER_X + 32) - 12;
+                f32 y = (PRINT_Y_BASE + 178) + 8;
 
-                // TODO: ortho tris!
-                // x += (1.0f - rankAlpha) * 30;
-                // y -= (1.0f - rankAlpha) * 15;
+                x += (1.0f - rankAlpha) * 6.0f;
+                y += (1.0f - rankAlpha) * 3.0f;
                 
                 gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_begin);
                 bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
-                print_set_envcolour(255, 255, 255, rankAlpha * gClownFontColor[3]);
+                print_set_envcolour(255, 255, 255, rankAlphaSqr * gClownFontColor[3]);
+
+                create_dl_ortho_matrix();
+                create_dl_translation_matrix(MENU_MTX_PUSH, x, (SCREEN_HEIGHT - 16) - y, 0.0f);
+                create_dl_scale_matrix(MENU_MTX_PUSH, 1.40f - (0.40f * rankAlphaSqr), 1.40f - (0.40f * rankAlphaSqr), 1.0f);
 
                 gDPPipeSync(gDisplayListHead++);
-                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, bsmRankTextures[rank]);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, VIRTUAL_TO_PHYSICAL(bsmRankTextures[rank]));
                 gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_tex_block);
-                gSPTextureRectangle(gDisplayListHead++, x, y, x + (32 << 2), y + (32 << 2), G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_vert);
+
                 gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_end);
 
             }
 
-            if (successMenuTimer >= 230) {
-                if (successMenuTimer == 230) {
+            if (successMenuTimer >= 220) {
+                if (successMenuTimer == 220) {
                     init_image_screen_press_button(0, 0);
                 }
 

@@ -2126,7 +2126,7 @@ ALIGNED8 static const Texture texture_font_char_us_V[] = {
 #include "textures/segment2/font_graphics.060C0.ia4.inc.c"
 };
 
-ALIGNED8 static const Texture texture_font_char_us_W[] = {
+ALIGNED8 const Texture texture_font_char_us_W[] = {
 #include "textures/segment2/font_graphics.06100.ia4.inc.c"
 };
 
@@ -2661,6 +2661,14 @@ const Texture *const main_hud_camera_lut[] = {
 #include "text/us/define_text.inc.c"
 #endif
 
+// 0x0200EE28 - 0x0200EE68
+static const Vtx vertex_32x32_char[] = {
+    {{{     0,      0,      0}, 0, {     0,   2048}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{    32,      0,      0}, 0, {  2048,   2048}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{    32,     32,      0}, 0, {  2048,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     0,     32,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
+};
+
 // 0x0200EC60 - 0x0200EC98
 const Gfx dl_hud_img_begin[] = {
     gsDPPipeSync(),
@@ -2768,6 +2776,7 @@ const Gfx dl_rgba32_32x32_text_begin[] = {
     gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetRenderMode(G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2),
     gsDPSetTextureFilter(G_TF_POINT),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsSPEndDisplayList(),
 };
 
@@ -2778,6 +2787,13 @@ const Gfx dl_rgba32_32x32_load_tex_block[] = {
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((32 * 32) - 1), CALC_DXT(32, G_IM_SIZ_32b_BYTES)),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_32b, 8, 0, G_TX_RENDERTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 5, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 5, G_TX_NOLOD),
     gsDPSetTileSize(0, 0, 0, ((32 - 1) << G_TEXTURE_IMAGE_FRAC), ((32 - 1) << G_TEXTURE_IMAGE_FRAC)),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200ED38 - 0x0200ED68
+const Gfx dl_rgba32_32x32_load_vert[] = {
+    gsSPVertex(vertex_32x32_char, 4, 0),
+    gsSP2Triangles( 0,  1,  2, 0x0, 0,  2,  3, 0x0),
     gsSPEndDisplayList(),
 };
 
