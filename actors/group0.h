@@ -343,4 +343,6 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "bouncy_shroom/geo_header.h"
 
+#include "bouncy_shroom/collision_header.h"
+
 #endif

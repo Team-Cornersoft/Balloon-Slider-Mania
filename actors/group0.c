@@ -36,3 +36,4 @@
 #include "custom_moving_bridge/model.inc.c"
 #include "custom_moving_bridge/collision.inc.c"
 #include "bouncy_shroom/model.inc.c"
+#include "bouncy_shroom/collision.inc.c"
