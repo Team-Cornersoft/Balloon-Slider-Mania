@@ -1306,6 +1306,9 @@
 /* BSM Bouncy Shroom */
 #define /*0x0F4*/ oBouncyShroomBounciness                       OBJECT_FIELD_F32(0x1B)
 #define /*0x0F8*/ oBouncyShroomFVelLastFrame                    OBJECT_FIELD_F32(0x1C)
+#define /*0x0FC*/ oBouncyShroomOscillation                      OBJECT_FIELD_S32(0x1D)
+#define /*0x100*/ oBouncyShroomOscillationTimer                 OBJECT_FIELD_S32(0x1E)
+#define /*0x104*/ oBouncyShroomOscillationIntensity             OBJECT_FIELD_F32(0x1F)
 
 
 /*Custom general defines:

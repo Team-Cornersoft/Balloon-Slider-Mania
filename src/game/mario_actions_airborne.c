@@ -521,6 +521,9 @@ s32 act_triple_jump(struct MarioState *m) {
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
 
+    if (m->action == ACT_MUSHROOM_BOUNCE) {
+        gAirWithTurnLast = TRUE;
+    }
     common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, MARIO_ANIM_TRIPLE_JUMP, 0);
 #if ENABLE_RUMBLE
     if (m->action == ACT_TRIPLE_JUMP_LAND) {

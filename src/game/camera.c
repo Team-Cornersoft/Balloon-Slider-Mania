@@ -2249,7 +2249,7 @@ s16 update_default_camera(struct Camera *c) {
 
         if (sSelectionFlags & CAM_MODE_MARIO_ACTIVE) {
             if (gMarioState && gMarioState->action == ACT_MUSHROOM_BOUNCE) {
-                c->pos[1] = ((camFloorHeight * 0.15f) + (c->pos[1] * 0.85f));
+                c->pos[1] = (((gMarioState->pos[1] + posHeight) * 0.15f) + (c->pos[1] * 0.85f));
             }
         }
     }
