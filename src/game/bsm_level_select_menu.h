@@ -77,6 +77,7 @@ extern u8 gSafeToLoadVideo;
 s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
+s32 calculate_bsm_rank(s32 courseNum, s32 score);
 
 struct Object *get_selcted_menu_object(u8 button);
 

@@ -442,7 +442,7 @@ static void render_press_button(void) {
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     if (!(gEmulator & EMU_CONSOLE)) {
         gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (u8) ((alpha * 95) >> 8));
-        print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff - 2, 208 + consoleDiff + 2, out);
+        print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff - 1, 208 + consoleDiff + 1, out);
     }
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, (u8) alpha);
     print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff, 208 + consoleDiff, out);

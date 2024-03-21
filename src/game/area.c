@@ -32,6 +32,7 @@
 #ifdef S2DEX_TEXT_ENGINE
 #include "s2d_engine/init.h"
 #endif
+#include "actors/custom_menu_rank/geo_header.h"
 
 struct SpawnInfo gPlayerSpawnInfos[1];
 struct GraphNode *gGraphNodePointers[MODEL_ID_COUNT];
@@ -441,21 +442,18 @@ static void bsm_print_if_time_allows(s32 requiredTime, s32 fadeDuration, char *s
     }
 }
 
-#define POINTS_FOR_BASELINE 200
-#define POINT_PER_FRAMES 20
+#define POINTS_FOR_BASELINE 400
+#define POINT_PER_FRAMES 30
 static s32 bsm_get_time_bonus(s32 courseId, s32 frameTime) {
     s32 baselineTime = gBSMStageProperties[courseId].baselineTime;
+
     s32 timediff = baselineTime - frameTime;
-    s32 rawPointBonus = timediff / POINT_PER_FRAMES;
+    s32 absoluteBonus = timediff / POINT_PER_FRAMES;
 
     f32 fracTime = 2.0f - ((f32) frameTime / baselineTime);
-    s32 exponentialBonus = POINTS_FOR_BASELINE * sqr(fracTime);
-    if (fracTime < 0.0f) {
-        exponentialBonus = 0;
-    }
+    s32 relativeBonus = POINTS_FOR_BASELINE * fracTime;
 
-    s32 finalBonus = rawPointBonus + exponentialBonus;
-
+    s32 finalBonus = relativeBonus + absoluteBonus;
     return finalBonus >= 0 ? finalBonus : 0;
 }
 
@@ -474,6 +472,71 @@ static s32 bsm_get_red_balloon_bonus(void) {
 
     return gRedBalloonPointTable[gBSMRedBalloonsPopped];
 }
+
+static void success_render_tcs_and_key(void) {
+    void **hudLUT = segmented_to_virtual(main_hud_lut);
+    s32 x1 = (SCREEN_CENTER_X - 80) - 8;
+    s32 x2 = (SCREEN_CENTER_X + 80) - 8;
+    s32 y = (SCREEN_CENTER_Y - 60) - 8;
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+    gDPPipeSync(gDisplayListHead++);
+    bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+
+    if (gBSMKeyCollected) {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
+        if (!(gEmulator & EMU_CONSOLE)) {
+            print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (x1 - 1) << 2, (y + 1) << 2, ((x1 - 1) + 16) << 2,
+                                ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gDPPipeSync(gDisplayListHead++);
+        }
+        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
+    } else {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
+        print_set_envcolour(255, 255, 255, (95 * gClownFontColor[3]) >> 8);
+    }
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, x1 << 2, y << 2, (x1 + 16) << 2,
+                        (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gDPPipeSync(gDisplayListHead++);
+
+    if (gBSMTCSTokenCollected) {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
+        if (!(gEmulator & EMU_CONSOLE)) {
+            print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (x2 - 1) << 2, (y + 1) << 2, ((x2 - 1) + 16) << 2,
+                                ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gDPPipeSync(gDisplayListHead++);
+        }
+        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
+    } else {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS_NA]);
+        print_set_envcolour(255, 255, 255, (95 * gClownFontColor[3]) >> 8);
+    }
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+    gSPTextureRectangle(gDisplayListHead++, x2 << 2, y << 2, (x2 + 16) << 2,
+                        (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+    gDPPipeSync(gDisplayListHead++);
+
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+}
+
+// NOTE: Adding new ranks isn't exactly safe without changing this...
+// Also: This assumes common1 is loaded!
+u8 *bsmRankTextures[] = {
+    custom_menu_rank_rank_f_rgba32_rgba32,
+    custom_menu_rank_rank_d_rgba32_rgba32,
+    custom_menu_rank_rank_c_rgba32_rgba32,
+    custom_menu_rank_rank_b_rgba32_rgba32,
+    custom_menu_rank_rank_a_rgba32_rgba32,
+    custom_menu_rank_rank_s_rgba32_rgba32,
+    custom_menu_rank_rank_g_rgba32_rgba32,
+};
 
 void bsm_render_success_menu(void) {
     f32 alpha = 1.0f;
@@ -495,6 +558,10 @@ void bsm_render_success_menu(void) {
     gClownFontColor[2] = 255;
     gClownFontColor[3] = 0;
 
+    if (successMenuTimer < 0x7FFF) {
+        successMenuTimer++;
+    }
+
     switch (successMenuAction) {
         case 0:
             alpha = (f32) successMenuTimer / 15;
@@ -502,7 +569,7 @@ void bsm_render_success_menu(void) {
 
             if (successMenuTimer >= 25) {
                 successMenuAction++;
-                successMenuTimer = -1;
+                successMenuTimer = 0;
             }
             break;
         case 1:
@@ -523,12 +590,40 @@ void bsm_render_success_menu(void) {
             bsm_print_if_time_allows(75, 10, successBuf, PRINT_X_BASE, PRINT_Y_BASE + 124, TRUE, FALSE);
 
             sprintf(successBuf, "SCORE: %d", gBSMFinalScoreCount);
-            bsm_print_if_time_allows(115, 15, successBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 150, FALSE, TRUE);
+            bsm_print_if_time_allows(105, 15, successBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 150, FALSE, TRUE);
 
-            bsm_print_if_time_allows(155, 15, "RANK: ", SCREEN_CENTER_X - 12, PRINT_Y_BASE + 178, FALSE, TRUE);
+            bsm_print_if_time_allows(140, 15, "RANK: ", SCREEN_CENTER_X - 12, PRINT_Y_BASE + 178, FALSE, TRUE);
 
-            if (successMenuTimer >= 215) {
-                if (successMenuTimer == 215) {
+            #define FADE_ALPHA_RANK_FRAMES 30
+            #define FADE_ALPHA_RANK_START 185
+            if (successMenuTimer >= FADE_ALPHA_RANK_START) {
+                f32 rankAlpha = 1.0f;
+                s32 rank = calculate_bsm_rank(gBSMLastCourse, gBSMFinalScoreCount);
+                if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES > successMenuTimer) {
+                    rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
+                }
+
+                s32 x = ((SCREEN_CENTER_X + 32) - 8) << 2;
+                s32 y = ((PRINT_Y_BASE + 178) - 8) << 2;
+
+                // TODO: ortho tris!
+                // x += (1.0f - rankAlpha) * 30;
+                // y -= (1.0f - rankAlpha) * 15;
+                
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_begin);
+                bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+                print_set_envcolour(255, 255, 255, rankAlpha * gClownFontColor[3]);
+
+                gDPPipeSync(gDisplayListHead++);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, bsmRankTextures[rank]);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_tex_block);
+                gSPTextureRectangle(gDisplayListHead++, x, y, x + (32 << 2), y + (32 << 2), G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_end);
+
+            }
+
+            if (successMenuTimer >= 230) {
+                if (successMenuTimer == 230) {
                     init_image_screen_press_button(0, 0);
                 }
 
@@ -542,16 +637,16 @@ void bsm_render_success_menu(void) {
                     image_screen_cannot_press_button(-1, 0);
                 }
             }
+
+            break;
     }
+
+    success_render_tcs_and_key();
 
     bsm_print_if_time_allows(-1, 0, "TRACK CLEAR!", SCREEN_CENTER_X, PRINT_Y_BASE + 0, FALSE, TRUE);
 
     sprintf(successBuf, "<COL_FFFF00-->Time:<COL_--------> %d:%02d.%02d%s", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30, isTimePB ? " <RAINBOW>(Record!)<RAINBOW>" : "");
     bsm_print_if_time_allows(-1, 0, successBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 24, TRUE, TRUE);
-
-    if (successMenuTimer < 0x7FFF) {
-        successMenuTimer++;
-    }
 }
 
 /*
