@@ -122,13 +122,18 @@ static u8 key_balloon_check_if_interacted(void) {
 }
 
 void bhv_point_balloon_init(void) {
+    // if (o->oBehParams2ndByte == POINT_BALLOON_RED) {
+    //     o->oBehParams2ndByte = POINT_BALLOON_BOWSER;
+    //     o->oBehParams = o->oBehParams2ndByte << 16;
+    // }
+
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
 
     if (!obj_has_behavior(o->parentObj, bhvSkiFlagSpawner)) {
         cur_obj_scale(bProps[bType].scale);
     }
-    o->oHomeY += bProps[bType].scale * 120.0f + (15.0f * bProps[bType].scale) + 15.0f;
+    o->oHomeY += bProps[bType].scale * 110.0f + (10.0f * bProps[bType].scale) + 25.0f;
 
     vec3f_copy(&o->oPosVec, &o->oHomeVec);
     vec3f_copy(&o->oPtBalloonRelativePosVec, &o->oHomeVec);
@@ -139,7 +144,7 @@ void bhv_point_balloon_init(void) {
 
     o->oPtBalloonOscillateYFreq = random_u16() % (u32) (40.0f * bProps[bType].scale) + 75;
     o->oPtBalloonOscillateYOffset = random_u16() % o->oPtBalloonOscillateYFreq;
-    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (25 * bProps[bType].scale)) + 10;
+    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (30 * sqrtf(bProps[bType].scale))) + 10;
 
     o->oPtBalloonOscillateZFreq = (random_u16() % (u32) (60.0f * bProps[bType].scale)) + 120;
     o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateZFreq;
