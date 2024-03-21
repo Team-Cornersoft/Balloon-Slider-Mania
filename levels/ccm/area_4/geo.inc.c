@@ -8,6 +8,7 @@ const GeoLayout ccm_area_4_geo[] = {
 			GEO_BRANCH(1, ccm_dl_1_area4_geo),
 		GEO_CLOSE_NODE(),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 20, 20, 50, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 255, 255, 255, 0, 64, -127),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

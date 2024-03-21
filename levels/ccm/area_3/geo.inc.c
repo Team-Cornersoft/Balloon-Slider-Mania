@@ -13,6 +13,7 @@ const GeoLayout ccm_area_3_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14071, 4141, -14068, 0, -180, 0, ccm_dl_a3_skybox_c_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -14069, 4141, 14073, 0, -90, 0, ccm_dl_a3_skybox_d_mesh_layer_1),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 80, 35, 20, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 255, 255, 230, 0, 127, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
