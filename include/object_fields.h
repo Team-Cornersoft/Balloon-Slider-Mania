@@ -1269,6 +1269,12 @@
 #define /*0x100*/ oBSMMenuRankObj       OBJECT_FIELD_OBJ(0x21)
 #define /*0x104*/ oBSMMenuTCSTokenObj   OBJECT_FIELD_OBJ(0x22)
 
+/* BSM Retry Menu */
+#define /*0x0F4*/ oBSMRetryMenuRankObj                          OBJECT_FIELD_OBJ(0x1B)
+#define /*0x0F8*/ oBSMRetryMenuButtonPressed                    OBJECT_FIELD_S32(0x1C)
+#define /*0x0FC*/ oBSMRetryMenuSelection                        OBJECT_FIELD_S32(0x1D)
+#define /*0x100*/ oBSMRetryMenuStickInput                       OBJECT_FIELD_S32(0x1E)
+
 /* BSM Point Balloon */
 #define /*0x0F4*/ oPtBalloonRelativePosVec                      OBJECT_FIELD_F32(0x1B)
 #define /*0x0F4*/ oPtBalloonRelativePosX                        OBJECT_FIELD_F32(0x1B)
@@ -1288,20 +1294,18 @@
 /* BSM Point Balloon Popped */
 #define /*0x0F4*/ oPtBalloonPoppedScale                         OBJECT_FIELD_F32(0x1B)
 
+/* BSM Ski Flag Spawner */
+#define /*0x0F4*/ oSkiFlagSpawnerBalloon                        OBJECT_FIELD_OBJ(0x1B)
+#define /*0x0F8*/ oSkiFlagSpawnerBalloonReferenceScale          OBJECT_FIELD_F32(0x1C)
+
 /* BSM Bridge */
 #define /*0x0F4*/ oRotatingBridgeYawHome                        OBJECT_FIELD_F32(0x1B)
 #define /*0x0F8*/ oRotatingBridgeYawRotated                     OBJECT_FIELD_F32(0x1C)
 #define /*0x0FC*/ oRotatingBridgeBalloonChild                   OBJECT_FIELD_OBJ(0x1D)
 
-/* BSM Retry Menu */
-#define /*0x0F4*/ oBSMRetryMenuRankObj                          OBJECT_FIELD_OBJ(0x1B)
-#define /*0x0F8*/ oBSMRetryMenuButtonPressed                    OBJECT_FIELD_S32(0x1C)
-#define /*0x0FC*/ oBSMRetryMenuSelection                        OBJECT_FIELD_S32(0x1D)
-#define /*0x100*/ oBSMRetryMenuStickInput                       OBJECT_FIELD_S32(0x1E)
-
-/* BSM Ski Flag Spawner */
-#define /*0x0F4*/ oSkiFlagSpawnerBalloon                        OBJECT_FIELD_OBJ(0x1B)
-#define /*0x0F8*/ oSkiFlagSpawnerBalloonReferenceScale          OBJECT_FIELD_F32(0x1C)
+/* BSM Bouncy Shroom */
+#define /*0x0F4*/ oBouncyShroomBounciness                       OBJECT_FIELD_F32(0x1B)
+#define /*0x0F8*/ oBouncyShroomFVelLastFrame                    OBJECT_FIELD_F32(0x1C)
 
 
 /*Custom general defines:

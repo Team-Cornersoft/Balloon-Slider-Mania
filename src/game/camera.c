@@ -2246,6 +2246,12 @@ s16 update_default_camera(struct Camera *c) {
     if (camFloorHeight != FLOOR_LOWER_LIMIT) {
         camFloorHeight += posHeight;
         approach_camera_height(c, camFloorHeight, 20.f);
+
+        if (sSelectionFlags & CAM_MODE_MARIO_ACTIVE) {
+            if (gMarioState && gMarioState->action == ACT_MUSHROOM_BOUNCE) {
+                c->pos[1] = ((camFloorHeight * 0.15f) + (c->pos[1] * 0.85f));
+            }
+        }
     }
     c->pos[0] = cPos[0];
     c->pos[2] = cPos[2];
