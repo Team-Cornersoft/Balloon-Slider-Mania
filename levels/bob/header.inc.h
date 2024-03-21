@@ -315,7 +315,7 @@ extern Gfx bob_dl_C_warning_sign_004_mesh_layer_4_tri_0[];
 extern Vtx bob_dl_A_IceTunnel2_mesh_layer_1_vtx_cull[8];
 extern Vtx bob_dl_A_IceTunnel2_mesh_layer_1_vtx_0[447];
 extern Gfx bob_dl_A_IceTunnel2_mesh_layer_1_tri_0[];
-extern Vtx bob_dl_A_IceTunnel2_mesh_layer_1_vtx_1[2051];
+extern Vtx bob_dl_A_IceTunnel2_mesh_layer_1_vtx_1[2029];
 extern Gfx bob_dl_A_IceTunnel2_mesh_layer_1_tri_1[];
 extern Vtx bob_dl_A_IceTunnel2_mesh_layer_1_vtx_2[232];
 extern Gfx bob_dl_A_IceTunnel2_mesh_layer_1_tri_2[];
