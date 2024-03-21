@@ -155,6 +155,7 @@ void create_dl_scale_matrix(s8 pushOp, f32 x, f32 y, f32 z);
 void print_generic_string_alpha(s16 x, s16 y, const u8 *str, s16 alpha);
 void print_generic_string(s16 x, s16 y, const u8 *str);
 void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str);
+void print_hud_lut_string_translated(s16 x, s16 y, const char *str, u8 centered);
 void print_menu_generic_string(s16 x, s16 y, const u8 *str);
 void handle_menu_scrolling(s8 scrollDirection, s8 *currentIndex, s8 minIndex, s8 maxIndex);
 s32 get_str_x_pos_from_center(s16 centerPos, u8 *str, f32 scale);

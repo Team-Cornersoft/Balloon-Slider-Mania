@@ -427,20 +427,25 @@ static u16 get_press_button_alpha() {
     }
 
     tmp = 1.0f - sins(((f32) ((CYCLE_FRAMES/2) - currentCycles) / (f32) CYCLE_FRAMES + 0.5f) * 32767.0f);
-    return ((u8) ((1.0f - (tmp * 0.67f)) * 255.0f + 0.5f)) | (1 << 8);
+    return ((u8) ((1.0f - (tmp * 0.67f)) * 255.0f + 0.5f));
 }
 
 static void render_press_button(void) {
+    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     u8 out[] = { GLYPH_A_BUTTON, GLYPH_SPACE };
 
     u16 alpha = get_press_button_alpha();
-    u8 ppAlpha = 255;
-    if (alpha < ppAlpha)
-        ppAlpha = alpha;
+    if (alpha > 255) {
+        alpha = 255;
+    }
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+    if (!(gEmulator & EMU_CONSOLE)) {
+        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (u8) ((alpha * 95) >> 8));
+        print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff - 2, 208 + consoleDiff + 2, out);
+    }
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, (u8) alpha);
-    print_hud_lut_string(HUD_LUT_GLOBAL, 288, 216, out);
+    print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff, 208 + consoleDiff, out);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 }
 
@@ -991,6 +996,10 @@ void render_hud_bsm_info(void) {
 void render_hud(void) {
     s16 hudDisplayFlags = gHudDisplay.flags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER;
 
+    if (gMarioState && gMarioState->action == ACT_BSM_CELEBRATION) {
+        hudDisplayFlags &= ~HUD_DISPLAY_FLAG_CAMERA_AND_POWER;
+    }
+
     if (hudDisplayFlags == HUD_DISPLAY_NONE) {
         sPowerMeterHUD.animation = POWER_METER_HIDDEN;
         sPowerMeterStoredHealth = 8;
@@ -1002,9 +1011,9 @@ void render_hud(void) {
             renderPressA = FALSE;
         }
 
-        if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) {
-            create_dl_ortho_matrix();
-        }
+        // if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) {
+        //     create_dl_ortho_matrix();
+        // }
 #ifdef BREATH_METER
         sBreathMeterHUD.animation = BREATH_METER_HIDDEN;
         sBreathMeterStoredValue = 8;

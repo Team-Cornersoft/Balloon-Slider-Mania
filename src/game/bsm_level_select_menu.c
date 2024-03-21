@@ -37,15 +37,15 @@ enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
 u8 gBSMInitialized = FALSE;
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
-    LEVEL_BOB, "Snowy\nPeak",
-    LEVEL_WF,  "Aqueduct\nFlow",
-    LEVEL_JRB, "Fungi\nCanyon",
-    LEVEL_CCM, "Starlight\nFest",
-    LEVEL_BBH, "Holiday\nPeak",
-    LEVEL_HMC, "Dragon\nFlow",
-    LEVEL_LLL, "Twilight\nCanyon",
-    LEVEL_SSL, "Cyber\nFest",
-    LEVEL_DDD, "Cornersoft\nParade",
+    {.levelID = LEVEL_BOB, .baselineTime = 90 * 30, .courseName = "Snowy\nPeak"       },
+    {.levelID = LEVEL_WF,  .baselineTime = 90 * 30, .courseName = "Aqueduct\nFlow"    },
+    {.levelID = LEVEL_JRB, .baselineTime = 90 * 30, .courseName = "Fungi\nCanyon"     },
+    {.levelID = LEVEL_CCM, .baselineTime = 90 * 30, .courseName = "Starlight\nFest"   },
+    {.levelID = LEVEL_BBH, .baselineTime = 90 * 30, .courseName = "Holiday\nPeak"     },
+    {.levelID = LEVEL_HMC, .baselineTime = 90 * 30, .courseName = "Dragon\nFlow"      },
+    {.levelID = LEVEL_LLL, .baselineTime = 90 * 30, .courseName = "Twilight\nCanyon"  },
+    {.levelID = LEVEL_SSL, .baselineTime = 90 * 30, .courseName = "Cyber\nFest"       },
+    {.levelID = LEVEL_DDD, .baselineTime = 90 * 30, .courseName = "Cornersoft\nParade"},
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
@@ -137,46 +137,50 @@ static void bsm_manager_render_stats(void) {
         s32 y2 = y1 + 14;
 
         if (bsmData[i].bestTimeInFrames == 0) {
+            print_set_envcolour(255, 255, 255, 255);
             if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>No Time<WAVE>");
             } else {
                 sprintf(strBuffer, "No Time");
             }
         } else {
-            s32 milliseconds = ((bsmData[i].bestTimeInFrames % 30) * 1000) / 30;
+            s32 milliseconds = ((bsmData[i].bestTimeInFrames % 30) * 100) / 30;
             s32 seconds = (bsmData[i].bestTimeInFrames / 30) % 60;
             s32 minutes = (bsmData[i].bestTimeInFrames / (30 * 60));
 
             if (minutes >= 10) {
                 minutes = 9;
                 seconds = 59;
-                milliseconds = 999;
+                milliseconds = 99;
             }
 
+            print_set_envcolour(223, 159, 255, 255);
             if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
-                sprintf(strBuffer, "<WAVE>%d:%02d.%03d<WAVE>", minutes, seconds, milliseconds);
+                sprintf(strBuffer, "<WAVE>%d:%02d.%02d<WAVE>", minutes, seconds, milliseconds);
             } else {
-                sprintf(strBuffer, "%d:%02d.%03d", minutes, seconds, milliseconds);
+                sprintf(strBuffer, "%d:%02d.%02d", minutes, seconds, milliseconds);
             }
         }
-        
-        print_set_envcolour(255, 255, 255, 255);
+
         print_small_text_buffered(x, y1, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         if (bsmData[i].score == (u16) -1) {
+            print_set_envcolour(255, 255, 255, 255);
             if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+                print_set_envcolour(255, 255, 255, 255);
                 sprintf(strBuffer, "<WAVE>No Score<WAVE>");
             } else {
                 sprintf(strBuffer, "No Score");
             }
         } else {
+            print_set_envcolour(255, 255, 95, 255);
             if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                 sprintf(strBuffer, "<WAVE>%d<WAVE>", bsmData[i].score);
             } else {
                 sprintf(strBuffer, "%d", bsmData[i].score);
             }
         }
-        print_set_envcolour(255, 255, 255, 255);
+
         print_small_text_buffered(x, y2, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 }

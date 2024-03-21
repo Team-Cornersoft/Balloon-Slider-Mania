@@ -710,6 +710,24 @@ static void level_cmd_unload_area(void) {
 }
 
 static void level_cmd_set_mario_start_pos(void) {
+#ifdef MARIO_POS_OVERRIDE
+    struct MarioPosOverride {
+        u8 area;
+        s16 yaw;
+        s16 x;
+        s16 y;
+        s16 z;
+    };
+
+    struct MarioPosOverride override = MARIO_POS_OVERRIDE;
+    gMarioSpawnInfo->areaIndex = override.area;
+    vec3s_set(gMarioSpawnInfo->startAngle, 0, override.yaw * 0x8000 / 180, 0);
+    gMarioSpawnInfo->startPos[0] = override.x;
+    gMarioSpawnInfo->startPos[1] = override.y;
+    gMarioSpawnInfo->startPos[2] = override.z;
+    
+#else
+
     gMarioSpawnInfo->areaIndex = CMD_GET(u8, 2);
 
 #if IS_64_BIT
@@ -718,6 +736,8 @@ static void level_cmd_set_mario_start_pos(void) {
     vec3s_copy(gMarioSpawnInfo->startPos, CMD_GET(Vec3s, 6));
 #endif
     vec3s_set(gMarioSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+
+#endif
 
     sCurrentCmd = CMD_NEXT;
 }

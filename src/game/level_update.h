@@ -128,6 +128,7 @@ extern u32 gBSMKeyCollected;
 extern u32 gBSMRedBalloonsPopped;
 extern u32 gBSMSkiFlagsHit;
 extern u32 gBSMScoreCount;
+extern u32 gBSMFinalScoreCount;
 extern u32 gBSMLastBalloonType;
 extern u32 gBSMFrameTimer;
 extern s32 gBSMLastLevel;

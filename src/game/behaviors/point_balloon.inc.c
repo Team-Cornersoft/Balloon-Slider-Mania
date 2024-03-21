@@ -207,6 +207,10 @@ void bhv_key_balloon_loop(void) {
         if (key_balloon_check_if_interacted()) {
             if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
                 spawn_mist_particles_variable(16, -120.0f + (110.0f * scale), 46.0f * scale);
+                spawn_mist_particles_variable(16, -120.0f - (110.0f * scale), 46.0f * scale);
+                if (scale == 0.0f) {
+                    FORCE_CRASH;
+                }
                 struct Object *balloonPop = spawn_object_relative(0xFF, 0, 110 * scale, 0, o, MODEL_BSM_POINT_BALLOON_POPPED, bhvPointBalloonPopped);
                 if (balloonPop) {
                     obj_scale(balloonPop, scale * 0.25f);
@@ -215,8 +219,10 @@ void bhv_key_balloon_loop(void) {
                     SET_BPARAM4(balloonPop->oBehParams, BPARAM4);
                 }
                 spawn_mist_particles_variable(4, -120.0f + (110.0f * scale), 46.0f * scale);
+                spawn_mist_particles_variable(4, -120.0f - (110.0f * scale), 46.0f * scale);
             } else {
                 spawn_mist_particles_variable(8, -120.0f + (110.0f * scale), 46.0f * scale);
+                spawn_mist_particles_variable(8, -120.0f - (110.0f * scale), 46.0f * scale);
             }
             obj_mark_for_deletion(o);
         }

@@ -392,8 +392,162 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
 #endif
 }
 
-static u32 successMenuTimer = 0;
+static s32 successMenuTimer = 0;
+static s32 successMenuAction = 0;
+static char successBuf[128];
+
+#define SUCCESS_BLANK_BOX_X ((3 * SCREEN_CENTER_X / 4) + 4)
+#define SUCCESS_BLANK_BOX_Y ((3 * SCREEN_CENTER_Y / 4) + 16)
+#define PRINT_X_BASE (SCREEN_CENTER_X - SUCCESS_BLANK_BOX_X + 24)
+#define PRINT_Y_BASE (SCREEN_CENTER_Y - SUCCESS_BLANK_BOX_Y + 8)
+static void bsm_render_success_black_box(f32 alpha) {
+    if (alpha <= 0.0f){
+        gClownFontColor[3] = 0;
+        return;
+    }
+    
+    if (alpha > 1.0f) {
+        alpha = 1.0f;
+    }
+
+    prepare_blank_box();
+    bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+    render_blank_box_rounded(SCREEN_CENTER_X - SUCCESS_BLANK_BOX_X, SCREEN_CENTER_Y - SUCCESS_BLANK_BOX_Y, SCREEN_CENTER_X + SUCCESS_BLANK_BOX_X, SCREEN_CENTER_Y + SUCCESS_BLANK_BOX_Y, 0, 0, 0, (u8) (159.0f * alpha));
+    finish_blank_box();
+
+    gClownFontColor[3] = (u8) (255.0f * alpha);
+}
+
+static void bsm_print_if_time_allows(s32 requiredTime, s32 fadeDuration, char *str, s16 x, s16 y, u8 isPuppyprint, u8 centered) {
+    f32 alpha = 1.0f;
+
+    if (successMenuTimer < requiredTime) {
+        return;
+    }
+
+    if (requiredTime + fadeDuration > successMenuTimer) {
+        alpha = (f32) (successMenuTimer - requiredTime + 1) / (fadeDuration + 1);
+    }
+
+    if (isPuppyprint) {
+        print_set_envcolour(255, 255, 255, alpha * gClownFontColor[3]);
+        print_small_text(x, y, str, centered ? PRINT_TEXT_ALIGN_CENTER : PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    } else {
+        gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+        bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+        print_set_envcolour(255, 255, 255, alpha * gClownFontColor[3]);
+        print_hud_lut_string_translated(x, y, str, centered);
+        gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+    }
+}
+
+#define POINTS_FOR_BASELINE 200
+#define POINT_PER_FRAMES 20
+static s32 bsm_get_time_bonus(s32 courseId, s32 frameTime) {
+    s32 baselineTime = gBSMStageProperties[courseId].baselineTime;
+    s32 timediff = baselineTime - frameTime;
+    s32 rawPointBonus = timediff / POINT_PER_FRAMES;
+
+    f32 fracTime = 2.0f - ((f32) frameTime / baselineTime);
+    s32 exponentialBonus = POINTS_FOR_BASELINE * sqr(fracTime);
+    if (fracTime < 0.0f) {
+        exponentialBonus = 0;
+    }
+
+    s32 finalBonus = rawPointBonus + exponentialBonus;
+
+    return finalBonus >= 0 ? finalBonus : 0;
+}
+
+static s32 bsm_get_red_balloon_bonus(void) {
+    const s16 gRedBalloonPointTable[] = {
+        0,   // 0
+        5,   // 1
+        15,  // 2
+        30,  // 3
+        50,  // 4
+        75,  // 5
+        125, // 6
+        200, // 7
+        300  // 8
+    };
+
+    return gRedBalloonPointTable[gBSMRedBalloonsPopped];
+}
+
 void bsm_render_success_menu(void) {
+    f32 alpha = 1.0f;
+    u8 isTimePB = FALSE;
+    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
+
+    s32 timeBonus = bsm_get_time_bonus(gBSMLastCourse, gBSMFrameTimer);
+    s32 redBalloonBonus = bsm_get_red_balloon_bonus();
+    s32 tcsTokenBonus = gBSMTCSTokenCollected ? 125 : 0;
+
+    gBSMFinalScoreCount = gBSMScoreCount + timeBonus + redBalloonBonus + tcsTokenBonus;
+
+    if (bsmData[gBSMLastCourse].bestTimeInFrames > gBSMFrameTimer || bsmData[gBSMLastCourse].bestTimeInFrames == 0) {
+        isTimePB = TRUE;
+    }
+
+    gClownFontColor[0] = 255;
+    gClownFontColor[1] = 255;
+    gClownFontColor[2] = 255;
+    gClownFontColor[3] = 0;
+
+    switch (successMenuAction) {
+        case 0:
+            alpha = (f32) successMenuTimer / 15;
+            bsm_render_success_black_box(alpha);
+
+            if (successMenuTimer >= 25) {
+                successMenuAction++;
+                successMenuTimer = -1;
+            }
+            break;
+        case 1:
+            bsm_render_success_black_box(alpha);
+            
+            bsm_print_if_time_allows(10, 15, "BONUSES", SCREEN_CENTER_X, PRINT_Y_BASE + 52, FALSE, TRUE);
+
+            sprintf(successBuf, "Base Score:  <COL_%s-->%d<COL_-------->", gBSMScoreCount > 0 ? "3FFF3F" : "FF3F3F", gBSMScoreCount);
+            bsm_print_if_time_allows(30, 10, successBuf, PRINT_X_BASE, PRINT_Y_BASE + 76, TRUE, FALSE);
+
+            sprintf(successBuf, "Time Bonus:  <COL_%s-->%d<COL_-------->", timeBonus > 0 ? "3FFF3F" : "FF3F3F", timeBonus);
+            bsm_print_if_time_allows(45, 10, successBuf, PRINT_X_BASE, PRINT_Y_BASE + 92, TRUE, FALSE);
+
+            sprintf(successBuf, "Red Balloon Bonus:  <COL_%s-->%d<COL_-------->", redBalloonBonus > 0 ? "3FFF3F" : "FF3F3F", redBalloonBonus);
+            bsm_print_if_time_allows(60, 10, successBuf, PRINT_X_BASE, PRINT_Y_BASE + 108, TRUE, FALSE);
+
+            sprintf(successBuf, "TCS Token Bonus:  <COL_%s-->%d<COL_-------->", tcsTokenBonus > 0 ? "3FFF3F" : "FF3F3F", tcsTokenBonus);
+            bsm_print_if_time_allows(75, 10, successBuf, PRINT_X_BASE, PRINT_Y_BASE + 124, TRUE, FALSE);
+
+            sprintf(successBuf, "SCORE: %d", gBSMFinalScoreCount);
+            bsm_print_if_time_allows(115, 15, successBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 150, FALSE, TRUE);
+
+            bsm_print_if_time_allows(155, 15, "RANK: ", SCREEN_CENTER_X - 12, PRINT_Y_BASE + 178, FALSE, TRUE);
+
+            if (successMenuTimer >= 215) {
+                if (successMenuTimer == 215) {
+                    init_image_screen_press_button(0, 0);
+                }
+
+                if (sDelayedWarpOp == WARP_OP_NONE) {
+                    if (image_screen_press_button(-1, 0)) {
+                        // TODO: Play Sound Effect
+                        level_trigger_warp(gMarioState, WARP_OP_STAR_EXIT);
+                        image_screen_cannot_press_button(-1, 0);
+                    }
+                } else {
+                    image_screen_cannot_press_button(-1, 0);
+                }
+            }
+    }
+
+    bsm_print_if_time_allows(-1, 0, "TRACK CLEAR!", SCREEN_CENTER_X, PRINT_Y_BASE + 0, FALSE, TRUE);
+
+    sprintf(successBuf, "<COL_FFFF00-->Time:<COL_--------> %d:%02d.%02d%s", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30, isTimePB ? " <RAINBOW>(Record!)<RAINBOW>" : "");
+    bsm_print_if_time_allows(-1, 0, successBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 24, TRUE, TRUE);
 
     if (successMenuTimer < 0x7FFF) {
         successMenuTimer++;
@@ -432,6 +586,7 @@ void render_game(void) {
             bsm_render_success_menu();
         } else {
             successMenuTimer = 0;
+            successMenuAction = 0;
         }
 
         render_text_labels();

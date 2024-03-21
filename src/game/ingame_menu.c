@@ -514,6 +514,48 @@ void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
     }
 }
 
+/**
+ * Prints a hud string depending of the hud table list defined.
+ */
+void print_hud_lut_string_translated(s16 x, s16 y, const char *str, u8 centered) {
+    s32 strPos = 0;
+    void **hudLUT2 = segmented_to_virtual(main_hud_lut); // 0-9 A-Z HUD Color Font
+    u32 curX = x;
+    u32 curY = y;
+    s32 c;
+
+    if (centered) {
+        s32 xOffset = 0;
+        c = str[strPos++];
+        while (c != '\0') {
+            xOffset -= get_clown_font_left_kerning(char_to_glyph_index(c));
+            xOffset += get_clown_font_right_kerning(char_to_glyph_index(c));
+            c = str[strPos++];
+        }
+
+        curX -= (xOffset / 2);
+        strPos = 0;
+    }
+
+    while (str[strPos] != '\0') {
+        c = char_to_glyph_index(str[strPos++]);
+        s32 leftKerning = get_clown_font_left_kerning(c);
+        curX -= leftKerning;
+        switch (c) {
+            case GLYPH_SPACE:
+                break;
+            default:
+                gDPPipeSync(gDisplayListHead++);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT2[c]);
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+                gSPTextureRectangle(gDisplayListHead++, curX << 2, curY << 2, (curX + 16) << 2,
+                                    (curY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        }
+
+        curX += get_clown_font_right_kerning(c);
+    }
+}
+
 
 void print_menu_generic_string(s16 x, s16 y, const u8 *str) {
     UNUSED s8 mark = DIALOG_MARK_NONE; // unused in EU

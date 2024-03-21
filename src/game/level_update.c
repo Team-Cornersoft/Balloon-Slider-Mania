@@ -165,6 +165,7 @@ u32 gBSMKeyCollected = FALSE;
 u32 gBSMRedBalloonsPopped = 0;
 u32 gBSMSkiFlagsHit = 0;
 u32 gBSMScoreCount = 0;
+u32 gBSMFinalScoreCount = 0;
 u32 gBSMFrameTimer = 0;
 u32 gBSMLastBalloonType = 0;
 
@@ -761,10 +762,14 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 break;
 
             case WARP_OP_STAR_EXIT:
+                sDelayedWarpTimer = 24;
+                fadeout_music((3 * sDelayedWarpTimer / 2) * 8 - 2);
                 sDelayedWarpTimer = 32;
                 sSourceWarpNodeId = WARP_NODE_DEFAULT;
                 gSavedCourseNum = COURSE_NONE;
-                play_transition(WARP_TRANSITION_FADE_INTO_MARIO, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                fadeMusic = FALSE;
+                // play_transition(WARP_TRANSITION_FADE_INTO_MARIO, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                 break;
 
             case WARP_OP_DEATH:
@@ -936,6 +941,18 @@ void initiate_delayed_warp(void) {
 
                     if (sSourceWarpNodeId == WARP_NODE_DEATH) {
                         warp_special(WARP_SPECIAL_BSM_FAILURE);
+                        break;
+                    }
+
+                    if (sSourceWarpNodeId == WARP_NODE_DEFAULT) {
+                        save_file_update_bsm_completion(gCurrSaveFileNum - 1, gBSMLastCourse, TRUE, gBSMTCSTokenCollected, -1);
+                        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMFinalScoreCount, gBSMFrameTimer);
+                        warp_special(WARP_SPECIAL_BSM_LEVEL_SELECT);
+
+                        gRenderBSMSuccessMenu = FALSE;
+                        if (gMarioState) {
+                            gMarioState->action = ACT_UNINITIALIZED;
+                        }
                         break;
                     }
 
@@ -1289,11 +1306,17 @@ s32 init_level(void) {
     gBSMRedBalloonsPopped = 0;
     gBSMSkiFlagsHit = 0;
     gBSMScoreCount = 0;
+    gBSMFinalScoreCount = 0;
     gBSMFrameTimer = 0;
     gBSMLastBalloonType = 0;
-    gBSMTimerActive = FALSE;
     gRenderBSMSuccessMenu = FALSE;
     memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
+
+#ifdef MARIO_POS_OVERRIDE
+    gBSMTimerActive = TRUE;
+#else
+    gBSMTimerActive = FALSE;
+#endif
 
     gTransitioningDirLight.overrideable = TRUE;
     gTransitioningDirLight.timer = U8_MAX;
@@ -1593,7 +1616,6 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
     // Initialize
     if (callType == 0) {
-        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMScoreCount, 0);
         gBSMRetryMenuSelection = -1;
         gBSMRetryMenuScale = 0.0f;
         return TRUE;
@@ -1601,6 +1623,7 @@ s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
 
     // Get selection data
     if (callType == 2) {
+        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMScoreCount, 0);
         return gBSMRetryMenuSelection;
     }
 

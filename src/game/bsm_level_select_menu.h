@@ -47,8 +47,9 @@ enum BSMMenuSelectionTypes {
 };
 
 struct BSMStageProperties {
-    u8 levelID;
-    char *courseName;
+    u8 levelID;       // Level ID tied to course
+    s32 baselineTime; // Average time expected to complete the course
+    char *courseName; // Name of the BSM Course
 };
 
 #define BSM_VIDEO_FRAMES_TO_WAIT 15
