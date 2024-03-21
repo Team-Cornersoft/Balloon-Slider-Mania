@@ -1,3 +1,7 @@
+extern void scroll_jrb_dl_0_stars_mesh_layer_4_vtx_0();
+extern void scroll_jrb_dl_0_stars_001_mesh_layer_4_vtx_0();
+extern void scroll_jrb_dl_0_stars_002_mesh_layer_4_vtx_0();
+extern void scroll_jrb_dl_0_stars_003_mesh_layer_4_vtx_0();
 extern void scroll_jrb_dl_C_sart_line_mesh_layer_5_vtx_0();
 extern void scroll_jrb_dl_C_sart_line_mesh_layer_5_vtx_1();
 extern void scroll_jrb_dl_C_sart_line_mesh_layer_5_vtx_2();
