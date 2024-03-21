@@ -1,0 +1,15 @@
+extern const GeoLayout bowser_balloon_geo[];
+extern u8 bowser_balloon_balloon_bowser_ia8[];
+extern u8 bowser_balloon_black_foil_i8[];
+extern Vtx bowser_balloon_Bowser_balloon_mesh_layer_6_vtx_cull[8];
+extern Vtx bowser_balloon_Bowser_balloon_mesh_layer_6_vtx_0[26];
+extern Gfx bowser_balloon_Bowser_balloon_mesh_layer_6_tri_0[];
+extern Vtx bowser_balloon_Bowser_balloon_mesh_layer_1_vtx_cull[8];
+extern Vtx bowser_balloon_Bowser_balloon_mesh_layer_1_vtx_0[83];
+extern Gfx bowser_balloon_Bowser_balloon_mesh_layer_1_tri_0[];
+extern Gfx mat_bowser_balloon_balloon_red_decal[];
+extern Gfx mat_revert_bowser_balloon_balloon_red_decal[];
+extern Gfx mat_bowser_balloon_balloon_black[];
+extern Gfx mat_revert_bowser_balloon_balloon_black[];
+extern Gfx bowser_balloon_Bowser_balloon_mesh_layer_6[];
+extern Gfx bowser_balloon_Bowser_balloon_mesh_layer_1[];
