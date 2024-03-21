@@ -122,11 +122,6 @@ static u8 key_balloon_check_if_interacted(void) {
 }
 
 void bhv_point_balloon_init(void) {
-    // if (o->oBehParams2ndByte == POINT_BALLOON_RED) {
-    //     o->oBehParams2ndByte = POINT_BALLOON_BOWSER;
-    //     o->oBehParams = o->oBehParams2ndByte << 16;
-    // }
-
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
 

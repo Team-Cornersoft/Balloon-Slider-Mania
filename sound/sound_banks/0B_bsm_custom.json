@@ -167,6 +167,11 @@
             "release_rate": 10,
             "envelope": "envelope0",
             "sound": "1F_bsm_gong"
+        },
+        "inst32": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "20_bsm_bowser_balloon"
         }
     },
     "instrument_list": [
@@ -201,6 +206,7 @@
         "inst28",
         "inst29",
         "inst30",
-        "inst31"
+        "inst31",
+        "inst32"
     ]
 }

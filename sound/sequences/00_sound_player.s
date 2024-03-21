@@ -12,7 +12,7 @@ seq_setmutescale 0
   seq_setvol 127
 #endif
 seq_settempo 120
-seq_initchannels 0x1fff
+seq_initchannels 0x3fff
 seq_startchannel 0, .channel0
 seq_startchannel 1, .channel1
 seq_startchannel 2, .channel2
@@ -26,6 +26,7 @@ seq_startchannel 9, .channel59
 seq_startchannel 10, .channelA
 seq_startchannel 11, .channelB
 seq_startchannel 12, .channelC
+seq_startchannel 13, .channelD
 .seq_loop:
 seq_delay 20000
 seq_jump .seq_loop
@@ -105,6 +106,17 @@ chan_setval 0
 chan_iowriteval 5
 chan_stereoheadseteffects 1
 chan_setdyntable .channelC_table
+chan_jump .main_loop_023589
+
+.channelD:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setdyntable .channelD_table
 chan_jump .main_loop_023589
 
 // Main loop for standard, non-continuous sound effects
@@ -8382,6 +8394,23 @@ chan_end
 
 .layer_bsm_gong:
 layer_note1 39, 0x2a0, 111
+layer_end
+
+
+.channelD_table:
+sound_ref .sound_bsm_bowser_balloon
+
+
+.sound_bsm_bowser_balloon:
+chan_setbank 11
+chan_setinstr 32
+chan_setval 20
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_bowser_balloon
+chan_end
+
+.layer_bsm_bowser_balloon:
+layer_note1 39, 0xac, 79
 layer_end
 
 
