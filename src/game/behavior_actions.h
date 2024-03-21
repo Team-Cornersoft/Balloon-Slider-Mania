@@ -30,6 +30,8 @@ void bhv_ski_flag_spawner_loop(void);
 void bhv_rotating_bridge_loop(void);
 void bhv_bell_gong_init(void);
 void bhv_bell_gong_loop(void);
+void bhv_bouncy_shroom_init(void);
+void bhv_bouncy_shroom_loop(void);
 void bhv_key_gate_loop(void);
 void bhv_bsm_menu_title_init(void);
 void bhv_bsm_menu_title_loop(void);

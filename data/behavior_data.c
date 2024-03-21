@@ -514,6 +514,21 @@ const BehaviorScript bhvBellGong[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvBouncyShroom[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, 8000),
+    SET_FLOAT(oDrawingDistance, 11000),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    LOAD_COLLISION_DATA(bouncy_shroom_collision),
+    CALL_NATIVE(bhv_bouncy_shroom_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_bouncy_shroom_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvBSMRetryMenu[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
