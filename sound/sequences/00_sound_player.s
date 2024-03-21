@@ -8363,6 +8363,7 @@ layer_end
 .channelC_table:
 sound_ref .sound_bsm_bell
 sound_ref .sound_bsm_gong
+sound_ref .sound_bsm_bouncy_mushroom
 
 
 .sound_bsm_bell:
@@ -8394,6 +8395,18 @@ chan_end
 
 .layer_bsm_gong:
 layer_note1 39, 0x2a0, 111
+layer_end
+
+.sound_bsm_bouncy_mushroom:
+chan_setbank 11
+chan_setinstr 33
+chan_setval 10
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_bouncy_mushroom
+chan_end
+
+.layer_bsm_bouncy_mushroom:
+layer_note1 39, 0x6f, 111
 layer_end
 
 

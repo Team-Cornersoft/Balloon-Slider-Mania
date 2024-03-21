@@ -22,6 +22,7 @@ void bhv_bouncy_shroom_loop(void) {
             o->oTimer = 0;
             o->oBouncyShroomOscillation = 0;
             o->oBouncyShroomOscillationIntensity = 0.35f;
+            cur_obj_play_sound_2(SOUND_SPECIAL1_BSM_BOUNCY_MUSHROOM);
         // }
     }
 

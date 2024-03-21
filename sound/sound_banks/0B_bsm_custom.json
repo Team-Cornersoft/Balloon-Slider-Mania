@@ -172,6 +172,11 @@
             "release_rate": 10,
             "envelope": "envelope0",
             "sound": "20_bsm_bowser_balloon"
+        },
+        "inst33": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "21_bsm_bouncy_mushroom"
         }
     },
     "instrument_list": [
@@ -207,6 +212,7 @@
         "inst29",
         "inst30",
         "inst31",
-        "inst32"
+        "inst32",
+        "inst33"
     ]
 }
