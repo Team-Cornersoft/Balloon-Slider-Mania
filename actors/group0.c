@@ -35,3 +35,4 @@
 #include "key_gate/collision.inc.c"
 #include "custom_moving_bridge/model.inc.c"
 #include "custom_moving_bridge/collision.inc.c"
+#include "bouncy_shroom/model.inc.c"

@@ -19,3 +19,4 @@
 
 #include "key_gate/geo.inc.c"
 #include "custom_moving_bridge/geo.inc.c"
+#include "bouncy_shroom/geo.inc.c"
