@@ -2,3 +2,5 @@
 *.c.in
 split_video
 *.mp4
+*.blend
+*.blend1

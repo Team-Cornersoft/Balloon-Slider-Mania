@@ -1286,6 +1286,10 @@ s32 obj_is_in_view(struct GraphNodeObject *node) {
 
     s16 cullingRadius;
 
+    if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
+        return TRUE;
+    }
+
     if (geo != NULL && geo->type == GRAPH_NODE_TYPE_CULLING_RADIUS) {
         cullingRadius = ((struct GraphNodeCullingRadius *) geo)->cullingRadius;
         

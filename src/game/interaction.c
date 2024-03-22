@@ -920,6 +920,15 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
                 queue_rumble_data(12, 80);
             }
 #else
+            // Override warp holes to act like pipes
+            if (obj->collisionData != segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)) {
+                if (sDelayedWarpOp == WARP_OP_NONE) {
+                    play_sound(SOUND_MENU_ENTER_PIPE, m->marioObj->header.gfx.cameraToObject);
+                    level_trigger_warp(m, WARP_OP_WARP_OBJECT);
+                }
+                return TRUE; // Do not hide Mario
+            }
+
             play_sound(obj->collisionData == segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)
                            ? SOUND_MENU_ENTER_PIPE
                            : SOUND_MENU_ENTER_HOLE,

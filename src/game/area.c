@@ -8,6 +8,7 @@
 #include "sm64.h"
 #include "gfx_dimensions.h"
 #include "behavior_data.h"
+#include "debug.h"
 #include "game_init.h"
 #include "object_list_processor.h"
 #include "engine/surface_load.h"

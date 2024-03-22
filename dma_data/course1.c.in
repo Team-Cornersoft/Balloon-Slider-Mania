@@ -1,6 +1,3 @@
-#include "types.h"
-#include "macros.h"
-
 ALIGNED16 const Texture course1_video_data[] = {
 #include "dma_data/course1_0000.rgba16.inc.c"
 ,
@@ -221,5 +218,77 @@ ALIGNED16 const Texture course1_video_data[] = {
 #include "dma_data/course1_0108.rgba16.inc.c"
 ,
 #include "dma_data/course1_0109.rgba16.inc.c"
+,
+#include "dma_data/course1_0110.rgba16.inc.c"
+,
+#include "dma_data/course1_0111.rgba16.inc.c"
+,
+#include "dma_data/course1_0112.rgba16.inc.c"
+,
+#include "dma_data/course1_0113.rgba16.inc.c"
+,
+#include "dma_data/course1_0114.rgba16.inc.c"
+,
+#include "dma_data/course1_0115.rgba16.inc.c"
+,
+#include "dma_data/course1_0116.rgba16.inc.c"
+,
+#include "dma_data/course1_0117.rgba16.inc.c"
+,
+#include "dma_data/course1_0118.rgba16.inc.c"
+,
+#include "dma_data/course1_0119.rgba16.inc.c"
+,
+#include "dma_data/course1_0120.rgba16.inc.c"
+,
+#include "dma_data/course1_0121.rgba16.inc.c"
+,
+#include "dma_data/course1_0122.rgba16.inc.c"
+,
+#include "dma_data/course1_0123.rgba16.inc.c"
+,
+#include "dma_data/course1_0124.rgba16.inc.c"
+,
+#include "dma_data/course1_0125.rgba16.inc.c"
+,
+#include "dma_data/course1_0126.rgba16.inc.c"
+,
+#include "dma_data/course1_0127.rgba16.inc.c"
+,
+#include "dma_data/course1_0128.rgba16.inc.c"
+,
+#include "dma_data/course1_0129.rgba16.inc.c"
+,
+#include "dma_data/course1_0130.rgba16.inc.c"
+,
+#include "dma_data/course1_0131.rgba16.inc.c"
+,
+#include "dma_data/course1_0132.rgba16.inc.c"
+,
+#include "dma_data/course1_0133.rgba16.inc.c"
+,
+#include "dma_data/course1_0134.rgba16.inc.c"
+,
+#include "dma_data/course1_0135.rgba16.inc.c"
+,
+#include "dma_data/course1_0136.rgba16.inc.c"
+,
+#include "dma_data/course1_0137.rgba16.inc.c"
+,
+#include "dma_data/course1_0138.rgba16.inc.c"
+,
+#include "dma_data/course1_0139.rgba16.inc.c"
+,
+#include "dma_data/course1_0140.rgba16.inc.c"
+,
+#include "dma_data/course1_0141.rgba16.inc.c"
+,
+#include "dma_data/course1_0142.rgba16.inc.c"
+,
+#include "dma_data/course1_0143.rgba16.inc.c"
+,
+#include "dma_data/course1_0144.rgba16.inc.c"
+,
+#include "dma_data/course1_0145.rgba16.inc.c"
 ,
 };
