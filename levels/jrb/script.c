@@ -53,6 +53,8 @@ const LevelScript level_jrb_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS, BRPRESET_BSM_C3_GENERAL, BRPRESET_BSM_C3_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -85,6 +87,8 @@ const LevelScript level_jrb_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS, BRPRESET_BSM_C3_GENERAL, BRPRESET_BSM_C3_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -115,6 +119,8 @@ const LevelScript level_jrb_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS, BRPRESET_BSM_C3_GENERAL, BRPRESET_BSM_C3_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -136,6 +142,8 @@ const LevelScript level_jrb_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE2_WATERWAYS, BRPRESET_BSM_C3_A4, BRPRESET_BSM_C3_A4),
+		SET_ECHO(0x20, 0x20),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
