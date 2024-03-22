@@ -43,6 +43,8 @@ const GeoLayout jrb_dl_1_area1_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1300, -7750, -18500, jrb_dl_B_Mushrooms_c_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -30735, 290, -1417, jrb_dl_B_Mushrooms_flat_a_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 30111, -1260, -3357, jrb_dl_B_Mushrooms_flat_b_mesh_layer_4),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 18535, 590, 28412, 0, -90, 0, jrb_dl_B_Mushrooms_flat_b_001_mesh_layer_4),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, -58, -5760, -31654, 0, 85, 0, jrb_dl_B_Mushrooms_flat_b_002_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -3476, -4212, 8278, jrb_dl_Bridge_a_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 9223, -7928, -10962, jrb_dl_Bridge_b_mesh_layer_4),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -1100, -9500, 8000, -15, 90, 0, jrb_dl_C_pipe_mesh_layer_1),

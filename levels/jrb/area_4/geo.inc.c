@@ -8,7 +8,7 @@ const GeoLayout jrb_area_4_geo[] = {
 			GEO_BRANCH(1, jrb_dl_1_area4_geo),
 		GEO_CLOSE_NODE(),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 20, 60, 20, 0, 0, 0),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 140, 80, 150, 0, 127, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 140, 80, 150, 0, 127, 63),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -17,7 +17,7 @@ const GeoLayout jrb_dl_1_area4_geo[] = {
 	GEO_OPEN_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -16000, 6371, 15959, jrb_dl_0_skybox_c_003_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, -15667, 9119, 15622, 6, 0, 0, jrb_dl_0_stars_013_mesh_layer_4),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2007, -5939, 13541, jrb_dl_A_environment_a4_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 2837, -7239, 3181, jrb_dl_A_environment_a4_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, jrb_dl_A_environment_a4_mesh_layer_5),
 		GEO_CLOSE_NODE(),
