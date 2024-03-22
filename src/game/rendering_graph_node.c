@@ -1286,7 +1286,7 @@ s32 obj_is_in_view(struct GraphNodeObject *node) {
 
     s16 cullingRadius;
 
-    if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
+    if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST) && !gOrthoCam) {
         return TRUE;
     }
 
