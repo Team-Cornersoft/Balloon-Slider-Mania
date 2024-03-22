@@ -1028,6 +1028,33 @@ void puppyprint_render_general_vars(void) {
 #endif
 }
 
+Vec3f gPuppycamSmoothFocus;
+u8 gLockCameraFocus = FALSE;
+u8 gHideMario = FALSE;
+void smooth_cam_menu(void) {
+    if ((gPlayer1Controller->buttonPressed & (B_BUTTON | R_JPAD)) && (gPlayer1Controller->buttonDown & (B_BUTTON | R_JPAD)) == (B_BUTTON | R_JPAD)) {
+        gLockCameraFocus ^= 1;
+        if (gMarioState) {
+            vec3f_copy(gPuppycamSmoothFocus, gMarioState->pos);
+        }
+    }
+
+    if ((gPlayer1Controller->buttonPressed & (B_BUTTON | L_JPAD)) && (gPlayer1Controller->buttonDown & (B_BUTTON | L_JPAD)) == (B_BUTTON | L_JPAD)) {
+        gHideMario ^= 1;
+        if (gMarioState && gMarioState->marioObj) {
+            if (gHideMario) {
+                gMarioState->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
+            } else {
+                gMarioState->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
+            }
+        }
+    }
+
+    if (gLockCameraFocus) {
+        vec3f_copy(gLakituState.curFocus, gPuppycamSmoothFocus);
+    }
+}
+
 struct PuppyPrintPage ppPages[] = {
 #ifdef USE_PROFILER
     [PUPPYPRINT_PAGE_PROFILER]      = {&puppyprint_render_standard,     "Profiler"},
@@ -1046,6 +1073,7 @@ struct PuppyPrintPage ppPages[] = {
 #ifdef BETTER_REVERB
     [PUPPYPRINT_PAGE_BETTER_REVERB] = {&better_reverb_preset_menu,      "Reverb Config"},
 #endif
+    [PUPPYPRINT_PAGE_SMOOTH_VIDEO]  = {&smooth_cam_menu,                "Smooth Cam"},
 };
 
 #define MENU_BOX_WIDTH 128

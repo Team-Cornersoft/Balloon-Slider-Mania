@@ -11,11 +11,11 @@
 #define CROP_WIDTH  178
 #define CROP_HEIGHT 82
 
-#define X_OFFSET    71
-#define Y_OFFSET    79
+int32_t X_OFFSET = 71;
+int32_t Y_OFFSET = 79;
 
-#define INPUT_FRAMERATE   60.0f
-#define DESIRED_FRAMERATE 30.0f
+float INPUT_FRAMERATE   = 60.0f;
+float DESIRED_FRAMERATE = 15.0f;
 
 const char suffix[] = ".rgba16.png";
 
@@ -179,11 +179,43 @@ void splitFrames(const char *videoPath, const char *outputFolder) {
 
 int main(int argc, char **argv) {
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s <mp4 file> [output folder]\n", argv[0]);
+        fprintf(stderr, "Usage: %s <mp4 file> [-x xOffset] [-y yOffset] [-a desiredFramerate] [-b inputFramerate]\n", argv[0]);
+        fprintf(stderr, "xOffset default: %d\nyOffset default: %d\ndesiredFramerate default: %f\ninputFramerate default: %f\n", X_OFFSET, Y_OFFSET, DESIRED_FRAMERATE, INPUT_FRAMERATE);
+        return EXIT_FAILURE;
+    }
+
+    for (int32_t i = 2; i < argc; i++) {
+        if (i + 1 == argc) {
+            fprintf(stderr, "Usage: %s <mp4 file> [-x xOffset] [-y yOffset] [-a desiredFramerate] [-b inputFramerate]\n", argv[0]);
+            return EXIT_FAILURE;
+        }
+
+        if (strcmp(argv[i], "-a") == 0) {
+            DESIRED_FRAMERATE = atof(argv[i + 1]);
+            i++;
+            continue;
+        }
+        if (strcmp(argv[i], "-b") == 0) {
+            INPUT_FRAMERATE = atof(argv[i + 1]);
+            i++;
+            continue;
+        }
+        if (strcmp(argv[i], "-x") == 0) {
+            X_OFFSET = atoi(argv[i + 1]);
+            i++;
+            continue;
+        }
+        if (strcmp(argv[i], "-y") == 0) {
+            Y_OFFSET = atoi(argv[i + 1]);
+            i++;
+            continue;
+        }
+        
+        fprintf(stderr, "Usage: %s <mp4 file> [-x xOffset] [-y yOffset] [-a desiredFramerate] [-b inputFramerate]\n", argv[0]);
         return EXIT_FAILURE;
     }
 	
-	splitFrames(argv[1], ((argc >= 3) ? argv[2] : "out"));
+	splitFrames(argv[1], "out");
 
     return EXIT_SUCCESS;
 }

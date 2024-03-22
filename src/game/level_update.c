@@ -8,6 +8,7 @@
 #include "audio/external.h"
 #include "audio/synthesis.h"
 #include "bsm_level_select_menu.h"
+#include "debug.h"
 #include "hud.h"
 #include "level_update.h"
 #include "game_init.h"
