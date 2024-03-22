@@ -376,6 +376,27 @@ void scroll_jrb_dl_C_Finish_line_mesh_layer_5_vtx_2() {
 	currentX += deltaX;
 }
 
+void scroll_jrb_dl_0_stars_013_mesh_layer_4_vtx_0() {
+	int i = 0;
+	int count = 56;
+	int width = 64 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(jrb_dl_0_stars_013_mesh_layer_4_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
 void scroll_jrb() {
 	scroll_jrb_dl_0_stars_mesh_layer_4_vtx_0();
 	scroll_jrb_dl_0_stars_001_mesh_layer_4_vtx_0();
@@ -395,4 +416,5 @@ void scroll_jrb() {
 	scroll_jrb_dl_C_Finish_line_mesh_layer_5_vtx_0();
 	scroll_jrb_dl_C_Finish_line_mesh_layer_5_vtx_1();
 	scroll_jrb_dl_C_Finish_line_mesh_layer_5_vtx_2();
+	scroll_jrb_dl_0_stars_013_mesh_layer_4_vtx_0();
 };
