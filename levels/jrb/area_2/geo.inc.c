@@ -40,7 +40,7 @@ const GeoLayout jrb_dl_1_area2_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 24044, -4610, 14739, 0, -15, 0, jrb_dl_B_Mushrooms_flat_a2_002_mesh_layer_4),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, -13413, -4760, -25888, 0, 55, 0, jrb_dl_B_Mushrooms_flat_a2_003_mesh_layer_4),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 22519, -4760, -30882, 0, 55, 0, jrb_dl_B_Mushrooms_flat_a2_004_mesh_layer_4),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -4690, -9796, 10810, 0, 45, 0, jrb_dl_C_cross_roads_sign_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -5150, -9814, 11053, 0, 41, 0, jrb_dl_C_cross_roads_sign_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, jrb_dl_C_cross_roads_sign_mesh_layer_4),
 		GEO_CLOSE_NODE(),
