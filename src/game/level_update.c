@@ -38,6 +38,7 @@
 #include "puppycam2.h"
 #include "puppyprint.h"
 #include "level_commands.h"
+#include "mario_actions_moving.h"
 
 #include "config.h"
 
@@ -323,6 +324,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_TELEPORT_FADE_IN, 0);
             break;
         case MARIO_SPAWN_INSTANT_ACTIVE:
+            gOverrideNewSlideAngle = TRUE;
             set_mario_action(m, ACT_IDLE, 0);
             break;
         case MARIO_SPAWN_AIRBORNE:

@@ -11,6 +11,7 @@
 extern f32 slideSpeedMultiplier;
 extern f32 terminalVelocityMultiplier;
 extern f32 deathBarrierMultiplier;
+extern u8 gOverrideNewSlideAngle;
 
 enum WalkSpeeds {
 	WALK_SPEED_START_TIPTOE,

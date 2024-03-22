@@ -20,6 +20,7 @@
 f32 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
 f32 terminalVelocityMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
 f32 deathBarrierMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+u8 gOverrideNewSlideAngle = FALSE;
 
 struct LandingAction {
     s16 numFrames;
@@ -154,6 +155,13 @@ void update_sliding_angle(struct MarioState *m, f32 accel, f32 lossFactor) {
     struct Surface *floor = m->floor;
     s16 slopeAngle = atan2s(floor->normal.z, floor->normal.x);
     f32 steepness = sqrtf(floor->normal.x * floor->normal.x + floor->normal.z * floor->normal.z);
+
+    if (gOverrideNewSlideAngle) {
+        f32 fvel = sqrtf(sqr(m->slideVelX) + sqr(m->slideVelZ));
+        m->slideVelX = sins(m->faceAngle[1]) * fvel;
+        m->slideVelZ = coss(m->faceAngle[1]) * fvel;
+        gOverrideNewSlideAngle = FALSE;
+    }
 
     m->slideVelX += accel * steepness * sins(slopeAngle);
     m->slideVelZ += accel * steepness * coss(slopeAngle);

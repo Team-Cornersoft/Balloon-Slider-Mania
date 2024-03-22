@@ -6,10 +6,13 @@
 #include "audio/external.h"
 #include "behavior_data.h"
 #include "camera.h"
+#include "debug.h"
 #include "engine/math_util.h"
+#include "game_init.h"
 #include "interaction.h"
 #include "level_update.h"
 #include "mario.h"
+#include "mario_actions_moving.h"
 #include "mario_step.h"
 #include "memory.h"
 #include "save_file.h"
@@ -18,6 +21,9 @@
 #include "rumble_init.h"
 
 s32 check_common_idle_cancels(struct MarioState *m) {
+    s32 slideAngleOverridden = gOverrideNewSlideAngle;
+    gOverrideNewSlideAngle = FALSE;
+
     mario_drop_held_object(m);
     if (m->floor->normal.y < COS73) {
         return mario_push_off_steep_floor(m, ACT_FREEFALL, 0);
@@ -36,6 +42,9 @@ s32 check_common_idle_cancels(struct MarioState *m) {
     }
 
     if (m->input & INPUT_ABOVE_SLIDE) {
+        if (slideAngleOverridden) {
+            gOverrideNewSlideAngle = TRUE;
+        }
         return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
     }
 
@@ -105,14 +114,17 @@ s32 check_common_hold_idle_cancels(struct MarioState *m) {
 //! TODO: actionArg names
 s32 act_idle(struct MarioState *m) {
     if (m->quicksandDepth > 30.0f) {
+        gOverrideNewSlideAngle = FALSE;
         return set_mario_action(m, ACT_IN_QUICKSAND, 0);
     }
 
     if (m->input & INPUT_IN_POISON_GAS) {
+        gOverrideNewSlideAngle = FALSE;
         return set_mario_action(m, ACT_COUGHING, 0);
     }
 
     if (!(m->actionArg & 1) && m->health < 0x300) {
+        gOverrideNewSlideAngle = FALSE;
         return set_mario_action(m, ACT_PANTING, 0);
     }
 
