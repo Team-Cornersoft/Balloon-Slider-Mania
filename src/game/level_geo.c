@@ -39,7 +39,12 @@ Gfx *geo_envfx_main(s32 callContext, struct GraphNode *node, Mat4 mtxf) {
                 mtxf_to_mtx(mtx, mtxf);
                 gSPMatrix(&gfx[0], VIRTUAL_TO_PHYSICAL(mtx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
                 gSPBranchList(&gfx[1], VIRTUAL_TO_PHYSICAL(particleList));
-                SET_GRAPH_NODE_LAYER(execNode->fnNode.node.flags, LAYER_OCCLUDE_SILHOUETTE_ALPHA);
+
+                if (snowMode == ENVFX_RAIN) {
+                    SET_GRAPH_NODE_LAYER(execNode->fnNode.node.flags, LAYER_TRANSPARENT);
+                } else {
+                    SET_GRAPH_NODE_LAYER(execNode->fnNode.node.flags, LAYER_OCCLUDE_SILHOUETTE_ALPHA);
+                }
             }
             SET_HIGH_U16_OF_32(*params, gAreaUpdateCounter);
         }

@@ -5,6 +5,12 @@
         "envelope0": [
             [0, 32700],
             "hang"
+        ],
+        "envelope1": [
+            [96, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
         ]
     },
     "instruments": {
@@ -177,6 +183,16 @@
             "release_rate": 10,
             "envelope": "envelope0",
             "sound": "21_bsm_bouncy_mushroom"
+        },
+        "inst34": {
+            "release_rate": 7,
+            "envelope": "envelope1",
+            "sound": "22_bsm_rain_L"
+        },
+        "inst35": {
+            "release_rate": 7,
+            "envelope": "envelope1",
+            "sound": "23_bsm_rain_R"
         }
     },
     "instrument_list": [
@@ -213,6 +229,8 @@
         "inst30",
         "inst31",
         "inst32",
-        "inst33"
+        "inst33",
+        "inst34",
+        "inst35"
     ]
 }

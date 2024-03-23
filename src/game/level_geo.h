@@ -9,6 +9,7 @@ enum EnvFxMode {
     /* 1*/ ENVFX_SNOW_NORMAL,       // CCM, SL
     /* 2*/ ENVFX_SNOW_WATER,        // Secret Aquarium, Sunken Ship
     /* 3*/ ENVFX_SNOW_BLIZZARD,     // unused
+    /* 4*/ ENVFX_RAIN,              // custom
     /*10*/ ENVFX_BUBBLE_START = 10, // Separates snow effects and flower/bubble effects
     /*11*/ ENVFX_FLOWERS,           // unused
     /*12*/ ENVFX_LAVA_BUBBLES,      // LLL, BitFS, Bowser 2

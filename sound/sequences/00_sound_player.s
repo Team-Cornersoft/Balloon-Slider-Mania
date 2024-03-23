@@ -12,7 +12,7 @@ seq_setmutescale 0
   seq_setvol 127
 #endif
 seq_settempo 120
-seq_initchannels 0x3fff
+seq_initchannels 0x7fff
 seq_startchannel 0, .channel0
 seq_startchannel 1, .channel1
 seq_startchannel 2, .channel2
@@ -27,6 +27,7 @@ seq_startchannel 10, .channelA
 seq_startchannel 11, .channelB
 seq_startchannel 12, .channelC
 seq_startchannel 13, .channelD
+seq_startchannel 14, .channelE
 .seq_loop:
 seq_delay 20000
 seq_jump .seq_loop
@@ -117,6 +118,17 @@ chan_setval 0
 chan_iowriteval 5
 chan_stereoheadseteffects 1
 chan_setdyntable .channelD_table
+chan_jump .main_loop_023589
+
+.channelE:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setdyntable .channelE_table
 chan_jump .main_loop_023589
 
 // Main loop for standard, non-continuous sound effects
@@ -8425,6 +8437,34 @@ chan_end
 .layer_bsm_bowser_balloon:
 layer_note1 39, 0xac, 79
 layer_end
+
+
+.channelE_table:
+sound_ref .sound_bsm_rain_stereo
+
+
+.sound_bsm_rain_stereo:
+chan_setbank 11
+chan_setpanmix 0
+chan_setlayer 0, .sound_bsm_rain_L
+chan_setlayer 1, .sound_bsm_rain_R
+chan_end
+
+.sound_bsm_rain_L:
+layer_setinstr 34
+layer_setpan 0x00
+layer_somethingon
+.sound_env_rain_L_loop:
+layer_note1 39, 0x480, 85
+layer_jump .sound_env_rain_L_loop
+
+.sound_bsm_rain_R:
+layer_setinstr 35
+layer_setpan 0x7F
+layer_somethingon
+.sound_env_rain_R_loop:
+layer_note1 39, 0x480, 85
+layer_jump .sound_env_rain_R_loop
 
 
 .align 2, 0

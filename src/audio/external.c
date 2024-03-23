@@ -1387,6 +1387,7 @@ static void update_game_sound(void) {
                         case SOUND_BANK_EXTRA2:
                         case SOUND_BANK_SPECIAL1:
                         case SOUND_BANK_SPECIAL2:
+                        case SOUND_BANK_CONT_ENV:
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));
@@ -1557,6 +1558,7 @@ static void update_game_sound(void) {
                         case SOUND_BANK_EXTRA2:
                         case SOUND_BANK_SPECIAL1:
                         case SOUND_BANK_SPECIAL2:
+                        case SOUND_BANK_CONT_ENV:
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));

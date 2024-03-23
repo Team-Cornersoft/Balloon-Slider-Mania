@@ -111,6 +111,26 @@ ALIGNED8 const Texture effect_0B00684C[] = {
 #include "textures/effect/tiny_bubble.0684C.rgba16.inc.c"
 };
 
+// Raindrop
+ALIGNED8 const Texture rain_texture[] = {
+#include "textures/effect/envfx_rain.custom.ia8.inc.c"
+};
+
+// 0x0B006A50 - 0x0B006AB0
+const Gfx rain_particle_dl[] = {
+    gsDPPipeSync(),
+    gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK | G_SHADING_SMOOTH),
+	gsDPSetCombineLERP(TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0),
+	gsSPTexture(65535, 65535, 0, 0, 1),
+    gsDPSetEnvColor(191, 191, 255, 223),
+	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, rain_texture),
+	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 127, 1024),
+	gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 4, 0, G_TX_WRAP | G_TX_NOMIRROR, 4, 0),
+	gsDPSetTileSize(0, 0, 0, 60, 60),
+	gsSPEndDisplayList(),
+};
+
 // 0x0B006A50 - 0x0B006AB0
 const Gfx tiny_bubble_dl_0B006A50[] = {
     gsDPPipeSync(),
