@@ -8,6 +8,7 @@
 #include "src/game/texscroll/hmc_texscroll.inc.h"
 #include "src/game/texscroll/wf_texscroll.inc.h"
 #include "src/game/texscroll/jrb_texscroll.inc.h"
+#include "src/game/texscroll/lll_texscroll.inc.h"
 extern void scroll_textures();
 
 #endif
