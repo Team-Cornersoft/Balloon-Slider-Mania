@@ -48,7 +48,7 @@ const GeoLayout lll_dl_1_area1_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, -18535, 590, 28412, 0, 90, 0, lll_dl_B_Mushrooms_flat_b_001_mesh_layer_4),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 58, -5760, -31654, 0, -85, 0, lll_dl_B_Mushrooms_flat_b_002_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 3538, -4315, 8273, lll_dl_Bouncy_shroom_stem_006_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -9762, -7765, -9927, lll_dl_Bouncy_shroom_stem_008_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -9162, -8165, -10827, lll_dl_Bouncy_shroom_stem_008_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -7302, -9615, -10367, lll_dl_Bouncy_shroom_stem_014_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 3476, -4212, 8278, lll_dl_Bridge_a_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -9224, -7928, -10962, lll_dl_Bridge_b_mesh_layer_4),

@@ -88,7 +88,7 @@ const GeoLayout wf_area_2[] = {
 				GEO_OPEN_NODE(),
 					GEO_BRANCH(1, wf_area_2_geo),
 					GEO_RENDER_OBJ(),
-					GEO_ASM(ENVFX_MODE_NONE, geo_envfx_main),
+					GEO_ASM(ENVFX_RAIN, geo_envfx_main),
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
