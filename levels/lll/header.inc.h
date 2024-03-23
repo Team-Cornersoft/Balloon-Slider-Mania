@@ -479,7 +479,7 @@ extern Gfx lll_dl_C_Finish_line_mesh_layer_5_tri_2[];
 extern Vtx lll_dl_C_Haunted_house_mesh_layer_1_vtx_cull[8];
 extern Vtx lll_dl_C_Haunted_house_mesh_layer_1_vtx_0[296];
 extern Gfx lll_dl_C_Haunted_house_mesh_layer_1_tri_0[];
-extern Vtx lll_dl_C_Haunted_house_mesh_layer_1_vtx_1[173];
+extern Vtx lll_dl_C_Haunted_house_mesh_layer_1_vtx_1[159];
 extern Gfx lll_dl_C_Haunted_house_mesh_layer_1_tri_1[];
 extern Vtx lll_dl_C_Haunted_house_mesh_layer_1_vtx_2[18];
 extern Gfx lll_dl_C_Haunted_house_mesh_layer_1_tri_2[];
