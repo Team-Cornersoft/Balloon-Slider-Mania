@@ -10,8 +10,8 @@ const GeoLayout lll_area_5_geo[] = {
 			GEO_BRANCH(1, lll_dl_3_area5_geo),
 			GEO_BRANCH(1, lll_dl_4_area5_geo),
 		GEO_CLOSE_NODE(),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 20, 60, 20, 0, 0, 0),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 200, 100, 220, 0, 127, -64),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 60, 55, 70, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 200, 190, 220, 0, 100, 64),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -39,7 +39,7 @@ const GeoLayout lll_dl_3_area5_geo[] = {
 const GeoLayout lll_dl_4_area5_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 827, 6027, lll_dl_A_hallways_d_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 827, 10027, lll_dl_A_hallways_d_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
