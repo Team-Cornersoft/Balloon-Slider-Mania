@@ -621,14 +621,14 @@ s16 music_unchanged_through_warp(s16 arg) {
 #endif
         u16 destParam1 = gAreas[destArea].musicParam;
         u16 destParam2 = gAreas[destArea].musicParam2;
-#ifdef BETTER_REVERB
-        u16 destParam3 = gAreas[destArea].betterReverbPreset;
-        unchanged = levelNum == gCurrLevelNum && destParam1 == gCurrentArea->musicParam
-               && destParam2 == gCurrentArea->musicParam2 && destParam3 == gCurrentArea->betterReverbPreset;
-#else
+// #ifdef BETTER_REVERB
+//         u16 destParam3 = gAreas[destArea].betterReverbPreset;
+//         unchanged = levelNum == gCurrLevelNum && destParam1 == gCurrentArea->musicParam
+//                && destParam2 == gCurrentArea->musicParam2 && destParam3 == gCurrentArea->betterReverbPreset;
+// #else
         unchanged = levelNum == gCurrLevelNum && destParam1 == gCurrentArea->musicParam
                && destParam2 == gCurrentArea->musicParam2;
-#endif
+// #endif
 
         if (get_current_background_music() != destParam2) {
             unchanged = FALSE;

@@ -923,7 +923,11 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
             // Override warp holes to act like pipes
             if (obj->collisionData != segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)) {
                 if (sDelayedWarpOp == WARP_OP_NONE) {
-                    play_sound(SOUND_MENU_ENTER_PIPE, m->marioObj->header.gfx.cameraToObject);
+                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_7_SPORE_CANYON) {
+                        play_sound(SOUND_MENU_ENTER_HOLE, m->marioObj->header.gfx.cameraToObject);
+                    } else {
+                        play_sound(SOUND_MENU_ENTER_PIPE, m->marioObj->header.gfx.cameraToObject);
+                    }
                     level_trigger_warp(m, WARP_OP_WARP_OBJECT);
                 }
                 return TRUE; // Do not hide Mario
