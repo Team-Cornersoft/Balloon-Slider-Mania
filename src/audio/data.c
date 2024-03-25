@@ -157,7 +157,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    [BRPRESET_BSM_C1_GENERAL] = { /* Course 1 General */
+    [BRPRESET_BSM_C1_GENERAL] = { /* Course 1 General, Course 3 General */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
@@ -173,7 +173,7 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    [BRPRESET_BSM_C1_A2] = { /* Course 1 Area 2 */
+    [BRPRESET_BSM_C1_A2] = { /* Course 1 Area 2, Course 3 Area 4 */
         .useLightweightSettings = TRUE,
         .downsampleRate = 2,
         .isMono = FALSE,
