@@ -605,6 +605,11 @@ void bsm_render_success_menu(void) {
                 f32 rankAlpha = 1.0f;
                 f32 rankAlphaSqr = 1.0f;
                 s32 rank = calculate_bsm_rank(gBSMLastCourse, gBSMFinalScoreCount);
+                if (rank < 0) {
+                    assert(FALSE, "Rank cannot be negative!");
+                    rank = 0;
+                }
+
                 if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES > successMenuTimer) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
                     rankAlphaSqr = sqr(rankAlpha);
