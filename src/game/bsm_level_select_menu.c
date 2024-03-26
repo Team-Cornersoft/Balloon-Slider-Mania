@@ -37,15 +37,15 @@ enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
 u8 gBSMInitialized = FALSE;
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
-    {.levelID = LEVEL_BOB, .baselineTime = 90 * 30, .courseName = "Snowy\nPeak"       },
-    {.levelID = LEVEL_WF,  .baselineTime = 90 * 30, .courseName = "Aqueduct\nFlow"    },
-    {.levelID = LEVEL_JRB, .baselineTime = 90 * 30, .courseName = "Fungi\nCanyon"     },
-    {.levelID = LEVEL_CCM, .baselineTime = 90 * 30, .courseName = "Starlight\nFest"   },
-    {.levelID = LEVEL_BBH, .baselineTime = 90 * 30, .courseName = "Holiday\nPeak"     },
-    {.levelID = LEVEL_HMC, .baselineTime = 90 * 30, .courseName = "Dragon\nFlow"      },
-    {.levelID = LEVEL_LLL, .baselineTime = 90 * 30, .courseName = "Twilight\nCanyon"  },
-    {.levelID = LEVEL_SSL, .baselineTime = 90 * 30, .courseName = "Cyber\nFest"       },
-    {.levelID = LEVEL_DDD, .baselineTime = 90 * 30, .courseName = "Cornersoft\nParade"},
+    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .courseName = "Snowy\nPeak"       },
+    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .courseName = "Aqueduct\nFlow"    },
+    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .courseName = "Fungi\nCanyon"     },
+    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .courseName = "Starlight\nFest"   },
+    {.levelID = LEVEL_BBH, .baselineTime =  90 * 30, .courseName = "Holiday\nPeak"     },
+    {.levelID = LEVEL_HMC, .baselineTime =  90 * 30, .courseName = "Dragon\nFlow"      },
+    {.levelID = LEVEL_LLL, .baselineTime =  90 * 30, .courseName = "Twilight\nCanyon"  },
+    {.levelID = LEVEL_SSL, .baselineTime =  90 * 30, .courseName = "Cyber\nFest"       },
+    {.levelID = LEVEL_DDD, .baselineTime =  90 * 30, .courseName = "Cornersoft\nParade"},
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
