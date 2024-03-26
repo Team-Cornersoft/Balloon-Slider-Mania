@@ -25,7 +25,6 @@ const GeoLayout lll_dl_1_area5_geo[] = {
 const GeoLayout lll_dl_2_area5_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -179, -5479, lll_dl_A_hallways_b_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
