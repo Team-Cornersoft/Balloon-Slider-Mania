@@ -1,7 +1,294 @@
-#include "types.h"
-#include "macros.h"
-
 ALIGNED16 const Texture course7_video_data[] = {
 #include "dma_data/course7_0000.rgba16.inc.c"
+,
+#include "dma_data/course7_0001.rgba16.inc.c"
+,
+#include "dma_data/course7_0002.rgba16.inc.c"
+,
+#include "dma_data/course7_0003.rgba16.inc.c"
+,
+#include "dma_data/course7_0004.rgba16.inc.c"
+,
+#include "dma_data/course7_0005.rgba16.inc.c"
+,
+#include "dma_data/course7_0006.rgba16.inc.c"
+,
+#include "dma_data/course7_0007.rgba16.inc.c"
+,
+#include "dma_data/course7_0008.rgba16.inc.c"
+,
+#include "dma_data/course7_0009.rgba16.inc.c"
+,
+#include "dma_data/course7_0010.rgba16.inc.c"
+,
+#include "dma_data/course7_0011.rgba16.inc.c"
+,
+#include "dma_data/course7_0012.rgba16.inc.c"
+,
+#include "dma_data/course7_0013.rgba16.inc.c"
+,
+#include "dma_data/course7_0014.rgba16.inc.c"
+,
+#include "dma_data/course7_0015.rgba16.inc.c"
+,
+#include "dma_data/course7_0016.rgba16.inc.c"
+,
+#include "dma_data/course7_0017.rgba16.inc.c"
+,
+#include "dma_data/course7_0018.rgba16.inc.c"
+,
+#include "dma_data/course7_0019.rgba16.inc.c"
+,
+#include "dma_data/course7_0020.rgba16.inc.c"
+,
+#include "dma_data/course7_0021.rgba16.inc.c"
+,
+#include "dma_data/course7_0022.rgba16.inc.c"
+,
+#include "dma_data/course7_0023.rgba16.inc.c"
+,
+#include "dma_data/course7_0024.rgba16.inc.c"
+,
+#include "dma_data/course7_0025.rgba16.inc.c"
+,
+#include "dma_data/course7_0026.rgba16.inc.c"
+,
+#include "dma_data/course7_0027.rgba16.inc.c"
+,
+#include "dma_data/course7_0028.rgba16.inc.c"
+,
+#include "dma_data/course7_0029.rgba16.inc.c"
+,
+#include "dma_data/course7_0030.rgba16.inc.c"
+,
+#include "dma_data/course7_0031.rgba16.inc.c"
+,
+#include "dma_data/course7_0032.rgba16.inc.c"
+,
+#include "dma_data/course7_0033.rgba16.inc.c"
+,
+#include "dma_data/course7_0034.rgba16.inc.c"
+,
+#include "dma_data/course7_0035.rgba16.inc.c"
+,
+#include "dma_data/course7_0036.rgba16.inc.c"
+,
+#include "dma_data/course7_0037.rgba16.inc.c"
+,
+#include "dma_data/course7_0038.rgba16.inc.c"
+,
+#include "dma_data/course7_0039.rgba16.inc.c"
+,
+#include "dma_data/course7_0040.rgba16.inc.c"
+,
+#include "dma_data/course7_0041.rgba16.inc.c"
+,
+#include "dma_data/course7_0042.rgba16.inc.c"
+,
+#include "dma_data/course7_0043.rgba16.inc.c"
+,
+#include "dma_data/course7_0044.rgba16.inc.c"
+,
+#include "dma_data/course7_0045.rgba16.inc.c"
+,
+#include "dma_data/course7_0046.rgba16.inc.c"
+,
+#include "dma_data/course7_0047.rgba16.inc.c"
+,
+#include "dma_data/course7_0048.rgba16.inc.c"
+,
+#include "dma_data/course7_0049.rgba16.inc.c"
+,
+#include "dma_data/course7_0050.rgba16.inc.c"
+,
+#include "dma_data/course7_0051.rgba16.inc.c"
+,
+#include "dma_data/course7_0052.rgba16.inc.c"
+,
+#include "dma_data/course7_0053.rgba16.inc.c"
+,
+#include "dma_data/course7_0054.rgba16.inc.c"
+,
+#include "dma_data/course7_0055.rgba16.inc.c"
+,
+#include "dma_data/course7_0056.rgba16.inc.c"
+,
+#include "dma_data/course7_0057.rgba16.inc.c"
+,
+#include "dma_data/course7_0058.rgba16.inc.c"
+,
+#include "dma_data/course7_0059.rgba16.inc.c"
+,
+#include "dma_data/course7_0060.rgba16.inc.c"
+,
+#include "dma_data/course7_0061.rgba16.inc.c"
+,
+#include "dma_data/course7_0062.rgba16.inc.c"
+,
+#include "dma_data/course7_0063.rgba16.inc.c"
+,
+#include "dma_data/course7_0064.rgba16.inc.c"
+,
+#include "dma_data/course7_0065.rgba16.inc.c"
+,
+#include "dma_data/course7_0066.rgba16.inc.c"
+,
+#include "dma_data/course7_0067.rgba16.inc.c"
+,
+#include "dma_data/course7_0068.rgba16.inc.c"
+,
+#include "dma_data/course7_0069.rgba16.inc.c"
+,
+#include "dma_data/course7_0070.rgba16.inc.c"
+,
+#include "dma_data/course7_0071.rgba16.inc.c"
+,
+#include "dma_data/course7_0072.rgba16.inc.c"
+,
+#include "dma_data/course7_0073.rgba16.inc.c"
+,
+#include "dma_data/course7_0074.rgba16.inc.c"
+,
+#include "dma_data/course7_0075.rgba16.inc.c"
+,
+#include "dma_data/course7_0076.rgba16.inc.c"
+,
+#include "dma_data/course7_0077.rgba16.inc.c"
+,
+#include "dma_data/course7_0078.rgba16.inc.c"
+,
+#include "dma_data/course7_0079.rgba16.inc.c"
+,
+#include "dma_data/course7_0080.rgba16.inc.c"
+,
+#include "dma_data/course7_0081.rgba16.inc.c"
+,
+#include "dma_data/course7_0082.rgba16.inc.c"
+,
+#include "dma_data/course7_0083.rgba16.inc.c"
+,
+#include "dma_data/course7_0084.rgba16.inc.c"
+,
+#include "dma_data/course7_0085.rgba16.inc.c"
+,
+#include "dma_data/course7_0086.rgba16.inc.c"
+,
+#include "dma_data/course7_0087.rgba16.inc.c"
+,
+#include "dma_data/course7_0088.rgba16.inc.c"
+,
+#include "dma_data/course7_0089.rgba16.inc.c"
+,
+#include "dma_data/course7_0090.rgba16.inc.c"
+,
+#include "dma_data/course7_0091.rgba16.inc.c"
+,
+#include "dma_data/course7_0092.rgba16.inc.c"
+,
+#include "dma_data/course7_0093.rgba16.inc.c"
+,
+#include "dma_data/course7_0094.rgba16.inc.c"
+,
+#include "dma_data/course7_0095.rgba16.inc.c"
+,
+#include "dma_data/course7_0096.rgba16.inc.c"
+,
+#include "dma_data/course7_0097.rgba16.inc.c"
+,
+#include "dma_data/course7_0098.rgba16.inc.c"
+,
+#include "dma_data/course7_0099.rgba16.inc.c"
+,
+#include "dma_data/course7_0100.rgba16.inc.c"
+,
+#include "dma_data/course7_0101.rgba16.inc.c"
+,
+#include "dma_data/course7_0102.rgba16.inc.c"
+,
+#include "dma_data/course7_0103.rgba16.inc.c"
+,
+#include "dma_data/course7_0104.rgba16.inc.c"
+,
+#include "dma_data/course7_0105.rgba16.inc.c"
+,
+#include "dma_data/course7_0106.rgba16.inc.c"
+,
+#include "dma_data/course7_0107.rgba16.inc.c"
+,
+#include "dma_data/course7_0108.rgba16.inc.c"
+,
+#include "dma_data/course7_0109.rgba16.inc.c"
+,
+#include "dma_data/course7_0110.rgba16.inc.c"
+,
+#include "dma_data/course7_0111.rgba16.inc.c"
+,
+#include "dma_data/course7_0112.rgba16.inc.c"
+,
+#include "dma_data/course7_0113.rgba16.inc.c"
+,
+#include "dma_data/course7_0114.rgba16.inc.c"
+,
+#include "dma_data/course7_0115.rgba16.inc.c"
+,
+#include "dma_data/course7_0116.rgba16.inc.c"
+,
+#include "dma_data/course7_0117.rgba16.inc.c"
+,
+#include "dma_data/course7_0118.rgba16.inc.c"
+,
+#include "dma_data/course7_0119.rgba16.inc.c"
+,
+#include "dma_data/course7_0120.rgba16.inc.c"
+,
+#include "dma_data/course7_0121.rgba16.inc.c"
+,
+#include "dma_data/course7_0122.rgba16.inc.c"
+,
+#include "dma_data/course7_0123.rgba16.inc.c"
+,
+#include "dma_data/course7_0124.rgba16.inc.c"
+,
+#include "dma_data/course7_0125.rgba16.inc.c"
+,
+#include "dma_data/course7_0126.rgba16.inc.c"
+,
+#include "dma_data/course7_0127.rgba16.inc.c"
+,
+#include "dma_data/course7_0128.rgba16.inc.c"
+,
+#include "dma_data/course7_0129.rgba16.inc.c"
+,
+#include "dma_data/course7_0130.rgba16.inc.c"
+,
+#include "dma_data/course7_0131.rgba16.inc.c"
+,
+#include "dma_data/course7_0132.rgba16.inc.c"
+,
+#include "dma_data/course7_0133.rgba16.inc.c"
+,
+#include "dma_data/course7_0134.rgba16.inc.c"
+,
+#include "dma_data/course7_0135.rgba16.inc.c"
+,
+#include "dma_data/course7_0136.rgba16.inc.c"
+,
+#include "dma_data/course7_0137.rgba16.inc.c"
+,
+#include "dma_data/course7_0138.rgba16.inc.c"
+,
+#include "dma_data/course7_0139.rgba16.inc.c"
+,
+#include "dma_data/course7_0140.rgba16.inc.c"
+,
+#include "dma_data/course7_0141.rgba16.inc.c"
+,
+#include "dma_data/course7_0142.rgba16.inc.c"
+,
+#include "dma_data/course7_0143.rgba16.inc.c"
+,
+#include "dma_data/course7_0144.rgba16.inc.c"
+,
+#include "dma_data/course7_0145.rgba16.inc.c"
 ,
 };

@@ -1,0 +1,100 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "instruments",
+    "envelopes": {
+        "envelope0": [
+            [3, 32700],
+            "hang"
+        ],
+        "envelope1": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope2": [
+            [2, 32700],
+            [300, 0],
+            "hang"
+        ],
+        "envelope3": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope4": [
+            [2, 32700],
+            [136, 0],
+            "hang"
+        ],
+        "envelope5": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope6": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope7": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope8": [
+            [1, 32700],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 8,
+            "envelope": "envelope0",
+            "sound": "custom_crystal"
+        },
+        "inst1": {
+            "release_rate": 45,
+            "envelope": "envelope1",
+            "sound": "custom_deep_drop_toom"
+        },
+        "inst2": {
+            "release_rate": 45,
+            "envelope": "envelope2",
+            "sound": "27_harpsichord"
+        },
+        "inst3": {
+            "release_rate": 85,
+            "envelope": "envelope3",
+            "sound": "custom_synth_bass_sample"
+        },
+        "inst4": {
+            "release_rate": 43,
+            "normal_range_hi": 47,
+            "envelope": "envelope4",
+            "sound": "46_pizzicato_strings_1",
+            "sound_hi": "47_pizzicato_strings_2"
+        },
+        "inst5": {
+            "release_rate": 20,
+            "envelope": "envelope5",
+            "sound": "22_boys_choir"
+        },
+        "inst6": {
+            "release_rate": 100,
+            "envelope": "envelope6",
+            "sound": "20_cabasa"
+        },
+        "percussion": [
+            {"release_rate": 55, "pan": 64, "envelope": "envelope8", "sound": {"sample": "06_kick_drum_1", "tuning": 0.5}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope7", "sound": {"sample": "08", "tuning": 0.8418465}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope7", "sound": {"sample": "0C_conga_stick", "tuning": 0.66742}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope7", "sound": {"sample": "0C_conga_stick", "tuning": 1.0}},
+            {"release_rate": 55, "pan": 96, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_toms", "tuning": 0.3650181}},
+            {"release_rate": 55, "pan": 32, "envelope": "envelope8", "sound": {"sample": "custom_mgtt_toms", "tuning": 0.4340822}}
+        ]
+	},
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2",
+        "inst3",
+        "inst4",
+        "inst5",
+        "inst6"
+    ]
+}

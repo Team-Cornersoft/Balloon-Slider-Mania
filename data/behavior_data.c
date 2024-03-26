@@ -421,7 +421,7 @@ const BehaviorScript bhvPointBalloon[] = {
 const BehaviorScript bhvKeyBalloon[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oDrawingDistance, 6500),
+    SET_FLOAT(oDrawingDistance, 7000),
     SET_INT(oOpacity, 255),
     SET_HOME(),
     CALL_NATIVE(bhv_key_balloon_init),
@@ -445,7 +445,7 @@ const BehaviorScript bhvPointBalloonPopped[] = {
 const BehaviorScript bhvTCSToken[] = {
     BEGIN(OBJ_LIST_LEVEL),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oDrawingDistance, 8000),
+    SET_FLOAT(oDrawingDistance, 10000),
     SET_INT(oOpacity, 255),
     SET_HOME(),
     CALL_NATIVE(bhv_tcs_token_init),
@@ -457,8 +457,8 @@ const BehaviorScript bhvTCSToken[] = {
 const BehaviorScript bhvKeyGate[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 12000),
-    SET_FLOAT(oDrawingDistance, 12000),
+    SET_FLOAT(oCollisionDistance, 20000),
+    SET_FLOAT(oDrawingDistance, 20000),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 0),
     LOAD_COLLISION_DATA(key_gate_collision),
@@ -472,7 +472,7 @@ const BehaviorScript bhvKeyGate[] = {
 const BehaviorScript bhvKeyGateOpen[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oDrawingDistance, 12000),
+    SET_FLOAT(oDrawingDistance, 20000),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 1),
     SET_HOME(),
@@ -491,7 +491,7 @@ const BehaviorScript bhvSkiFlagSpawner[] = {
 const BehaviorScript bhvRotatingBridge[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 8000),
+    SET_FLOAT(oCollisionDistance, 20000),
     SET_FLOAT(oDrawingDistance, 20000),
     SET_INT(oOpacity, 255),
     SET_HOME(),
@@ -516,9 +516,9 @@ const BehaviorScript bhvBellGong[] = {
 
 const BehaviorScript bhvBouncyShroom[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 8000),
-    SET_FLOAT(oDrawingDistance, 11000),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, 20000),
+    SET_FLOAT(oDrawingDistance, 20000),
     SET_INT(oOpacity, 255),
     SET_HOME(),
     LOAD_COLLISION_DATA(bouncy_shroom_collision),

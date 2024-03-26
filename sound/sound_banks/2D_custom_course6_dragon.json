@@ -1,0 +1,80 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "instruments",
+    "envelopes": {
+        "envelope0": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope1": [
+            [6, 32700],
+            "hang"
+        ],
+        "envelope2": [
+            [4, 32700],
+            "hang"
+        ],
+        "envelope3": [
+            [2, 32700],
+            "hang"
+        ],
+        "envelope4": [
+            [2, 32700],
+            [205, 0],
+            "hang"
+        ],
+        "envelope5": [
+            [1, 32700],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 85,
+            "envelope": "envelope0",
+            "sound": "custom_synth_bass_sample"
+        },
+        "inst1": {
+            "release_rate": 27,
+            "normal_range_lo": 27,
+            "normal_range_hi": 46,
+            "envelope": "envelope1",
+            "sound_lo": "23_strings_1",
+            "sound": "24_strings_2",
+            "sound_hi": "25_strings_3"
+        },
+        "inst2": {
+            "release_rate": 40,
+            "normal_range_lo": 57,
+            "envelope": "envelope2",
+            "sound_lo": "15_strings_4",
+            "sound": "15_strings_4+1"
+        },
+        "inst3": {
+            "release_rate": 60,
+            "envelope": "envelope3",
+            "sound": "custom_saw_lead"
+        },
+        "inst4": {
+            "release_rate": 55,
+            "normal_range_lo": 68,
+            "envelope": "envelope4",
+            "sound_lo": "custom_piano_high_low",
+            "sound": "custom_piano_high_mid"
+        },
+        "percussion": [
+            {"release_rate": 55, "pan": 64, "envelope": "envelope5", "sound": {"sample": "06_kick_drum_1", "tuning": 0.5}},
+            {"release_rate": 45, "pan": 64, "envelope": "envelope5", "sound": {"sample": "0E_hihat_closed", "tuning": 1.122462}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope5", "sound": {"sample": "08", "tuning": 1.1905508}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope5", "sound": {"sample": "08", "tuning": 0.8418465}},
+            {"release_rate": 55, "pan": 64, "envelope": "envelope5", "sound": {"sample": "08", "tuning": 0.8919052}}
+        ]
+	},
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2",
+        "inst3",
+        "inst4"
+    ]
+}
