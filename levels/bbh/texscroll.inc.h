@@ -1,0 +1,11 @@
+extern void scroll_bbh_dl_0_stars_mesh_layer_4_vtx_0();
+extern void scroll_bbh_dl_0_stars_001_mesh_layer_4_vtx_0();
+extern void scroll_bbh_dl_0_stars_002_mesh_layer_4_vtx_0();
+extern void scroll_bbh_dl_0_stars_003_mesh_layer_4_vtx_0();
+extern void scroll_bbh_dl_C_start_line_mesh_layer_5_vtx_0();
+extern void scroll_bbh_dl_C_start_line_mesh_layer_5_vtx_1();
+extern void scroll_bbh_dl_C_start_line_mesh_layer_5_vtx_2();
+extern void scroll_bbh_dl_C_finish_line_a4_mesh_layer_5_vtx_0();
+extern void scroll_bbh_dl_C_finish_line_a4_mesh_layer_5_vtx_1();
+extern void scroll_bbh_dl_C_finish_line_a4_mesh_layer_5_vtx_2();
+extern void scroll_bbh();

@@ -1,0 +1,17 @@
+extern const GeoLayout custom_gong_geo[];
+extern u8 custom_gong_gold_ci8[];
+extern u8 custom_gong_gold_pal_rgba16[];
+extern u8 custom_gong_gong_ci4[];
+extern u8 custom_gong_gong_pal_rgba16[];
+extern Vtx custom_gong_Gong_mesh_layer_1_vtx_cull[8];
+extern Vtx custom_gong_Gong_mesh_layer_1_vtx_0[60];
+extern Gfx custom_gong_Gong_mesh_layer_1_tri_0[];
+extern Vtx custom_gong_Gong_mesh_layer_6_vtx_cull[8];
+extern Vtx custom_gong_Gong_mesh_layer_6_vtx_0[60];
+extern Gfx custom_gong_Gong_mesh_layer_6_tri_0[];
+extern Gfx mat_custom_gong_Bell[];
+extern Gfx mat_revert_custom_gong_Bell[];
+extern Gfx mat_custom_gong_Gong[];
+extern Gfx mat_revert_custom_gong_Gong[];
+extern Gfx custom_gong_Gong_mesh_layer_1[];
+extern Gfx custom_gong_Gong_mesh_layer_6[];

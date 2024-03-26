@@ -23,3 +23,5 @@
 #include "levels/hmc/areas/1/geo.inc.c"
 
 #include "levels/hmc/geo.inc.c"
+
+#include "levels/hmc/custom_gong/geo.inc.c"
