@@ -33,6 +33,21 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
         cur_obj_unhide();
     }
 
+#ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
+    if (cur_obj_has_model(MODEL_BSM_MENU_STAGE) && o->oBehParams2ndByte == BSM_COURSE_9_CORNERSOFT_PARADE) {
+        o->oAnimState = 1;
+
+        if (gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_BONUS) {
+            s32 x = (o->oHomeX * 0.1f) + SCREEN_CENTER_X;
+            s32 y = SCREEN_HEIGHT - (s32) (o->oHomeY * 0.1f) - 10;
+
+            if (gSelectionShown == BSM_SELECTION_NONE) {
+                print_small_text_buffered(x, y, "<RAINBOW>COMING\nSOON!<RAINBOW>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+            }
+        }
+    }
+#endif
+
     o->oPosX = o->oHomeX + BSM_MENU_CAMERA_LAYOUT_OFFSET;
     bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuLockObj);
     bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuRankObj);
@@ -49,6 +64,12 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     if (!cur_obj_has_model(MODEL_BSM_MENU_STAGE)) {
         return; // Process only stages below
     }
+
+#ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
+    if (buttonId == BSM_COURSE_9_CORNERSOFT_PARADE) {
+        o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_NONE, bhvBSMMenuLockOrToken);
+    }
+#endif
 
 #ifdef DEBUG_LEVEL_SELECT
     if (FALSE) {
@@ -76,6 +97,11 @@ void bhv_bsm_menu_button_or_stage_init(void) {
                 o->oBSMMenuStageCutscene = TRUE;
             }
         } else {
+#ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
+            if (!o->oBSMMenuLockObj) {
+                o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_NONE, bhvBSMMenuLockOrToken);
+            }
+#else
             s32 tcsTokensCollected = TRUE;
             for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
                 if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
@@ -91,6 +117,7 @@ void bhv_bsm_menu_button_or_stage_init(void) {
             } else {
                 o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_BSM_MENU_TCSLOCK_X8, bhvBSMMenuLockOrToken);
             }
+#endif
         }
 
         vec3f_copy(&o->oBSMMenuLockObj->oHomeVec, &o->oBSMMenuLockObj->oPosVec); // Set home

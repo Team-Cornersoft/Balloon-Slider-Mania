@@ -93,3 +93,8 @@
  * The levelscript needs to have a MARIO_POS command for this to work.
  */
 #define START_LEVEL LEVEL_CASTLE_GROUNDS
+
+/**
+ * We didn't finish in time :(
+ */
+#define BALLOON_SLIDER_MANIA_DISABLE_C9

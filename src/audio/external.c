@@ -1748,15 +1748,22 @@ static u8 bsm_menu_get_music_state(void) {
         return sDynCastleGrounds[3]; // Is course 4 unlocked and has cutscene been watched?
     }
 
-    // Are extra courses visible? If not, return fourth music state.
-    if (gBSMMenuLayoutBGState < BSM_MENU_LAYOUT_BG_STANDARD) {
+    // Is course 4 completed? If not, return fourth music state.
+    if (!(bsmCompletionFlags[BSM_COURSE_4_STARLIGHT_FEST] & (1 << BSM_STAR_COMPLETED_COURSE)) {
         return sDynCastleGrounds[4];
     }
 
+#ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
+    // Is the menu with course 9 visible? If not, return fifth music state.
+    if (gBSMMenuLayoutBGState != BSM_MENU_LAYOUT_BG_BONUS) {
+        return sDynCastleGrounds[5];
+    }
+#else
     // Is course 9 unlocked and has cutscene been watched? If not, return fifth music state.
     if (!(bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_WATCHED_CUTSCENE))) {
         return sDynCastleGrounds[5];
     }
+#endif
 
     // Return complete music state
     return sDynCastleGrounds[6];

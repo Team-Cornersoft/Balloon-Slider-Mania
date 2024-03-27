@@ -1520,9 +1520,7 @@ s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     gBSMInitialized = FALSE;
 
 #ifdef DEBUG_LEVEL_SELECT
-    // gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS; // No course 9 :(
-    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_STANDARD;
-    return TRUE;
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
 #else
     u8 showStandard = FALSE;
     u8 *bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
@@ -1544,18 +1542,19 @@ s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
     }
 
     gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_STANDARD;
-    return TRUE; // No course 9 :(
 
-    // for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
-    //     if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
-    //         return TRUE; // Need to complete all extra and main courses to display bonus course
-    //     }
-    // }
+    for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
+        if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+            return TRUE; // Need to complete all extra and main courses to display bonus course
+        }
+    }
 
-    // // All non-bonus courses completed
-    // gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
-    return TRUE;
+    // All non-bonus courses completed
+    gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_BONUS;
+
 #endif
+
+    return TRUE;
 }
 
 s32 init_image_screen_press_button(UNUSED s16 frames, UNUSED s32 arg1) {
