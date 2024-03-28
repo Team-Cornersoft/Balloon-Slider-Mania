@@ -30,9 +30,10 @@
 #include "surface_collision.h"
 #include "surface_load.h"
 #include "string.h"
+#include "game/emutest.h"
 #include "game/puppycam2.h"
 #include "game/puppyprint.h"
-#include "game/emutest.h"
+#include "game/texscroll.h"
 
 #include "config.h"
 
@@ -922,6 +923,11 @@ static void level_cmd_ortho_cam(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
+static void level_cmd_scroll_textures(void) {
+    scroll_textures();
+    sCurrentCmd = CMD_NEXT;
+}
+
 static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_LOAD_AND_EXECUTE            */ level_cmd_load_and_execute,
     /*LEVEL_CMD_EXIT_AND_EXECUTE            */ level_cmd_exit_and_execute,
@@ -989,6 +995,7 @@ static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_SET_ECHO                    */ level_cmd_set_echo,
     /*LEVEL_CMD_PLAY_SOUND_EFFECT           */ level_cmd_play_sound_effect,
     /*LEVEL_CMD_ORTHO_CAM                   */ level_cmd_ortho_cam,
+    /*LEVEL_CMD_SCROLL_TEXTURES             */ level_cmd_scroll_textures,
 };
 
 struct LevelCommand *level_script_execute(struct LevelCommand *cmd) {

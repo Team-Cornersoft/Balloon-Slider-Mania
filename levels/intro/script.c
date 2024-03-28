@@ -100,14 +100,14 @@ const LevelScript level_intro_retry_menu[] = {
 
     LOOP_BEGIN(),
         UPDATE_OBJECTS(),
-        CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
         SLEEP(/*frames*/ 1),
         CALL(/*arg*/ 1, /*func*/ retry_menu_state),
     LOOP_UNTIL(/*op*/ OP_NEQ, /*arg*/ 0),
 
     JUMP_LINK_PUSH_ARG(8),
         UPDATE_OBJECTS(),
-        CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
 
@@ -115,7 +115,7 @@ const LevelScript level_intro_retry_menu[] = {
 
     JUMP_LINK_PUSH_ARG(10),
         UPDATE_OBJECTS(),
-        CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
 

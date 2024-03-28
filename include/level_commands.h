@@ -73,6 +73,7 @@ enum LevelCommands {
     /*0x3F*/ LEVEL_CMD_SET_ECHO,
     /*0x40*/ LEVEL_CMD_PLAY_SOUND_EFFECT,
     /*0x41*/ LEVEL_CMD_ORTHO_CAM,
+    /*0x42*/ LEVEL_CMD_SCROLL_TEXTURES,
 };
 
 enum LevelActs {
@@ -392,6 +393,10 @@ enum GoddardScene {
 
 #define UPDATE_OBJECTS() \
     CMD_BBH(LEVEL_CMD_UPDATE_OBJECTS, 0x04, 0x0000)
+
+// NOTE: Calling the function directly is NOT SAFE!
+#define SCROLL_TEXTURES() \
+    CMD_BBH(LEVEL_CMD_SCROLL_TEXTURES, 0x04, 0x0000)
 
 #define TERRAIN(terrainData) \
     CMD_BBH(LEVEL_CMD_SET_TERRAIN_DATA, 0x08, 0x0000), \

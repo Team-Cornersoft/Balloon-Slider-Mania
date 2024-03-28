@@ -87,7 +87,7 @@ const LevelScript level_cgds_menu_select[] = {
 
     LOOP_BEGIN(),
 		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
     	CALL(/*arg*/ 0, /*func*/ update_menu_video_buffers),
         SLEEP(/*frames*/ 1),
     	CALL(/*arg*/ 0, /*func*/ bsm_menu_selection_made),
@@ -100,7 +100,7 @@ const LevelScript level_cgds_menu_select[] = {
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 45, /*color*/ 0xFF, 0xFF, 0xFF),
     JUMP_LINK_PUSH_ARG(45),
 		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
     	CALL(/*arg*/ 0, /*func*/ update_menu_video_buffers),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),

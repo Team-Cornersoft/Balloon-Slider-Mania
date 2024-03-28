@@ -51,20 +51,20 @@ const LevelScript level_ccy_title_screen[] = {
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
     JUMP_LINK_PUSH_ARG(75),
 		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
     
 	// To compensate for the early sleep below
 	UPDATE_OBJECTS(),
-    CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    SCROLL_TEXTURES(),
 
     LOOP_BEGIN(),
 		// This sleep comes early because of the way 'image_screen_press_button' is written.
 		// 'image_screen_cannot_press_button' needs to be called on the same frame if the first returns TRUE, or else the button flickers.
         SLEEP(/*frames*/ 1),
 		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
     	CALL(/*arg*/ -1, /*func*/ image_screen_press_button),
     LOOP_UNTIL(/*op*/ OP_EQ, /*arg*/ TRUE),
 
@@ -77,7 +77,7 @@ const LevelScript level_ccy_title_screen[] = {
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
     JUMP_LINK_PUSH_ARG(16),
 		UPDATE_OBJECTS(),
-    	CALL(/*arg*/ 0, /*func*/ scroll_textures),
+    	SCROLL_TEXTURES(),
     	CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
         SLEEP(/*frames*/ 1),
     JUMP_N_TIMES(),
