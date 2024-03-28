@@ -35,8 +35,6 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
 
 #ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
     if (cur_obj_has_model(MODEL_BSM_MENU_STAGE) && o->oBehParams2ndByte == BSM_COURSE_9_CORNERSOFT_PARADE) {
-        o->oAnimState = 1;
-
         if (gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_BONUS) {
             s32 x = (o->oHomeX * 0.1f) + SCREEN_CENTER_X;
             s32 y = SCREEN_HEIGHT - (s32) (o->oHomeY * 0.1f) - 10;
@@ -67,7 +65,9 @@ void bhv_bsm_menu_button_or_stage_init(void) {
 
 #ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
     if (buttonId == BSM_COURSE_9_CORNERSOFT_PARADE) {
+        o->oAnimState = 1;
         o->oBSMMenuLockObj = spawn_object_relative(buttonId, 0, 0, 20, o, MODEL_NONE, bhvBSMMenuLockOrToken);
+        vec3f_copy(&o->oBSMMenuLockObj->oHomeVec, &o->oBSMMenuLockObj->oPosVec); // Set home
     }
 #endif
 

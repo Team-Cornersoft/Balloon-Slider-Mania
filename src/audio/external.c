@@ -1749,7 +1749,7 @@ static u8 bsm_menu_get_music_state(void) {
     }
 
     // Is course 4 completed? If not, return fourth music state.
-    if (!(bsmCompletionFlags[BSM_COURSE_4_STARLIGHT_FEST] & (1 << BSM_STAR_COMPLETED_COURSE)) {
+    if (!(bsmCompletionFlags[BSM_COURSE_4_STARLIGHT_FEST] & (1 << BSM_STAR_COMPLETED_COURSE))) {
         return sDynCastleGrounds[4];
     }
 
