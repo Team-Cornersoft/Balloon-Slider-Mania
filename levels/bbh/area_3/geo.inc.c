@@ -18,7 +18,6 @@ const GeoLayout bbh_area_3_geo[] = {
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, -31300, 3600, 0, bbh_dl_A_moon_glow_001_mesh_layer_5),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_ALPHA, -31200, 3600, 0, bbh_dl_A_the_fucking_moon_001_mesh_layer_4),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_ALPHA, -101200, 3600, 0, bbh_dl_A_the_fucking_moon_003_mesh_layer_4),
-		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_ALPHA, 108800, 3600, 0, bbh_dl_A_the_fucking_moon_004_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -952, 3443, -8768, bbh_dl_B_forest_a_mesh_layer_4),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, bbh_dl_B_forest_a_mesh_layer_1),
@@ -52,8 +51,8 @@ const GeoLayout bbh_area_3_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_ALPHA, bbh_dl_B_forest_h_mesh_layer_4),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 8067, -5668, 12795, bbh_dl_C_billboards_b_mesh_layer_1),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 90, 75, 100, 0, 0, 0),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 255, 235, 205, 127, 95, -128),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 56, 50, 68, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 200, 180, 210, -127, 100, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
