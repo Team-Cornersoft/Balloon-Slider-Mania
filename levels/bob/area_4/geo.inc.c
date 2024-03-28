@@ -106,6 +106,10 @@ const GeoLayout bob_dl_1_area4_geo[] = {
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 14661, -2492, 25167, bob_dl_C_super_large_tree_003_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 16001, -3022, 20837, bob_dl_C_super_large_tree_004_mesh_layer_1),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 4871, -1320, 25597, bob_dl_C_super_large_tree_005_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 50, -450, 20920, 0, -80, 0, bob_dl_C_warning_sign_005_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_C_warning_sign_005_mesh_layer_4),
+		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

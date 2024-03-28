@@ -128,7 +128,7 @@ const LevelScript level_bob_entry[] = {
 		TERRAIN(bob_area_1_collision),
 		ROOMS(bob_area_1_collision_rooms),
 		MACRO_OBJECTS(bob_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE1_SNOWY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
@@ -219,7 +219,7 @@ const LevelScript level_bob_entry[] = {
 		TERRAIN(bob_area_2_collision),
 		ROOMS(bob_area_2_collision_rooms),
 		MACRO_OBJECTS(bob_area_2_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE1_SNOWY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, BRPRESET_BSM_C1_A2, BRPRESET_BSM_C1_A2),
@@ -262,7 +262,7 @@ const LevelScript level_bob_entry[] = {
 		TERRAIN(bob_area_3_collision),
 		ROOMS(bob_area_3_collision_rooms),
 		MACRO_OBJECTS(bob_area_3_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE1_SNOWY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
@@ -344,7 +344,7 @@ const LevelScript level_bob_entry[] = {
 		TERRAIN(bob_area_4_collision),
 		ROOMS(bob_area_4_collision_rooms),
 		MACRO_OBJECTS(bob_area_4_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SNOW),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE1_SNOWY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE1_SNOWY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
