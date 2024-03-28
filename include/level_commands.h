@@ -394,7 +394,6 @@ enum GoddardScene {
 #define UPDATE_OBJECTS() \
     CMD_BBH(LEVEL_CMD_UPDATE_OBJECTS, 0x04, 0x0000)
 
-// NOTE: Calling the function directly is NOT SAFE!
 #define SCROLL_TEXTURES() \
     CMD_BBH(LEVEL_CMD_SCROLL_TEXTURES, 0x04, 0x0000)
 

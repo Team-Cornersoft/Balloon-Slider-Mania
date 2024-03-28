@@ -68,7 +68,9 @@ const LevelScript level_intro_retry_menu[] = {
     LOAD_GODDARD(),
     LOAD_BEHAVIOR_DATA(),
     LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_YAY0(          /*seg*/ SEGMENT_GROUP0_YAY0,   _group0_yay0SegmentRomStart,  _group0_yay0SegmentRomEnd),
     LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,  _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_GROUP0_GEO,     _group0_geoSegmentRomStart,   _group0_geoSegmentRomEnd,  _group0_geoSegmentBssStart,  _group0_geoSegmentBssEnd),
 	LOAD_YAY0(0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
 
     // Load Retry Menu
