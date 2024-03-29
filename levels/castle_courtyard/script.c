@@ -33,7 +33,7 @@ const LevelScript level_ccy_title_screen[] = {
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
 
 	ALLOC_LEVEL_POOL(),
-	AREA(1, castle_courtyard_area_1_custom_static),
+		AREA(1, castle_courtyard_area_1_custom_static),
 		JUMP_LINK(ccy_area1_jump),
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_MENU_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 		SET_ECHO(0x00, 0x00),

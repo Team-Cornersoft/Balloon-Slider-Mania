@@ -1,0 +1,3 @@
+extern void scroll_castle_courtyard_dl_C_Menu_decoration_c_mesh_layer_4_vtx_0();
+extern void scroll_castle_courtyard_dl_C_Menu_decoration_c_mesh_layer_4_vtx_1();
+extern void scroll_castle_courtyard();
