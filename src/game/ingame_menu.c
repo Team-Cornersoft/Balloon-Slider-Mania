@@ -42,9 +42,13 @@ s16 gCutsceneMsgXOffset;
 s16 gCutsceneMsgYOffset;
 s8 gRedCoinsCollected;
 #if defined(WIDE) && !defined(PUPPYCAM)
-u8 textCurrRatio43[] = { TEXT_HUD_CURRENT_RATIO_43 };
-u8 textCurrRatio169[] = { TEXT_HUD_CURRENT_RATIO_169 };
-u8 textPressL[] = { TEXT_HUD_PRESS_L };
+// u8 textCurrRatio43[] = { TEXT_HUD_CURRENT_RATIO_43 };
+// u8 textCurrRatio169[] = { TEXT_HUD_CURRENT_RATIO_169 };
+// u8 textPressL[] = { TEXT_HUD_PRESS_L };
+
+char textCurrRatio43[] = "<COL_FFEFEF-->ASPECT RATIO: <COL_FFFF00-->4:3<COL_-------->";
+char textCurrRatio169[] = "<COL_FFEFEF-->ASPECT RATIO: <COL_FFFF00-->16:9<COL_-------->";
+char textPressL[] = "<COL_FFEFEF-->PRESS L TO SWITCH<COL_-------->";
 #endif
 
 #if MULTILANG
@@ -1603,16 +1607,27 @@ void render_pause_red_coins(void) {
 void render_widescreen_setting(void) {
     s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
 
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
-    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
+    // gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
+    // gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
+    // if (!gConfig.widescreen) {
+    //     print_generic_string_alpha(200 + consoleDiff, 50 - consoleDiff, textCurrRatio43, gDialogTextAlpha);
+    //     print_generic_string_alpha(200 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+    // } else {
+    //     print_generic_string_alpha(196 + consoleDiff, 50 - consoleDiff, textCurrRatio169, gDialogTextAlpha);
+    //     print_generic_string_alpha(196 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+    // }
+    // gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+
+    print_set_envcolour(255, 255, 255, (gDialogTextAlpha * 0xBF) >> 8);
     if (!gConfig.widescreen) {
-        print_generic_string_alpha(200 + consoleDiff, 50 - consoleDiff, textCurrRatio43, gDialogTextAlpha);
-        print_generic_string_alpha(200 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+        print_small_text(296 + consoleDiff, 176 + consoleDiff, textCurrRatio43, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     } else {
-        print_generic_string_alpha(196 + consoleDiff, 50 - consoleDiff, textCurrRatio169, gDialogTextAlpha);
-        print_generic_string_alpha(196 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+        print_small_text(296 + consoleDiff, 176 + consoleDiff, textCurrRatio169, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+
+    print_set_envcolour(255, 255, 255, (gDialogTextAlpha * 0xBF) >> 8);
+    print_small_text(296 + consoleDiff, 189 + consoleDiff, textPressL, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
     if (gPlayer1Controller->buttonPressed & L_TRIG){
         gConfig.widescreen ^= 1;
         save_file_set_widescreen_mode(gConfig.widescreen);
@@ -1740,23 +1755,42 @@ void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
 #define Y_VAL8 2
 
 void render_pause_course_options(s16 x, s16 y, s8 *index, UNUSED s16 yIndex) {
-    u8 textContinue[] = { TEXT_CONTINUE };
-    u8 textRestart[] = { TEXT_RESTART };
-    u8 textExitCourse[] = { TEXT_EXIT_COURSE };
+    // u8 textContinue[] = { TEXT_CONTINUE };
+    // u8 textRestart[] = { TEXT_RESTART };
+    // u8 textExitCourse[] = { TEXT_EXIT_COURSE };
+
+    char textContinue[] = "CONTINUE";
+    char textRestart[] = "RESTART";
+    char textExitCourse[] = "EXIT TRACK";
 
     handle_menu_scrolling(MENU_SCROLL_VERTICAL, index, 1, 3);
 
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
-    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
+    print_set_envcolour(255, 255, 255, gDialogTextAlpha);
+    print_small_text_light(x + 10, y -  3,   LANGUAGE_ARRAY(textContinue), PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    
+    print_set_envcolour(255, 255, 255, gDialogTextAlpha);
+    print_small_text_light(x + 10, y + 12,    LANGUAGE_ARRAY(textRestart), PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
-    print_generic_string(x + 10, y - 2, LANGUAGE_ARRAY(textContinue));
-    print_generic_string(x + 10, y - 17, LANGUAGE_ARRAY(textRestart));
-    print_generic_string(x + 10, y - 33, LANGUAGE_ARRAY(textExitCourse));
+    print_set_envcolour(255, 255, 255, gDialogTextAlpha);
+    print_small_text_light(x + 10, y + 27, LANGUAGE_ARRAY(textExitCourse), PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+    // gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
+    // gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
+
+    // print_generic_string(x + 10, y - 2, LANGUAGE_ARRAY(textContinue));
+    // print_generic_string(x + 10, y - 17, LANGUAGE_ARRAY(textRestart));
+    // print_generic_string(x + 10, y - 33, LANGUAGE_ARRAY(textExitCourse));
+
+    // gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+
+    if (!(gEmulator & EMU_CONSOLE)) {
+        create_dl_translation_matrix(MENU_MTX_PUSH, x - X_VAL8 - 2, (y - ((*index - 1) * yIndex)) - Y_VAL8 - 2, 0);
+        gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (gDialogTextAlpha * 95) >> 8);
+        gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+        gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+    }
 
     create_dl_translation_matrix(MENU_MTX_PUSH, x - X_VAL8, (y - ((*index - 1) * yIndex)) - Y_VAL8, 0);
-
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
     gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
@@ -1964,7 +1998,7 @@ s32 render_pause_courses_and_castle(void) {
 // #else
 //             if (gMarioStates[0].action & ACT_FLAG_PAUSE_EXIT) {
 // #endif
-            render_pause_course_options(114, 116, &gDialogLineNum, 15);
+            render_pause_course_options(113, 116, &gDialogLineNum, 15);
 //             }
 // #endif
 

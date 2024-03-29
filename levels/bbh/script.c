@@ -94,6 +94,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -140,6 +142,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -178,6 +182,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -254,6 +260,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -306,6 +314,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -340,6 +350,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -423,6 +435,8 @@ const LevelScript level_bbh_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE5_HOLIDAY, BRPRESET_BSM_C1_GENERAL, BRPRESET_BSM_C1_GENERAL),
+		SET_ECHO(0x02, 0x02),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 

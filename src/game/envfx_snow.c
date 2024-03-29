@@ -12,6 +12,7 @@
 #include "engine/math_util.h"
 #include "engine/behavior_script.h"
 #include "audio/external.h"
+#include "mario_actions_moving.h"
 #include "obj_behaviors.h"
 #include "level_geo.h"
 
@@ -77,7 +78,7 @@ s32 envfx_init_snow(s32 mode) {
 
         case ENVFX_SNOW_NORMAL:
             gSnowParticleMaxCount = 140;
-            gSnowParticleCount = 5;
+            gSnowParticleCount = 25;
             break;
 
         case ENVFX_SNOW_WATER:
@@ -191,6 +192,27 @@ s32 envfx_is_snowflake_alive(s32 index, s32 snowCylinderX, s32 snowCylinderY, s3
     s32 y = (gEnvFxBuffer + index)->yPos;
     s32 z = (gEnvFxBuffer + index)->zPos;
 
+    if (sqr(x - snowCylinderX) + sqr(z - snowCylinderZ) > sqr(300 * slideSpeedMultiplier)) {
+        return FALSE;
+    }
+
+    if ((y < snowCylinderY - (201 * slideSpeedMultiplier)) || (snowCylinderY + (201 * slideSpeedMultiplier) < y)) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+/**
+ * Check whether the raindrop with the given index is inside view, where
+ * 'view' is a cylinder of radius 300 and height 400 centered at the input
+ * x, y and z.
+ */
+s32 envfx_is_raindrop_alive(s32 index, s32 snowCylinderX, s32 snowCylinderY, s32 snowCylinderZ) {
+    s32 x = (gEnvFxBuffer + index)->xPos;
+    s32 y = (gEnvFxBuffer + index)->yPos;
+    s32 z = (gEnvFxBuffer + index)->zPos;
+
     if (sqr(x - snowCylinderX) + sqr(z - snowCylinderZ) > sqr(300)) {
         return FALSE;
     }
@@ -234,7 +256,7 @@ void envfx_update_snow_normal(s32 snowCylinderX, s32 snowCylinderY, s32 snowCyli
             (gEnvFxBuffer + i)->isAlive = TRUE;
         } else {
             (gEnvFxBuffer + i)->xPos += random_float() * 2 - 1.0f + (s16)(deltaX / 1.2);
-            (gEnvFxBuffer + i)->yPos -= 2 -(s16)(deltaY * 0.8);
+            (gEnvFxBuffer + i)->yPos -= 4 -(s16)(deltaY * 0.8);
             (gEnvFxBuffer + i)->zPos += random_float() * 2 - 1.0f + (s16)(deltaZ / 1.2);
         }
     }
@@ -252,7 +274,7 @@ void envfx_update_rain(s32 snowCylinderX, s32 snowCylinderY, s32 snowCylinderZ) 
 
     for (i = 0; i < gSnowParticleCount; i++) {
         (gEnvFxBuffer + i)->isAlive =
-            envfx_is_snowflake_alive(i, snowCylinderX, snowCylinderY, snowCylinderZ);
+            envfx_is_raindrop_alive(i, snowCylinderX, snowCylinderY, snowCylinderZ);
         if (!(gEnvFxBuffer + i)->isAlive) {
             (gEnvFxBuffer + i)->xPos =
                 400.0f * random_float() - 200.0f + snowCylinderX + (s16)(deltaX * 2);
@@ -460,8 +482,8 @@ Gfx *envfx_update_snow(s32 snowMode, Vec3s marioPos, Vec3s camFrom, Vec3s camTo)
         case ENVFX_SNOW_NORMAL:
             // ensure the snow cylinder is no further than 250 units in front
             // of the camera, and no closer than 1 unit.
-            if (radius > 250) {
-                radius -= 250;
+            if (radius > 250 * slideSpeedMultiplier) {
+                radius -= 250 * slideSpeedMultiplier;
             } else {
                 radius = 1;
             }
