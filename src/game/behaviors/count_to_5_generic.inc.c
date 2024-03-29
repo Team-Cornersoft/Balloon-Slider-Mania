@@ -60,5 +60,5 @@ void bhv_present_loop(void) {
     }
 
     o->oFaceAngleYaw += 0x300;
-    o->oPosY = PRESENT_Y_AMPLITUDE * sins(0x10000 * o->oTimer / PRESENT_Y_OSCILLATION);
+    o->oPosY = o->oHomeY + PRESENT_Y_AMPLITUDE * sins(0x10000 * o->oTimer / PRESENT_Y_OSCILLATION);
 }
