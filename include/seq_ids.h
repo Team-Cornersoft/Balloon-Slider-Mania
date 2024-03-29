@@ -55,6 +55,7 @@ enum SeqId {
     SEQ_CUSTOM_COURSE6_DRAGON,        // 0x29
     SEQ_CUSTOM_COURSE7_TWILIGHT,      // 0x2A
     SEQ_CUSTOM_COURSE8_CYBER,         // 0x2B
+    SEQ_CUSTOM_SUCCESS_JINGLE,        // 0x2C
 
     SEQ_COUNT
 };
