@@ -1732,6 +1732,14 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
                 break;
             }
             FALL_THROUGH;
+        case BSM_COURSE_5_HOLIDAY_PEAK:
+            if (gCurrAreaIndex == 3) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.35f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.5f;
+                deathBarrierMultiplier = terminalVelocityMultiplier;
+                break;
+            }
+            FALL_THROUGH;
         default:
             slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
             terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
