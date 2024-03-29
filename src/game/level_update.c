@@ -165,7 +165,7 @@ u8 gBSMTimerActive = FALSE;
 u32 gBSMTCSTokenCollected = FALSE;
 u32 gBSMKeyCollected = FALSE;
 u32 gBSMRedBalloonsPopped = 0;
-u32 gBSMSkiFlagsHit = 0;
+u32 gBSMCountTo5 = 0;
 u32 gBSMScoreCount = 0;
 u32 gBSMFinalScoreCount = 0;
 u32 gBSMFrameTimer = 0;
@@ -1307,7 +1307,7 @@ s32 init_level(void) {
     gBSMTCSTokenCollected = FALSE;
     gBSMKeyCollected = FALSE;
     gBSMRedBalloonsPopped = 0;
-    gBSMSkiFlagsHit = 0;
+    gBSMCountTo5 = 0;
     gBSMScoreCount = 0;
     gBSMFinalScoreCount = 0;
     gBSMFrameTimer = 0;

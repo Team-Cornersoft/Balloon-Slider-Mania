@@ -588,11 +588,12 @@ enum CustomModelIDs {
     MODEL_BSM_POINT_BALLOON_POPPED, // common1
     MODEL_BSM_TCS_TOKEN,            // common1
     MODEL_BSM_KEY_GATE,             // group0
+    MODEL_BSM_ITEM_GATE,            // group0
     MODEL_BSM_BRIDGE,               // group0
     MODEL_BSM_BOUNCY_SHROOM,        // group0
     MODEL_BSM_BELL,                 // whomp's fortress
     MODEL_BSM_GONG,                 // hazy maze cave
-    MODEL_BSM_PRESENT_GATE,              // big boo's haunt
+    MODEL_BSM_PRESENT,              // big boo's haunt
 
     MODEL_ID_COUNT
 };

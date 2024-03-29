@@ -126,7 +126,7 @@ extern u8 gBSMTimerActive;
 extern u32 gBSMTCSTokenCollected;
 extern u32 gBSMKeyCollected;
 extern u32 gBSMRedBalloonsPopped;
-extern u32 gBSMSkiFlagsHit;
+extern u32 gBSMCountTo5;
 extern u32 gBSMScoreCount;
 extern u32 gBSMFinalScoreCount;
 extern u32 gBSMLastBalloonType;

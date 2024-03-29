@@ -469,7 +469,32 @@ const BehaviorScript bhvKeyGate[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvItemGate[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, 20000),
+    SET_FLOAT(oDrawingDistance, 20000),
+    SET_INT(oOpacity, 255),
+    SET_INT(oAnimState, 0),
+    LOAD_COLLISION_DATA(key_gate_collision), // Item gates use the same collision mapping as the key gate, so just reuse that I guess
+    SET_HOME(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_item_gate_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvKeyGateOpen[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, 20000),
+    SET_INT(oOpacity, 255),
+    SET_INT(oAnimState, 1),
+    SET_HOME(),
+    BREAK(),
+};
+
+const BehaviorScript bhvItemGateOpen[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_FLOAT(oDrawingDistance, 20000),
@@ -485,6 +510,19 @@ const BehaviorScript bhvSkiFlagSpawner[] = {
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_ski_flag_spawner_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvPresent[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_FLOAT(oDrawingDistance, 16000),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    SET_INT(oIntangibleTimer, 0),
+    CALL_NATIVE(bhv_present_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_present_loop),
     END_LOOP(),
 };
 

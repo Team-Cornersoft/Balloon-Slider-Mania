@@ -299,3 +299,19 @@ void bhv_key_gate_loop(void) {
         obj_mark_for_deletion(o);
     }
 }
+
+void bhv_item_gate_loop(void) {
+    u32 countNeeded = 5;
+    if (o->oBehParams2ndByte != 0) {
+        countNeeded = o->oBehParams2ndByte;
+    }
+
+    if (gBSMCountTo5 >= countNeeded) {
+        struct Object *obj = spawn_object(o, MODEL_BSM_ITEM_GATE, bhvItemGateOpen);
+        if (obj) {
+            obj->parentObj = obj;
+        }
+
+        obj_mark_for_deletion(o);
+    }
+}
