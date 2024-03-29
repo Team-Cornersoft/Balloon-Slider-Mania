@@ -70,3 +70,5 @@
 #include "levels/bbh/areas/1/movtext.inc.c"
 
 #include "levels/bbh/leveldata.inc.c"
+
+#include "levels/bbh/c5_present/model.inc.c"

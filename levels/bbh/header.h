@@ -114,4 +114,6 @@ extern const LevelScript level_bbh_entry[];
 
 #include "levels/bbh/header.inc.h"
 
+#include "levels/bbh/c5_present/geo_header.h"
+
 #endif

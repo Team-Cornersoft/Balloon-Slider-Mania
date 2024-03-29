@@ -24,3 +24,5 @@
 #include "levels/bbh/areas/1/geo.inc.c"
 
 #include "levels/bbh/geo.inc.c"
+
+#include "levels/bbh/c5_present/geo.inc.c"
