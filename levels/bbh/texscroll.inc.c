@@ -754,6 +754,90 @@ void scroll_bbh_dl_C_finish_line_a2_002_mesh_layer_5_vtx_2() {
 	currentX += deltaX;
 }
 
+void scroll_bbh_dl_0_stars_024_mesh_layer_4_vtx_0() {
+	int i = 0;
+	int count = 62;
+	int width = 64 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(bbh_dl_0_stars_024_mesh_layer_4_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_bbh_dl_0_stars_025_mesh_layer_4_vtx_0() {
+	int i = 0;
+	int count = 56;
+	int width = 64 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(bbh_dl_0_stars_025_mesh_layer_4_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_bbh_dl_0_stars_026_mesh_layer_4_vtx_0() {
+	int i = 0;
+	int count = 48;
+	int width = 64 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(bbh_dl_0_stars_026_mesh_layer_4_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_bbh_dl_0_stars_027_mesh_layer_4_vtx_0() {
+	int i = 0;
+	int count = 56;
+	int width = 64 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(bbh_dl_0_stars_027_mesh_layer_4_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
 void scroll_gfx_mat_bbh_dl_Christmas_lights_a() {
 	Gfx *mat = segmented_to_virtual(mat_bbh_dl_Christmas_lights_a);
 	static int interval_tex_bbh_dl_Christmas_lights_a = 8;
@@ -827,6 +911,10 @@ void scroll_bbh() {
 	scroll_bbh_dl_C_finish_line_a2_002_mesh_layer_5_vtx_0();
 	scroll_bbh_dl_C_finish_line_a2_002_mesh_layer_5_vtx_1();
 	scroll_bbh_dl_C_finish_line_a2_002_mesh_layer_5_vtx_2();
+	scroll_bbh_dl_0_stars_024_mesh_layer_4_vtx_0();
+	scroll_bbh_dl_0_stars_025_mesh_layer_4_vtx_0();
+	scroll_bbh_dl_0_stars_026_mesh_layer_4_vtx_0();
+	scroll_bbh_dl_0_stars_027_mesh_layer_4_vtx_0();
 	scroll_gfx_mat_bbh_dl_Christmas_lights_a();
 	scroll_gfx_mat_bbh_dl_Christmas_lights_b();
 	scroll_gfx_mat_bbh_dl_Christmas_lights();

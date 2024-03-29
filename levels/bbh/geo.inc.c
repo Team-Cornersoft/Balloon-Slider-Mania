@@ -4,3 +4,4 @@
 #include "levels/bbh/area_4/geo.inc.c"
 #include "levels/bbh/area_5/geo.inc.c"
 #include "levels/bbh/area_6/geo.inc.c"
+#include "levels/bbh/area_7/geo.inc.c"
