@@ -95,4 +95,8 @@ extern const LevelScript level_hmc_entry[];
 
 #include "levels/hmc/custom_gong/geo_header.h"
 
+#include "levels/hmc/custom_moving_dragon_bridge/geo_header.h"
+
+#include "levels/hmc/custom_moving_bridge/collision_header.h"
+
 #endif

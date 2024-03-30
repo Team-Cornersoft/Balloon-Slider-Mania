@@ -25,3 +25,4 @@
 #include "levels/hmc/geo.inc.c"
 
 #include "levels/hmc/custom_gong/geo.inc.c"
+#include "levels/hmc/custom_moving_dragon_bridge/geo.inc.c"
