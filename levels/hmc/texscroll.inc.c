@@ -1,6 +1,6 @@
 void scroll_hmc_dl_B_Dragon_portal_a1_mesh_layer_6_vtx_0() {
 	int i = 0;
-	int count = 5;
+	int count = 24;
 	int height = 32 * 0x20;
 
 	static int currentY = 0;
