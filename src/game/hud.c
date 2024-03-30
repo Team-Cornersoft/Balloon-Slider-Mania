@@ -944,6 +944,10 @@ void render_hud_bsm_info(void) {
                 }
                 
                 gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+
+                if (props->animTimer == 10 && gBSMRedBalloonsPopped == 8) {
+                    play_narrator_sound_at_random(&gBSMNarratorReds);
+                }
             }
         } else {
             gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);

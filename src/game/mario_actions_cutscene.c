@@ -615,6 +615,12 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater, s32 bsmCuts
                 }
                 break;
 
+            case 7:
+                if (bsmCutscene) {
+                    play_narrator_sound_at_random(&gBSMNarratorVictory);
+                }
+                break;
+
             case 42:
                 play_sound(SOUND_MARIO_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
                 break;

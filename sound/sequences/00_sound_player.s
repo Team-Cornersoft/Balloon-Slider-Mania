@@ -12,7 +12,7 @@ seq_setmutescale 0
   seq_setvol 127
 #endif
 seq_settempo 120
-seq_initchannels 0x7fff
+seq_initchannels 0xffff
 seq_startchannel 0, .channel0
 seq_startchannel 1, .channel1
 seq_startchannel 2, .channel2
@@ -28,6 +28,7 @@ seq_startchannel 11, .channelB
 seq_startchannel 12, .channelC
 seq_startchannel 13, .channelD
 seq_startchannel 14, .channelE
+seq_startchannel 15, .channelF
 .seq_loop:
 seq_delay 20000
 seq_jump .seq_loop
@@ -129,6 +130,18 @@ chan_setval 0
 chan_iowriteval 5
 chan_stereoheadseteffects 1
 chan_setdyntable .channelE_table
+chan_jump .main_loop_023589
+
+.channelF:
+chan_largenoteson
+chan_setinstr 0
+chan_setpanmix 127
+chan_setnotepriority 14
+chan_setval 0
+chan_iowriteval 5
+chan_stereoheadseteffects 1
+chan_setmutebhv 0x00
+chan_setdyntable .channelF_table
 chan_jump .main_loop_023589
 
 // Main loop for standard, non-continuous sound effects
@@ -8466,6 +8479,100 @@ layer_somethingon
 layer_note1 39, 0x480, 85
 layer_jump .sound_env_rain_R_loop
 
+
+.channelF_table:
+sound_ref .sound_bsm_narrator_rank_f_0
+sound_ref .sound_bsm_narrator_rank_f_1
+sound_ref .sound_bsm_narrator_rank_f_2
+sound_ref .sound_bsm_narrator_rank_d_0
+sound_ref .sound_bsm_narrator_rank_d_1
+sound_ref .sound_bsm_narrator_rank_d_2
+sound_ref .sound_bsm_narrator_rank_c_0
+sound_ref .sound_bsm_narrator_rank_c_1
+sound_ref .sound_bsm_narrator_rank_c_2
+sound_ref .sound_bsm_narrator_rank_b_0
+sound_ref .sound_bsm_narrator_rank_b_1
+sound_ref .sound_bsm_narrator_rank_b_2
+sound_ref .sound_bsm_narrator_rank_a_0
+sound_ref .sound_bsm_narrator_rank_a_1
+sound_ref .sound_bsm_narrator_rank_a_2
+sound_ref .sound_bsm_narrator_rank_s_0
+sound_ref .sound_bsm_narrator_rank_s_1
+sound_ref .sound_bsm_narrator_rank_s_2
+sound_ref .sound_bsm_narrator_rank_g_0
+sound_ref .sound_bsm_narrator_rank_g_1
+sound_ref .sound_bsm_narrator_rank_g_2
+sound_ref .sound_bsm_narrator_victory_0
+sound_ref .sound_bsm_narrator_victory_1
+sound_ref .sound_bsm_narrator_victory_2
+sound_ref .sound_bsm_narrator_victory_3
+sound_ref .sound_bsm_narrator_fail_0
+sound_ref .sound_bsm_narrator_fail_1
+sound_ref .sound_bsm_narrator_fail_2
+sound_ref .sound_bsm_narrator_fail_3
+sound_ref .sound_bsm_narrator_item_0
+sound_ref .sound_bsm_narrator_item_1
+sound_ref .sound_bsm_narrator_item_2
+sound_ref .sound_bsm_narrator_item_3
+sound_ref .sound_bsm_narrator_item_4
+sound_ref .sound_bsm_narrator_reds_0
+sound_ref .sound_bsm_narrator_reds_1
+sound_ref .sound_bsm_narrator_reds_2
+sound_ref .sound_bsm_narrator_reds_3
+sound_ref .sound_bsm_narrator_trackselect_0
+sound_ref .sound_bsm_narrator_trackselect_1
+sound_ref .sound_bsm_narrator_trackselect_2
+sound_ref .sound_bsm_narrator_trackselect_3
+sound_ref .sound_bsm_narrator_ready
+sound_ref .sound_bsm_narrator_go
+sound_ref .sound_bsm_narrator_title
+
+
+narrator_sound rank_f_0,       0, 0xdb,  78
+narrator_sound rank_f_1,       1, 0x97,  78
+narrator_sound rank_f_2,       2, 0x62,  78
+narrator_sound rank_d_0,       3, 0x94,  78
+narrator_sound rank_d_1,       4, 0xa0,  78
+narrator_sound rank_d_2,       5, 0xb4,  78
+narrator_sound rank_c_0,       6, 0x4e,  78
+narrator_sound rank_c_1,       7, 0x6e,  78
+narrator_sound rank_c_2,       8, 0x2c,  78
+narrator_sound rank_b_0,       9, 0x5c,  78
+narrator_sound rank_b_1,      10, 0x58,  78
+narrator_sound rank_b_2,      11, 0x53,  78
+narrator_sound rank_a_0,      12, 0x4c,  78
+narrator_sound rank_a_1,      13, 0x6c,  78
+narrator_sound rank_a_2,      14, 0x75,  78
+narrator_sound rank_s_0,      15, 0x77,  78
+narrator_sound rank_s_1,      16, 0x8f,  78
+narrator_sound rank_s_2,      17, 0x87,  78
+narrator_sound rank_g_0,      18, 0xcb,  78
+narrator_sound rank_g_1,      19, 0x87,  78
+narrator_sound rank_g_2,      20, 0x11d, 78
+narrator_sound victory_0,     21, 0xc5,  78
+narrator_sound victory_1,     22, 0x7e,  78
+narrator_sound victory_2,     23, 0x67,  78
+narrator_sound victory_3,     24, 0x6c,  78
+narrator_sound fail_0,        25, 0x59,  78
+narrator_sound fail_1,        26, 0x78,  78
+narrator_sound fail_2,        27, 0x77,  78
+narrator_sound fail_3,        28, 0x70,  78
+narrator_sound item_0,        29, 0x55,  81
+narrator_sound item_1,        30, 0x25,  84
+narrator_sound item_2,        31, 0x63,  82
+narrator_sound item_3,        32, 0x44,  82
+narrator_sound item_4,        33, 0x45,  81
+narrator_sound reds_0,        34, 0x46,  81
+narrator_sound reds_1,        35, 0x84,  81
+narrator_sound reds_2,        36, 0x58,  81
+narrator_sound reds_3,        37, 0x54,  81
+narrator_sound trackselect_0, 38, 0x94,  75
+narrator_sound trackselect_1, 39, 0xb8,  75
+narrator_sound trackselect_2, 40, 0xab,  75
+narrator_sound trackselect_3, 41, 0x77,  75
+narrator_sound ready,         42, 0x5f,  78
+narrator_sound go,            43, 0x85,  78
+narrator_sound title,         44, 0x1d7, 64
 
 .align 2, 0
 .envelope_32C4:

@@ -3,6 +3,16 @@
 
 #define NUM_RANKS 7
 
+struct BSMNarratorList *rankNarratorLists[NUM_RANKS] = {
+    &gBSMNarratorRankF,
+    &gBSMNarratorRankD,
+    &gBSMNarratorRankC,
+    &gBSMNarratorRankB,
+    &gBSMNarratorRankA,
+    &gBSMNarratorRankS,
+    &gBSMNarratorRankG,
+};
+
 // static const u16 BSMRankMinimumScores[BSM_COURSE_COUNT][NUM_RANKS-1] = {
 // /*                                        D     C     B     A     S     G    */
 //     [BSM_COURSE_1_SNOWY_PEAK]        = {1680, 1904, 2128, 2352, 2576, 2800}, // G * (1.0 - 0.08n)
@@ -47,6 +57,14 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
     [BSM_COURSE_8_CYBER_FEST]        = 1000,
     [BSM_COURSE_9_CORNERSOFT_PARADE] = 1000,
 };
+
+void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
+    if (rankIndex >= NUM_RANKS) {
+        return;
+    }
+
+    play_narrator_sound_at_random(rankNarratorLists[rankIndex]);
+}
 
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
     u8 rank = NUM_RANKS - 1;

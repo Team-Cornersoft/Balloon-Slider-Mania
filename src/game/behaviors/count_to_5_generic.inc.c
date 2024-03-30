@@ -28,6 +28,9 @@ void bhv_ski_flag_spawner_loop(void) {
     }
 
     gBSMCountTo5++;
+    if (gBSMCountTo5 == 5) {
+        gBSMNarratorItemTimer = 10;
+    }
 
     if (gMarioState->marioObj) {
         obj = o;
@@ -53,6 +56,10 @@ void bhv_present_init(void) {
 void bhv_present_loop(void) {
     if (obj_check_if_collided_with_object(o, gMarioObject)) {
         gBSMCountTo5++;
+        if (gBSMCountTo5 == 5) {
+            gBSMNarratorItemTimer = 10;
+        }
+
         spawn_orange_number(gBSMCountTo5, 0, 0, 0);
         play_sound(SOUND_MENU_COLLECT_SECRET + (((u8) gBSMCountTo5 - 1) << 16), gGlobalSoundSource);
         cur_obj_play_sound_2(SOUND_EXTRA1_BSM_BALLOON_SEMILARGE);

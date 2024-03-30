@@ -49,7 +49,15 @@ const LevelScript level_ccy_title_screen[] = {
 
     CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
-    JUMP_LINK_PUSH_ARG(75),
+    JUMP_LINK_PUSH_ARG(10),
+		UPDATE_OBJECTS(),
+    	SCROLL_TEXTURES(),
+        SLEEP(/*frames*/ 1),
+    JUMP_N_TIMES(),
+
+	PLAY_SOUND_EFFECT(SOUND_NARRATION_BSM_TITLE),
+
+    JUMP_LINK_PUSH_ARG(65),
 		UPDATE_OBJECTS(),
     	SCROLL_TEXTURES(),
         SLEEP(/*frames*/ 1),

@@ -252,6 +252,7 @@ void bhv_point_balloon_popped_loop(void) {
 
         if (o->oBehParams2ndByte == 0xFF) {
             props = &keyBalloon;
+            gBSMNarratorItemTimer = 10;
         } else {
             props = &bProps[o->oBehParams2ndByte];
             assert(o->oBehParams2ndByte < ARRAY_COUNT(bProps), "Invalid balloon pop type!");

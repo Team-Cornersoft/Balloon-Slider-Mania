@@ -170,6 +170,9 @@ u32 gBSMScoreCount = 0;
 u32 gBSMFinalScoreCount = 0;
 u32 gBSMFrameTimer = 0;
 u32 gBSMLastBalloonType = 0;
+u32 gBSMNarratorItemTimer = 0;
+u32 gBSMReadyGoTimer = 0;
+u32 gBSMGoSignaled = FALSE;
 
 s32 gBSMLastLevel = 0;
 s32 gBSMLastCourse = 0;
@@ -438,7 +441,11 @@ void init_mario_after_warp(void) {
 #ifdef BETTER_REVERB
         gBetterReverbPresetValue = gCurrentArea->betterReverbPreset;
 #endif
-        set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+        if (gBSMReadyGoTimer == 0) {
+            set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+        } else {
+            set_background_music(gCurrentArea->musicParam, SEQ_SOUND_PLAYER, 0);
+        }
 
         if (gMarioState->flags & MARIO_METAL_CAP) {
             play_cap_music(SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP));
@@ -549,8 +556,12 @@ void warp_credits(void) {
     if (gCurrCreditsEntry == NULL || gCurrCreditsEntry == sCreditsSequence) {
 #ifdef BETTER_REVERB
         gBetterReverbPresetValue = gCurrentArea->betterReverbPreset;
-#endif
-        set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+#endif            
+        if (gBSMReadyGoTimer == 0) {
+            set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+        } else {
+            set_background_music(gCurrentArea->musicParam, SEQ_SOUND_PLAYER, 0);
+        }
     }
 }
 
@@ -1054,6 +1065,33 @@ s32 play_mode_normal(void) {
     }
 #endif
 
+    if (gBSMReadyGoTimer > 0) {
+        gBSMReadyGoTimer--;
+
+        if (75 - gBSMReadyGoTimer < 15) {
+            gClownFontColor[3] = (u8) (255.0f * (f32) (75 - gBSMReadyGoTimer) / 15.0f);
+        } else if (gBSMReadyGoTimer < 15) {
+            gClownFontColor[3] = (u8) (255.0f * (f32) gBSMReadyGoTimer / 15.0f);
+        }
+
+        if (gBSMGoSignaled) {
+            print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 48, "GO!");
+        } else {
+            print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 48, "READY?");
+        }
+
+        if (gBSMReadyGoTimer == 70) {
+            if (gBSMGoSignaled) {
+                play_sound(SOUND_NARRATION_BSM_GO, gGlobalSoundSource);
+            } else {
+                play_sound(SOUND_NARRATION_BSM_READY, gGlobalSoundSource);
+            }
+        }
+    } else if (gBSMGoSignaled == FALSE && gBSMTimerActive) {
+        gBSMGoSignaled = TRUE;
+        gBSMReadyGoTimer = 75;
+    }
+
     warp_area();
     check_instant_warp();
 
@@ -1312,6 +1350,8 @@ s32 init_level(void) {
     gBSMFinalScoreCount = 0;
     gBSMFrameTimer = 0;
     gBSMLastBalloonType = 0;
+    gBSMNarratorItemTimer = 0;
+    gBSMGoSignaled = FALSE;
     gRenderBSMSuccessMenu = FALSE;
     memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
 
@@ -1378,7 +1418,11 @@ s32 init_level(void) {
 #ifdef BETTER_REVERB
             gBetterReverbPresetValue = gCurrentArea->betterReverbPreset;
 #endif
-            set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+            if (gBSMReadyGoTimer == 0) {
+                set_background_music(gCurrentArea->musicParam, gMarioState->action != ACT_BSM_CELEBRATION ? gCurrentArea->musicParam2 : SEQ_CUSTOM_SUCCESS_JINGLE, 0);
+            } else {
+                set_background_music(gCurrentArea->musicParam, SEQ_SOUND_PLAYER, 0);
+            }
         }
     }
 #if ENABLE_RUMBLE

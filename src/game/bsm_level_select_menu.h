@@ -61,6 +61,25 @@ enum BSMVideoSafetyStates {
     BSM_VIDEO_SAFE,
 };
 
+struct BSMNarratorList {
+    u32 *sfxArray;
+    s32 lastAccessed;
+    s32 soundCount;
+};
+
+extern struct BSMNarratorList gBSMNarratorRankF;
+extern struct BSMNarratorList gBSMNarratorRankD;
+extern struct BSMNarratorList gBSMNarratorRankC;
+extern struct BSMNarratorList gBSMNarratorRankB;
+extern struct BSMNarratorList gBSMNarratorRankA;
+extern struct BSMNarratorList gBSMNarratorRankS;
+extern struct BSMNarratorList gBSMNarratorRankG;
+extern struct BSMNarratorList gBSMNarratorVictory;
+extern struct BSMNarratorList gBSMNarratorFail;
+extern struct BSMNarratorList gBSMNarratorItem;
+extern struct BSMNarratorList gBSMNarratorReds;
+extern struct BSMNarratorList gBSMNarratorTrackselect;
+
 extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 extern enum BSMMenuSelectionTypes gSelectionShown;
@@ -78,6 +97,8 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 calculate_bsm_rank(s32 courseNum, s32 score);
+void play_narrator_sound_at_random(struct BSMNarratorList *list);
+void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);
 
 struct Object *get_selcted_menu_object(u8 button);
 

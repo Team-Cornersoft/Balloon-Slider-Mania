@@ -729,3 +729,38 @@
 .macro sound_ref a
     .byte (\a - sequence_start) >> 8, (\a - sequence_start) & 0xff
 .endm
+
+.macro narrator_sound name, instrument, duration, volume
+    .sound_bsm_narrator_\name:
+    chan_setbank 12
+    chan_setpanmix 0
+    chan_setinstr \instrument
+    chan_setval 0x18
+    chan_call .set_reverb
+    chan_setlayer 0, .layer_bsm_narrator_echo1_\name
+    chan_setlayer 1, .layer_bsm_narrator_echo0_\name
+    chan_setlayer 2, .layer_bsm_narrator_L_\name
+    chan_setlayer 3, .layer_bsm_narrator_R_\name
+    chan_end
+
+    .layer_bsm_narrator_echo1_\name:
+    layer_delay 0x38
+    layer_note1 46, (\duration * 668) / 1000, ((\volume * 34) >> 7)
+    layer_end
+
+    .layer_bsm_narrator_echo0_\name:
+    layer_delay 0x1C
+    layer_note1 46, (\duration * 668) / 1000, ((\volume * 72) >> 7)
+    layer_end
+
+    .layer_bsm_narrator_L_\name:
+    layer_setpan 0x10
+    layer_note1 46, (\duration * 668) / 1000, \volume
+    layer_end
+
+    .layer_bsm_narrator_R_\name:
+    layer_delay 0x2
+    layer_setpan 0x70
+    layer_note1 46, (\duration * 668) / 1000, \volume
+    layer_end
+.endm

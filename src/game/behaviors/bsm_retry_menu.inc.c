@@ -55,6 +55,10 @@ void bhv_bsm_retry_menu_loop(void) {
     print_text_centered(SCREEN_CENTER_X - 8, SCREEN_CENTER_Y - 16, rankText);
 
     if (o->oAction == 0) {
+        if (o->oTimer == 5) {
+            play_narrator_sound_at_random(&gBSMNarratorFail);
+        }
+
         if (o->oTimer < 10) {
             gClownFontColor[3] = 0;
             gBSMRetryMenuScale = sins(0x4000 * o->oTimer / 7) * 1.03f;

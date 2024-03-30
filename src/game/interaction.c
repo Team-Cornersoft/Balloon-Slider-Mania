@@ -770,6 +770,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 
     if (obj->behavior == segmented_to_virtual(bhvTCSToken)) {
         gBSMTCSTokenCollected = TRUE;
+        gBSMNarratorItemTimer = 10;
 
         play_sound(SOUND_MENU_STAR_SOUND, m->marioObj->header.gfx.cameraToObject);
         spawn_object(obj, MODEL_NONE, bhvStarKeyCollectionPuffSpawner);
@@ -1926,6 +1927,10 @@ void pss_end_slide(struct MarioState *m) {
 
 void bsm_begin_track(UNUSED struct MarioState *m) {
     gBSMTimerActive = TRUE;
+    if (gCurrentArea) {
+        play_music(SEQ_PLAYER_LEVEL, gCurrentArea->musicParam2, 0);
+        sCurrentMusic = gCurrentArea->musicParam2;
+    }
 }
 
 void bsm_end_track(struct MarioState *m) {

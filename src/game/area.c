@@ -613,6 +613,8 @@ void bsm_render_success_menu(void) {
                 if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES > successMenuTimer) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
                     rankAlphaSqr = sqr(rankAlpha);
+                } else if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES == successMenuTimer) {
+                    play_narrator_sound_at_random_by_rank_id(rank);
                 }
 
                 f32 x = (SCREEN_CENTER_X + 32) - 12;
@@ -698,6 +700,13 @@ void render_game(void) {
         } else {
             successMenuTimer = 0;
             successMenuAction = 0;
+        }
+
+        if (gBSMNarratorItemTimer > 0) {
+            gBSMNarratorItemTimer--;
+            if (gBSMNarratorItemTimer == 0) {
+                play_narrator_sound_at_random(&gBSMNarratorItem);
+            }
         }
 
         render_text_labels();

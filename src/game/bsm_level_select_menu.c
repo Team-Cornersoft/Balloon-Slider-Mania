@@ -36,6 +36,88 @@ enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
 enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
 u8 gBSMInitialized = FALSE;
 
+u8 bsmTrackSelectNarratorSpoken = 0;
+
+static u32 bsmNarratorRankFList[] = {
+    SOUND_NARRATION_BSM_RANK_F_0,
+    SOUND_NARRATION_BSM_RANK_F_1,
+    SOUND_NARRATION_BSM_RANK_F_2,
+};
+static u32 bsmNarratorRankDList[] = {
+    SOUND_NARRATION_BSM_RANK_D_0,
+    SOUND_NARRATION_BSM_RANK_D_1,
+    SOUND_NARRATION_BSM_RANK_D_2,
+};
+static u32 bsmNarratorRankCList[] = {
+    SOUND_NARRATION_BSM_RANK_C_0,
+    SOUND_NARRATION_BSM_RANK_C_1,
+    SOUND_NARRATION_BSM_RANK_C_2,
+};
+static u32 bsmNarratorRankBList[] = {
+    SOUND_NARRATION_BSM_RANK_B_0,
+    SOUND_NARRATION_BSM_RANK_B_1,
+    SOUND_NARRATION_BSM_RANK_B_2,
+};
+static u32 bsmNarratorRankAList[] = {
+    SOUND_NARRATION_BSM_RANK_A_0,
+    SOUND_NARRATION_BSM_RANK_A_1,
+    SOUND_NARRATION_BSM_RANK_A_2,
+};
+static u32 bsmNarratorRankSList[] = {
+    SOUND_NARRATION_BSM_RANK_S_0,
+    SOUND_NARRATION_BSM_RANK_S_1,
+    SOUND_NARRATION_BSM_RANK_S_2,
+};
+static u32 bsmNarratorRankGList[] = {
+    SOUND_NARRATION_BSM_RANK_G_0,
+    SOUND_NARRATION_BSM_RANK_G_1,
+    SOUND_NARRATION_BSM_RANK_G_2,
+};
+static u32 bsmNarratorVictoryList[] = {
+    SOUND_NARRATION_BSM_VICTORY_0,
+    SOUND_NARRATION_BSM_VICTORY_1,
+    SOUND_NARRATION_BSM_VICTORY_2,
+    SOUND_NARRATION_BSM_VICTORY_3,
+};
+static u32 bsmNarratorFailList[] = {
+    SOUND_NARRATION_BSM_FAIL_0,
+    SOUND_NARRATION_BSM_FAIL_1,
+    SOUND_NARRATION_BSM_FAIL_2,
+    SOUND_NARRATION_BSM_FAIL_3,
+};
+static u32 bsmNarratorItemList[] = {
+    SOUND_NARRATION_BSM_ITEM_0,
+    SOUND_NARRATION_BSM_ITEM_1,
+    SOUND_NARRATION_BSM_ITEM_2,
+    SOUND_NARRATION_BSM_ITEM_3,
+    SOUND_NARRATION_BSM_ITEM_4,
+};
+static u32 bsmNarratorRedsList[] = {
+    SOUND_NARRATION_BSM_REDS_0,
+    SOUND_NARRATION_BSM_REDS_1,
+    SOUND_NARRATION_BSM_REDS_2,
+    SOUND_NARRATION_BSM_REDS_3,
+};
+static u32 bsmNarratorTrackselectList[] = {
+    SOUND_NARRATION_BSM_TRACKSELECT_0,
+    SOUND_NARRATION_BSM_TRACKSELECT_1,
+    SOUND_NARRATION_BSM_TRACKSELECT_2,
+    SOUND_NARRATION_BSM_TRACKSELECT_3,
+};
+
+struct BSMNarratorList gBSMNarratorRankF       = {bsmNarratorRankFList,       -1, ARRAY_COUNT(bsmNarratorRankFList)      };
+struct BSMNarratorList gBSMNarratorRankD       = {bsmNarratorRankDList,       -1, ARRAY_COUNT(bsmNarratorRankDList)      };
+struct BSMNarratorList gBSMNarratorRankC       = {bsmNarratorRankCList,       -1, ARRAY_COUNT(bsmNarratorRankCList)      };
+struct BSMNarratorList gBSMNarratorRankB       = {bsmNarratorRankBList,       -1, ARRAY_COUNT(bsmNarratorRankBList)      };
+struct BSMNarratorList gBSMNarratorRankA       = {bsmNarratorRankAList,       -1, ARRAY_COUNT(bsmNarratorRankAList)      };
+struct BSMNarratorList gBSMNarratorRankS       = {bsmNarratorRankSList,       -1, ARRAY_COUNT(bsmNarratorRankSList)      };
+struct BSMNarratorList gBSMNarratorRankG       = {bsmNarratorRankGList,       -1, ARRAY_COUNT(bsmNarratorRankGList)      };
+struct BSMNarratorList gBSMNarratorVictory     = {bsmNarratorVictoryList,     -1, ARRAY_COUNT(bsmNarratorVictoryList)    };
+struct BSMNarratorList gBSMNarratorFail        = {bsmNarratorFailList,        -1, ARRAY_COUNT(bsmNarratorFailList)       };
+struct BSMNarratorList gBSMNarratorItem        = {bsmNarratorItemList,        -1, ARRAY_COUNT(bsmNarratorItemList)       };
+struct BSMNarratorList gBSMNarratorReds        = {bsmNarratorRedsList,        -1, ARRAY_COUNT(bsmNarratorRedsList)       };
+struct BSMNarratorList gBSMNarratorTrackselect = {bsmNarratorTrackselectList, -1, ARRAY_COUNT(bsmNarratorTrackselectList)};
+
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .courseName = "Snowy\nPeak"       },
     {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .courseName = "Aqueduct\nFlow"    },
@@ -76,6 +158,22 @@ Custom Soundtrack\n\
 HackerSM64, fast64\
 "
 };
+
+void play_narrator_sound_at_random(struct BSMNarratorList *list) {
+    s32 soundCount = list->soundCount;
+    s32 shouldSkipASound = (list->lastAccessed >= 0 && list->soundCount > 1);
+    if (shouldSkipASound) {
+        soundCount--;
+    }
+    s32 soundIndex = random_u16() % soundCount;
+
+    if (shouldSkipASound && soundIndex >= list->lastAccessed) {
+        soundIndex++;
+    }
+
+    play_sound(list->sfxArray[soundIndex], gGlobalSoundSource);
+    list->lastAccessed = soundIndex;
+}
 
 struct Object *get_selcted_menu_object(u8 button) {
     if (button < BSM_COURSE_COUNT) {
@@ -484,6 +582,10 @@ void bhv_bsm_menu_button_manager_init(void) {
     showStats = FALSE;
     locate_all_button_objects();
     gBSMInitialized = TRUE;
+
+    if (bsmTrackSelectNarratorSpoken != 0) {
+        bsmTrackSelectNarratorSpoken = 1;
+    }
 }
 
 void bhv_bsm_menu_button_manager_loop(void) {
@@ -493,7 +595,27 @@ void bhv_bsm_menu_button_manager_loop(void) {
         return;
     }
 
+    if (bsmTrackSelectNarratorSpoken != 2) {
+        if (bsmTrackSelectNarratorSpoken == 0) {
+            // Don't randomize first playback
+            play_sound(gBSMNarratorTrackselect.sfxArray[0], gGlobalSoundSource);
+            gBSMNarratorTrackselect.lastAccessed = 0;
+        } else {
+            play_narrator_sound_at_random(&gBSMNarratorTrackselect);
+        }
+        bsmTrackSelectNarratorSpoken = 2;
+    }
+
     random_u16(); // Progress the RNG
+
+    for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
+        if (bsmMenuLevels[i]->oBSMMenuStageCutscene) {
+            inputStickFlags = 0;
+            stickHistory = 0;
+            bsm_manager_render_update();
+            return;
+        }
+    }
 
     s32 soundToPlay = NO_SOUND;
     if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | START_BUTTON)) {

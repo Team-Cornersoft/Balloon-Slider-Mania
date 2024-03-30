@@ -1222,6 +1222,10 @@ void debug_print_speed_action_normal(struct MarioState *m) {
  * Update the button inputs for Mario.
  */
 void update_mario_button_inputs(struct MarioState *m) {
+    if (!gBSMTimerActive && COURSE_NUM_TO_INDEX(gCurrCourseNum) < BSM_COURSE_COUNT && COURSE_NUM_TO_INDEX(gCurrCourseNum) >= BSM_COURSE_1_SNOWY_PEAK) {
+        return;
+    }
+
     if (m->controller->buttonPressed & A_BUTTON) m->input |= INPUT_A_PRESSED;
     if (m->controller->buttonDown    & A_BUTTON) m->input |= INPUT_A_DOWN;
 
@@ -1250,6 +1254,20 @@ void update_mario_button_inputs(struct MarioState *m) {
  * Updates the joystick intended magnitude.
  */
 void update_mario_joystick_inputs(struct MarioState *m) {
+    if (!gBSMTimerActive && COURSE_NUM_TO_INDEX(gCurrCourseNum) < BSM_COURSE_COUNT && COURSE_NUM_TO_INDEX(gCurrCourseNum) >= BSM_COURSE_1_SNOWY_PEAK) { 
+        f32 mag = 64.0f;
+    
+        if (m->squishTimer == 0) {
+            m->intendedMag = mag / 2.0f;
+        } else {
+            m->intendedMag = mag / 8.0f;
+        }
+
+        m->intendedYaw = atan2s(-64.0f, 0) + m->area->camera->yaw;
+        m->input |= INPUT_NONZERO_ANALOG;
+        return;
+    }
+
     struct Controller *controller = m->controller;
     f32 mag = ((controller->stickMag / 64.0f) * (controller->stickMag / 64.0f)) * 64.0f;
 
@@ -1947,4 +1965,7 @@ void init_mario_from_save_file(void) {
 
     gHudDisplay.coins = 0;
     gHudDisplay.wedges = 8;
+
+    gBSMReadyGoTimer = 75;
+    gBSMGoSignaled = FALSE;
 }
