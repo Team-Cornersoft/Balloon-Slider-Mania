@@ -1,0 +1,12 @@
+extern void scroll_hmc_dl_B_Dragon_portal_a1_mesh_layer_6_vtx_0();
+extern void scroll_hmc_dl_C_sart_line_mesh_layer_5_vtx_0();
+extern void scroll_hmc_dl_C_sart_line_mesh_layer_5_vtx_1();
+extern void scroll_hmc_dl_C_sart_line_mesh_layer_5_vtx_2();
+extern void scroll_hmc_dl_C_Finish_line_mesh_layer_5_vtx_0();
+extern void scroll_hmc_dl_C_Finish_line_mesh_layer_5_vtx_1();
+extern void scroll_hmc_dl_C_Finish_line_mesh_layer_5_vtx_2();
+extern void scroll_gfx_mat_hmc_dl_Flow_a_layer5();
+extern void scroll_gfx_mat_hmc_dl_Flow_b_layer5();
+extern void scroll_gfx_mat_hmc_dl_Water_a_layer5();
+extern void scroll_gfx_mat_hmc_dl_Water_b_layer5();
+extern void scroll_hmc();
