@@ -17,6 +17,7 @@ extern const BehaviorScript bhvPresent[];
 extern const BehaviorScript bhvRotatingBridge[];
 extern const BehaviorScript bhvBellGong[];
 extern const BehaviorScript bhvBouncyShroom[];
+extern const BehaviorScript bhvRotatingGlobe[];
 extern const BehaviorScript bhvBSMRetryMenu[];
 extern const BehaviorScript bhvBSMMenuTitle[];
 extern const BehaviorScript bhvBSMMenuButtonManager[];

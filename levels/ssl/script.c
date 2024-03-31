@@ -89,6 +89,7 @@ const LevelScript level_ssl_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_SSL_MOVING_PYRAMID_WALL, ssl_geo_000794),
     LOAD_MODEL_FROM_GEO(MODEL_SSL_PYRAMID_ELEVATOR,    ssl_geo_0007AC),
     LOAD_MODEL_FROM_GEO(MODEL_SSL_TOX_BOX,             ssl_geo_000630),
+    LOAD_MODEL_FROM_GEO(MODEL_BSM_ROTATING_GLOBE,      custom_portal_globe_geo),
 
     AREA(/*index*/ 1, ssl_geo_000648),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/   653, 1038,  6566, /*angle*/ 0,  90, 0, /*behParam*/ 0x000A0000, /*beh*/ bhvSpinAirborneWarp),
