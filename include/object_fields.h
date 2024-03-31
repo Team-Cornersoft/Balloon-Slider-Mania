@@ -399,6 +399,7 @@
 /* Cannon */
 #define /*0x0F4*/ oCannonAngle              OBJECT_FIELD_S32(0x1B)
 #define /*0x0F8*/ oCannonTimeSinceActivated OBJECT_FIELD_S32(0x1C)
+#define /*0x0FC*/ oCannonIsCustomModel      OBJECT_FIELD_S32(0x1D)
 #define /*0x10C*/ oCannonIsActive           OBJECT_FIELD_S32(0x21)
 
 /* Cap */

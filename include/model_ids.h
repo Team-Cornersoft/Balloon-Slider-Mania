@@ -591,6 +591,7 @@ enum CustomModelIDs {
     MODEL_BSM_ITEM_GATE,            // group0
     MODEL_BSM_BRIDGE,               // group0
     MODEL_BSM_BOUNCY_SHROOM,        // group0
+    MODEL_BSM_CANNON_BARREL,        // common0
     MODEL_BSM_BELL,                 // whomp's fortress
     MODEL_BSM_GONG,                 // hazy maze cave
     MODEL_BSM_PRESENT,              // big boo's haunt

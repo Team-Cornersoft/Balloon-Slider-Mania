@@ -117,6 +117,14 @@ ObjActionFunc sOpenedCannonActions[] = {
     opened_cannon_act_turning_yaw,
 };
 
+void bhv_cannon_base_init(void) {
+    if (!obj_has_model(o, MODEL_NONE)) {
+        return;
+    }
+
+    o->oCannonIsCustomModel = TRUE;
+}
+
 void bhv_cannon_base_loop(void) {
     cur_obj_call_action_function(sOpenedCannonActions);
 
@@ -125,6 +133,16 @@ void bhv_cannon_base_loop(void) {
     }
 
     o->oInteractStatus = INT_STATUS_NONE;
+}
+
+void bhv_cannon_barrel_init(void) {
+    if (!o->parentObj->oCannonIsCustomModel) {
+        return;
+    }
+
+    cur_obj_set_model(MODEL_BSM_CANNON_BARREL);
+    cur_obj_scale(0.6f);
+    o->oGraphYOffset -= 125.0f;
 }
 
 void bhv_cannon_barrel_loop(void) {
