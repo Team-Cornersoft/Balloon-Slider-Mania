@@ -187,6 +187,69 @@ void scroll_hmc_dl_B_Dragon_exit_a3_001_mesh_layer_6_vtx_0() {
 	currentY += deltaY;
 }
 
+void scroll_hmc_dl_B_Dragon_exit_a2_001_mesh_layer_6_vtx_0() {
+	int i = 0;
+	int count = 24;
+	int height = 32 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(hmc_dl_B_Dragon_exit_a2_001_mesh_layer_6_vtx_0);
+
+	deltaY = (int)(1.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_hmc_dl_B_Dragon_portal_a2_002_mesh_layer_6_vtx_0() {
+	int i = 0;
+	int count = 24;
+	int height = 32 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(hmc_dl_B_Dragon_portal_a2_002_mesh_layer_6_vtx_0);
+
+	deltaY = (int)(1.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_hmc_dl_B_Dragon_portal_a2_003_mesh_layer_6_vtx_0() {
+	int i = 0;
+	int count = 24;
+	int height = 32 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(hmc_dl_B_Dragon_portal_a2_003_mesh_layer_6_vtx_0);
+
+	deltaY = (int)(1.0 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
 void scroll_gfx_mat_hmc_dl_Flow_a_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_hmc_dl_Flow_a_layer5);
 
@@ -239,6 +302,9 @@ void scroll_hmc() {
 	scroll_hmc_dl_B_Dragon_portal_a2_001_mesh_layer_6_vtx_0();
 	scroll_hmc_dl_B_Dragon_exit_a3_mesh_layer_6_vtx_0();
 	scroll_hmc_dl_B_Dragon_exit_a3_001_mesh_layer_6_vtx_0();
+	scroll_hmc_dl_B_Dragon_exit_a2_001_mesh_layer_6_vtx_0();
+	scroll_hmc_dl_B_Dragon_portal_a2_002_mesh_layer_6_vtx_0();
+	scroll_hmc_dl_B_Dragon_portal_a2_003_mesh_layer_6_vtx_0();
 	scroll_gfx_mat_hmc_dl_Flow_a_layer5();
 	scroll_gfx_mat_hmc_dl_Flow_b_layer5();
 	scroll_gfx_mat_hmc_dl_Water_a_layer5();
