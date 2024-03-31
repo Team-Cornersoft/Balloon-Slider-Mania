@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "sm64.h"
+#include "audio/external.h"
 #include "behavior_data.h"
 #include "model_ids.h"
 #include "seq_ids.h"
@@ -35,13 +36,13 @@ const LevelScript level_ccy_title_screen[] = {
 	ALLOC_LEVEL_POOL(),
 		AREA(1, castle_courtyard_area_1_custom_static),
 		JUMP_LINK(ccy_area1_jump),
-		SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_MENU_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 		SET_ECHO(0x00, 0x00),
 	END_AREA(),
 	FREE_LEVEL_POOL(),
 
     LOAD_AREA(/*area*/ 1),
-	SET_MENU_MUSIC_WITH_REVERB(SEQ_MENU_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+	SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 
     CALL(/*arg*/ 0, /*func*/ load_mario_area),
 
@@ -82,6 +83,7 @@ const LevelScript level_ccy_title_screen[] = {
     CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
     SLEEP(/*frames*/ 1),
 
+	STOP_MUSIC_PLAYERS(150, (1 << SEQ_PLAYER_LEVEL)),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
     JUMP_LINK_PUSH_ARG(16),
 		UPDATE_OBJECTS(),

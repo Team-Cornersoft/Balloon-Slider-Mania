@@ -52,8 +52,10 @@
         },
         "inst3": {
             "release_rate": 60,
+            "normal_range_hi": 63,
             "envelope": "envelope3",
-            "sound": "custom_saw_lead"
+            "sound": "custom_saw_lead",
+            "sound_hi": "custom_saw_lead_high"
         },
         "inst4": {
             "release_rate": 55,

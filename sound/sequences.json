@@ -44,5 +44,6 @@
     "29_custom_course6_dragon": ["2D_custom_course6_dragon"],
     "2A_custom_course7_twilight": ["2E_custom_course7_twilight"],
     "2B_custom_course8_cyber": ["2F_custom_course8_cyber"],
-    "2C_custom_success_jingle": ["30_custom_success_jingle"]
+    "2C_custom_success_jingle": ["30_custom_success_jingle"],
+    "2D_custom_title_screen": ["31_custom_title_screen"]
 }
