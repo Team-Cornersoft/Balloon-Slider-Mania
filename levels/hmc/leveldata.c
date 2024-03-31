@@ -64,4 +64,3 @@
 
 #include "levels/hmc/custom_gong/model.inc.c"
 #include "levels/hmc/custom_moving_dragon_bridge/model.inc.c"
-#include "levels/hmc/custom_moving_bridge/collision.inc.c"

@@ -28,6 +28,7 @@ const LevelScript level_hmc_entry[] = {
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_GONG, custom_gong_geo), 
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_DRAGON_BRIDGE, custom_moving_dragon_bridge_geo), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
