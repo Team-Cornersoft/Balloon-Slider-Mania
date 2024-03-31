@@ -1,3 +1,5 @@
+#include "levels/hmc/header.h"
+
 #define BRIDGE_LENGTH 5800.0f
 #define BRIDGE_STARTING_ANGLE 0x6000
 #define BRIDGE_MOVE_LENGTH 0x4000
@@ -23,6 +25,10 @@ static void rotating_bridge_update_child_balloon(void) {
 
 void bhv_rotating_bridge_init(void) {
     o->oRotatingBridgeYawHome = o->oFaceAngleYaw;
+
+    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_6_SCORCH_ISLE) {
+        o->collisionData = segmented_to_virtual(custom_moving_dragon_bridge_collision);
+    }
 
     struct Object *obj = spawn_object(o, MODEL_BSM_POINT_BALLOON, bhvPointBalloon);
     if (obj) {
