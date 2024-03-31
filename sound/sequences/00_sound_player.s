@@ -8437,6 +8437,7 @@ layer_end
 
 .channelD_table:
 sound_ref .sound_bsm_bowser_balloon
+sound_ref .sound_bsm_cheering
 
 
 .sound_bsm_bowser_balloon:
@@ -8450,6 +8451,32 @@ chan_end
 .layer_bsm_bowser_balloon:
 layer_note1 39, 0xac, 79
 layer_end
+
+
+.sound_bsm_cheering:
+chan_setbank 11
+chan_setinstr 36
+chan_setpanmix 0
+chan_setval 20
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_cheering_L
+chan_setlayer 1, .layer_bsm_cheering_R
+chan_end
+
+.layer_bsm_cheering_loop:
+layer_note1 38, 0x20, 64
+layer_jump .layer_bsm_cheering_loop
+
+.layer_bsm_cheering_L:
+layer_somethingon
+layer_setpan 0x00
+layer_jump .layer_bsm_cheering_loop
+
+.layer_bsm_cheering_R:
+layer_somethingon
+layer_setpan 0x7F
+layer_delay 0x2
+layer_jump .layer_bsm_cheering_loop
 
 
 .channelE_table:

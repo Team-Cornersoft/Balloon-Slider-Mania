@@ -193,6 +193,11 @@
             "release_rate": 7,
             "envelope": "envelope1",
             "sound": "23_bsm_rain_R"
+        },
+        "inst36": {
+            "release_rate": 7,
+            "envelope": "envelope1",
+            "sound": "24_bsm_cheering"
         }
     },
     "instrument_list": [
@@ -231,6 +236,7 @@
         "inst32",
         "inst33",
         "inst34",
-        "inst35"
+        "inst35",
+        "inst36"
     ]
 }
