@@ -237,6 +237,22 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
+    [BRPRESET_BSM_C6_GENERAL] = { /* Course 6 General */
+        .useLightweightSettings = TRUE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 9),   // Ignored with lightweight settings
+
+        .windowSize = 0x2400,
+        .gain = 0x2CFF,
+        .gainIndex = 0xA0,                  // Ignored with lightweight settings
+        .reverbIndex = 0x20,                // Ignored with lightweight settings
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
+        .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
+    },
 };
 
 #ifdef PUPPYPRINT_DEBUG

@@ -98,6 +98,8 @@ const LevelScript level_hmc_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE6_DRAGON),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE6_DRAGON, BRPRESET_BSM_C6_GENERAL, BRPRESET_BSM_C6_GENERAL),
+		SET_ECHO(0x06, 0x06),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -175,6 +177,8 @@ const LevelScript level_hmc_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE6_DRAGON),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE6_DRAGON, BRPRESET_BSM_C6_GENERAL, BRPRESET_BSM_C6_GENERAL),
+		SET_ECHO(0x06, 0x06),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -229,6 +233,8 @@ const LevelScript level_hmc_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE6_DRAGON),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE6_DRAGON, BRPRESET_BSM_C6_GENERAL, BRPRESET_BSM_C6_GENERAL),
+		SET_ECHO(0x06, 0x06),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -299,6 +305,8 @@ const LevelScript level_hmc_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE6_DRAGON),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE6_DRAGON, BRPRESET_BSM_C6_GENERAL, BRPRESET_BSM_C6_GENERAL),
+		SET_ECHO(0x06, 0x06),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
