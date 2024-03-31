@@ -40,4 +40,6 @@ extern const struct MovtexQuadCollection ddd_movtex_area2_water[];
 // script
 extern const LevelScript level_ddd_entry[];
 
+#include "levels/ddd/custom_portal_globe/geo_header.h"
+
 #endif

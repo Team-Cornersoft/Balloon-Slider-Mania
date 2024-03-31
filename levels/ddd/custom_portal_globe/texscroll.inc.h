@@ -1,0 +1,2 @@
+extern void scroll_gfx_mat_custom_portal_globe_Planet_projection_layer5();
+extern void scroll_ddd_level_geo_custom_portal_globe();
