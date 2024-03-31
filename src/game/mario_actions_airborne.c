@@ -527,6 +527,7 @@ s32 act_triple_jump(struct MarioState *m) {
 
     if (m->action == ACT_MUSHROOM_BOUNCE) {
         gAirWithTurnLast = TRUE;
+        gLastFrameSliding = FALSE;
     }
     common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, MARIO_ANIM_TRIPLE_JUMP, 0);
 #if ENABLE_RUMBLE
