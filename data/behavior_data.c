@@ -567,6 +567,16 @@ const BehaviorScript bhvBouncyShroom[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvRotatingGlobe[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    BEGIN_LOOP(),
+        ADD_INT(oFaceAngleYaw, 0x80),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvBSMRetryMenu[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
