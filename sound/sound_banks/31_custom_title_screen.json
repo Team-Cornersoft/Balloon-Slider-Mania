@@ -68,10 +68,12 @@
         },
         "inst4": {
             "release_rate": 208,
-            "normal_range_hi": 63,
+            "normal_range_lo": 63,
+            "normal_range_hi": 75,
             "envelope": "envelope4",
-            "sound": "custom_saw_lead",
-            "sound_hi": "custom_saw_lead_high"
+            "sound_lo": "custom_saw_lead",
+            "sound": "custom_saw_lead_high",
+            "sound_hi": "custom_saw_lead_highest"
         },
         "percussion": [
             {"release_rate": 35, "pan": 64, "envelope": "envelope5", "sound": {"sample": "custom_mgtt_kick_normal", "tuning": 1.0}},
