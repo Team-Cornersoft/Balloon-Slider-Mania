@@ -1,9 +1,0 @@
-extern const GeoLayout custom_portal_globe_geo[];
-extern u8 custom_portal_globe_interference_ia16[];
-extern u8 custom_portal_globe_cyber_rgba16[];
-extern Vtx custom_portal_globe_custom_portal_globe_mesh_layer_5_vtx_cull[8];
-extern Vtx custom_portal_globe_custom_portal_globe_mesh_layer_5_vtx_0[506];
-extern Gfx custom_portal_globe_custom_portal_globe_mesh_layer_5_tri_0[];
-extern Gfx mat_custom_portal_globe_Planet_projection_layer5[];
-extern Gfx mat_revert_custom_portal_globe_Planet_projection_layer5[];
-extern Gfx custom_portal_globe_custom_portal_globe_mesh_layer_5[];

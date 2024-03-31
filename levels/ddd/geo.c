@@ -18,5 +18,3 @@
 #include "levels/ddd/submarine/geo.inc.c"
 #include "levels/ddd/areas/1/geo.inc.c"
 #include "levels/ddd/areas/2/geo.inc.c"
-
-#include "levels/ddd/custom_portal_globe/geo.inc.c"

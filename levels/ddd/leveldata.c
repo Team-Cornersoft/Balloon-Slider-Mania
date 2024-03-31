@@ -34,5 +34,3 @@
 #include "levels/ddd/sub_door/collision.inc.c"
 #include "levels/ddd/areas/1/movtext.inc.c"
 #include "levels/ddd/areas/2/movtext.inc.c"
-
-#include "levels/ddd/custom_portal_globe/model.inc.c"
