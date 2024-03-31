@@ -1736,7 +1736,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
                 deathBarrierMultiplier = terminalVelocityMultiplier;
                 break;
             }
-            FALL_THROUGH;
+            goto slideSpeedDefaultCase;
         case BSM_COURSE_2_LAVA_ISLE:
             if (gCurrAreaIndex == 2) {
                 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
@@ -1749,7 +1749,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
                 deathBarrierMultiplier = terminalVelocityMultiplier;
                 break;
             }
-            FALL_THROUGH;
+            goto slideSpeedDefaultCase;
         case BSM_COURSE_5_HOLIDAY_PEAK:
             if (gCurrAreaIndex == 3) {
                 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.35f;
@@ -1757,8 +1757,17 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
                 deathBarrierMultiplier = terminalVelocityMultiplier;
                 break;
             }
-            FALL_THROUGH;
+            goto slideSpeedDefaultCase;
+        case BSM_COURSE_6_SCORCH_ISLE:
+            if (gCurrAreaIndex == 2 || gCurrAreaIndex == 4) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
+                deathBarrierMultiplier = 0.9f;
+                break;
+            }
+            goto slideSpeedDefaultCase;
         default:
+slideSpeedDefaultCase:
             slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
             terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
                 deathBarrierMultiplier = terminalVelocityMultiplier;

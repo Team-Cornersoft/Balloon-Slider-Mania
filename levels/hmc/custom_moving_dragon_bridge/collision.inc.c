@@ -1,4 +1,4 @@
-const Collision custom_moving_bridge_collision[] = {
+const Collision custom_moving_dragon_bridge_collision[] = {
 	COL_INIT(),
 	COL_VERTEX_INIT(33),
 	COL_VERTEX(4412, -861, -3279),
