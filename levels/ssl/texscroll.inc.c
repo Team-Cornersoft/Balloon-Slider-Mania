@@ -364,7 +364,7 @@ void scroll_ssl_dl_StaR_road_a3_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -385,7 +385,7 @@ void scroll_ssl_dl_StaR_road_a3_001_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_001_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -406,7 +406,7 @@ void scroll_ssl_dl_StaR_road_a3_002_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_002_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -427,7 +427,7 @@ void scroll_ssl_dl_StaR_road_a3_003_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_003_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -448,7 +448,7 @@ void scroll_ssl_dl_StaR_road_a3_004_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_004_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -469,7 +469,7 @@ void scroll_ssl_dl_StaR_road_a3_005_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_StaR_road_a3_005_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -490,7 +490,7 @@ void scroll_ssl_dl_0_stars_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_stars_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -511,7 +511,7 @@ void scroll_ssl_dl_0_stars_001_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_stars_001_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -532,7 +532,7 @@ void scroll_ssl_dl_0_stars_002_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_stars_002_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -553,7 +553,7 @@ void scroll_ssl_dl_0_stars_003_mesh_layer_5_vtx_0() {
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_stars_003_mesh_layer_5_vtx_0);
 
-	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+	deltaX = (int)(1.0 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
