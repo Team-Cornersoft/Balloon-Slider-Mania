@@ -934,13 +934,6 @@ void scroll_gfx_mat_ssl_dl_Building_plus_window() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_b1_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_b1_layer5);
-
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
-
-};
-
 void scroll_gfx_mat_ssl_dl_Billboard_b2_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_b2_layer5);
 
@@ -948,8 +941,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_b2_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_a2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_a2_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_b1_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_b1_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -962,22 +955,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_a1_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_g2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_g2_layer5);
-
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
-
-};
-
-void scroll_gfx_mat_ssl_dl_Billboard_f2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_f2_layer5);
-
-	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
-
-};
-
-void scroll_gfx_mat_ssl_dl_Billboard_f1_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_f1_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_a2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_a2_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -990,8 +969,22 @@ void scroll_gfx_mat_ssl_dl_Billboard_g1_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_h1_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_h1_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_f1_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_f1_layer5);
+
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
+
+};
+
+void scroll_gfx_mat_ssl_dl_Billboard_f2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_f2_layer5);
+
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
+
+};
+
+void scroll_gfx_mat_ssl_dl_Billboard_g2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_g2_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1004,8 +997,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_h2_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_c1_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_c1_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_h1_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_h1_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1018,8 +1011,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_c2_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_i2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_i2_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_c1_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_c1_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1032,8 +1025,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_i1_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_e2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_e2_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_i2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_i2_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1046,8 +1039,8 @@ void scroll_gfx_mat_ssl_dl_Billboard_e1_layer5() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Billboard_d2_layer5() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_d2_layer5);
+void scroll_gfx_mat_ssl_dl_Billboard_e2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_e2_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1055,6 +1048,13 @@ void scroll_gfx_mat_ssl_dl_Billboard_d2_layer5() {
 
 void scroll_gfx_mat_ssl_dl_Billboard_d1_layer5() {
 	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_d1_layer5);
+
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
+
+};
+
+void scroll_gfx_mat_ssl_dl_Billboard_d2_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Billboard_d2_layer5);
 
 	shift_t_down(mat, 14, PACK_TILESIZE(0, 3));
 
@@ -1137,24 +1137,24 @@ void scroll_ssl() {
 	scroll_gfx_mat_ssl_dl_Cyber_floor_layer1();
 	scroll_gfx_mat_ssl_dl_Planet_projection_layer5();
 	scroll_gfx_mat_ssl_dl_Building_plus_window();
-	scroll_gfx_mat_ssl_dl_Billboard_b1_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_b2_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_a2_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_b1_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_a1_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_g2_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_f2_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_f1_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_a2_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_g1_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_h1_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_f1_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_f2_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_g2_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_h2_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_c1_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_h1_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_c2_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_i2_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_c1_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_i1_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_e2_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_i2_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_e1_layer5();
-	scroll_gfx_mat_ssl_dl_Billboard_d2_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_e2_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_d1_layer5();
+	scroll_gfx_mat_ssl_dl_Billboard_d2_layer5();
 	scroll_gfx_mat_ssl_dl_Star_projection_layer5();
 	scroll_gfx_mat_ssl_dl_Wormhole_platform_2_layer5();
 	scroll_gfx_mat_ssl_dl_Wormhole_crosses_layer4();
