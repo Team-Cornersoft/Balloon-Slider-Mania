@@ -167,6 +167,12 @@ void bhv_point_balloon_loop(void) {
                 spawn_mist_particles_variable(4, -120.0f, 46.0f * scale);
             } else {
                 spawn_mist_particles_variable(8, -120.0f, 46.0f * scale);
+                struct Object *balloonPop = spawn_object(o, MODEL_NONE, bhvPointBalloonPopped);
+                if (balloonPop) {
+                    obj_scale(balloonPop, scale * 0.25f);
+                    balloonPop->oBehParams = o->oBehParams;
+                    balloonPop->oBehParams2ndByte = o->oBehParams2ndByte;
+                }
             }
             obj_mark_for_deletion(o);
         }
