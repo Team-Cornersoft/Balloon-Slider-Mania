@@ -316,3 +316,42 @@ void bhv_item_gate_loop(void) {
         obj_mark_for_deletion(o);
     }
 }
+
+void bhv_title_screen_balloon_init(void) {
+    f32 scale = 1.5f; // Does not actually scale the object
+
+    vec3f_copy(&o->oPosVec, &o->oHomeVec);
+    vec3f_copy(&o->oPtBalloonRelativePosVec, &o->oHomeVec);
+
+    o->oPtBalloonOscillateXFreq = (random_u16() % (u32) (60.0f * scale)) + 120;
+    o->oPtBalloonOscillateXOffset = random_u16() % o->oPtBalloonOscillateXFreq;
+    o->oPtBalloonOscillateXIntensity = (f32) (random_u16() % (u32) (20 * scale));
+
+    o->oPtBalloonOscillateYFreq = random_u16() % (u32) (40.0f * scale) + 75;
+    o->oPtBalloonOscillateYOffset = random_u16() % o->oPtBalloonOscillateYFreq;
+    o->oPtBalloonOscillateYIntensity = (f32) (random_u16() % (u32) (30 * sqrtf(scale))) + 10;
+
+    o->oPtBalloonOscillateZFreq = (random_u16() % (u32) (60.0f * scale)) + 120;
+    o->oPtBalloonOscillateZOffset = random_u16() % o->oPtBalloonOscillateZFreq;
+    o->oPtBalloonOscillateZIntensity = (f32) (random_u16() % (u32) (20 * scale));
+
+    assert(o->oPtBalloonOscillateXFreq != 0, "Balloon X freq is 0!");
+    assert(o->oPtBalloonOscillateYFreq != 0, "Balloon Y freq is 0!");
+    assert(o->oPtBalloonOscillateZFreq != 0, "Balloon Z freq is 0!");
+
+    f32 decreaseY = 1800.0f + ((random_u16() & 0x1FFF));
+    o->oPosY -= decreaseY;
+    o->oPtBalloonRelativePosY -= decreaseY;
+
+    o->oPtBalloonLerpSpeed = random_float() * 0.015f + 0.02f;
+}
+
+void bhv_title_screen_balloon_loop(void) {
+    o->oPtBalloonRelativePosY = lerpf(o->oPtBalloonRelativePosY, o->oHomeY, o->oPtBalloonLerpSpeed);
+
+    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
+    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
+    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
+
+    o->oPtBalloonAbsoluteTimer++;
+}

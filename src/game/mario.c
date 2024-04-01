@@ -1785,6 +1785,7 @@ slideSpeedDefaultCase:
             (gMarioState->controller->buttonDown & U_JPAD) &&
             !(gMarioState->controller->buttonDown & L_TRIG)
         ) {
+            bsm_begin_track();
             set_camera_mode(gMarioState->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);
             set_mario_action(gMarioState, ACT_DEBUG_FREE_MOVE, 0);
         }
@@ -1975,6 +1976,7 @@ void init_mario_from_save_file(void) {
     gHudDisplay.coins = 0;
     gHudDisplay.wedges = 8;
 
-    gBSMReadyGoTimer = 75;
+    gBSMReadyGoTimer = READY_GO_TIMER_VALUE;
+    gBSMCameraCutscenePanTimer = BSM_CAMERA_CUTSCENE_PAN_VALUE;
     gBSMGoSignaled = FALSE;
 }

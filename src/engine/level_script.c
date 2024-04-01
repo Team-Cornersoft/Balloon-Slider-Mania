@@ -381,6 +381,7 @@ static void level_cmd_clear_level(void) {
     unmap_tlbs();
 
     gBSMReadyGoTimer = 0;
+    gBSMCameraCutscenePanTimer = 0;
 
     sCurrentCmd = CMD_NEXT;
 }

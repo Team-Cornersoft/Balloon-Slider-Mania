@@ -1925,7 +1925,7 @@ void pss_end_slide(struct MarioState *m) {
     }
 }
 
-void bsm_begin_track(UNUSED struct MarioState *m) {
+void bsm_begin_track() {
     gBSMTimerActive = TRUE;
     if (gCurrentArea) {
         play_music(SEQ_PLAYER_LEVEL, gCurrentArea->musicParam2, 0);
@@ -1964,7 +1964,7 @@ void mario_handle_special_floors(struct MarioState *m) {
 
             case SURFACE_TIMER_START:
                 // pss_begin_slide(m);
-                bsm_begin_track(m);
+                bsm_begin_track();
                 break;
 
             case SURFACE_TIMER_END:
