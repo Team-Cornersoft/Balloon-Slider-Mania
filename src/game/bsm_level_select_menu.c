@@ -126,7 +126,7 @@ struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .courseName = "Holiday\nPeak"     },
     {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .courseName = "Dragon\nFlow"      },
     {.levelID = LEVEL_LLL, .baselineTime =  90 * 30, .courseName = "Twilight\nCanyon"  },
-    {.levelID = LEVEL_SSL, .baselineTime =  90 * 30, .courseName = "Cyber\nFest"       },
+    {.levelID = LEVEL_SSL, .baselineTime =  60 * 30, .courseName = "Cyber\nFest"       },
     {.levelID = LEVEL_DDD, .baselineTime =  90 * 30, .courseName = "Cornersoft\nParade"},
 };
 
