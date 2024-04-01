@@ -11,7 +11,16 @@ void bhv_warp_loop(void) {
         } else {
             o->hitboxRadius = radius * 10.0f;
         }
-        o->hitboxHeight = 50.0f;
+
+        u16 height = GET_BPARAM4(o->oBehParams);
+
+        if (height == 0) {
+            o->hitboxHeight = 50.0f;
+        } else if (height == 0xFF) {
+            o->hitboxHeight = 10000.0f;
+        } else {
+            o->hitboxHeight = height * 10.0f;
+        }
     }
 
     o->oInteractStatus = INT_STATUS_NONE;
