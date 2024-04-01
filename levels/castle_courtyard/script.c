@@ -25,20 +25,34 @@
 
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript ccy_area1_jump[] = {
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON, -1038, 1812, -326, 0, 0, 0, 0x00000000, bhvTitleScreenBalloon), // B
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -749, 1664, -250, 0, 0, 0, 0x00010000, bhvTitleScreenBalloon), // A
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -531, 1886, -443, 0, 0, 0, 0x00020000, bhvTitleScreenBalloon), // L
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -275, 1738, -339, 0, 0, 0, 0x00030000, bhvTitleScreenBalloon), // L
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,   -63, 1812, -549, 0, 0, 0, 0x00040000, bhvTitleScreenBalloon), // O
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,   183, 1683, -742, 0, 0, 0, 0x00050000, bhvTitleScreenBalloon), // O
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,   455, 1823, -605, 0, 0, 0, 0x00060000, bhvTitleScreenBalloon), // N
 	RETURN(),
 };
 
 const LevelScript level_ccy_title_screen[] = {
     INIT_LEVEL(),
     LOAD_BEHAVIOR_DATA(),
+    LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_YAY0(          /*seg*/ SEGMENT_GROUP0_YAY0,   _group0_yay0SegmentRomStart,  _group0_yay0SegmentRomEnd), // group0 load needed for scrolling textures!
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,  _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_GROUP0_GEO,     _group0_geoSegmentRomStart,   _group0_geoSegmentRomEnd,  _group0_geoSegmentBssStart,  _group0_geoSegmentBssEnd),
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
 
 	ALLOC_LEVEL_POOL(),
-		AREA(1, castle_courtyard_area_1_custom_static),
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_TITLE_SCREEN_BALLOON, title_screen_balloon_geo),
+
+	AREA(1, castle_courtyard_area_1_custom_static),
 		JUMP_LINK(ccy_area1_jump),
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_TITLE_SCREEN, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 		SET_ECHO(0x00, 0x00),
 	END_AREA(),
+
 	FREE_LEVEL_POOL(),
 
     LOAD_AREA(/*area*/ 1),
@@ -103,6 +117,7 @@ const LevelScript level_castle_courtyard_entry[] = {
 	INIT_LEVEL(),
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_TITLE_SCREEN_BALLOON, title_screen_balloon_geo),
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 
 	/* Fast64 begin persistent block [level commands] */

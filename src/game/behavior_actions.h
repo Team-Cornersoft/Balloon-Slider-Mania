@@ -21,6 +21,8 @@ void bhv_point_balloon_init(void);
 void bhv_point_balloon_loop(void);
 void bhv_key_balloon_init(void);
 void bhv_key_balloon_loop(void);
+void bhv_title_screen_balloon_init(void);
+void bhv_title_screen_balloon_loop(void);
 void bhv_point_balloon_popped_init(void);
 void bhv_point_balloon_popped_loop(void);
 void bhv_tcs_token_init(void);

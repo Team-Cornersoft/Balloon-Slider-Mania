@@ -430,6 +430,17 @@ const BehaviorScript bhvKeyBalloon[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvTitleScreenBalloon[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oOpacity, 255),
+    SET_HOME(),
+    CALL_NATIVE(bhv_title_screen_balloon_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_title_screen_balloon_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvPointBalloonPopped[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),

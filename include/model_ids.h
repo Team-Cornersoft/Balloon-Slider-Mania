@@ -581,6 +581,7 @@ enum CustomModelIDs {
     MODEL_BSM_MENU_RANK,            // castle grounds
     MODEL_BSM_MENU_TCSTOKEN,        // castle grounds
     MODEL_BSM_MENU_TITLE,           // castle grounds
+    MODEL_BSM_TITLE_SCREEN_BALLOON, // castle courtyard
     MODEL_BSM_RETRY_MENU_RETRY,     // intro
     MODEL_BSM_RETRY_MENU_QUIT,      // intro
     MODEL_BSM_POINT_BALLOON,        // common1

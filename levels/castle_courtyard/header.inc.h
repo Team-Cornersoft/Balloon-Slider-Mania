@@ -178,3 +178,5 @@ extern Gfx castle_courtyard_dl_Balloon_7_mesh_layer_1[];
 extern Gfx castle_courtyard_dl_Balloon_7_mesh_layer_5[];
 extern Gfx castle_courtyard_dl_C_Menu_decoration_c_mesh_layer_4[];
 extern Gfx castle_courtyard_dl_C_Menu_decoration_c_mesh_layer_1[];
+
+#include "levels/castle_courtyard/title_screen_balloon/geo_header.h"
