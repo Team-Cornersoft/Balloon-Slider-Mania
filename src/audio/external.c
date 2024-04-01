@@ -239,12 +239,12 @@ struct MusicDynamic sMusicDynamics[] = {
     { 0x0000, 127, 100, 0x0070, 0, 10 },  // SEQ_LEVEL_SPOOKY
     { 0xffff, 127, 100, 0x0000, 0, 100 }, // any (unused)
 
-    { 0b0000001000000011, 127, 75, 0b1111110111111100, 0, 75}, // BSM Menu Initial State
-    { 0b1000001000001111, 127, 75, 0b0111110111110000, 0, 75}, // BSM Menu Unlocked Stage 2
-    { 0b1100001000111111, 127, 75, 0b0011110111000000, 0, 75}, // BSM Menu Unlocked Stage 3
-    { 0b1100001011111111, 127, 75, 0b0011110100000000, 0, 75}, // BSM Menu Unlocked Stage 4
-    { 0b1100001111111111, 127, 75, 0b0011110000000000, 0, 75}, // BSM Menu Can See Extra Stages
-    { 0b1111111111111111, 127, 75, 0b0000000000000000, 0, 75}, // BSM Menu Unlocked Bonus Stage
+    { 0b0000001000000011, 127, 55, 0b1111110111111100, 0, 55}, // BSM Menu Initial State
+    { 0b1000001000001111, 127, 55, 0b0111110111110000, 0, 55}, // BSM Menu Unlocked Stage 2
+    { 0b1100001000111111, 127, 55, 0b0011110111000000, 0, 55}, // BSM Menu Unlocked Stage 3
+    { 0b1100001011111111, 127, 55, 0b0011110100000000, 0, 55}, // BSM Menu Unlocked Stage 4
+    { 0b1100001111111111, 127, 55, 0b0011110000000000, 0, 55}, // BSM Menu Can See Extra Stages
+    { 0b1111111111111111, 127, 55, 0b0000000000000000, 0, 55}, // BSM Menu Unlocked Bonus Stage
 };
 
 #define STUB_LEVEL(_0, _1, _2, _3, echo1, echo2, echo3, _7, _8) { echo1, echo2, echo3 },
