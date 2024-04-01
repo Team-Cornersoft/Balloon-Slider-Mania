@@ -328,6 +328,14 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_TELEPORT_FADE_IN, 0);
             break;
         case MARIO_SPAWN_INSTANT_ACTIVE:
+            if (m->marioObj) {
+                m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
+                if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_8_CYBER_FEST) {
+                    m->forwardVel = 64.0f * slideSpeedMultiplier;
+                    m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
+                    m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
+                }
+            }
             gOverrideNewSlideAngle = TRUE;
             set_mario_action(m, ACT_IDLE, 0);
             break;
