@@ -49,7 +49,7 @@ void scroll_ssl_dl_0_SKYBOX_a_002_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_002_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(0.25 * 0x20) % height;
+	deltaY = (int)(-0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -70,7 +70,7 @@ void scroll_ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(0.25 * 0x20) % height;
+	deltaY = (int)(-0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -91,7 +91,7 @@ void scroll_ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(0.25 * 0x20) % height;
+	deltaY = (int)(-0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -112,7 +112,7 @@ void scroll_ssl_dl_0_SKYBOX_a_005_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_005_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(0.25 * 0x20) % height;
+	deltaY = (int)(-0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -448,7 +448,7 @@ void scroll_ssl_dl_0_skybox_a3_mesh_layer_5_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_skybox_a3_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(0.25 * 0x20) % height;
+	deltaY = (int)(-0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -1003,8 +1003,13 @@ void scroll_gfx_mat_ssl_dl_Cyber_floor_2_layer1() {
 
 void scroll_gfx_mat_ssl_dl_Scrolling_numbers() {
 	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Scrolling_numbers);
+	static int interval_tex_ssl_dl_Scrolling_numbers = 8;
+	static int cur_interval_tex_ssl_dl_Scrolling_numbers = 8;
 
-	shift_t_down(mat, 9, PACK_TILESIZE(0, 192));
+	if (--cur_interval_tex_ssl_dl_Scrolling_numbers <= 0) {
+		shift_t(mat, 9, PACK_TILESIZE(0, 192));
+		cur_interval_tex_ssl_dl_Scrolling_numbers = interval_tex_ssl_dl_Scrolling_numbers;
+	}
 
 };
 
