@@ -1191,12 +1191,12 @@ s32 play_mode_normal(void) {
                 vec3f_set(posOffsets, 0.0f, 2000.0f, 0.0f);
                 vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
                 maxDist = 5000.0f;
-                yawOffset = -0x8000;
+                yawOffset = 0x8000;
                 break;
             case BSM_COURSE_8_CYBER_FEST:
-                vec3f_set(posOffsets, 0.0f, 2500.0f, 0.0f);
-                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
-                maxDist = 6000.0f;
+                vec3f_set(posOffsets, 0.0f, 1000.0f, -3000.0f);
+                vec3f_set(focOffsets, 0.0f, 0000.0f, 0.0f);
+                maxDist = 1200.0f;
                 yawOffset = -0x8000;
                 break;
             case BSM_COURSE_9_CORNERSOFT_PARADE:
