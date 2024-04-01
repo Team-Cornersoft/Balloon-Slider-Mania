@@ -172,6 +172,7 @@ u32 gBSMFrameTimer = 0;
 u32 gBSMLastBalloonType = 0;
 u32 gBSMNarratorItemTimer = 0;
 u32 gBSMReadyGoTimer = 0;
+u32 gBSMCameraCutscenePanTimer = 0;
 u32 gBSMGoSignaled = FALSE;
 
 s32 gBSMLastLevel = 0;
@@ -1052,6 +1053,9 @@ void basic_update(void) {
     }
 }
 
+Vec3f lakituStatePosHist = {0.0f, 0.0f, 0.0f};
+Vec3f lakituStateFocusHist = {0.0f, 0.0f, 0.0f};
+
 s32 play_mode_normal(void) {
 #ifndef DISABLE_DEMO
     if (gCurrDemoInput != NULL) {
@@ -1080,7 +1084,7 @@ s32 play_mode_normal(void) {
             print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 48, "READY?");
         }
 
-        if (gBSMReadyGoTimer == 70) {
+        if (gBSMReadyGoTimer == READY_GO_TIMER_VALUE - 5) {
             if (gBSMGoSignaled) {
                 play_sound(SOUND_NARRATION_BSM_GO, gGlobalSoundSource);
             } else {
@@ -1089,7 +1093,7 @@ s32 play_mode_normal(void) {
         }
     } else if (gBSMGoSignaled == FALSE && gBSMTimerActive) {
         gBSMGoSignaled = TRUE;
-        gBSMReadyGoTimer = 75;
+        gBSMReadyGoTimer = READY_GO_TIMER_VALUE;
     }
 
     warp_area();
@@ -1118,6 +1122,12 @@ s32 play_mode_normal(void) {
 #endif
     update_hud_values();
     if (gCurrentArea != NULL) {
+        if (gBSMCameraCutscenePanTimer != 0 && gCamera) {
+            gCamera->cutscene = 0;
+            vec3f_copy(gLakituState.pos, lakituStatePosHist);
+            vec3f_copy(gLakituState.focus, lakituStateFocusHist);
+        }
+
 #ifdef PUPPYPRINT_DEBUG
 #ifdef BETTER_REVERB
     if (sPPDebugPage != PUPPYPRINT_PAGE_RAM && sPPDebugPage != PUPPYPRINT_PAGE_LEVEL_SELECT && sPPDebugPage != PUPPYPRINT_PAGE_BETTER_REVERB) {
@@ -1129,6 +1139,111 @@ s32 play_mode_normal(void) {
 #else
         update_camera(gCurrentArea->camera);
 #endif
+    }
+
+    if (gBSMCameraCutscenePanTimer > 0 && gCurrentArea && gCamera && gMarioState) {
+        Vec3f posOffsets;
+        Vec3f focOffsets;
+        s32 yawOffset;
+        f32 maxDist;
+
+        vec3f_copy(lakituStatePosHist, gLakituState.pos);
+        vec3f_copy(lakituStateFocusHist, gLakituState.focus);
+
+        switch(COURSE_NUM_TO_INDEX(gCurrCourseNum)) {
+            case BSM_COURSE_1_SNOWY_PEAK:
+                vec3f_set(posOffsets, 0.0f, 4000.0f, -4000.0f);
+                vec3f_set(focOffsets, 5000.0f, -2500.0f, -15000.0f);
+                maxDist = 3500.0f;
+                yawOffset = -0x6000;
+                break;
+            case BSM_COURSE_2_LAVA_ISLE:
+                vec3f_set(posOffsets, 0.0f, 1000.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 2000.0f;
+                yawOffset = 0x8000;
+                break;
+            case BSM_COURSE_3_FUNGI_CANYON:
+                vec3f_set(posOffsets, 0.0f, 700.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 4000.0f;
+                yawOffset = -0x8000;
+                break;
+            case BSM_COURSE_4_STARLIGHT_FEST:
+                vec3f_set(posOffsets, 0.0f, 5500.0f, -10000.0f);
+                vec3f_set(focOffsets, 0.0f, 3500.0f, -18000.0f);
+                maxDist = -4000.0f;
+                yawOffset = 0x1000;
+                break;
+            case BSM_COURSE_5_HOLIDAY_PEAK:
+                vec3f_set(posOffsets, 0.0f, 3000.0f, -4000.0f);
+                vec3f_set(focOffsets, -5000.0f, -500.0f, -15000.0f);
+                maxDist = 3500.0f;
+                yawOffset = 0x6000;
+                break;
+            case BSM_COURSE_6_SCORCH_ISLE:
+                vec3f_set(posOffsets, 0.0f, 3500.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 5000.0f;
+                yawOffset = 0x8400;
+                break;
+            case BSM_COURSE_7_SPORE_CANYON:
+                vec3f_set(posOffsets, 0.0f, 2000.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 5000.0f;
+                yawOffset = -0x8000;
+                break;
+            case BSM_COURSE_8_CYBER_FEST:
+                vec3f_set(posOffsets, 0.0f, 2500.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 6000.0f;
+                yawOffset = -0x8000;
+                break;
+            case BSM_COURSE_9_CORNERSOFT_PARADE:
+                vec3f_set(posOffsets, 0.0f, 2500.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 6000.0f;
+                yawOffset = -0x8000;
+                break;
+            default:
+                vec3f_set(posOffsets, 0.0f, 2500.0f, 0.0f);
+                vec3f_set(focOffsets, 0.0f, 0.0f, 0.0f);
+                maxDist = 6000.0f;
+                yawOffset = -0x8000;
+                break;
+        }
+
+        f32 transAmount1 = coss(0x8000 * gBSMCameraCutscenePanTimer / BSM_CAMERA_CUTSCENE_PAN_VALUE);
+        f32 transAmount2 = sqrtf(ABS(transAmount1)) * (transAmount1 >= 0.0f ? 1.0f : -1.0f);
+        f32 multAmount1 = transAmount1 = 1.0f - ((transAmount1 + 1.0f) / 2.0f);
+        f32 multAmount2 = transAmount2 = 1.0f - ((transAmount2 + 1.0f) / 2.0f);
+
+        multAmount1 = multAmount1 * 1.10f - 0.10f;
+        if (multAmount1 < 0.0f) {
+            multAmount1 = 0.0f;
+        }
+
+        yawOffset *= multAmount2;
+        posOffsets[0] += maxDist * sins(yawOffset);
+        posOffsets[2] += maxDist * coss(yawOffset);
+
+        Vec3f marioPosOffsets;
+        vec3f_add(focOffsets, gLakituState.focus);
+        for (s32 i = 0; i < ARRAY_COUNT(posOffsets); i++) {
+            // posOffsets[i] *= 1.0f - coss(0x4000 * gBSMCameraCutscenePanTimer / BSM_CAMERA_CUTSCENE_PAN_VALUE);
+            posOffsets[i] *= multAmount1;
+            marioPosOffsets[i] = (gMarioState->pos[i] * multAmount1) + (gLakituState.pos[i] * (1.0f - multAmount1));
+            focOffsets[i] = (focOffsets[i] * multAmount1) + (gLakituState.focus[i] * (1.0f - multAmount1));
+        }
+
+        vec3f_copy(gLakituState.pos, marioPosOffsets);
+        vec3f_add(gLakituState.pos, posOffsets);
+        vec3f_copy(gLakituState.focus, focOffsets);
+        
+        gBSMCameraCutscenePanTimer--;
+        if (gBSMCameraCutscenePanTimer > 0) {
+            gCamera->cutscene = 1;
+        }
     }
 
     initiate_painting_warp();

@@ -113,6 +113,9 @@ struct WarpDest {
     u32 arg;
 };
 
+#define READY_GO_TIMER_VALUE 75
+#define BSM_CAMERA_CUTSCENE_PAN_VALUE 85
+
 extern struct WarpDest sWarpDest;
 
 extern s16 sSpecialWarpDest;
@@ -132,6 +135,7 @@ extern u32 gBSMFinalScoreCount;
 extern u32 gBSMLastBalloonType;
 extern u32 gBSMNarratorItemTimer;
 extern u32 gBSMReadyGoTimer;
+extern u32 gBSMCameraCutscenePanTimer;
 extern u32 gBSMGoSignaled;
 extern u32 gBSMFrameTimer;
 extern s32 gBSMLastLevel;
