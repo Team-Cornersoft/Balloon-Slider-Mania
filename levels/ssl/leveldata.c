@@ -50,3 +50,4 @@
 #include "levels/ssl/areas/2/movtext.inc.c"
 
 #include "levels/ssl/custom_portal_globe/model.inc.c"
+#include "levels/ssl/leveldata.inc.c"

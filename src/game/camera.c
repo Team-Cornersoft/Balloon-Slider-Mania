@@ -5908,11 +5908,7 @@ struct CameraTrigger sCamHMC[] = {
  * radial.
  */
 struct CameraTrigger sCamSSL[] = {
-    { 1, cam_ssl_enter_pyramid_top, -2048, 1080, -1024, 150, 150, 150, 0 },
-    { 2, cam_ssl_pyramid_center, 0, -104, -104, 1248, 1536, 2950, 0 },
-    { 2, cam_ssl_pyramid_center, 0, 2500, 256, 515, 5000, 515, 0 },
-    { 3, cam_ssl_boss_room, 0, -1534, -2040, 1000, 800, 1000, 0 },
-    NULL_TRIGGER
+	NULL_TRIGGER
 };
 
 /**
@@ -10421,7 +10417,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // Unused         | Unused
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // BBH            | CCM
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // CASTLE_INSIDE  | HMC
-	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), // SSL            | BOB
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // SSL            | BOB
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 0, 0, 0), // SL             | WDW
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 0, 0), // JRB            | THI
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // TTC            | RR
