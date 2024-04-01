@@ -8,6 +8,7 @@ const GeoLayout ssl_area_3_geo[] = {
 			GEO_BRANCH(1, ssl_dl_1_area3_geo),
 			GEO_BRANCH(1, ssl_dl_2_area3_geo),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 770, 7250, 10650, 0, -60, 0, ssl_dl_0_skybox_a3_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -3700, 0, ssl_dl_A_sun_mesh_layer_1),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 0, -3700, 0, ssl_dl_A_sun_glow_mesh_layer_5),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 90, 150, 90, 0, 0, 0),
