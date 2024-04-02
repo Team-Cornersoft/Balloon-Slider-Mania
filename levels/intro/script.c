@@ -5,6 +5,7 @@
 #include "seq_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
+#include "audio/external.h"
 
 #include "game/area.h"
 #include "game/level_update.h"
@@ -97,6 +98,7 @@ const LevelScript level_intro_retry_menu[] = {
     LOAD_AREA(/*area*/ 1),
     CALL(/*arg*/ 0, /*func*/ load_mario_area),
     SET_MENU_MUSIC_WITH_REVERB(SEQ_SOUND_PLAYER, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
+	STOP_MUSIC_PLAYERS(0, (1 << SEQ_PLAYER_LEVEL)), // Needed to actually reinit audio when restarting level
 
     PLAY_SOUND_EFFECT(SOUND_MENU_MESSAGE_DISAPPEAR),
 

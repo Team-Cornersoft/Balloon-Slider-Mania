@@ -97,4 +97,4 @@
 /**
  * We didn't finish in time :(
  */
-#define BALLOON_SLIDER_MANIA_DISABLE_C9
+// #define BALLOON_SLIDER_MANIA_DISABLE_C9

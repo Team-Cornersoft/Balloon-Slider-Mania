@@ -817,7 +817,7 @@ static void level_cmd_fadeout_music(void) {
             dur = 0;
         func_803210D4(dur, playerFlags);
 
-        if (playerFlags & SEQ_PLAYER_LEVEL) {
+        if (playerFlags & (1 << SEQ_PLAYER_LEVEL)) {
             sCurrentMusic = MUSIC_NONE;
             sCurrentShellMusic = MUSIC_NONE;
             sCurrentCapMusic = MUSIC_NONE;
