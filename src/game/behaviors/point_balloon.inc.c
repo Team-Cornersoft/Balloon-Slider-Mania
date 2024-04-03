@@ -1,124 +1,157 @@
 #include "game/debug.h"
+#include "game/mario_actions_moving.h"
 extern void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ);
+
+#define BALLOON_STEP_COUNT 2
 
 #define BALLOON_FLOATING_CALC(relativePos, intensity, offset, freq) \
     (relativePos + intensity * sins((0x10000 * ((o->oPtBalloonAbsoluteTimer + offset) % freq)) / freq))
 
 static u8 point_balloon_check_if_interacted(void) {
-    if (!gMarioState || !gMarioState->marioObj) {
-        return FALSE;
-    }
-
-    f32 scale = bProps[o->oBehParams2ndByte].scale;
-
+    Vec3f initialMarioPositions;
     Vec3f marioPos;
     Vec3f balloonPos;
     Vec3f requiredDist;
     Vec3f objDist;
+    s32 i;
+    f32 scale = bProps[o->oBehParams2ndByte].scale;
 
-    vec3f_copy(balloonPos, &o->oPosVec);
-    balloonPos[1] -= 10.0f;
-
-    s16 relativeYaw = obj_angle_to_object(o, gMarioState->marioObj) - o->oFaceAngleYaw;
-    f32 dist = lateral_dist_between_objects(o, gMarioState->marioObj);
-
-    marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
-    marioPos[1] = gMarioState->pos[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
-    marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
-
-    objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
-    objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
-    objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
-
-    requiredDist[0] = 95.0f * scale;
-    requiredDist[1] = (110.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
-    requiredDist[2] = 45.0f * scale;
-
-    for (s32 i = 0; i < 3; i++) {
-        if (objDist[i] < 0.0f) {
-            objDist[i] = 0.0f;
-        }
-        if (requiredDist[i] < 0.01f) {
-            requiredDist[i] = 0.01f;
-        }
-    }
-
-    if (
-       objDist[0] > requiredDist[0] ||
-       objDist[1] > requiredDist[1] ||
-       objDist[2] > requiredDist[2]
-    ) {
+    if (!gMarioState || !gMarioState->marioObj) {
         return FALSE;
     }
 
-    if (
-        objDist[0] > (requiredDist[0] * coss(sqrtf(sqr(objDist[1]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[1]) + sqr(requiredDist[2])) * 0x4000)) ||
-        objDist[1] > (requiredDist[1] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[2])) * 0x4000)) ||
-        objDist[2] > (requiredDist[2] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[1])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[1])) * 0x4000))
-    ) {
-        return FALSE;
+    for (s32 stepCount = 0; stepCount < BALLOON_STEP_COUNT; stepCount++) {
+        f32 balancer = 1.0f - ((f32) stepCount / (f32) BALLOON_STEP_COUNT);
+
+        for (i = 0; i < ARRAY_COUNT(initialMarioPositions); i++) {
+            initialMarioPositions[i] = (gMarioState->pos[i] * balancer) + (gMarioState->prevPos[i] * (1.0f - balancer));
+        }
+
+        vec3f_copy(balloonPos, &o->oPosVec);
+        balloonPos[1] -= 10.0f;
+
+        s16 relativeYaw = atan2s(initialMarioPositions[2] - o->oPosZ, initialMarioPositions[0] - o->oPosX) - o->oFaceAngleYaw; // atan2s equivalent is obj_angle_to_object()
+
+        // lateral_dist_between_objects() equivalent
+        f32 distX = o->oPosX - initialMarioPositions[0];
+        f32 distZ = o->oPosZ - initialMarioPositions[2];
+        f32 dist = sqrtf(sqr(distX) + sqr(distZ));
+
+        marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
+        marioPos[1] = initialMarioPositions[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+        marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
+
+        objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
+        objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+        objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
+
+        requiredDist[0] = 95.0f * scale;
+        requiredDist[1] = (110.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
+        requiredDist[2] = 45.0f * scale;
+
+        for (i = 0; i < ARRAY_COUNT(objDist); i++) {
+            if (objDist[i] < 0.0f) {
+                objDist[i] = 0.0f;
+            }
+            if (requiredDist[i] < 0.01f) {
+                requiredDist[i] = 0.01f;
+            }
+        }
+
+        if (
+           objDist[0] > requiredDist[0] ||
+           objDist[1] > requiredDist[1] ||
+           objDist[2] > requiredDist[2]
+        ) {
+            continue;
+        }
+
+        if (
+           objDist[0] > (requiredDist[0] * coss(sqrtf(sqr(objDist[1]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[1]) + sqr(requiredDist[2])) * 0x4000)) ||
+           objDist[1] > (requiredDist[1] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[2])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[2])) * 0x4000)) ||
+           objDist[2] > (requiredDist[2] * coss(sqrtf(sqr(objDist[0]) + sqr(objDist[1])) / sqrtf(sqr(requiredDist[0]) + sqr(requiredDist[1])) * 0x4000))
+        ) {
+            continue;
+        }
+
+        return TRUE;
     }
 
-    return TRUE;
+    return FALSE;
 }
 
 static u8 key_balloon_check_if_interacted(void) {
-    if (!gMarioState || !gMarioState->marioObj) {
-        return FALSE;
-    }
-
-    f32 scale = keyBalloon.scale;
-
+    Vec3f initialMarioPositions;
     Vec3f marioPos;
     Vec3f balloonPos;
     Vec3f requiredDist;
     Vec3f objDist;
+    s32 i;
+    f32 scale = keyBalloon.scale;
 
-    vec3f_copy(balloonPos, &o->oPosVec);
-    balloonPos[1] -= 10.0f;
-
-    s16 relativeYaw = obj_angle_to_object(o, gMarioState->marioObj) - o->oFaceAngleYaw;
-    f32 dist = lateral_dist_between_objects(o, gMarioState->marioObj);
-
-    marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
-    marioPos[1] = gMarioState->pos[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
-    marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
-
-    objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
-    objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
-    objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
-
-    requiredDist[0] = 95.0f * scale;
-    requiredDist[1] = (225.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
-    requiredDist[2] = 50.0f * scale;
-
-    for (s32 i = 0; i < 3; i++) {
-        if (objDist[i] < 0.0f) {
-            objDist[i] = 0.0f;
-        }
-        if (requiredDist[i] < 0.01f) {
-            requiredDist[i] = 0.01f;
-        }
-    }
-
-    if (
-       objDist[0] > requiredDist[0] ||
-       objDist[1] > requiredDist[1] ||
-       objDist[2] > requiredDist[2]
-    ) {
+    if (!gMarioState || !gMarioState->marioObj) {
         return FALSE;
     }
 
-    // Generously ignore Y elements of hitbox for key balloons
-    if (
-        objDist[0] > (requiredDist[0] * coss(objDist[2] / requiredDist[2] * 0x4000)) ||
-        objDist[1] > requiredDist[1] ||
-        objDist[2] > (requiredDist[2] * coss(objDist[0] / requiredDist[0] * 0x4000))
-    ) {
-        return FALSE;
+    for (s32 stepCount = 0; stepCount < BALLOON_STEP_COUNT; stepCount++) {
+        f32 balancer = 1.0f - ((f32) stepCount / (f32) BALLOON_STEP_COUNT);
+
+        for (i = 0; i < ARRAY_COUNT(initialMarioPositions); i++) {
+            initialMarioPositions[i] = (gMarioState->pos[i] * balancer) + (gMarioState->prevPos[i] * (1.0f - balancer));
+        }
+
+        vec3f_copy(balloonPos, &o->oPosVec);
+        balloonPos[1] -= 10.0f;
+
+        s16 relativeYaw = atan2s(initialMarioPositions[2] - o->oPosZ, initialMarioPositions[0] - o->oPosX) - o->oFaceAngleYaw; // atan2s equivalent is obj_angle_to_object()
+
+        // lateral_dist_between_objects() equivalent
+        f32 distX = o->oPosX - initialMarioPositions[0];
+        f32 distZ = o->oPosZ - initialMarioPositions[2];
+        f32 dist = sqrtf(sqr(distX) + sqr(distZ));
+
+        marioPos[0] = balloonPos[0] + sins(relativeYaw) * dist;
+        marioPos[1] = initialMarioPositions[1] + ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+        marioPos[2] = balloonPos[2] + coss(relativeYaw) * dist;
+
+        objDist[0] = ABS(marioPos[0] - balloonPos[0]) - ABS(gMarioState->marioObj->hitboxRadius);
+        objDist[1] = ABS(marioPos[1] - balloonPos[1]) - ABS(gMarioState->marioObj->hitboxHeight) / 2.0f;
+        objDist[2] = ABS(marioPos[2] - balloonPos[2]) - ABS(gMarioState->marioObj->hitboxRadius);
+
+        requiredDist[0] = 95.0f * scale;
+        requiredDist[1] = (225.0f + 5.0f) * scale + 5.0f; // Increase hitbox Y slightly to reduce likelihood of sliding under balloons
+        requiredDist[2] = 50.0f * scale;
+
+        for (i = 0; i < ARRAY_COUNT(objDist); i++) {
+            if (objDist[i] < 0.0f) {
+                objDist[i] = 0.0f;
+            }
+            if (requiredDist[i] < 0.01f) {
+                requiredDist[i] = 0.01f;
+            }
+        }
+
+        if (
+           objDist[0] > requiredDist[0] ||
+           objDist[1] > requiredDist[1] ||
+           objDist[2] > requiredDist[2]
+        ) {
+            continue;
+        }
+
+        // Generously ignore Y elements of hitbox for key balloons
+        if (
+           objDist[0] > (requiredDist[0] * coss(objDist[2] / requiredDist[2] * 0x4000)) ||
+           objDist[1] > requiredDist[1] ||
+           objDist[2] > (requiredDist[2] * coss(objDist[0] / requiredDist[0] * 0x4000))
+        ) {
+            continue;
+        }
+
+        return TRUE;
     }
 
-    return TRUE;
+    return FALSE;
 }
 
 void bhv_point_balloon_init(void) {
@@ -154,7 +187,8 @@ void bhv_point_balloon_loop(void) {
     u32 bType = o->oBehParams2ndByte;
     f32 scale = bProps[bType].scale;
 
-    if (o->oDistanceToMario <= (120.0f * scale) + 160.0f /*About Mario's height*/) {
+    // slideSpeedMultiplier added here to handle high Mario velocities
+    if (o->oDistanceToMario <= ((120.0f * scale) + 160.0f /*About Mario's height*/) * slideSpeedMultiplier) {
         if (point_balloon_check_if_interacted()) {
             if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
                 spawn_mist_particles_variable(16, -120.0f, 46.0f * scale);
@@ -209,7 +243,7 @@ void bhv_key_balloon_init(void) {
 void bhv_key_balloon_loop(void) {
     f32 scale = keyBalloon.scale;
 
-    if (o->oDistanceToMario <= (225.0f * scale) + 160.0f /*About Mario's height*/) {
+    if (o->oDistanceToMario <= ((225.0f * scale) + 160.0f /*About Mario's height*/) * slideSpeedMultiplier) {
         if (key_balloon_check_if_interacted()) {
             if (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST)) {
                 spawn_mist_particles_variable(16, -120.0f + (110.0f * scale), 46.0f * scale);
