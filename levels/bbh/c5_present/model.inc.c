@@ -1,3 +1,6 @@
+Lights1 c5_present_balloon_red_decal_lights = gdSPDefLights1(
+	0x7F, 0x7F, 0x7F,
+	0xFF, 0xFF, 0xFF, 0x49, 0x49, 0x49);
 
 Gfx c5_present_present_ci4_aligner[] = {gsSPEndDisplayList()};
 u8 c5_present_present_ci4[] = {
@@ -679,8 +682,7 @@ Gfx mat_c5_present_balloon_red_decal[] = {
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsSPTexture(65535, 65535, 0, 0, 1),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+	gsSPSetLights1(c5_present_balloon_red_decal_lights),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, c5_present_present_pal_rgba16),
 	gsDPSetTile(0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
 	gsDPLoadTLUTCmd(5, 12),
@@ -698,7 +700,7 @@ Gfx mat_revert_c5_present_balloon_red_decal[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_c5_present_balloon_black[] = {
+Gfx mat_c5_present_rainbow[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, ENVIRONMENT, 0, 0, 0, TEXEL0, 0, 0, 0, ENVIRONMENT),
 	gsSPGeometryMode(0, G_TEXTURE_GEN),
@@ -715,7 +717,7 @@ Gfx mat_c5_present_balloon_black[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_c5_present_balloon_black[] = {
+Gfx mat_revert_c5_present_rainbow[] = {
 	gsDPPipeSync(),
 	gsSPGeometryMode(G_TEXTURE_GEN, 0),
 	gsDPSetTextureLUT(G_TT_NONE),
@@ -769,9 +771,9 @@ Gfx c5_present_Present_mesh_layer_1[] = {
 	gsSPVertex(c5_present_Present_mesh_layer_1_vtx_cull + 0, 8, 0),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPCullDisplayList(0, 7),
-	gsSPDisplayList(mat_c5_present_balloon_black),
+	gsSPDisplayList(mat_c5_present_rainbow),
 	gsSPDisplayList(c5_present_Present_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_c5_present_balloon_black),
+	gsSPDisplayList(mat_revert_c5_present_rainbow),
 	gsSPDisplayList(mat_c5_present_ribbon),
 	gsSPDisplayList(c5_present_Present_mesh_layer_1_tri_1),
 	gsSPDisplayList(mat_revert_c5_present_ribbon),
