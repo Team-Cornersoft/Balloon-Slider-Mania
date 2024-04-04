@@ -2032,14 +2032,6 @@ void puppyprint_print_deferred(void) {
         bcopy(&sPuppyprintTextBuffer[i], &header, HEADERSIZE);
         i += HEADERSIZE;
 
-        // Stupid hack to render deferred black box
-        if (header.font & (1 << 7)) {
-            prepare_blank_box();
-            render_blank_box_rounded(SCREEN_CENTER_X - 100, SCREEN_CENTER_Y - 75, SCREEN_CENTER_X + 100, SCREEN_CENTER_Y + 75, 0, 0, 0, 191);
-            finish_blank_box();
-            header.font &= ~(1 << 7);
-        }
-
         s32 x = header.x;
         s32 y = header.y;
         x -= 0x8000;

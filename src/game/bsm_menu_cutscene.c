@@ -30,7 +30,7 @@
 
 #define GAME_FRAMERATE 30
 
-struct BSMDMAImageProperties {\
+struct BSMDMAImageProperties {
     const Texture *addr;
     u32 relativeLoopStart;
     u32 frameTotal;

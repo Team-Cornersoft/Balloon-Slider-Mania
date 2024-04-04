@@ -119,15 +119,15 @@ struct BSMNarratorList gBSMNarratorReds        = {bsmNarratorRedsList,        -1
 struct BSMNarratorList gBSMNarratorTrackselect = {bsmNarratorTrackselectList, -1, ARRAY_COUNT(bsmNarratorTrackselectList)};
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
-    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .courseName = "Snowy\nPeak"       },
-    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .courseName = "Aqueduct\nFlow"    },
-    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .courseName = "Fungi\nCanyon"     },
-    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .courseName = "Starlight\nFest"   },
-    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .courseName = "Holiday\nPeak"     },
-    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .courseName = "Dragon\nFlow"      },
-    {.levelID = LEVEL_LLL, .baselineTime =  90 * 30, .courseName = "Twilight\nCanyon"  },
-    {.levelID = LEVEL_SSL, .baselineTime =  60 * 30, .courseName = "Cyber\nFest"       },
-    {.levelID = LEVEL_DDD, .baselineTime =  90 * 30, .courseName = "Cornersoft\nParade"},
+    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .developerTime = 2071, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
+    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .developerTime = 1521, .courseName = "Aqueduct\nFlow"    , .courseNameNoNewline = "Aqueduct Flow"    },
+    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .developerTime = 1668, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
+    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .developerTime = 2746, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
+    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .developerTime = 1743, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
+    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .developerTime = 2559, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
+    {.levelID = LEVEL_LLL, .baselineTime =  90 * 30, .developerTime = 1886, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
+    {.levelID = LEVEL_SSL, .baselineTime =  60 * 30, .developerTime = 1215, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
+    {.levelID = LEVEL_DDD, .baselineTime =  90 * 30, .developerTime =    0, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
@@ -135,29 +135,13 @@ struct Object *bsmMenuButtonStats;
 struct Object *bsmMenuButtonCredits;
 
 s32 gBSMSelectedButton = BSM_COURSE_1_SNOWY_PEAK;
-static u8 showStats = FALSE;
+struct BSMStatsShow gBSMShowStats;
 
 static u16 warpTransitionOffsets[ARRAY_COUNT(gFBEWarpTransitionProps)];
 
 static char strBuffer[128];
 static u8 inputStickFlags;
 static s8 stickHistory;
-
-// NOTE: Puppyprint only supports 12 lines total (I think), with deferred prints only supporting under 254 characters (excluding newline)
-static char creditsStr[] = {
-"\
-<COL_5FFF5FFF> Mel<COL_--------> \n\
-Courses, Models & Artwork,\n\
-Custom Soundtrack\n\
-\n\
-<COL_FF5F5FFF> ArcticJaguar725<COL_--------> \n\
-Programming, Sound Design,\n\
-Custom Soundtrack\n\
-\n\
-<COL_5F5FFFFF> Tools Used<COL_--------> \n\
-HackerSM64, fast64\
-"
-};
 
 void play_narrator_sound_at_random(struct BSMNarratorList *list) {
     s32 soundCount = list->soundCount;
@@ -283,20 +267,13 @@ static void bsm_manager_render_stats(void) {
     }
 }
 
-static void bsm_manager_render_credits(void) {
-    print_set_envcolour(255, 255, 255, 255);
-    print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT * 1 / 4 + 0, creditsStr, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA | (1 << 7) /*Stupid hack to render deferred black box*/);
-}
-
 static void bsm_manager_render_update(void) {
     if (gSelectionShown == BSM_SELECTION_NONE) {
-        if (showStats) {
+        if (gBSMShowStats.isShowingStats) {
             bsm_manager_render_stats();
         } else {
             bsm_manager_render_stage_name();
         }
-    } else if (gBSMSelectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
-        bsm_manager_render_credits();
     }
 }
 
@@ -579,7 +556,7 @@ static void attempt_selection_move(void) {
 void bhv_bsm_menu_button_manager_init(void) {
     inputStickFlags = 0;
     stickHistory = 0;
-    showStats = FALSE;
+    gBSMShowStats.isShowingStats = FALSE;
     locate_all_button_objects();
     gBSMInitialized = TRUE;
 
@@ -625,7 +602,7 @@ void bhv_bsm_menu_button_manager_loop(void) {
 
             switch (gBSMSelectedButton) {
                 case (BSM_BUTTON_STATS + BSM_COURSE_COUNT):
-                    showStats ^= TRUE;
+                    gBSMShowStats.isShowingStats ^= TRUE;
                     break;
                 case (BSM_BUTTON_CREDITS + BSM_COURSE_COUNT):
                     gSelectionShown = BSM_SELECTION_CREDITS;
@@ -634,30 +611,35 @@ void bhv_bsm_menu_button_manager_loop(void) {
                     if (obj->oBSMMenuLockObj != NULL) {
                         soundToPlay = SOUND_MENU_CAMERA_BUZZ;
                     } else {
-                        u16 rand, swap;
-                        u16 *wProps = &gFBEWarpTransitionProps[0][0];
-                        
-                        // Initialize array
-                        for (s32 i = 0; i < ARRAY_COUNT(warpTransitionOffsets); i++) {
-                            warpTransitionOffsets[i] =  i * ARRAY_COUNT(gFBEWarpTransitionProps[0]);
-                        }
+                        if (gBSMShowStats.isShowingStats) {
+                            gSelectionShown = BSM_SELECTION_DETAILED_STATS;
+                            gBSMShowStats.courseId = gBSMSelectedButton;
+                        } else {
+                            u16 rand, swap;
+                            u16 *wProps = &gFBEWarpTransitionProps[0][0];
+                            
+                            // Initialize array
+                            for (s32 i = 0; i < ARRAY_COUNT(warpTransitionOffsets); i++) {
+                                warpTransitionOffsets[i] =  i * ARRAY_COUNT(gFBEWarpTransitionProps[0]);
+                            }
 
-                        // Randomize array
-                        for (s32 i = ARRAY_COUNT(warpTransitionOffsets) - 1; i >= 0; i--) {
-                            rand = random_u16() % (i + 1);
-                            swap = warpTransitionOffsets[i];
-                            warpTransitionOffsets[i] = warpTransitionOffsets[rand];
-                            warpTransitionOffsets[rand] = swap;
-                        }
+                            // Randomize array
+                            for (s32 i = ARRAY_COUNT(warpTransitionOffsets) - 1; i >= 0; i--) {
+                                rand = random_u16() % (i + 1);
+                                swap = warpTransitionOffsets[i];
+                                warpTransitionOffsets[i] = warpTransitionOffsets[rand];
+                                warpTransitionOffsets[rand] = swap;
+                            }
 
-                        // Randomize FBE transitions based on randomized array order because random_u16 sucks and is semi-deterministic and stuff
-                        for (s32 i = 0; i < ARRAY_COUNT(gFBEWarpTransitionProps); i++) {
-                            rand = random_u16();
-                            wProps[warpTransitionOffsets[i]] = rand >> 15;
-                            wProps[warpTransitionOffsets[i]+1] = rand % 900;
-                        }
+                            // Randomize FBE transitions based on randomized array order because random_u16 sucks and is semi-deterministic and stuff
+                            for (s32 i = 0; i < ARRAY_COUNT(gFBEWarpTransitionProps); i++) {
+                                rand = random_u16();
+                                wProps[warpTransitionOffsets[i]] = rand >> 15;
+                                wProps[warpTransitionOffsets[i]+1] = rand % 900;
+                            }
 
-                        gSelectionShown = BSM_SELECTION_STAGE_START_FIRST + gBSMSelectedButton;
+                            gSelectionShown = BSM_SELECTION_STAGE_START_FIRST + gBSMSelectedButton;
+                        }
                     }
                     break;
             }
@@ -666,6 +648,9 @@ void bhv_bsm_menu_button_manager_loop(void) {
         } else {
             switch (gSelectionShown) {
                 case BSM_SELECTION_CREDITS:
+                    gSelectionShown = BSM_SELECTION_NONE;
+                    break;
+                case BSM_SELECTION_DETAILED_STATS:
                     gSelectionShown = BSM_SELECTION_NONE;
                     break;
                 default:
@@ -706,7 +691,7 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
         cameraNode->pos[2] = Z_POS_OFFSET;
         cameraNode->focus[2] = Z_FOC_OFFSET;
 
-        if (gSelectionShown != BSM_SELECTION_NONE && gBSMSelectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        if (gSelectionShown != BSM_SELECTION_NONE && gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
             cameraNode->pos[2] = Z_POS_OFFSET + Z_OFFSET_MOD;
             cameraNode->focus[2] = Z_FOC_OFFSET + Z_OFFSET_MOD;
         }
@@ -726,15 +711,10 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
         translationNode->translation[1] = 0;
 
-        if (gSelectionShown != BSM_SELECTION_NONE && gBSMSelectedButton == BSM_COURSE_COUNT + BSM_BUTTON_CREDITS) {
+        if (gSelectionShown != BSM_SELECTION_NONE && gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
             translationNode->translation[1] += TRANSLATE_OFFSET;
-        
-            print_set_envcolour(159, 159, 159, 255);
-            print_small_text_buffered(SCREEN_CENTER_X, SCREEN_HEIGHT - 34, "<WAVE>A: Return<WAVE>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         }
     }
 
     return NULL;
 }
-
-STATIC_ASSERT(sizeof(creditsStr) <= 0xFF, "creditsStr exceeds deferred print maximum length!");

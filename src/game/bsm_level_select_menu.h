@@ -43,13 +43,16 @@ enum BSMMenuButtons {
 enum BSMMenuSelectionTypes {
     BSM_SELECTION_NONE,
     BSM_SELECTION_CREDITS,
-    BSM_SELECTION_STAGE_START_FIRST,
+    BSM_SELECTION_DETAILED_STATS,
+    BSM_SELECTION_STAGE_START_FIRST, // Must be last
 };
 
 struct BSMStageProperties {
-    u8 levelID;       // Level ID tied to course
-    s32 baselineTime; // Average time expected to complete the course
-    char *courseName; // Name of the BSM Course
+    u8 levelID;                // Level ID tied to course
+    s32 baselineTime;          // Average time expected to complete the course
+    s32 developerTime;         // Fastest developer time
+    char *courseName;          // Name of the BSM Course
+    char *courseNameNoNewline; // Name of the BSM Course, without newlines
 };
 
 #define BSM_VIDEO_FRAMES_TO_WAIT 15
@@ -67,6 +70,11 @@ struct BSMNarratorList {
     s32 soundCount;
 };
 
+struct BSMStatsShow {
+    u8 isShowingStats;
+    u8 courseId;
+};
+
 extern struct BSMNarratorList gBSMNarratorRankF;
 extern struct BSMNarratorList gBSMNarratorRankD;
 extern struct BSMNarratorList gBSMNarratorRankC;
@@ -79,6 +87,7 @@ extern struct BSMNarratorList gBSMNarratorFail;
 extern struct BSMNarratorList gBSMNarratorItem;
 extern struct BSMNarratorList gBSMNarratorReds;
 extern struct BSMNarratorList gBSMNarratorTrackselect;
+extern struct BSMStatsShow gBSMShowStats;
 
 extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
@@ -96,6 +105,7 @@ extern u8 gSafeToLoadVideo;
 s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
+s32 get_bsm_rank_requirement(s32 courseNum, s32 rank);
 s32 calculate_bsm_rank(s32 courseNum, s32 score);
 void play_narrator_sound_at_random(struct BSMNarratorList *list);
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);

@@ -66,6 +66,10 @@ void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
     play_narrator_sound_at_random(rankNarratorLists[rankIndex]);
 }
 
+s32 get_bsm_rank_requirement(s32 courseNum, s32 rank) {
+    return (BSMGRanks[courseNum] * (1.0f - (G_RANK_MULT * ((NUM_RANKS - 1) - rank))));
+}
+
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
     u8 rank = NUM_RANKS - 1;
     if (score == (u16) -1) {
@@ -73,9 +77,7 @@ s32 calculate_bsm_rank(s32 courseNum, s32 score) {
     }
     
     for (s32 i = 0; rank > 0; rank--, i++) {
-        f32 mult = 1.0f - (G_RANK_MULT * i);
-
-        if ((f32) score >= BSMGRanks[courseNum] * mult) {
+        if ((f32) score >= get_bsm_rank_requirement(courseNum, rank)) {
             break;
         }
     }
