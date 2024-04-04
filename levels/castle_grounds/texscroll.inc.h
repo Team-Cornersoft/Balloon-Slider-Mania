@@ -1,3 +1,9 @@
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_mesh_layer_1_vtx_0();
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_mesh_layer_1_vtx_1();
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_0();
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_1();
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_0();
+extern void scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_1();
 extern void scroll_castle_grounds_dl_B_Menu_checkers_a_mesh_layer_5_vtx_0();
 extern void scroll_castle_grounds_dl_B_Menu_checkers_b_mesh_layer_5_vtx_0();
 extern void scroll_castle_grounds_dl_B_Menu_checkers_c_mesh_layer_5_vtx_0();
