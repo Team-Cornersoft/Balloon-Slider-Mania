@@ -413,8 +413,6 @@ void render_hud_breath_meter(void) {
 #endif
 
 
-#define CYCLE_FRAMES 60
-
 static u16 get_press_button_alpha() {
     f32 tmp;
     s32 currentCycles = pressAFrames % CYCLE_FRAMES;

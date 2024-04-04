@@ -714,8 +714,6 @@ void process_bsm_actions(void) {
         finish_blank_box();
         print_set_envcolour(255, 255, 255, 255);
         print_small_text(SCREEN_CENTER_X, SCREEN_HEIGHT * 1 / 4 + 0, creditsStr, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-        print_set_envcolour(175, 175, 175, 255);
-        print_small_text(SCREEN_CENTER_X, SCREEN_HEIGHT - 34, "<WAVE>A: Return<WAVE>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     } else if (gSelectionShown == BSM_SELECTION_DETAILED_STATS) {
         s32 xBase = 60;
         s32 yBase = (SCREEN_HEIGHT - 16) - 84;
@@ -727,10 +725,10 @@ void process_bsm_actions(void) {
         finish_blank_box();
     
         sprintf(strBuf, "Track %d", gBSMSelectedButton + 1);
-        print_set_envcolour(255, 255, 63, 255);
+        print_set_envcolour(127, 255, 127, 255);
         print_small_text(SCREEN_CENTER_X, 44, strBuf, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     
-        print_set_envcolour(159, 191, 255, 255);
+        print_set_envcolour(191, 223, 255, 255);
         print_small_text(SCREEN_CENTER_X, 58, gBSMStageProperties[gBSMSelectedButton].courseNameNoNewline, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 159, 31, 255);
@@ -769,12 +767,9 @@ void process_bsm_actions(void) {
             s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
             s32 y = (i / 2) * -32.0f;
 
-            sprintf(strBuf, "%d Pts.", get_bsm_rank_requirement(gBSMSelectedButton, rank));
+            sprintf(strBuf, "<COL_FFFF3F-->%d <COL_BFBFBF-->Pts.<COL_-------->", get_bsm_rank_requirement(gBSMSelectedButton, rank));
             print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBase + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         }
-
-        print_set_envcolour(175, 175, 175, 255);
-        print_small_text(SCREEN_CENTER_X, SCREEN_HEIGHT - 26, "<WAVE>A: Return<WAVE>", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 }
 

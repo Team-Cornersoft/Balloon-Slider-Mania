@@ -9,7 +9,9 @@
 #include "bsm_level_select_menu.h"
 #include "debug.h"
 #include "game_init.h"
+#include "hud.h"
 #include "ingame_menu.h"
+#include "level_update.h"
 #include "object_helpers.h"
 #include "object_list_processor.h"
 #include "print.h"
@@ -558,6 +560,7 @@ void bhv_bsm_menu_button_manager_init(void) {
     stickHistory = 0;
     gBSMShowStats.isShowingStats = FALSE;
     locate_all_button_objects();
+    init_image_screen_press_button(0, 0);
     gBSMInitialized = TRUE;
 
     if (bsmTrackSelectNarratorSpoken != 0) {
@@ -649,9 +652,11 @@ void bhv_bsm_menu_button_manager_loop(void) {
             switch (gSelectionShown) {
                 case BSM_SELECTION_CREDITS:
                     gSelectionShown = BSM_SELECTION_NONE;
+                    init_image_screen_press_button(0, 0);
                     break;
                 case BSM_SELECTION_DETAILED_STATS:
                     gSelectionShown = BSM_SELECTION_NONE;
+                    init_image_screen_press_button(0, 0);
                     break;
                 default:
                     break;
@@ -713,6 +718,12 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
         if (gSelectionShown != BSM_SELECTION_NONE && gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
             translationNode->translation[1] += TRANSLATE_OFFSET;
+
+            renderPressA = TRUE;
+            pressAFrames++;
+            // if (pressAFrames < CYCLE_FRAMES / 2) {
+            //     pressAFrames = CYCLE_FRAMES / 2;
+            // }
         }
     }
 
