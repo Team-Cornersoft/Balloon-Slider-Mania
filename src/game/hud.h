@@ -16,6 +16,7 @@
 #define HUD_STARS_X 78 // This starts counting from the right edge
 #define HUD_CAMERA_X 54 // This starts counting from the right edge
 
+#define CYCLE_FRAMES 60
 #define EMULATOR_DIFF 6
 
 enum PowerMeterAnimation {
