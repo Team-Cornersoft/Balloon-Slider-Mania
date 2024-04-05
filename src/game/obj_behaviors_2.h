@@ -22,4 +22,6 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
                    f32 startSpeed, f32 endSpeed, s16 movePitch);
 void obj_set_speed_to_zero(void);
 
+void clear_shared_area_point_balloons(void);
+
 #endif // OBJ_BEHAVIORS_2_H

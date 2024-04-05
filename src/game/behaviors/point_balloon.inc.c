@@ -4,6 +4,17 @@ extern void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ);
 
 #define BALLOON_STEP_COUNT 2
 
+struct SharedAreaPointBalloon {
+    u8 loaded;
+    s32 timer;
+    Vec3s oscillateFreq;
+    Vec3s oscillateOffset;
+    Vec3f oscillateIntensity;
+};
+
+static struct SharedAreaPointBalloon sharedAreasPointBalloons[0x3F];
+
+
 #define BALLOON_FLOATING_CALC(relativePos, intensity, offset, freq) \
     (relativePos + intensity * sins((0x10000 * ((o->oPtBalloonAbsoluteTimer + offset) % freq)) / freq))
 
@@ -154,6 +165,60 @@ static u8 key_balloon_check_if_interacted(void) {
     return FALSE;
 }
 
+static void init_shared_generic_balloon_positions(void) {
+    if (BPARAM4 == 0) {
+        return;
+    }
+
+    u32 index = BPARAM4 - 1;
+    assert(index < ARRAY_COUNT(sharedAreasPointBalloons), "bparam4 balloon index out of supported range!");
+
+    if (!sharedAreasPointBalloons[index].loaded) {
+        sharedAreasPointBalloons[index].loaded = TRUE;
+        return;
+    }
+
+    // Copy balloon position from previous area
+    o->oPtBalloonAbsoluteTimer = sharedAreasPointBalloons[index].timer;
+
+    o->oPtBalloonOscillateXFreq = sharedAreasPointBalloons[index].oscillateFreq[0];
+    o->oPtBalloonOscillateYFreq = sharedAreasPointBalloons[index].oscillateFreq[1];
+    o->oPtBalloonOscillateZFreq = sharedAreasPointBalloons[index].oscillateFreq[2];
+
+    o->oPtBalloonOscillateXOffset = sharedAreasPointBalloons[index].oscillateOffset[0];
+    o->oPtBalloonOscillateYOffset = sharedAreasPointBalloons[index].oscillateOffset[1];
+    o->oPtBalloonOscillateZOffset = sharedAreasPointBalloons[index].oscillateOffset[2];
+
+    o->oPtBalloonOscillateXIntensity = sharedAreasPointBalloons[index].oscillateIntensity[0];
+    o->oPtBalloonOscillateYIntensity = sharedAreasPointBalloons[index].oscillateIntensity[1];
+    o->oPtBalloonOscillateZIntensity = sharedAreasPointBalloons[index].oscillateIntensity[2];
+}
+
+static void update_generic_balloon_positions(void) {
+    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
+    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
+    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
+
+    o->oPtBalloonAbsoluteTimer++;
+
+    if (BPARAM4 > 0) {
+        u32 index = BPARAM4 - 1;
+        sharedAreasPointBalloons[index].timer = o->oPtBalloonAbsoluteTimer;
+
+        sharedAreasPointBalloons[index].oscillateFreq[0] = o->oPtBalloonOscillateXFreq;
+        sharedAreasPointBalloons[index].oscillateFreq[1] = o->oPtBalloonOscillateYFreq;
+        sharedAreasPointBalloons[index].oscillateFreq[2] = o->oPtBalloonOscillateZFreq;
+
+        sharedAreasPointBalloons[index].oscillateOffset[0] = o->oPtBalloonOscillateXOffset;
+        sharedAreasPointBalloons[index].oscillateOffset[1] = o->oPtBalloonOscillateYOffset;
+        sharedAreasPointBalloons[index].oscillateOffset[2] = o->oPtBalloonOscillateZOffset;
+
+        sharedAreasPointBalloons[index].oscillateIntensity[0] = o->oPtBalloonOscillateXIntensity;
+        sharedAreasPointBalloons[index].oscillateIntensity[1] = o->oPtBalloonOscillateYIntensity;
+        sharedAreasPointBalloons[index].oscillateIntensity[2] = o->oPtBalloonOscillateZIntensity;
+    }
+}
+
 void bhv_point_balloon_init(void) {
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
@@ -181,6 +246,8 @@ void bhv_point_balloon_init(void) {
     assert(o->oPtBalloonOscillateXFreq != 0, "Balloon X freq is 0!");
     assert(o->oPtBalloonOscillateYFreq != 0, "Balloon Y freq is 0!");
     assert(o->oPtBalloonOscillateZFreq != 0, "Balloon Z freq is 0!");
+
+    init_shared_generic_balloon_positions();
 }
 
 void bhv_point_balloon_loop(void) {
@@ -212,11 +279,7 @@ void bhv_point_balloon_loop(void) {
         }
     }
 
-    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
-    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
-    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
-
-    o->oPtBalloonAbsoluteTimer++;
+    update_generic_balloon_positions();
 }
 
 void bhv_key_balloon_init(void) {
@@ -238,6 +301,8 @@ void bhv_key_balloon_init(void) {
     assert(o->oPtBalloonOscillateXFreq != 0, "Balloon X freq is 0!");
     assert(o->oPtBalloonOscillateYFreq != 0, "Balloon Y freq is 0!");
     assert(o->oPtBalloonOscillateZFreq != 0, "Balloon Z freq is 0!");
+
+    init_shared_generic_balloon_positions();
 }
 
 void bhv_key_balloon_loop(void) {
@@ -268,11 +333,7 @@ void bhv_key_balloon_loop(void) {
         }
     }
 
-    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
-    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
-    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
-
-    o->oPtBalloonAbsoluteTimer++;
+    update_generic_balloon_positions();
 }
 
 void bhv_point_balloon_popped_init(void) {
@@ -358,6 +419,9 @@ void bhv_item_gate_loop(void) {
 }
 
 void bhv_title_screen_balloon_init(void) {
+    // Do not fill shared area slots
+    SET_BPARAM4(o->oBehParams, 0);
+
     f32 scale = 1.5f; // Does not actually scale the object
 
     vec3f_copy(&o->oPosVec, &o->oHomeVec);
@@ -388,10 +452,10 @@ void bhv_title_screen_balloon_init(void) {
 
 void bhv_title_screen_balloon_loop(void) {
     o->oPtBalloonRelativePosY = lerpf(o->oPtBalloonRelativePosY, o->oHomeY, o->oPtBalloonLerpSpeed);
+    
+    update_generic_balloon_positions();
+}
 
-    o->oPosX = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosX, o->oPtBalloonOscillateXIntensity, o->oPtBalloonOscillateXOffset, o->oPtBalloonOscillateXFreq);
-    o->oPosY = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosY, o->oPtBalloonOscillateYIntensity, o->oPtBalloonOscillateYOffset, o->oPtBalloonOscillateYFreq);
-    o->oPosZ = BALLOON_FLOATING_CALC(o->oPtBalloonRelativePosZ, o->oPtBalloonOscillateZIntensity, o->oPtBalloonOscillateZOffset, o->oPtBalloonOscillateZFreq);
-
-    o->oPtBalloonAbsoluteTimer++;
+void clear_shared_area_point_balloons(void) {
+    bzero(sharedAreasPointBalloons, sizeof(sharedAreasPointBalloons));
 }

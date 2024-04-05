@@ -1477,6 +1477,7 @@ s32 init_level(void) {
     gBSMGoSignaled = FALSE;
     gRenderBSMSuccessMenu = FALSE;
     memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
+    clear_shared_area_point_balloons();
 
 #ifdef MARIO_POS_OVERRIDE
     gBSMTimerActive = TRUE;
