@@ -42,14 +42,14 @@ void scroll_ssl_dl_0_SKYBOX_a_001_mesh_layer_1_vtx_0() {
 
 void scroll_ssl_dl_0_SKYBOX_a_002_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 96;
-	int height = 128 * 0x20;
+	int count = 144;
+	int height = 512 * 0x20;
 
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_002_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(-0.5 * 0x20) % height;
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -63,14 +63,14 @@ void scroll_ssl_dl_0_SKYBOX_a_002_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 96;
-	int height = 128 * 0x20;
+	int count = 144;
+	int height = 512 * 0x20;
 
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(-0.5 * 0x20) % height;
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -84,14 +84,14 @@ void scroll_ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 96;
-	int height = 128 * 0x20;
+	int count = 144;
+	int height = 512 * 0x20;
 
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(-0.5 * 0x20) % height;
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -105,14 +105,35 @@ void scroll_ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_0_SKYBOX_a_005_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 144;
-	int height = 128 * 0x20;
+	int count = 108;
+	int height = 512 * 0x20;
 
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_005_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(-0.5 * 0x20) % height;
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
+
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentY += deltaY;
+}
+
+void scroll_ssl_dl_0_SKYBOX_a_006_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 108;
+	int height = 512 * 0x20;
+
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ssl_dl_0_SKYBOX_a_006_mesh_layer_5_vtx_0);
+
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -294,7 +315,7 @@ void scroll_ssl_dl_A_Road_a_mesh_layer_1_vtx_2() {
 
 void scroll_ssl_dl_A_Road_b_mesh_layer_1_vtx_0() {
 	int i = 0;
-	int count = 90;
+	int count = 76;
 	int height = 64 * 0x20;
 
 	static int currentY = 0;
@@ -315,7 +336,7 @@ void scroll_ssl_dl_A_Road_b_mesh_layer_1_vtx_0() {
 
 void scroll_ssl_dl_A_Road_b_mesh_layer_1_vtx_3() {
 	int i = 0;
-	int count = 692;
+	int count = 618;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
@@ -442,13 +463,13 @@ void scroll_ssl_dl_C_start_line_mesh_layer_5_vtx_2() {
 void scroll_ssl_dl_0_skybox_a3_mesh_layer_5_vtx_0() {
 	int i = 0;
 	int count = 376;
-	int height = 128 * 0x20;
+	int height = 512 * 0x20;
 
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_0_skybox_a3_mesh_layer_5_vtx_0);
 
-	deltaY = (int)(-0.5 * 0x20) % height;
+	deltaY = (int)(-0.699999988079071 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -1038,6 +1059,38 @@ void scroll_gfx_mat_ssl_dl_Planet_projection_layer5() {
 
 };
 
+void scroll_gfx_mat_ssl_dl_Cyber_floor_C_layer1() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Cyber_floor_C_layer1);
+	static int interval_tex_ssl_dl_Cyber_floor_C_layer1 = 4;
+	static int cur_interval_tex_ssl_dl_Cyber_floor_C_layer1 = 4;
+
+
+	if (--cur_interval_tex_ssl_dl_Cyber_floor_C_layer1 <= 0) {
+		shift_s(mat, 11, PACK_TILESIZE(0, 96));
+		shift_t(mat, 11, PACK_TILESIZE(0, 192));
+		cur_interval_tex_ssl_dl_Cyber_floor_C_layer1 = interval_tex_ssl_dl_Cyber_floor_C_layer1;
+	}
+	shift_s_down(mat, 16, PACK_TILESIZE(0, 96));
+	shift_t(mat, 16, PACK_TILESIZE(0, 192));
+
+};
+
+void scroll_gfx_mat_ssl_dl_Cyber_floor_B_layer1() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Cyber_floor_B_layer1);
+	static int interval_tex_ssl_dl_Cyber_floor_B_layer1 = 4;
+	static int cur_interval_tex_ssl_dl_Cyber_floor_B_layer1 = 4;
+
+
+	if (--cur_interval_tex_ssl_dl_Cyber_floor_B_layer1 <= 0) {
+		shift_s(mat, 11, PACK_TILESIZE(0, 96));
+		shift_t(mat, 11, PACK_TILESIZE(0, 192));
+		cur_interval_tex_ssl_dl_Cyber_floor_B_layer1 = interval_tex_ssl_dl_Cyber_floor_B_layer1;
+	}
+	shift_s_down(mat, 16, PACK_TILESIZE(0, 96));
+	shift_t(mat, 16, PACK_TILESIZE(0, 192));
+
+};
+
 void scroll_gfx_mat_ssl_dl_Building_plus_window() {
 	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Building_plus_window);
 	static int interval_tex_ssl_dl_Building_plus_window = 8;
@@ -1214,6 +1267,7 @@ void scroll_ssl() {
 	scroll_ssl_dl_0_SKYBOX_a_003_mesh_layer_5_vtx_0();
 	scroll_ssl_dl_0_SKYBOX_a_004_mesh_layer_5_vtx_0();
 	scroll_ssl_dl_0_SKYBOX_a_005_mesh_layer_5_vtx_0();
+	scroll_ssl_dl_0_SKYBOX_a_006_mesh_layer_5_vtx_0();
 	scroll_ssl_dl_0_SKYBOX_b_mesh_layer_1_vtx_0();
 	scroll_ssl_dl_0_SKYBOX_b_001_mesh_layer_1_vtx_0();
 	scroll_ssl_dl_0_SKYBOX_c_mesh_layer_1_vtx_0();
@@ -1259,6 +1313,8 @@ void scroll_ssl() {
 	scroll_gfx_mat_ssl_dl_Scrolling_numbers();
 	scroll_gfx_mat_ssl_dl_Cyber_floor_layer1();
 	scroll_gfx_mat_ssl_dl_Planet_projection_layer5();
+	scroll_gfx_mat_ssl_dl_Cyber_floor_C_layer1();
+	scroll_gfx_mat_ssl_dl_Cyber_floor_B_layer1();
 	scroll_gfx_mat_ssl_dl_Building_plus_window();
 	scroll_gfx_mat_ssl_dl_Billboard_b2_layer5();
 	scroll_gfx_mat_ssl_dl_Billboard_b1_layer5();
