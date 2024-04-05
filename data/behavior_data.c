@@ -476,7 +476,6 @@ const BehaviorScript bhvKeyGate[] = {
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_key_gate_loop),
-        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
 
@@ -491,7 +490,6 @@ const BehaviorScript bhvItemGate[] = {
     SET_HOME(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_item_gate_loop),
-        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
 

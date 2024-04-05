@@ -399,6 +399,8 @@ void bhv_key_gate_loop(void) {
         }
 
         obj_mark_for_deletion(o);
+    } else {
+        load_object_collision_model();
     }
 }
 
@@ -415,6 +417,8 @@ void bhv_item_gate_loop(void) {
         }
 
         obj_mark_for_deletion(o);
+    } else {
+        load_object_collision_model();
     }
 }
 
