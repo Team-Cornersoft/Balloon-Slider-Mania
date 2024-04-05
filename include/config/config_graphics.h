@@ -7,7 +7,8 @@
 /**
  * The size of the master display list (gDisplayListHead). 6400 is vanilla.
  */
-#define GFX_POOL_SIZE 22000
+#define GFX_POOL_SIZE 20000
+#define ASSERTED_GFX_POOL_SIZE 14000
 
 /**
  * Causes the global light direction to be in world space,

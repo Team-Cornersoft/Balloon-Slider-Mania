@@ -27,6 +27,7 @@
 #ifdef SRAM
 #include "sram.h"
 #endif
+#include "debug.h"
 #include "puppyprint.h"
 #include "puppycam2.h"
 #include "debug_box.h"
@@ -357,6 +358,12 @@ void create_gfx_task_structure(void) {
     gGfxSPTask->task.t.data_size = entries * sizeof(Gfx);
     gGfxSPTask->task.t.yield_data_ptr = (u64 *) gGfxSPTaskYieldBuffer;
     gGfxSPTask->task.t.yield_data_size = OS_YIELD_DATA_SIZE;
+
+#ifdef PUPPYPRINT_DEBUG
+    if (!sDebugMenu) {
+        assert(((u32)gDisplayListHead - ((u32)gGfxPool->buffer)) / 4 < ASSERTED_GFX_POOL_SIZE, "GFX too heavy! please split area!");
+    }
+#endif
 }
 
 /**

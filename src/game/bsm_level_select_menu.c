@@ -700,6 +700,12 @@ Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void 
             cameraNode->pos[2] = Z_POS_OFFSET + Z_OFFSET_MOD;
             cameraNode->focus[2] = Z_FOC_OFFSET + Z_OFFSET_MOD;
         }
+
+#ifdef DEBUG_LEVEL_SELECT
+        if (gPlayer1Controller->buttonPressed & L_TRIG) {
+            gBSMMenuLayoutBGState = (gBSMMenuLayoutBGState + 1) % BSM_MENU_LAYOUT_BG_COUNT;
+        }
+#endif
     }
 
     return NULL;
@@ -721,9 +727,6 @@ Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void
 
             renderPressA = TRUE;
             pressAFrames++;
-            // if (pressAFrames < CYCLE_FRAMES / 2) {
-            //     pressAFrames = CYCLE_FRAMES / 2;
-            // }
         }
     }
 
