@@ -483,7 +483,7 @@ void scroll_ssl_dl_0_skybox_a3_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 278;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
@@ -504,7 +504,7 @@ void scroll_ssl_dl_StaR_road_a3_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_001_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 271;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
@@ -525,7 +525,7 @@ void scroll_ssl_dl_StaR_road_a3_001_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_002_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 271;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
@@ -546,7 +546,7 @@ void scroll_ssl_dl_StaR_road_a3_002_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_003_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 271;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
@@ -567,7 +567,7 @@ void scroll_ssl_dl_StaR_road_a3_003_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_004_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 271;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
@@ -588,7 +588,7 @@ void scroll_ssl_dl_StaR_road_a3_004_mesh_layer_5_vtx_0() {
 
 void scroll_ssl_dl_StaR_road_a3_005_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 271;
+	int count = 246;
 	int width = 64 * 0x20;
 
 	static int currentX = 0;
