@@ -65,6 +65,7 @@ Gfx *geo_switch_anim_state(s32 callContext, struct GraphNode *node, UNUSED void 
 Gfx *geo_switch_bparam2(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_switch_console(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_bsm_menu_set_stats_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_menu_set_special_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_menu_switch_alpha_stage(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_retry_menu_set_clownfont_color(s32 callContext, UNUSED struct GraphNode *node, UNUSED void *context);

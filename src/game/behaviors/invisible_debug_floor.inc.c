@@ -9,6 +9,6 @@ void bhv_invisible_debug_floor_loop(void) {
         }
 #endif
     } else {
-        obj_mark_for_deletion(o);
+        o->oPosY = FLOOR_LOWER_LIMIT + 50.0f;
     }
 }

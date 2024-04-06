@@ -57,6 +57,7 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
     s32 buttonId = o->oBehParams2ndByte;
     o->oBSMMenuFrameColor = 0xFFFFFFFF;
+    o->oBSMMenuButtonColor = 0xFFFFFFFF;
     o->oBSMStageFadeTimer = 0;
 
     if (!cur_obj_has_model(MODEL_BSM_MENU_STAGE)) {
@@ -205,7 +206,7 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
             objectGraphNode = gCurGraphNodeHeldObject->objNode;
         }
 
-        dlStart = alloc_display_list(sizeof(Gfx) * 3);
+        dlStart = alloc_display_list(sizeof(Gfx) * 2);
 
         SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_TRANSPARENT);
         Gfx *dlHead = dlStart;
@@ -241,6 +242,14 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
                     g = 0.75f;
                     b = 0.75f;
                 }
+            } else if (
+               gBSMShowStats.isShowingStats &&
+               obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) &&
+               objectGraphNode->oBehParams2ndByte == 0
+            ) {
+                r = 1.0f;
+                g = 1.0f;
+                b = 0.0f;
             }
 
             r = smoothstop((objectGraphNode->oBSMMenuFrameColor >> 24 & 0xFF) / 255.0f, r, 0.15f);
@@ -267,6 +276,78 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
     return dlStart;
 }
 
+Gfx *geo_bsm_menu_set_stats_envcolor(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    Gfx *dlStart = NULL;
+
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *objectGraphNode = (struct Object *) gCurGraphNodeObject;
+        struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+        struct Object *parentNode = objectGraphNode->parentObj;
+
+        if (!parentNode || objectGraphNode->behavior == segmented_to_virtual(bhvBSMMenuButtonOrStage)) {
+            parentNode = objectGraphNode;
+        }
+
+        if (gCurGraphNodeHeldObject != NULL) {
+            objectGraphNode = gCurGraphNodeHeldObject->objNode;
+        }
+
+        dlStart = alloc_display_list(sizeof(Gfx) * 2);
+
+        SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_OPAQUE);
+        Gfx *dlHead = dlStart;
+
+        f32 r = 1.0f;
+        f32 g = 1.0f;
+        f32 b = 1.0f;
+
+        if (
+           gBSMShowStats.isShowingStats &&
+           obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) &&
+           objectGraphNode->oBehParams2ndByte == 0
+        ) {
+            r = 1.0f;
+            g = 1.0f;
+            b = 0.0f;
+
+            if (r > 1.0f) {
+                r = 1.0f;
+            } else if (r < 0.0f) {
+                r = 0.0f;
+            }
+            if (g > 1.0f) {
+                g = 1.0f;
+            } else if (g < 0.0f) {
+                g = 0.0f;
+            }
+            if (b > 1.0f) {
+                b = 1.0f;
+            } else if (b < 0.0f) {
+                b = 0.0f;
+            }
+        }
+
+        r = smoothstop((objectGraphNode->oBSMMenuButtonColor >> 24 & 0xFF) / 255.0f, r, 0.15f);
+        g = smoothstop((objectGraphNode->oBSMMenuButtonColor >> 16 & 0xFF) / 255.0f, g, 0.15f);
+        b = smoothstop((objectGraphNode->oBSMMenuButtonColor >>  8 & 0xFF) / 255.0f, b, 0.15f);
+
+        r *= 255.0f;
+        g *= 255.0f;
+        b *= 255.0f;
+
+        objectGraphNode->oBSMMenuButtonColor = (objectGraphNode->oBSMMenuButtonColor & 0xFF) | 
+            ((u8) r << 24) |
+            ((u8) g << 16) |
+            ((u8) b << 8);
+
+        gDPSetEnvColor(dlHead++, r, g, b, objectGraphNode->oOpacity);
+        
+        gSPEndDisplayList(dlHead);
+    }
+
+    return dlStart;
+}
+
 Gfx *geo_bsm_menu_set_special_transparency(s32 callContext, struct GraphNode *node, UNUSED void *context) {
     Gfx *dlStart = NULL;
 
@@ -281,7 +362,7 @@ Gfx *geo_bsm_menu_set_special_transparency(s32 callContext, struct GraphNode *no
         s32 objectOpacity = 255 - (objectGraphNode->oBSMStageFadeTimer * 255 / FADE_FRAMES);
         objectOpacity = CLAMP_U8(objectOpacity);
 
-        dlStart = alloc_display_list(sizeof(Gfx) * 3);
+        dlStart = alloc_display_list(sizeof(Gfx) * 2);
         Gfx *dlHead = dlStart;
 
         if (objectOpacity == 0xFF) {

@@ -1222,15 +1222,17 @@ s32 play_mode_normal(void) {
                 break;
         }
 
-        f32 transAmount1 = coss(0x8000 * gBSMCameraCutscenePanTimer / BSM_CAMERA_CUTSCENE_PAN_VALUE);
-        f32 transAmount2 = sqrtf(ABS(transAmount1)) * (transAmount1 >= 0.0f ? 1.0f : -1.0f);
-        f32 multAmount1 = transAmount1 = 1.0f - ((transAmount1 + 1.0f) / 2.0f);
-        f32 multAmount2 = transAmount2 = 1.0f - ((transAmount2 + 1.0f) / 2.0f);
+        f32 transAmount1 = ((f32) gBSMCameraCutscenePanTimer - 5.0f) / ((f32) BSM_CAMERA_CUTSCENE_PAN_VALUE - 5.0f);
+        transAmount1 = coss(0x8000 * MAX(0.0f, transAmount1));
+        f32 transAmount2 = coss(0x8000 * gBSMCameraCutscenePanTimer / BSM_CAMERA_CUTSCENE_PAN_VALUE);
+        transAmount2 = (coss((0x4000 * -transAmount2) + 0x4000) * 0.75f) + (transAmount2 * 0.25f);
+        f32 multAmount1 = 1.0f - ((transAmount1 + 1.0f) / 2.0f);
+        f32 multAmount2 = 1.0f - ((transAmount2 + 1.0f) / 2.0f);
 
-        multAmount1 = multAmount1 * 1.10f - 0.10f;
-        if (multAmount1 < 0.0f) {
-            multAmount1 = 0.0f;
-        }
+        // multAmount1 = multAmount1 * 1.20f - 0.20f;
+        // if (multAmount1 < 0.0f) {
+        //     multAmount1 = 0.0f;
+        // }
 
         yawOffset *= multAmount2;
         posOffsets[0] += maxDist * sins(yawOffset);

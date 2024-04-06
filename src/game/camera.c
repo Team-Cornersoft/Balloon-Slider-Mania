@@ -2135,8 +2135,10 @@ s16 update_default_camera(struct Camera *c) {
     cPos[1] += posHeight + 125.f;
 
     // Move the camera away from walls and set the collision flag
-    if (collide_with_walls(cPos, 10.f, 80.f) != 0) {
-        sStatusFlags |= CAM_FLAG_COLLIDED_WITH_WALL;
+    if (gBSMCameraCutscenePanTimer == 0) {
+        if (collide_with_walls(cPos, 10.f, 80.f) != 0) {
+            sStatusFlags |= CAM_FLAG_COLLIDED_WITH_WALL;
+        }
     }
 
     c->focus[0] = sMarioCamState->pos[0];
