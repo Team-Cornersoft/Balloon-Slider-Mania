@@ -8,8 +8,6 @@ void bhv_invisible_debug_floor_loop(void) {
             o->oPosY = MAX(FLOOR_LOWER_LIMIT, gMarioObject->oPosY - 150.0f);
         }
 #endif
-
-        load_object_collision_model();
     } else {
         obj_mark_for_deletion(o);
     }
