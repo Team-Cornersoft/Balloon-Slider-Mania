@@ -1000,7 +1000,12 @@ void render_hud_bsm_info(void) {
 void render_hud(void) {
     s16 hudDisplayFlags = gHudDisplay.flags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER;
 
-    if (gMarioState && gMarioState->action == ACT_BSM_CELEBRATION) {
+    if (
+        (gMarioState && gMarioState->action == ACT_BSM_CELEBRATION)
+#ifdef PUPPYPRINT_DEBUG
+        || (fDebug && sPPDebugPage == PUPPYPRINT_PAGE_SMOOTH_VIDEO)
+#endif
+    ) {
         hudDisplayFlags &= ~HUD_DISPLAY_FLAG_CAMERA_AND_POWER;
     }
 

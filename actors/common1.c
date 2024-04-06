@@ -102,3 +102,6 @@ UNUSED static const u64 binid_26 = 26;
 
 #include "tcs_token/model.inc.c"
 UNUSED static const u64 binid_27 = 27;
+
+#include "invisible_floor/collision.inc.c"
+UNUSED static const u64 binid_28 = 278;

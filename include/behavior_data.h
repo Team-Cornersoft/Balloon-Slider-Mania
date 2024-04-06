@@ -27,6 +27,7 @@ extern const BehaviorScript bhvBSMMenuLockOrToken[];
 extern const BehaviorScript bhvBSMMenuRankOrToken[];
 extern const BehaviorScript bhvBSMRetryMenuRank[];
 extern const BehaviorScript bhvBSMRetryMenuSelection[];
+extern const BehaviorScript bhvInvisibleDebugFloor[];
 extern const BehaviorScript bhvStarDoor[];
 extern const BehaviorScript bhvMrI[];
 extern const BehaviorScript bhvMrIIris[];

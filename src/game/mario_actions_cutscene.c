@@ -519,6 +519,10 @@ s32 act_debug_free_move(struct MarioState *m) {
     struct Surface *floor, *ceil;
     Vec3f pos;
 
+    if (!find_first_object_with_behavior_and_bparams(bhvInvisibleDebugFloor, 0, 0)) {
+        spawn_object(gMarioState->marioObj, MODEL_NONE, bhvInvisibleDebugFloor);
+    }
+
     f32 speed = (gPlayer1Controller->buttonDown & B_BUTTON) ? 4.0f : 1.0f;
     if (gPlayer1Controller->buttonDown & Z_TRIG) speed = 0.01f;
     if (m->area->camera->mode != CAMERA_MODE_8_DIRECTIONS) set_camera_mode(m->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);

@@ -24,6 +24,7 @@
 #include "object_list_processor.h"
 #include "ingame_menu.h"
 #include "obj_behaviors.h"
+#include "obj_behaviors_2.h"
 #include "rendering_graph_node.h"
 #include "save_file.h"
 #if MULTILANG

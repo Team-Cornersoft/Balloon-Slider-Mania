@@ -123,6 +123,7 @@ enum PuppyFont {
     FONT_NUM
 };
 
+extern u8 fDebug;
 extern u8 sDebugMenu;
 extern u8 sPPDebugPage;
 extern u8 gPuppyFont;

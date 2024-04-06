@@ -1783,7 +1783,8 @@ slideSpeedDefaultCase:
 #ifdef ENABLE_DEBUG_FREE_MOVE
         if (
             (gMarioState->controller->buttonDown & U_JPAD) &&
-            !(gMarioState->controller->buttonDown & L_TRIG)
+            !(gMarioState->controller->buttonDown & L_TRIG) &&
+            (gMarioState->action != ACT_DEBUG_FREE_MOVE)
         ) {
             bsm_begin_track();
             set_camera_mode(gMarioState->area->camera, CAMERA_MODE_8_DIRECTIONS, 1);

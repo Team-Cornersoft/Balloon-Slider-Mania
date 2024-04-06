@@ -951,6 +951,7 @@ void cur_obj_update(void) {
             (objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR)
             || (!(gEmulator & NO_CULLING_EMULATOR_BLACKLIST) && (objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR))
             || distanceFromMario < o->oDrawingDistance
+            || o->oDrawingDistance < 0.0f
         ) {
             if (inRoom == MARIO_OUTSIDE_ROOM) {
                 cur_obj_disable_rendering_in_room();
@@ -969,7 +970,7 @@ void cur_obj_update(void) {
         && ((gEmulator & NO_CULLING_EMULATOR_BLACKLIST) || !(objFlags & OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR))
     ) {
         // If the object has a render distance, check if it should be shown.
-        if (distanceFromMario > o->oDrawingDistance) {
+        if (distanceFromMario > o->oDrawingDistance && o->oDrawingDistance >= 0.0f) {
             // Out of render distance, hide the object.
             o->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
             o->activeFlags |= ACTIVE_FLAG_FAR_AWAY;

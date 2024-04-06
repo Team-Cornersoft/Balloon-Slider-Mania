@@ -670,6 +670,18 @@ const BehaviorScript bhvBSMRetryMenuSelection[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvInvisibleDebugFloor[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_DONT_CALC_COLL_DIST)),
+    LOAD_COLLISION_DATA(invisible_floor_collision),
+    SET_FLOAT(oCollisionDistance, -1),
+    SET_FLOAT(oDrawingDistance, -1),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_invisible_debug_floor_loop),
+        CALL_NATIVE(load_object_collision_model),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),

@@ -700,7 +700,7 @@ void load_object_collision_model(void) {
 
     // If the object collision is supposed to be loaded more than the
     // drawing distance, extend the drawing range.
-    if (o->oCollisionDistance > o->oDrawingDistance) {
+    if (o->oCollisionDistance > o->oDrawingDistance || o->oCollisionDistance < 0.0f) {
         o->oDrawingDistance = o->oCollisionDistance;
     }
     
@@ -709,6 +709,10 @@ void load_object_collision_model(void) {
         && (verticalMarioDiff > 0 || verticalMarioDiff > -o->oCollisionDistance)
         && (verticalMarioDiff < 0 || verticalMarioDiff < o->oCollisionDistance + 2000.f)
     );
+
+    if (o->oCollisionDistance < 0.0f) {
+        inColRadius = TRUE;
+    }
 
     // Update if no Time Stop, in range, and in the current room.
     if (
@@ -733,7 +737,7 @@ void load_object_collision_model(void) {
         marioDist = dist_between_objects(o, gMarioObject);
     }
 
-    COND_BIT((marioDist < o->oDrawingDistance), o->header.gfx.node.flags, GRAPH_RENDER_ACTIVE);
+    COND_BIT((marioDist < o->oDrawingDistance || o->oDrawingDistance < 0.0f), o->header.gfx.node.flags, GRAPH_RENDER_ACTIVE);
     profiler_collision_update(first);
 }
 
