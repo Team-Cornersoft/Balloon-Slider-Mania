@@ -31,7 +31,8 @@
 #define GAME_FRAMERATE 30
 
 struct BSMDMAImageProperties {
-    const Texture *addr;
+    const Texture *dataAddr;
+    const Texture *paletteAddr;
     u32 relativeLoopStart;
     u32 frameTotal;
     u32 framerate;
@@ -39,20 +40,21 @@ struct BSMDMAImageProperties {
 };
 
 struct BSMDMAImageProperties bsmDMAProps[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = {.addr = course1_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_2_LAVA_ISLE]         = {.addr = course2_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_3_FUNGI_CANYON]      = {.addr = course3_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {.addr = course4_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.addr = course5_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_6_SCORCH_ISLE]       = {.addr = course6_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_7_SPORE_CANYON]      = {.addr = course7_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_8_CYBER_FEST]        = {.addr = course8_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.addr = course9_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .startFrame = 0, .framerate = 15},
+    [BSM_COURSE_1_SNOWY_PEAK]        = {.dataAddr = course1_video_data, .paletteAddr = course1_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_2_LAVA_ISLE]         = {.dataAddr = course2_video_data, .paletteAddr = course2_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_3_FUNGI_CANYON]      = {.dataAddr = course3_video_data, .paletteAddr = course3_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {.dataAddr = course4_video_data, .paletteAddr = course4_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.dataAddr = course5_video_data, .paletteAddr = course5_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {.dataAddr = course6_video_data, .paletteAddr = course6_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_7_SPORE_CANYON]      = {.dataAddr = course7_video_data, .paletteAddr = course7_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_8_CYBER_FEST]        = {.dataAddr = course8_video_data, .paletteAddr = course8_video_palettes, .relativeLoopStart = 0, .frameTotal = 292, .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.dataAddr = course9_video_data, .paletteAddr = course9_video_palettes, .relativeLoopStart = 0, .frameTotal = 1,   .startFrame = 0, .framerate = 30},
 };
 
 // NOTE: This has acceptable alignment, but should otherwise be taken into consideration with DMA usage.
-#define TEXTURE_SIZE (TEXTURE_WIDTH * TEXTURE_HEIGHT * sizeof(RGBA16))
+#define TEXTURE_SIZE ALIGN16(TEXTURE_WIDTH * TEXTURE_HEIGHT * sizeof(u8))
 #define ALIGNED_BUFFER_SIZE (ALIGN16(TEXTURE_SIZE) + 16)
+#define PALETTE_SIZE (0x100 * sizeof(RGBA16))
 
 OSIoMesg bsmMenuImageDMAIoMesg[TEXTURE_COUNT];
 OSMesg bsmMenuImageDMAReceivedMesg[TEXTURE_COUNT];
@@ -66,6 +68,7 @@ u8 hasInitializedMessageQueue = FALSE;
 s32 sImageDMACount = 0;
 
 Texture *bsmDMATextures[3];
+Texture *bsmDMAPaletteTextures[3];
 u8 bsmDMAMisaligned[ARRAY_COUNT(bsmDMATextures)];
 
 u32 bsmImageGameFrame = 0;
@@ -87,20 +90,24 @@ static void dma_read_image_noblock(u8 *dest, u8 *srcStart, u8 *srcEnd) {
         size -= copySize;
     }
 
-    assert(sImageDMACount <= TEXTURE_COUNT, "sImageDMACount too large!");
+    assert(sImageDMACount <= TEXTURE_COUNT + 1, "sImageDMACount too large!");
 }
 
-static void dma_read_image_at_offset(u8 *dest, u8 *relativeAddr) {
-    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + ALIGNED_BUFFER_SIZE));
+static void dma_read_image_at_offset(u8 *dest, u8 *relativeAddr, size_t size) {
+    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + size));
 }
 
-static void dma_bsm_frame(const Texture *startingAddr, u32 imageIndex) {
+static void dma_bsm_frame(const Texture *startingAddr, const Texture *paletteAddr, u32 imageIndex) {
     Texture *relativeAddr = (Texture *) ((u32) startingAddr + (imageIndex * TEXTURE_SIZE));
     Texture *dest = bsmDMATextures[sTripleBufferIndex];
     bsmDMAMisaligned[sTripleBufferIndex] = (0x10 - ((size_t) relativeAddr & 0xF)) & 0xF;
-    sTripleBufferIndex = (sTripleBufferIndex + 1) % ARRAY_COUNT(bsmDMATextures);
+    dma_read_image_at_offset(dest, (u8 *) ((size_t) relativeAddr & ~0xF), ALIGNED_BUFFER_SIZE);
 
-    dma_read_image_at_offset(dest, (u8 *) ((size_t) relativeAddr & ~0xF));
+    relativeAddr = (Texture *) ((u32) paletteAddr + (imageIndex * PALETTE_SIZE));
+    dest = bsmDMAPaletteTextures[sTripleBufferIndex];
+    dma_read_image_at_offset(dest, (u8 *) relativeAddr, PALETTE_SIZE);
+
+    sTripleBufferIndex = (sTripleBufferIndex + 1) % ARRAY_COUNT(bsmDMATextures);
 }
 
 static void add_menu_frame(void) {
@@ -123,6 +130,11 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     bsmSafeBufferIndex = 0;
     sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
 
+    u8 *paletteaddr = main_pool_alloc(PALETTE_SIZE * ARRAY_COUNT(bsmDMAPaletteTextures), MEMORY_POOL_LEFT);
+    if (paletteaddr == NULL) {
+        assert(FALSE, "Out of memory! :(");
+        return TRUE;
+    }
     u8 *memaddr = main_pool_alloc(ALIGNED_BUFFER_SIZE * ARRAY_COUNT(bsmDMATextures), MEMORY_POOL_LEFT);
     if (memaddr == NULL) {
         assert(FALSE, "Out of memory! :(");
@@ -136,6 +148,10 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     }
 
     gSafeToLoadVideo = BSM_VIDEO_UNSAFE;
+
+    for (s32 i = 0; i < ARRAY_COUNT(bsmDMAPaletteTextures); i++) {
+        bsmDMAPaletteTextures[i] = &paletteaddr[PALETTE_SIZE * i];
+    }
 
     for (s32 i = 0; i < ARRAY_COUNT(bsmDMATextures); i++) {
         bsmDMATextures[i] = &memaddr[ALIGNED_BUFFER_SIZE * i];
@@ -191,7 +207,7 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
         add_menu_frame();
     }
 
-    dma_bsm_frame(bsmDMAProps[bsmCourseIndex].addr, bsmImageVideoFrame);
+    dma_bsm_frame(bsmDMAProps[bsmCourseIndex].dataAddr, bsmDMAProps[bsmCourseIndex].paletteAddr, bsmImageVideoFrame);
 
     if (gSafeToLoadVideo == BSM_VIDEO_ACTIVE_DMA && bsmSafeBufferIndex == sTripleBufferIndex) {
         gSafeToLoadVideo = BSM_VIDEO_SAFE;
@@ -305,9 +321,11 @@ ALIGNED16 static const Gfx bsm_menu_cutscene_tri_7[] = {
 
 ALIGNED16 static const Gfx bsm_menu_cutscene_dl_before[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0),
+	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0, 0, 0, 0, TEXEL0),
 	gsDPSetTextureFilter(G_TF_POINT),
+	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsSPTexture(65535, 65535, 0, 0, 1),
+	gsDPSetEnvColor(255, 255, 255, 255),
 	gsSPEndDisplayList(),
 };
 ALIGNED16 static const Gfx bsm_menu_cutscene_dl_after[] = {
@@ -319,22 +337,24 @@ ALIGNED16 static const Gfx bsm_menu_cutscene_dl_after[] = {
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsDPPipeSync(),
 	gsDPSetTextureFilter(G_TF_BILERP),
+	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 ALIGNED16 static const Gfx bsm_menu_cutscene_image_0[] = {
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 45, 0, 7, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 23, 0, 7, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0),
     gsDPLoadTile(7, 0, 0, (TEXTURE_WIDTH - 1) << G_TEXTURE_IMAGE_FRAC, (TEXTURE_HEIGHT_4K - 1) << G_TEXTURE_IMAGE_FRAC),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 45, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 4, 0, G_TX_CLAMP | G_TX_NOMIRROR, 8, 0),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 23, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 4, 0, G_TX_CLAMP | G_TX_NOMIRROR, 8, 0),
     gsDPSetTileSize(0, 0, 0, (TEXTURE_WIDTH - 1) << G_TEXTURE_IMAGE_FRAC, (TEXTURE_HEIGHT_4K - 1) << G_TEXTURE_IMAGE_FRAC),
 	gsSPEndDisplayList(),
 };
 ALIGNED16 static const Gfx bsm_menu_cutscene_image_7[] = {
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 45, 0, 7, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 23, 0, 7, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 0, 0),
     gsDPLoadTile(7, 0, 0, (TEXTURE_WIDTH - 1) << G_TEXTURE_IMAGE_FRAC, ((TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) - 1) << G_TEXTURE_IMAGE_FRAC),
-	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 45, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 4, 0, G_TX_CLAMP | G_TX_NOMIRROR, 8, 0),
+	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 23, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 4, 0, G_TX_CLAMP | G_TX_NOMIRROR, 8, 0),
     gsDPSetTileSize(0, 0, 0, (TEXTURE_WIDTH - 1) << G_TEXTURE_IMAGE_FRAC, ((TEXTURE_HEIGHT - (TEXTURE_HEIGHT_4K * 7)) - 1) << G_TEXTURE_IMAGE_FRAC),
 	gsSPEndDisplayList(),
 };
+
 ALIGNED16 static const Gfx *menu_cutscene_tris[] = {
     bsm_menu_cutscene_tri_0,
     bsm_menu_cutscene_tri_1,
@@ -380,14 +400,19 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
         }
 
         SET_GRAPH_NODE_LAYER(currentGraphNode->fnNode.node.flags, LAYER_OPAQUE);
-        dlStart = alloc_display_list(sizeof(Gfx) * (5 * ARRAY_COUNT(menu_cutscene_tris) + 3));
+        dlStart = alloc_display_list(sizeof(Gfx) * (8 * ARRAY_COUNT(menu_cutscene_tris) + 3));
         Gfx *dlHead = dlStart;
 
 	    gSPDisplayList(dlHead++, bsm_menu_cutscene_dl_before);
 
         for (s32 i = 0; i < ARRAY_COUNT(menu_cutscene_tris); i++) {
             gDPTileSync(dlHead++);
-            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, TEXTURE_WIDTH, bsmDMATextures[renderIndex] + bsmDMAMisaligned[renderIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(RGBA16))));
+
+            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, bsmDMAPaletteTextures[renderIndex]);
+            gDPSetTile(dlHead++, 0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0);
+            gDPLoadTLUTCmd(dlHead++, 5, (PALETTE_SIZE / sizeof(RGBA16)) - 1);
+
+            gDPSetTextureImage(dlHead++, G_IM_FMT_CI, G_IM_SIZ_8b, TEXTURE_WIDTH, bsmDMATextures[renderIndex] + bsmDMAMisaligned[renderIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(u8))));
             gSPDisplayList(dlHead++, menu_cutscene_images[i]);
             gSPDisplayList(dlHead++, menu_cutscene_tris[i]);
 	        gDPPipeSync(dlHead++);

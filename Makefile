@@ -14,7 +14,7 @@ SRC_DIRS :=
 USE_DEBUG := 0
 
 # NOTE: This can be used to speed up compile times by linking a precompiled object file instead
-PRECOMPILED_DMA_DATA ?= 1
+PRECOMPILED_DMA_DATA ?= 0
 
 #==============================================================================#
 # Build Options                                                                #
