@@ -4,3 +4,5 @@ split_video
 *.mp4
 *.blend
 *.blend1
+out*/*
+dma_data/*

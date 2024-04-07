@@ -1,12 +1,17 @@
 #include "types.h"
 #include "macros.h"
 
-extern ALIGNED16 const Texture course1_video_data[];
-extern ALIGNED16 const Texture course2_video_data[];
-extern ALIGNED16 const Texture course3_video_data[];
-extern ALIGNED16 const Texture course4_video_data[];
-extern ALIGNED16 const Texture course5_video_data[];
-extern ALIGNED16 const Texture course6_video_data[];
-extern ALIGNED16 const Texture course7_video_data[];
-extern ALIGNED16 const Texture course8_video_data[];
-extern ALIGNED16 const Texture course9_video_data[];
+struct DMAVideoProps {
+    const Texture *address;
+    u32 compressedSize;
+};
+
+extern ALIGNED16 const struct DMAVideoProps course1_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course2_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course3_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course4_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course5_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course6_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course7_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course8_video_data[292];
+extern ALIGNED16 const struct DMAVideoProps course9_video_data[1];

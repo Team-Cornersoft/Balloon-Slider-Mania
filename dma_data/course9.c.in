@@ -1,7 +1,6 @@
-#include "types.h"
-#include "macros.h"
-
-ALIGNED16 const Texture course9_video_data[] = {
-#include "dma_data/course9_0000.rgba16.inc.c"
-,
+ALIGNED16 const Texture course9_video_data_0001[] = {
+#include "dma_data/course9_0001.rgba16.yay0.c.in"
+};
+ALIGNED16 const struct DMAVideoProps course9_video_data[1] = {
+    {.address = course9_video_data_0001, .compressedSize = 0x31E0},
 };

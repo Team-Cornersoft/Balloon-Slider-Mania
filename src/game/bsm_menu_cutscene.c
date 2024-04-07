@@ -18,6 +18,7 @@
 #include "segment2.h"
 #include "segment7.h"
 #include "spawn_object.h"
+#include "boot/slidec.h"
 #include "sm64.h"
 #ifdef PUPPYPRINT
 #include "puppyprint.h"
@@ -31,7 +32,7 @@
 #define GAME_FRAMERATE 30
 
 struct BSMDMAImageProperties {
-    const Texture *addr;
+    const struct DMAVideoProps *addr;
     u32 relativeLoopStart;
     u32 frameTotal;
     u32 framerate;
@@ -39,15 +40,15 @@ struct BSMDMAImageProperties {
 };
 
 struct BSMDMAImageProperties bsmDMAProps[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = {.addr = course1_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_2_LAVA_ISLE]         = {.addr = course2_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_3_FUNGI_CANYON]      = {.addr = course3_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {.addr = course4_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.addr = course5_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_6_SCORCH_ISLE]       = {.addr = course6_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_7_SPORE_CANYON]      = {.addr = course7_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_8_CYBER_FEST]        = {.addr = course8_video_data, .relativeLoopStart = 0, .frameTotal = 146, .startFrame = 0, .framerate = 15},
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.addr = course9_video_data, .relativeLoopStart = 0, .frameTotal = 1,   .startFrame = 0, .framerate = 15},
+    [BSM_COURSE_1_SNOWY_PEAK]        = {.addr = course1_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course1_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_2_LAVA_ISLE]         = {.addr = course2_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course2_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_3_FUNGI_CANYON]      = {.addr = course3_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course3_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {.addr = course4_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course4_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = {.addr = course5_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course5_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {.addr = course6_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course6_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_7_SPORE_CANYON]      = {.addr = course7_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course7_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_8_CYBER_FEST]        = {.addr = course8_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course8_video_data), .startFrame = 0, .framerate = 30},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {.addr = course9_video_data, .relativeLoopStart = 0, .frameTotal = ARRAY_COUNT(course9_video_data), .startFrame = 0, .framerate = 30},
 };
 
 // NOTE: This has acceptable alignment, but should otherwise be taken into consideration with DMA usage.
@@ -66,7 +67,8 @@ u8 hasInitializedMessageQueue = FALSE;
 s32 sImageDMACount = 0;
 
 Texture *bsmDMATextures[3];
-u8 bsmDMAMisaligned[ARRAY_COUNT(bsmDMATextures)];
+Texture *bsmDMAYAY0[3];
+struct DMAVideoProps *bsmVideoDataProps[BSM_COURSE_COUNT];
 
 u32 bsmImageGameFrame = 0;
 u32 bsmImageVideoFrame = 0;
@@ -90,17 +92,31 @@ static void dma_read_image_noblock(u8 *dest, u8 *srcStart, u8 *srcEnd) {
     assert(sImageDMACount <= TEXTURE_COUNT, "sImageDMACount too large!");
 }
 
-static void dma_read_image_at_offset(u8 *dest, u8 *relativeAddr) {
-    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + ALIGNED_BUFFER_SIZE));
+static void dma_read_block(u8 *dest, u8 *srcStart, u8 *srcEnd) {
+    u32 size = ALIGN16(srcEnd - srcStart);
+
+    osInvalDCache(dest, size);
+    while (size != 0) {
+        u32 copySize = (size >= 0x1000) ? 0x1000 : size;
+
+        osPiStartDma(&bsmMenuImageDMAIoMesg[sImageDMACount], OS_MESG_PRI_NORMAL, OS_READ, (uintptr_t) srcStart, dest, copySize,
+                     &bsmMenuImageDMAQueue);
+        osRecvMesg(&bsmMenuImageDMAQueue, &bsmMenuImageDMAReceivedMesg[sImageDMACount], OS_MESG_BLOCK);
+
+        dest += copySize;
+        srcStart += copySize;
+        size -= copySize;
+    }
 }
 
-static void dma_bsm_frame(const Texture *startingAddr, u32 imageIndex) {
-    Texture *relativeAddr = (Texture *) ((u32) startingAddr + (imageIndex * TEXTURE_SIZE));
-    Texture *dest = bsmDMATextures[sTripleBufferIndex];
-    bsmDMAMisaligned[sTripleBufferIndex] = (0x10 - ((size_t) relativeAddr & 0xF)) & 0xF;
-    sTripleBufferIndex = (sTripleBufferIndex + 1) % ARRAY_COUNT(bsmDMATextures);
+static void dma_bsm_frame(struct DMAVideoProps *dmaProps) {
+    Texture *relativeAddr = (Texture *) ((u32) dmaProps->address);
+    Texture *dest = bsmDMAYAY0[sTripleBufferIndex];
+    sTripleBufferIndex = (sTripleBufferIndex + 1) % ARRAY_COUNT(bsmDMAYAY0);
 
-    dma_read_image_at_offset(dest, (u8 *) ((size_t) relativeAddr & ~0xF));
+    assert(dmaProps->compressedSize < ALIGNED_BUFFER_SIZE, "Compressed YAY0 larger than source!");
+
+    dma_read_image_noblock(dest, relativeAddr, (u8 *) ((size_t) relativeAddr + dmaProps->compressedSize));
 }
 
 static void add_menu_frame(void) {
@@ -123,8 +139,14 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
     bsmSafeBufferIndex = 0;
     sBSMWaitFrames = BSM_VIDEO_FRAMES_TO_WAIT;
 
-    u8 *memaddr = main_pool_alloc(ALIGNED_BUFFER_SIZE * ARRAY_COUNT(bsmDMATextures), MEMORY_POOL_LEFT);
-    if (memaddr == NULL) {
+    u8 *texturememaddr = main_pool_alloc(ALIGNED_BUFFER_SIZE * ARRAY_COUNT(bsmDMATextures), MEMORY_POOL_LEFT);
+    if (texturememaddr == NULL) {
+        assert(FALSE, "Out of memory! :(");
+        return TRUE;
+    }
+
+    u8 *yay0memaddr = main_pool_alloc(ALIGNED_BUFFER_SIZE * ARRAY_COUNT(bsmDMAYAY0), MEMORY_POOL_LEFT);
+    if (yay0memaddr == NULL) {
         assert(FALSE, "Out of memory! :(");
         return TRUE;
     }
@@ -135,11 +157,24 @@ s32 init_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
                         ARRAY_COUNT(bsmMenuImageDMAReceivedMesg));
     }
 
+    for (s32 i = 0; i < ARRAY_COUNT(bsmVideoDataProps); i++) {
+        uint32_t dataSize = (bsmDMAProps[i].frameTotal * sizeof(struct DMAVideoProps));
+        u8 *propData = main_pool_alloc(ALIGN16(dataSize), MEMORY_POOL_LEFT);
+        if (propData == NULL) {
+            assert(FALSE, "Out of memory! :(");
+            return TRUE;
+        }
+
+        bsmVideoDataProps[i] = (struct DMAVideoProps*) propData;
+
+        dma_read_block(propData, (u8 *) bsmDMAProps[i].addr, (u8 *) bsmDMAProps[i].addr + (size_t) ALIGN16(dataSize));
+    }
+
     gSafeToLoadVideo = BSM_VIDEO_UNSAFE;
 
     for (s32 i = 0; i < ARRAY_COUNT(bsmDMATextures); i++) {
-        bsmDMATextures[i] = &memaddr[ALIGNED_BUFFER_SIZE * i];
-        bsmDMAMisaligned[i] = 0;
+        bsmDMATextures[i] = &texturememaddr[ALIGNED_BUFFER_SIZE * i];
+        bsmDMAYAY0[i] = &yay0memaddr[ALIGNED_BUFFER_SIZE * i];
     }
 
     return TRUE;
@@ -179,6 +214,10 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
         return TRUE;
     }
 
+    if (gSafeToLoadVideo == BSM_VIDEO_ACTIVE_DMA && bsmSafeBufferIndex == sTripleBufferIndex) {
+        gSafeToLoadVideo = BSM_VIDEO_SAFE;
+    }
+
     if (gSafeToLoadVideo == BSM_VIDEO_UNSAFE) {
         if (gBSMSelectedButton < BSM_COURSE_COUNT) {
             bsmCourseIndex = gBSMSelectedButton;
@@ -188,14 +227,12 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1) {
             gSafeToLoadVideo = BSM_VIDEO_ACTIVE_DMA;
         }
     } else {
+        s32 lastBufferIndex = (sTripleBufferIndex + (ARRAY_COUNT(bsmDMATextures) - 1)) % ARRAY_COUNT(bsmDMATextures);
+        slidstart(bsmDMAYAY0[lastBufferIndex], bsmDMATextures[sTripleBufferIndex]);
         add_menu_frame();
     }
 
-    dma_bsm_frame(bsmDMAProps[bsmCourseIndex].addr, bsmImageVideoFrame);
-
-    if (gSafeToLoadVideo == BSM_VIDEO_ACTIVE_DMA && bsmSafeBufferIndex == sTripleBufferIndex) {
-        gSafeToLoadVideo = BSM_VIDEO_SAFE;
-    }
+    dma_bsm_frame(&bsmVideoDataProps[bsmCourseIndex][bsmImageVideoFrame]);
 
     return TRUE;
 }
@@ -387,7 +424,7 @@ Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED vo
 
         for (s32 i = 0; i < ARRAY_COUNT(menu_cutscene_tris); i++) {
             gDPTileSync(dlHead++);
-            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, TEXTURE_WIDTH, bsmDMATextures[renderIndex] + bsmDMAMisaligned[renderIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(RGBA16))));
+            gDPSetTextureImage(dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, TEXTURE_WIDTH, bsmDMATextures[renderIndex] + (i * (TEXTURE_WIDTH*TEXTURE_HEIGHT_4K*sizeof(RGBA16))));
             gSPDisplayList(dlHead++, menu_cutscene_images[i]);
             gSPDisplayList(dlHead++, menu_cutscene_tris[i]);
 	        gDPPipeSync(dlHead++);
