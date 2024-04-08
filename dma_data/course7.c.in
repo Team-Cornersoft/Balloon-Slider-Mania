@@ -871,11 +871,8 @@ ALIGNED16 const Texture course7_video_data_0290[] = {
 ALIGNED16 const Texture course7_video_data_0291[] = {
 #include "dma_data/course7_0291.rgba16.yay0.c.in"
 };
-ALIGNED16 const Texture course7_video_data_0292[] = {
-#include "dma_data/course7_0292.rgba16.yay0.c.in"
-};
 
-ALIGNED16 const struct DMAVideoProps course7_video_data[292] = {
+ALIGNED16 const struct DMAVideoProps course7_video_data[291] = {
     {.address = course7_video_data_0001, .compressedSize = 0x3690},
     {.address = course7_video_data_0002, .compressedSize = 0x3710},
     {.address = course7_video_data_0003, .compressedSize = 0x3630},
@@ -1167,5 +1164,4 @@ ALIGNED16 const struct DMAVideoProps course7_video_data[292] = {
     {.address = course7_video_data_0289, .compressedSize = 0x3790},
     {.address = course7_video_data_0290, .compressedSize = 0x3730},
     {.address = course7_video_data_0291, .compressedSize = 0x36E0},
-    {.address = course7_video_data_0292, .compressedSize = 0x3730},
 };

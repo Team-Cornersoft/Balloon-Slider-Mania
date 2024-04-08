@@ -698,6 +698,12 @@ void load_object_collision_model(void) {
     }
 #endif
 
+#ifdef PUPPYPRINT_DEBUG
+    if (fDebug && sPPDebugPage == PUPPYPRINT_PAGE_SMOOTH_VIDEO) {
+        o->oCollisionDistance = -1;
+    }
+#endif
+
     // If the object collision is supposed to be loaded more than the
     // drawing distance, extend the drawing range.
     if (o->oCollisionDistance > o->oDrawingDistance || o->oCollisionDistance < 0.0f) {

@@ -1663,7 +1663,7 @@ void print_small_text(s32 x, s32 y, const char *str, s32 align, s32 amount, u8 f
 
 
         if (waveToggle) {
-            wavePos = ((sins((gGlobalTimer * 3000) + (j * 10000))) * 2) * textSizeTotal;
+            wavePos = ((sins((gGlobalTimer * 3000) - (j * 10000))) * 2) * textSizeTotal;
         } else {
             wavePos = 0;
         }
@@ -1681,9 +1681,9 @@ void print_small_text(s32 x, s32 y, const char *str, s32 align, s32 amount, u8 f
             }
 
             gSPScisTextureRectangle(gDisplayListHead++, (x + textPos[0] + (s16)(shakePos[0])) << 2,
-                                                        (y + textPos[1] + (s16)((shakePos[1] + offsetY + wavePos))) << 2,
+                                                        (y + textPos[1] + (s16)((shakePos[1] + offsetY + (s32) wavePos))) << 2,
                                                         (x + textPos[0] + (s16)((shakePos[0] + (widthX * textSizeTotal)))) << 2,
-                                                        (y + textPos[1] + (s16)((wavePos + offsetY + shakePos[1] + textOffsets[1]))) << 2,
+                                                        (y + textPos[1] + (s16)(((s32) wavePos + offsetY + shakePos[1] + textOffsets[1]))) << 2,
                                                         G_TX_RENDERTILE, (textX << 6) + goddamnJMeasure, 0, textTempScale, textTempScale);
         }
         textPos[0] += (spaceX + 1) * textSizeTotal;
