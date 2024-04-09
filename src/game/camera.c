@@ -10841,7 +10841,7 @@ void play_cutscene(struct Camera *c) {
 #undef CUTSCENE
 
     if ((cutsceneDuration != 0) && !(gCutsceneTimer & CUTSCENE_STOP)) {
-        if (gCutsceneTimer < CUTSCENE_LOOP) {
+        if (gCutsceneTimer < CUTSCENE_LOOP-1) {
             gCutsceneTimer++;
         }
         //! Because gCutsceneTimer is often set to 0x7FFF (CUTSCENE_LOOP), this conditional can only
