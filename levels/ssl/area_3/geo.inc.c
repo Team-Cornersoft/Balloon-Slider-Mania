@@ -3,10 +3,9 @@
 const GeoLayout ssl_area_3_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(3, geo_switch_area),
+		GEO_SWITCH_CASE(2, geo_switch_area),
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, ssl_dl_1_area3_geo),
-			GEO_BRANCH(1, ssl_dl_2_area3_geo),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 770, 7250, 10650, 0, -60, 0, ssl_dl_0_skybox_a3_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -3700, 0, ssl_dl_A_sun_mesh_layer_1),
@@ -29,12 +28,6 @@ const GeoLayout ssl_dl_1_area3_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, -1069, 100, -10926, 0, 180, 0, ssl_dl_StaR_road_a3_003_mesh_layer_5),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 8928, 100, -6389, 0, 120, 0, ssl_dl_StaR_road_a3_004_mesh_layer_5),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 9997, 100, 4538, 0, 60, 0, ssl_dl_StaR_road_a3_005_mesh_layer_5),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ssl_dl_2_area3_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
