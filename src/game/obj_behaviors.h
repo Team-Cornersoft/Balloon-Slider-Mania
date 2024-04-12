@@ -16,7 +16,14 @@ enum ObjCollisionFlags {
     OBJ_COL_FLAGS_LANDED    = (OBJ_COL_FLAG_GROUNDED | OBJ_COL_FLAG_NO_Y_VEL)
 };
 
+#define TERM_VEL(x) (x * terminalVelocityMultiplier * ((shouldFadeMarioWarp > 0) ? 1.0f : (0.67f + gravityMult) / 1.67f))
+
+#ifndef TERM_VEL
+#define TERM_VEL(x) x
+#endif
+
 //! Lots of these are duplicates
+f32 get_gravity_mult(u8 warpOverride);
 void set_yoshi_as_not_dead(void);
 s32 obj_flicker_and_disappear(struct Object *obj, s16 lifeSpan);
 s32 coin_step(s16 *collisionFlagsPtr);

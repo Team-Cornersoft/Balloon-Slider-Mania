@@ -150,6 +150,9 @@ s16 sSourceWarpNodeId;
 s32 sDelayedWarpArg;
 s8 sTimerRunning;
 s8 gNeverEnteredCastle;
+s32 shouldFadeMarioWarp = 0;
+f32 animSlowdownRate = 1.0f;
+f32 animTotalForward = 1.0f;
 // Prevent multiple 100 coin stars from spawning
 u8 g100CoinStarSpawned = FALSE;
 
@@ -873,6 +876,16 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
                 fadeMusic = !music_unchanged_through_warp(sSourceWarpNodeId);
                 play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                break;
+
+            case WARP_OP_SLOWMO_WARP:
+                sDelayedWarpTimer = 30;
+                sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
+                fadeMusic = FALSE;
+                play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                shouldFadeMarioWarp = sDelayedWarpTimer;
+                animSlowdownRate = 1.0f;
+                animTotalForward = 1.0f;
                 break;
 
             case WARP_OP_CREDITS_START:

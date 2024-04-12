@@ -5,6 +5,17 @@
 
 #include "macros.h"
 #include "types.h"
+#include "level_update.h"
+
+// #define SLOW_ALL_MARIO_ANIMS
+
+#define SCALE_PFs(s) ((s32) (((f32) (s) * animSlowdownRate) + 0.5f))
+
+#ifdef SLOW_ALL_MARIO_ANIMS
+#define set_mario_animation(m, tanimId) (set_mario_anim_with_accel(m, tanimId, 0x10000))
+#else
+s16 set_mario_animation(struct MarioState *m, s32 targetAnimID);
+#endif
 
 s32 is_anim_at_end(struct MarioState *m);
 s32 is_anim_past_end(struct MarioState *m);

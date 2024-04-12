@@ -19,6 +19,7 @@ enum WarpOperation {
     WARP_OP_WARP_DOOR,
     WARP_OP_WARP_OBJECT,
     WARP_OP_TELEPORT,
+    WARP_OP_SLOWMO_WARP,
     WARP_OP_BSM_LEVEL_COMPLETE,
     WARP_OP_TRIGGERS_LEVEL_SELECT = 0x10,
     WARP_OP_STAR_EXIT,
@@ -122,6 +123,9 @@ extern s16 sSpecialWarpDest;
 extern s16 sDelayedWarpOp;
 extern s16 sDelayedWarpTimer;
 extern s16 sSourceWarpNodeId;
+extern s32 shouldFadeMarioWarp;
+extern f32 animSlowdownRate;
+extern f32 animTotalForward;
 extern s32 sDelayedWarpArg;
 extern s8 sTimerRunning;
 

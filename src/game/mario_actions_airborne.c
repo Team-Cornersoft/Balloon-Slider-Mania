@@ -13,6 +13,7 @@
 #include "level_update.h"
 #include "mario.h"
 #include "mario_step.h"
+#include "obj_behaviors.h"
 #include "save_file.h"
 #include "rumble_init.h"
 
@@ -33,8 +34,10 @@ void play_far_fall_sound(struct MarioState *m) {
     if (!(action & ACT_FLAG_INVULNERABLE) && action != ACT_TWIRLING && action != ACT_FLYING
         && !(m->flags & MARIO_FALL_SOUND_PLAYED)) {
         if (m->peakHeight - m->pos[1] > FALL_DAMAGE_HEIGHT_SMALL) {
-            play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
-            m->flags |= MARIO_FALL_SOUND_PLAYED;
+            if (get_gravity_mult(FALSE) >= 0.9f) {
+                play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+                m->flags |= MARIO_FALL_SOUND_PLAYED;
+            }
         }
     }
 }

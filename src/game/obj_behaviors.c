@@ -22,6 +22,7 @@
 #include "levels/ttm/header.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"
+#include "mario_actions_moving.h"
 #include "mario_misc.h"
 #include "memory.h"
 #include "obj_behaviors.h"
@@ -223,6 +224,16 @@ void calc_obj_friction(f32 *objFriction, f32 floor_nY) {
     }
 }
 
+f32 get_gravity_mult(u8 warpOverride) {
+    f32 res = 1.0f;
+
+    if (shouldFadeMarioWarp > 0 && warpOverride) {
+        return (res * 0.4f);
+    }
+
+    return res;
+}
+
 /**
  * Updates an objects speed for gravity and updates Y position.
  */
@@ -231,14 +242,16 @@ void calc_new_obj_vel_and_pos_y(struct Surface *objFloor, f32 objFloorY, f32 obj
     f32 floor_nY = objFloor->normal.y;
     f32 floor_nZ = objFloor->normal.z;
     f32 objFriction;
+    f32 gravityMult = get_gravity_mult(FALSE);
 
     // Caps vertical speed with a "terminal velocity".
-    o->oVelY -= o->oGravity;
-    if (o->oVelY > 75.0) {
-        o->oVelY = 75.0;
+    o->oVelY -= (o->oGravity * gravityMult);
+
+    if (o->oVelY > TERM_VEL(75.0f)) {
+        o->oVelY = TERM_VEL(75.0f);
     }
-    if (o->oVelY < -75.0) {
-        o->oVelY = -75.0;
+    if (o->oVelY < TERM_VEL(-75.0f)) {
+        o->oVelY = TERM_VEL(-75.0f);
     }
 
     o->oPosY += o->oVelY;
@@ -248,7 +261,7 @@ void calc_new_obj_vel_and_pos_y(struct Surface *objFloor, f32 objFloorY, f32 obj
         o->oPosY = objFloorY;
 
         // Bounces an object if the ground is hit fast enough.
-        if (o->oVelY < -17.5f) {
+        if (o->oVelY < -17.5f * gravityMult) {
             o->oVelY = -(o->oVelY / 2);
         } else {
             o->oVelY = 0;
@@ -281,16 +294,17 @@ void calc_new_obj_vel_and_pos_y_underwater(struct Surface *objFloor, f32 floorY,
     f32 floor_nX = objFloor->normal.x;
     f32 floor_nY = objFloor->normal.y;
     f32 floor_nZ = objFloor->normal.z;
+    f32 gravityMult = get_gravity_mult(FALSE);
 
     f32 netYAccel = (1.0f - o->oBuoyancy) * (-1.0f * o->oGravity);
     o->oVelY -= netYAccel;
 
     // Caps vertical speed with a "terminal velocity".
-    if (o->oVelY > 75.0f) {
-        o->oVelY = 75.0f;
+    if (o->oVelY > TERM_VEL(75.0f)) {
+        o->oVelY = TERM_VEL(75.0f);
     }
-    if (o->oVelY < -75.0f) {
-        o->oVelY = -75.0f;
+    if (o->oVelY < TERM_VEL(-75.0f)) {
+        o->oVelY = TERM_VEL(-75.0f);
     }
 
     o->oPosY += o->oVelY;
@@ -300,7 +314,7 @@ void calc_new_obj_vel_and_pos_y_underwater(struct Surface *objFloor, f32 floorY,
         o->oPosY = floorY;
 
         // Bounces an object if the ground is hit fast enough.
-        if (o->oVelY < -17.5f) {
+        if (o->oVelY < (-17.5f * gravityMult)) {
             o->oVelY = -(o->oVelY / 2);
         } else {
             o->oVelY = 0;

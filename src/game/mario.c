@@ -59,6 +59,7 @@ s32 is_anim_past_end(struct MarioState *m) {
 /**
  * Sets Mario's animation without any acceleration, running at its default rate.
  */
+#ifndef SLOW_ALL_MARIO_ANIMS
 s16 set_mario_animation(struct MarioState *m, s32 targetAnimID) {
     struct Object *marioObj = m->marioObj;
     struct Animation *targetAnim = m->animList->bufTarget;
@@ -87,6 +88,7 @@ s16 set_mario_animation(struct MarioState *m, s32 targetAnimID) {
 
     return marioObj->header.gfx.animInfo.animFrame;
 }
+#endif
 
 /**
  * Sets Mario's animation where the animation is sped up or
@@ -100,6 +102,8 @@ s16 set_mario_anim_with_accel(struct MarioState *m, s32 targetAnimID, s32 accel)
         targetAnim->values = (void *) VIRTUAL_TO_PHYSICAL((u8 *) targetAnim + (uintptr_t) targetAnim->values);
         targetAnim->index = (void *) VIRTUAL_TO_PHYSICAL((u8 *) targetAnim + (uintptr_t) targetAnim->index);
     }
+
+    accel = SCALE_PFs(accel);
 
     if (marioObj->header.gfx.animInfo.animID != targetAnimID) {
         marioObj->header.gfx.animInfo.animID = targetAnimID;
@@ -1642,6 +1646,26 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
     struct MarioBodyState *bodyState = m->marioBodyState;
     s32 flags = update_and_return_cap_flags(m);
 
+    if (shouldFadeMarioWarp > 0) {
+        animTotalForward -= (f32) ((s32) animTotalForward);
+        if (sDelayedWarpTimer > 0) {
+            m->fadeWarpOpacity = (u8) (((s32) sDelayedWarpTimer * 255) / shouldFadeMarioWarp);
+            m->fadeWarpOpacity = (u8) (sqr((s32) m->fadeWarpOpacity) / 255);
+            m->fadeWarpOpacity = 0;
+            m->flags |= MARIO_TELEPORTING;
+            m->forwardVel *= 0.875f;
+            m->vel[1] *= 0.875f;
+            animSlowdownRate *= 0.97f;
+            animTotalForward += animSlowdownRate;
+        } else {
+            m->fadeWarpOpacity = 255;
+            m->flags &= ~MARIO_TELEPORTING;
+            shouldFadeMarioWarp = 0;
+            animSlowdownRate = 1.0f;
+            animTotalForward = 1.0f;
+        }
+    }
+
     if (flags & MARIO_VANISH_CAP) {
         bodyState->modelState = MODEL_STATE_NOISE_ALPHA;
     }
@@ -1728,49 +1752,52 @@ void queue_rumble_particles(struct MarioState *m) {
 s32 execute_mario_action(UNUSED struct Object *obj) {
     s32 inLoop = TRUE;
 
+    slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
+    terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
+    deathBarrierMultiplier = terminalVelocityMultiplier;
     switch(COURSE_NUM_TO_INDEX(gCurrCourseNum)) {
         case BSM_COURSE_1_SNOWY_PEAK:
             if (gCurrAreaIndex == 3) {
                 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.35f;
                 terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.5f;
                 deathBarrierMultiplier = terminalVelocityMultiplier;
-                break;
             }
-            goto slideSpeedDefaultCase;
+            break;
         case BSM_COURSE_2_LAVA_ISLE:
             if (gCurrAreaIndex == 2) {
-                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
-                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
                 deathBarrierMultiplier = 0.9f;
-                break;
             } else if (gCurrAreaIndex == 3) {
                 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.15f;
                 terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.4f;
                 deathBarrierMultiplier = terminalVelocityMultiplier;
-                break;
             }
-            goto slideSpeedDefaultCase;
+            break;
         case BSM_COURSE_5_HOLIDAY_PEAK:
             if (gCurrAreaIndex == 3) {
                 slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.35f;
                 terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.5f;
                 deathBarrierMultiplier = terminalVelocityMultiplier;
-                break;
             }
-            goto slideSpeedDefaultCase;
+            break;
         case BSM_COURSE_6_SCORCH_ISLE:
             if (gCurrAreaIndex == 2 || gCurrAreaIndex == 4) {
-                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
-                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
                 deathBarrierMultiplier = 0.9f;
-                break;
             }
-            goto slideSpeedDefaultCase;
-        default:
-slideSpeedDefaultCase:
-            slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT;
-            terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT;
+            break;
+        case BSM_COURSE_8_CYBER_FEST:
+            if (gCurrAreaIndex == 2 || gCurrAreaIndex == 4 || gCurrAreaIndex == 5) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.15f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.15f;
                 deathBarrierMultiplier = terminalVelocityMultiplier;
+            } else if (gCurrAreaIndex == 3) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 1.1f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 1.1f;
+                deathBarrierMultiplier = terminalVelocityMultiplier;
+            } else if (gCurrAreaIndex == 6) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 0.9f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 0.9f;
+                deathBarrierMultiplier = terminalVelocityMultiplier;
+            }
             break;
     }
 

@@ -386,6 +386,8 @@ const LevelScript level_ssl_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE8_CYBER, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
+		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -440,6 +442,8 @@ const LevelScript level_ssl_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE8_CYBER, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
+		SET_ECHO(0x10, 0x10),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 

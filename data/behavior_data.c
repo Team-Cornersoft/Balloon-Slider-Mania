@@ -467,9 +467,9 @@ const BehaviorScript bhvTCSToken[] = {
 
 const BehaviorScript bhvKeyGate[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 20000),
-    SET_FLOAT(oDrawingDistance, 20000),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, -1),
+    SET_FLOAT(oDrawingDistance, -1),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 0),
     LOAD_COLLISION_DATA(key_gate_collision),
@@ -481,9 +481,9 @@ const BehaviorScript bhvKeyGate[] = {
 
 const BehaviorScript bhvItemGate[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 20000),
-    SET_FLOAT(oDrawingDistance, 20000),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oCollisionDistance, -1),
+    SET_FLOAT(oDrawingDistance, -1),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 0),
     LOAD_COLLISION_DATA(key_gate_collision), // Item gates use the same collision mapping as the key gate, so just reuse that I guess
@@ -495,8 +495,8 @@ const BehaviorScript bhvItemGate[] = {
 
 const BehaviorScript bhvKeyGateOpen[] = {
     BEGIN(OBJ_LIST_DEFAULT),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oDrawingDistance, 20000),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, -1),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 1),
     SET_HOME(),
@@ -505,8 +505,8 @@ const BehaviorScript bhvKeyGateOpen[] = {
 
 const BehaviorScript bhvItemGateOpen[] = {
     BEGIN(OBJ_LIST_DEFAULT),
-    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR_EMULATOR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oDrawingDistance, 20000),
+    OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    SET_FLOAT(oDrawingDistance, -1),
     SET_INT(oOpacity, 255),
     SET_INT(oAnimState, 1),
     SET_HOME(),
@@ -538,8 +538,8 @@ const BehaviorScript bhvPresent[] = {
 const BehaviorScript bhvRotatingBridge[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_DONT_CALC_COLL_DIST | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
-    SET_FLOAT(oCollisionDistance, 20000),
-    SET_FLOAT(oDrawingDistance, 20000),
+    SET_FLOAT(oCollisionDistance, -1),
+    SET_FLOAT(oDrawingDistance, -1),
     SET_INT(oOpacity, 255),
     SET_HOME(),
     LOAD_COLLISION_DATA(custom_moving_bridge_collision),
@@ -554,6 +554,7 @@ const BehaviorScript bhvBellGong[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_LONG(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_INT(oOpacity, 255),
+    SET_FLOAT(oDrawingDistance, 12000),
     SET_HOME(),
     CALL_NATIVE(bhv_bell_gong_init),
     BEGIN_LOOP(),
