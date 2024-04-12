@@ -50,7 +50,7 @@ void extractAndWriteFilenames(const char *videoPath, const char *directoryPath) 
     std::string videoFilename = cv::samples::findFile(videoPath);
     size_t lastindex = videoFilename.find_last_of(".");
     videoFilename = videoFilename.substr(0, lastindex);
-    std::string videoFilenameCFile = videoFilename + ".c.in";
+    std::string videoFilenameCFile = "dma_data/" + videoFilename + ".c.in";
 
     // Open the directory
     if ((dir = opendir(directoryPath)) != NULL) {
