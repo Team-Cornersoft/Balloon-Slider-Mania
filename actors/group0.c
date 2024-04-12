@@ -38,3 +38,4 @@
 #include "bouncy_shroom/model.inc.c"
 #include "bouncy_shroom/collision.inc.c"
 #include "item_gate/model.inc.c"
+#include "elise/model.inc.c"

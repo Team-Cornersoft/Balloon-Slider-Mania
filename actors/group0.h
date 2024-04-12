@@ -347,4 +347,6 @@ extern const Gfx white_particle_small_unused_dl[];
 
 #include "item_gate/geo_header.h"
 
+#include "elise/geo_header.h"
+
 #endif

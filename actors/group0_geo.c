@@ -21,3 +21,4 @@
 #include "custom_moving_bridge/geo.inc.c"
 #include "bouncy_shroom/geo.inc.c"
 #include "item_gate/geo.inc.c"
+#include "elise/geo.inc.c"
