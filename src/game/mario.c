@@ -1651,7 +1651,6 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
         if (sDelayedWarpTimer > 0) {
             m->fadeWarpOpacity = (u8) (((s32) sDelayedWarpTimer * 255) / shouldFadeMarioWarp);
             m->fadeWarpOpacity = (u8) (sqr((s32) m->fadeWarpOpacity) / 255);
-            m->fadeWarpOpacity = 0;
             m->flags |= MARIO_TELEPORTING;
             m->forwardVel *= 0.875f;
             m->vel[1] *= 0.875f;
