@@ -1663,6 +1663,18 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
             animSlowdownRate = 1.0f;
             animTotalForward = 1.0f;
         }
+
+        if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_8_CYBER_FEST && m->marioObj) {
+            #define APPROACH_GLOBE_CONST 0.8875f
+
+            f32 dist;
+            struct Object *obj = obj_find_nearest_object_with_behavior(m->marioObj, bhvRotatingGlobe, &dist);
+            if (obj && dist < 2000) {
+                m->pos[0] = (m->pos[0] * APPROACH_GLOBE_CONST) + ( obj->oPosX           * (1.0f - APPROACH_GLOBE_CONST));
+                m->pos[1] = (m->pos[1] * APPROACH_GLOBE_CONST) + ((obj->oPosY + 900.0f) * (1.0f - APPROACH_GLOBE_CONST));
+                m->pos[2] = (m->pos[2] * APPROACH_GLOBE_CONST) + ( obj->oPosZ           * (1.0f - APPROACH_GLOBE_CONST));
+            }
+        }
     }
 
     if (flags & MARIO_VANISH_CAP) {
