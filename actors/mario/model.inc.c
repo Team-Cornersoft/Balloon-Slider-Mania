@@ -4993,7 +4993,7 @@ Gfx mat_mario_blue[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(PRIMITIVE, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, PRIMITIVE, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
-    gsDPSetPrimColor(0, 0, 0, 0, 254, 255),
+	gsDPSetPrimColor(0, 0, 0, 0, 254, 255),
 	gsSPEndDisplayList(),
 };
 
@@ -5025,7 +5025,7 @@ Gfx mat_mario_red[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(PRIMITIVE, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, PRIMITIVE, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
-    gsDPSetPrimColor(0, 0, 254, 0, 0, 255),
+	gsDPSetPrimColor(0, 0, 254, 0, 0, 255),
 	gsSPEndDisplayList(),
 };
 
@@ -5835,12 +5835,12 @@ Gfx mario_material_revert_render_settings[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
-    //gsSPClearGeometryMode(G_POINT_LIGHTING),
-    gsSPNumLights(NUMLIGHTS_1),
+	//gsSPClearGeometryMode(G_POINT_LIGHTING),
+	gsSPNumLights(NUMLIGHTS_1),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
-    gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
+	gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPEndDisplayList(),
 };
