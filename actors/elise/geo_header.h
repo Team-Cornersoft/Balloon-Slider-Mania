@@ -76,8 +76,6 @@ extern Vtx elise_000_displaylist_003_mesh_layer_1_vtx_2[8];
 extern Gfx elise_000_displaylist_003_mesh_layer_1_tri_2[];
 extern Vtx elise_000_displaylist_003_mesh_layer_1_vtx_3[6];
 extern Gfx elise_000_displaylist_003_mesh_layer_1_tri_3[];
-extern Vtx elise_000_displaylist_003_mesh_layer_1_vtx_4[3];
-extern Gfx elise_000_displaylist_003_mesh_layer_1_tri_4[];
 extern Vtx elise_000_offset_006_skinned_mesh_layer_1_vtx_0[9];
 extern Gfx elise_000_offset_006_skinned_mesh_layer_1_tri_0[];
 extern Vtx elise_000_offset_006_mesh_layer_1_vtx_0[7];
