@@ -294,7 +294,7 @@ void scroll_ssl_dl_A_Road_a_mesh_layer_1_vtx_0() {
 
 void scroll_ssl_dl_A_Road_a_mesh_layer_1_vtx_2() {
 	int i = 0;
-	int count = 300;
+	int count = 295;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
@@ -427,7 +427,7 @@ void scroll_ssl_dl_A_digital_path_a2_mesh_layer_4_vtx_0() {
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_A_digital_path_a2_mesh_layer_4_vtx_0);
 
-	deltaY = (int)(1.0 * 0x20) % height;
+	deltaY = (int)(0.25 * 0x20) % height;
 
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
@@ -547,30 +547,22 @@ void scroll_ssl_dl_A_digital_path_a4_003_mesh_layer_4_vtx_0() {
 void scroll_ssl_dl_B_backdrop_a5_a_003_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 93;
-	int width = 32 * 0x20;
-	int height = 32 * 0x20;
+	int height = 64 * 0x20;
 
-	static int currentX = 0;
-	int deltaX;
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_B_backdrop_a5_a_003_mesh_layer_1_vtx_0);
 
-	deltaX = (int)(0.0 * 0x20) % width;
-	deltaY = (int)(-0.25 * 0x20) % height;
+	deltaY = (int)(0.25 * 0x20) % height;
 
-	if (absi(currentX) > width) {
-		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
-	}
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
 	}
 
 	for (i = 0; i < count; i++) {
-		vertices[i].n.tc[0] += deltaX;
 		vertices[i].n.tc[1] += deltaY;
 	}
-	currentX += deltaX;	currentY += deltaY;
+	currentY += deltaY;
 }
 
 void scroll_ssl_dl_B_backdrop_a5_a_003_mesh_layer_5_vtx_0() {
@@ -597,30 +589,22 @@ void scroll_ssl_dl_B_backdrop_a5_a_003_mesh_layer_5_vtx_0() {
 void scroll_ssl_dl_B_backdrop_a5_b_003_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 90;
-	int width = 32 * 0x20;
-	int height = 32 * 0x20;
+	int height = 64 * 0x20;
 
-	static int currentX = 0;
-	int deltaX;
 	static int currentY = 0;
 	int deltaY;
 	Vtx *vertices = segmented_to_virtual(ssl_dl_B_backdrop_a5_b_003_mesh_layer_1_vtx_0);
 
-	deltaX = (int)(0.0 * 0x20) % width;
-	deltaY = (int)(-0.25 * 0x20) % height;
+	deltaY = (int)(0.25 * 0x20) % height;
 
-	if (absi(currentX) > width) {
-		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
-	}
 	if (absi(currentY) > height) {
 		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
 	}
 
 	for (i = 0; i < count; i++) {
-		vertices[i].n.tc[0] += deltaX;
 		vertices[i].n.tc[1] += deltaY;
 	}
-	currentX += deltaX;	currentY += deltaY;
+	currentY += deltaY;
 }
 
 void scroll_ssl_dl_B_backdrop_a5_b_003_mesh_layer_5_vtx_0() {
@@ -1649,7 +1633,7 @@ void scroll_ssl_dl_0_SKYBOX_d_003_mesh_layer_1_vtx_0() {
 
 void scroll_ssl_dl_A_Road_c_mesh_layer_1_vtx_0() {
 	int i = 0;
-	int count = 118;
+	int count = 122;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
@@ -1996,10 +1980,10 @@ void scroll_gfx_mat_ssl_dl_Scrolling_numbers_B() {
 
 };
 
-void scroll_gfx_mat_ssl_dl_Black_filter_layer4() {
-	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Black_filter_layer4);
+void scroll_gfx_mat_ssl_dl_Black_filter() {
+	Gfx *mat = segmented_to_virtual(mat_ssl_dl_Black_filter);
 
-	shift_t_down(mat, 10, PACK_TILESIZE(0, 3));
+	shift_t_down(mat, 9, PACK_TILESIZE(0, 3));
 
 };
 
@@ -2279,7 +2263,7 @@ void scroll_ssl() {
 	scroll_gfx_mat_ssl_dl_Star_projection_layer5();
 	scroll_gfx_mat_ssl_dl_PC_4_layer5();
 	scroll_gfx_mat_ssl_dl_Scrolling_numbers_B();
-	scroll_gfx_mat_ssl_dl_Black_filter_layer4();
+	scroll_gfx_mat_ssl_dl_Black_filter();
 	scroll_gfx_mat_ssl_dl_Scrolling_numbers_B2();
 	scroll_gfx_mat_ssl_dl_Cyber_floor_2_B_layer1();
 	scroll_gfx_mat_ssl_dl_PC_6_layer5();

@@ -109,7 +109,7 @@ extern void scroll_gfx_mat_ssl_dl_Scrolling_numbers_D();
 extern void scroll_gfx_mat_ssl_dl_Star_projection_layer5();
 extern void scroll_gfx_mat_ssl_dl_PC_4_layer5();
 extern void scroll_gfx_mat_ssl_dl_Scrolling_numbers_B();
-extern void scroll_gfx_mat_ssl_dl_Black_filter_layer4();
+extern void scroll_gfx_mat_ssl_dl_Black_filter();
 extern void scroll_gfx_mat_ssl_dl_Scrolling_numbers_B2();
 extern void scroll_gfx_mat_ssl_dl_Cyber_floor_2_B_layer1();
 extern void scroll_gfx_mat_ssl_dl_PC_6_layer5();
