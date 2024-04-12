@@ -40,14 +40,14 @@ void scroll_castle_grounds_dl_A_Menu_backdrop_a_mesh_layer_1_vtx_1() {
 	currentX += deltaX;
 }
 
-void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_0() {
+void scroll_castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 60;
 	int width = 128 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_0);
+	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_0);
 
 	deltaX = (int)(-0.15000000596046448 * 0x20) % width;
 
@@ -61,14 +61,14 @@ void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_0() {
 	currentX += deltaX;
 }
 
-void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_1() {
+void scroll_castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_1() {
 	int i = 0;
 	int count = 60;
 	int width = 128 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_1);
+	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_1);
 
 	deltaX = (int)(-0.15000000596046448 * 0x20) % width;
 
@@ -82,14 +82,14 @@ void scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_1() {
 	currentX += deltaX;
 }
 
-void scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_0() {
+void scroll_castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_0() {
 	int i = 0;
 	int count = 60;
 	int width = 128 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_0);
+	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_0);
 
 	deltaX = (int)(-0.15000000596046448 * 0x20) % width;
 
@@ -103,14 +103,14 @@ void scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_0() {
 	currentX += deltaX;
 }
 
-void scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_1() {
+void scroll_castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_1() {
 	int i = 0;
 	int count = 60;
 	int width = 128 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_1);
+	Vtx *vertices = segmented_to_virtual(castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_1);
 
 	deltaX = (int)(-0.15000000596046448 * 0x20) % width;
 
@@ -508,10 +508,10 @@ void scroll_castle_grounds_dl_C_Menu_decoration_c_mesh_layer_4_vtx_6() {
 void scroll_castle_grounds() {
 	scroll_castle_grounds_dl_A_Menu_backdrop_a_mesh_layer_1_vtx_0();
 	scroll_castle_grounds_dl_A_Menu_backdrop_a_mesh_layer_1_vtx_1();
-	scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_0();
-	scroll_castle_grounds_dl_A_Menu_backdrop_a_001_mesh_layer_1_vtx_1();
-	scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_0();
-	scroll_castle_grounds_dl_A_Menu_backdrop_a_002_mesh_layer_1_vtx_1();
+	scroll_castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_0();
+	scroll_castle_grounds_dl_A_Menu_backdrop_b_mesh_layer_1_vtx_1();
+	scroll_castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_0();
+	scroll_castle_grounds_dl_A_Menu_backdrop_c_mesh_layer_1_vtx_1();
 	scroll_castle_grounds_dl_B_Menu_checkers_a_mesh_layer_5_vtx_0();
 	scroll_castle_grounds_dl_B_Menu_checkers_b_mesh_layer_5_vtx_0();
 	scroll_castle_grounds_dl_B_Menu_checkers_c_mesh_layer_5_vtx_0();
