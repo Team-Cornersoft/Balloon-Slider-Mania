@@ -1,6 +1,6 @@
 const Collision lll_area_2_collision[] = {
 	COL_INIT(),
-	COL_VERTEX_INIT(777),
+	COL_VERTEX_INIT(778),
 	COL_VERTEX(-15270, -10254, -12632),
 	COL_VERTEX(-16326, -10209, -12083),
 	COL_VERTEX(-11883, -10215, -12233),
@@ -778,6 +778,7 @@ const Collision lll_area_2_collision[] = {
 	COL_VERTEX(-8291, -10862, 10289),
 	COL_VERTEX(-8291, -10412, 10289),
 	COL_VERTEX(-8196, -10412, 10319),
+	COL_VERTEX(5000, -8400, -13316),
 	COL_TRI_INIT(SURFACE_TIMER_END, 8),
 	COL_TRI(0, 1, 2),
 	COL_TRI(0, 2, 3),
@@ -787,7 +788,7 @@ const Collision lll_area_2_collision[] = {
 	COL_TRI(6, 8, 9),
 	COL_TRI(7, 10, 11),
 	COL_TRI(7, 11, 8),
-	COL_TRI_INIT(SURFACE_DEFAULT, 1111),
+	COL_TRI_INIT(SURFACE_DEFAULT, 1116),
 	COL_TRI(12, 13, 14),
 	COL_TRI(15, 16, 17),
 	COL_TRI(15, 17, 18),
@@ -1899,6 +1900,11 @@ const Collision lll_area_2_collision[] = {
 	COL_TRI(773, 772, 776),
 	COL_TRI(774, 773, 776),
 	COL_TRI(774, 776, 775),
+	COL_TRI(481, 468, 479),
+	COL_TRI(496, 481, 479),
+	COL_TRI(469, 483, 777),
+	COL_TRI(469, 777, 462),
+	COL_TRI(490, 462, 777),
 	COL_TRI_STOP(),
 	COL_END()
 };
