@@ -1656,6 +1656,10 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
             m->vel[1] *= 0.875f;
             animSlowdownRate *= 0.97f;
             animTotalForward += animSlowdownRate;
+
+            f32 slideSpeed = sqrtf(sqr(m->slideVelX) + sqr(m->slideVelZ)) * 0.875f;
+            m->slideVelX = slideSpeed * sins(m->faceAngle[1]);
+            m->slideVelZ = slideSpeed * coss(m->faceAngle[1]);
         } else {
             m->fadeWarpOpacity = 255;
             m->flags &= ~MARIO_TELEPORTING;

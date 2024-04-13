@@ -8905,7 +8905,47 @@ layer_end
 sound_ref .sound_bsm_bell
 sound_ref .sound_bsm_gong
 sound_ref .sound_bsm_bouncy_mushroom
+sound_ref .sound_bsm_custom_warp
 
+
+.sound_bsm_custom_warp:
+chan_setbank 6
+chan_setinstr 0x83
+chan_setenvelope .envelope_custom_fade_warp
+chan_setpanmix 0
+chan_setval 48
+chan_call .set_reverb
+chan_setlayer 0, .layer_bsm_custom_warp
+chan_setlayer 1, .layer_bsm_custom_warp_2
+chan_setlayer 2, .layer_bsm_custom_warp_3
+chan_setlayer 3, .layer_bsm_custom_warp_4
+chan_end
+
+.layer_bsm_custom_warp:
+layer_setinstr 13
+layer_setpan 0x40
+layer_portamento 0x1, 32, 0xC0
+layer_note1 0, 0x60, 95
+layer_end
+
+.layer_bsm_custom_warp_2:
+layer_setinstr 13
+layer_setpan 0x50
+layer_portamento 0x1, 33, 0xC0
+layer_note1 0, 0x60, 95
+layer_end
+
+.layer_bsm_custom_warp_3:
+layer_setpan 0x10
+layer_portamento 0x1, 18, 0xC0
+layer_note1 0, 0x50, 33
+layer_end
+
+.layer_bsm_custom_warp_4:
+layer_setpan 0x70
+layer_portamento 0x1, 19, 0xC0
+layer_note1 0, 0x50, 33
+layer_end
 
 .sound_bsm_bell:
 chan_setbank 11
@@ -9291,3 +9331,9 @@ envelope_line 1000 32700
 envelope_line 10 16000
 envelope_line 200 32760
 envelope_goto 3
+
+.envelope_custom_fade_warp:
+envelope_line 30 32700
+envelope_line 1 32760
+envelope_line 32700 29430
+envelope_hang

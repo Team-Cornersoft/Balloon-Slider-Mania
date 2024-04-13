@@ -881,6 +881,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
             case WARP_OP_SLOWMO_WARP:
             case WARP_OP_SLOWMO_WARP_FLOOR:
                 if (warpOp == WARP_OP_SLOWMO_WARP_FLOOR) {
+                    play_sound(SOUND_SPECIAL1_BSM_CUSTOM_FADE_WARP, gGlobalSoundSource);
                     if ((m->floor) && (m->floor->force & 0xFF)) {
                         sSourceWarpNodeId = m->floor->force & 0xFF;
                     } else {
