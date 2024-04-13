@@ -1783,12 +1783,24 @@ s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
 }
 
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
+    u8 *bsmCompletionFlags;
+
     if (setToLastLevel) {
         return gBSMLastLevel;
     }
 
     if (gSelectionShown < BSM_SELECTION_STAGE_START_FIRST) {
         return -1;
+    }
+
+    bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+    if (
+       (gPlayer1Controller->buttonDown & Z_TRIG) &&
+       (bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))
+    ) {
+        gUseEliseModel = TRUE;
+    } else {
+        gUseEliseModel = FALSE;
     }
 
     sWarpDest.levelNum = gBSMStageProperties[gSelectionShown - BSM_SELECTION_STAGE_START_FIRST].levelID;

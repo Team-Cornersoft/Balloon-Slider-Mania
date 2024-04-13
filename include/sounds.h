@@ -95,6 +95,9 @@ enum SoundBank {
 #define SOUND_STATUS_WAITING        1
 #define SOUND_STATUS_PLAYING        2
 
+
+#define ELISE_INDEX_FLAGS (0x40 << SOUNDARGS_SHIFT_SOUNDID)
+
 /**
  * Terrain types. mario_get_terrain_sound_addend computes a
  * sound terrain type between 0 and 7, depending on the terrain type of the
@@ -264,6 +267,8 @@ enum SoundBank {
 #define SOUND_PEACH_BAKE_A_CAKE                  /* 0x243DFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3D, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_PEACH_FOR_MARIO                    /* 0x243EFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3E, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_PEACH_MARIO2                       /* 0x243FFF81 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3F, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+// NOTE: SOUND_BANK_VOICE 0x40 - 0x7F reserved for ELISE voices!
 
 /* General Sound Effects */
 #define SOUND_GENERAL_ACTIVATE_CAP_SWITCH        /* 0x30008081 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x00, 0x80, SOUND_DISCRETE)

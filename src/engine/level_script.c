@@ -493,7 +493,13 @@ static void level_cmd_init_mario(void) {
     gMarioSpawnInfo->areaIndex = 0;
     gMarioSpawnInfo->behaviorArg = CMD_GET(u32, 4);
     gMarioSpawnInfo->behaviorScript = CMD_GET(void *, 8);
-    gMarioSpawnInfo->model = gLoadedGraphNodes[CMD_GET(ModelID16, 0x2)]; // u8, 3?
+
+    if (gUseEliseModel) {
+        gMarioSpawnInfo->model = gLoadedGraphNodes[MODEL_ELISE];
+    } else {
+        gMarioSpawnInfo->model = gLoadedGraphNodes[MODEL_MARIO];
+    }
+
     gMarioSpawnInfo->next = NULL;
 
     sCurrentCmd = CMD_NEXT;

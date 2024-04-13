@@ -15,9 +15,15 @@
             "hang"
         ],
         "envelope2": [
-            [6, 32700],
+            [2, 32700],
             [1, 32700],
             [32700, 29430],
+            "hang"
+        ],
+        "envelope3": [
+            [2, 32700],
+            [55, 32700],
+            [127, 0],
             "hang"
         ]
     },
@@ -25,32 +31,39 @@
         "inst0": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "16_french_horns"
+            "sound": "2E_accordion"
         },
         "inst1": {
             "release_rate": 208,
             "envelope": "envelope1",
-            "sound": "16_french_horns"
+            "sound": "2E_accordion"
         },
         "inst2": {
-            "release_rate": 15,
-            "normal_range_lo": 27,
-            "normal_range_hi": 46,
+            "release_rate": 208,
             "envelope": "envelope2",
-            "sound_lo": "23_strings_1",
-            "sound": "24_strings_2",
-            "sound_hi": "25_strings_3"
+            "sound": "2F_sleigh_bells"
+        },
+        "inst3": {
+            "release_rate": 10,
+            "normal_range_lo": 18,
+            "envelope": "envelope3",
+            "sound_lo": "12_snare_drum_1",
+            "sound": "13_snare_drum_2"
         }
     },
     "instrument_list": [
         "inst0",
         null,
-        null,
-        null,
-        null,
-        null,
-        null,
         "inst1",
-        "inst2"
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "inst2",
+        "inst3"
     ]
 }

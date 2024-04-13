@@ -2104,6 +2104,72 @@ sound_ref .sound_peach_bake_a_cake
 sound_ref .sound_peach_for_mario
 sound_ref .sound_peach_mario2
 
+// BEGIN ELISE SOUNDS (0x40)
+sound_ref .sound_elise_jump_yah
+sound_ref .sound_elise_jump_wah
+sound_ref .sound_elise_jump_hoo
+sound_ref .sound_elise_hoohoo
+sound_ref .sound_elise_yahoo
+sound_ref .sound_elise_uh
+sound_ref .sound_elise_hrmm
+sound_ref .sound_elise_wah2
+sound_ref .sound_elise_whoa
+sound_ref .sound_elise_eeuh
+sound_ref .sound_elise_attacked
+sound_ref .sound_elise_ooof
+sound_ref .sound_elise_here_we_go
+sound_ref .sound_elise_yawning
+sound_ref .sound_elise_snoring1
+sound_ref .sound_elise_snoring2
+sound_ref .sound_elise_waaaooow
+sound_ref .sound_elise_haha
+sound_ref .sound_elise_panting
+sound_ref .sound_elise_uh2
+sound_ref .sound_elise_on_fire
+sound_ref .sound_elise_dying
+sound_ref .sound_elise_panting
+sound_ref .sound_elise_coughing3
+sound_ref .sound_elise_panting
+sound_ref .sound_elise_panting
+sound_ref .sound_elise_panting
+sound_ref .sound_elise_coughing1
+sound_ref .sound_elise_coughing2
+sound_ref .sound_elise_coughing3
+sound_ref .sound_elise_punch_yah
+sound_ref .sound_elise_punch_hoo
+sound_ref .sound_elise_mama_mia
+sound_ref .sound_elise_okey_dokey
+sound_ref .sound_elise_ground_pound_wah
+sound_ref .sound_elise_drowning
+sound_ref .sound_elise_punch_wah
+sound_ref .sound_elise_uh
+sound_ref .sound_elise_hrmm
+sound_ref .sound_elise_wah2
+sound_ref .sound_peach_dear_mario
+sound_ref .sound_elise_jump_hoo
+sound_ref .sound_elise_jump_hoo
+sound_ref .sound_elise_yahoo
+sound_ref .sound_elise_yahoo
+sound_ref .sound_elise_yahoo
+sound_ref .sound_elise_waha
+sound_ref .sound_elise_yippee
+sound_ref .sound_elise_doh
+sound_ref .sound_elise_game_over
+sound_ref .sound_elise_hello
+sound_ref .sound_elise_press_start_to_play
+sound_ref .sound_elise_twirl_bounce
+sound_ref .sound_elise_snoring3
+sound_ref .sound_elise_so_longa_bowser
+sound_ref .sound_elise_ima_tired
+sound_ref .sound_peach_mario
+sound_ref .sound_peach_power_of_the_stars
+sound_ref .sound_peach_thanks_to_you
+sound_ref .sound_peach_thank_you_mario
+sound_ref .sound_peach_something_special
+sound_ref .sound_peach_bake_a_cake
+sound_ref .sound_peach_for_mario
+sound_ref .sound_peach_mario2
+
 .sound_mario_jump_hoo:
 chan_setbank 8
 chan_setinstr 0
@@ -2748,6 +2814,456 @@ layer_end
   layer_delay 0x5
   layer_end
 #endif
+
+.sound_elise_jump_hoo:
+chan_setbank 13
+chan_setinstr 0
+chan_setlayer 0, .layer_elise_C3C
+chan_end
+
+.layer_elise_C3C:
+layer_note1 39, 0x0c, 127
+layer_end
+
+.sound_elise_jump_wah:
+chan_setbank 13
+chan_setinstr 1
+chan_setlayer 0, .layer_elise_C4C
+chan_end
+
+.layer_elise_C4C:
+layer_note1 39, 0x10, 127
+layer_end
+
+.sound_elise_jump_yah:
+chan_setbank 13
+chan_setinstr 35
+chan_setlayer 0, .layer_elise_C5A
+chan_end
+
+.layer_elise_C5A:
+layer_note1 39, 0x19, 120
+layer_end
+
+.sound_elise_hoohoo:
+chan_setbank 13
+chan_setinstr 28
+chan_setlayer 0, .layer_elise_C6C
+chan_end
+
+.layer_elise_C6C:
+layer_note1 39, 0x14, 127
+layer_end
+
+.sound_elise_yahoo:
+chan_setbank 13
+chan_setinstr 4
+chan_setlayer 0, .layer_elise_C7C
+chan_end
+
+.layer_elise_C7C:
+layer_note1 39, 0x2c, 110
+layer_end
+
+.sound_elise_uh:
+chan_setbank 13
+chan_setinstr 5
+chan_setlayer 0, .layer_elise_C92
+chan_end
+
+.layer_elise_C92:
+layer_note1 39, 0x1e, 115
+layer_end
+
+.sound_elise_hrmm:
+chan_setbank 13
+chan_setinstr 6
+chan_setlayer 0, .layer_elise_CA4
+chan_end
+
+.layer_elise_CA4:
+layer_note1 39, 0x3f, 110
+layer_end
+
+.sound_elise_wah2:
+chan_setbank 13
+chan_setinstr 7
+chan_setlayer 0, .layer_elise_CB2
+chan_end
+
+.layer_elise_CB2:
+layer_note1 39, 0x16, 127
+layer_end
+
+.sound_elise_whoa:
+chan_setbank 13
+chan_setinstr 8
+chan_setlayer 0, .layer_elise_CC0
+chan_end
+
+.layer_elise_CC0:
+layer_note1 39, 0x31, 110
+layer_end
+
+.sound_elise_eeuh:
+chan_setbank 13
+chan_setinstr 9
+chan_setlayer 0, .layer_elise_CCE
+chan_end
+
+.layer_elise_CCE:
+layer_note1 39, 0x36, 105
+layer_end
+
+.sound_elise_attacked:
+chan_setbank 13
+chan_setinstr 10
+chan_setlayer 0, .layer_elise_CDC
+chan_end
+
+.layer_elise_CDC:
+layer_note1 39, 0x3c, 120
+layer_end
+
+.sound_elise_ooof:
+chan_setbank 13
+chan_setinstr 11
+chan_setlayer 0, .layer_elise_CEA
+chan_end
+
+.layer_elise_CEA:
+layer_note1 39, 0x32, 127
+layer_end
+
+.sound_elise_here_we_go:
+chan_setbank 13
+chan_setinstr 12
+chan_setlayer 0, .layer_elise_CF8
+chan_end
+
+.layer_elise_CF8:
+layer_note1 39, 0x3c, 127
+layer_end
+
+.sound_elise_yawning:
+chan_setbank 13
+chan_setinstr 13
+chan_setlayer 0, .layer_elise_D09
+chan_end
+
+.layer_elise_D09:
+layer_note1 39, 0x7f, 105
+layer_end
+
+.sound_elise_snoring1:
+chan_setbank 13
+chan_setinstr 14
+chan_setlayer 0, .layer_elise_D17
+chan_end
+
+.layer_elise_D17:
+layer_note1 39, 0x60, 64
+layer_end
+
+.sound_elise_snoring2:
+chan_setbank 13
+chan_setinstr 15
+chan_setlayer 0, .layer_elise_D25
+chan_end
+
+.layer_elise_D25:
+layer_note1 39, 0x5c, 52
+layer_end
+
+.sound_elise_waaaooow:
+chan_setbank 13
+chan_setinstr 27
+chan_setlayer 0, .layer_elise_D33
+chan_end
+
+.layer_elise_D33:
+layer_note1 39, 0xaf, 127
+layer_end
+
+.sound_elise_haha:
+chan_setbank 13
+chan_setinstr 3
+chan_setlayer 0, .layer_elise_D42
+chan_end
+
+.layer_elise_D42:
+layer_note1 39, 0x36, 120
+layer_end
+
+.sound_elise_uh2:
+chan_setbank 13
+chan_setinstr 32
+chan_setlayer 0, .layer_elise_D50
+chan_end
+
+.layer_elise_D50:
+layer_note1 39, 0x11, 105
+layer_end
+
+.sound_elise_on_fire:
+chan_setbank 13
+chan_setinstr 31
+chan_setlayer 0, .layer_elise_D5E
+chan_end
+
+.layer_elise_D5E:
+layer_note1 39, 0xad, 127
+layer_end
+
+.sound_elise_dying:
+chan_setbank 13
+chan_setinstr 30
+chan_setlayer 0, .layer_elise_D6D
+chan_end
+
+.layer_elise_D6D:
+layer_note1 39, 0xa9, 110
+layer_end
+
+.sound_elise_panting:
+chan_setbank 13
+chan_setinstr 29
+chan_setlayer 0, .layer_elise_D8E
+chan_end
+
+.layer_elise_D8E:
+layer_note1 39, 0x62, 100
+layer_end
+
+.sound_elise_coughing1:
+chan_setbank 13
+chan_setinstr 33
+chan_setlayer 0, .layer_elise_DBC
+chan_end
+
+.layer_elise_DBC:
+layer_note1 39, 0x10, 115
+layer_end
+
+.sound_elise_coughing2:
+chan_setbank 13
+chan_setinstr 33
+chan_setlayer 0, .layer_elise_DCA
+chan_end
+
+.layer_elise_DCA:
+layer_note1 39, 0x18, 115
+layer_end
+
+.sound_elise_coughing3:
+chan_setbank 13
+chan_setinstr 33
+chan_setlayer 0, .layer_elise_DDC
+chan_end
+
+.layer_elise_DDC:
+layer_note1 39, 0x12, 115
+layer_end
+
+.sound_elise_punch_yah:
+chan_setbank 13
+chan_setinstr 35
+chan_setlayer 0, .layer_elise_DFE
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_538
+chan_end
+
+.layer_elise_DFE:
+layer_note1 39, 0x19, 115
+layer_end
+
+.sound_elise_punch_hoo:
+chan_setbank 13
+chan_setinstr 36
+chan_setlayer 0, .layer_elise_E17
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_548
+chan_end
+
+.layer_elise_E17:
+layer_note1 39, 0x15, 115
+layer_end
+
+.sound_elise_mama_mia:
+chan_setbank 13
+chan_setinstr 37
+chan_setlayer 0, .layer_elise_E29
+chan_end
+
+.layer_elise_E29:
+layer_note1 39, 0x58, 115
+layer_end
+
+.sound_elise_okey_dokey:
+chan_setbank 13
+chan_setinstr 38
+chan_setlayer 0, .layer_elise_E3A
+chan_end
+
+.layer_elise_E3A:
+layer_note1 39, 0x39, 115
+layer_end
+
+.sound_elise_ground_pound_wah:
+chan_setbank 13
+chan_setinstr 7
+chan_setlayer 0, .layer_elise_E40
+chan_end
+
+.layer_elise_E40:
+layer_note1 39, 0x16, 127
+layer_end
+
+.sound_elise_drowning:
+chan_setbank 13
+chan_setinstr 39
+chan_setlayer 0, .layer_elise_E49
+chan_end
+
+.layer_elise_E49:
+layer_note1 39, 0xa9, 127
+layer_end
+
+.sound_elise_punch_wah:
+chan_setbank 13
+chan_setinstr 1
+chan_setlayer 0, .layer_elise_E62
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_536
+chan_end
+
+.layer_elise_E62:
+layer_note1 39, 0x10, 127
+layer_end
+
+.sound_elise_waha:
+chan_setbank 13
+chan_setinstr 24
+chan_setlayer 0, .layer_elise_E7C
+chan_end
+
+.layer_elise_E7C:
+layer_note1 39, 0x31, 127
+layer_end
+
+.sound_elise_yippee:
+chan_setbank 13
+chan_setinstr 25
+chan_setlayer 0, .layer_elise_E88
+chan_end
+
+.layer_elise_E88:
+layer_note1 39, 0x6c, 97
+layer_end
+
+.sound_elise_doh:
+chan_setbank 13
+chan_setinstr 16
+chan_setlayer 0, .layer_elise_E94
+chan_end
+
+.layer_elise_E94:
+layer_note1 39, 0x15, 127
+layer_end
+
+.sound_elise_game_over:
+chan_setbank 13
+chan_setinstr 17
+chan_setlayer 0, .layer_elise_EA0
+chan_end
+
+.layer_elise_EA0:
+layer_note1 39, 0x55, 110
+layer_end
+
+.sound_elise_hello:
+chan_setbank 13
+chan_setinstr 18
+chan_setlayer 0, .layer_elise_EAC
+chan_end
+
+.layer_elise_EAC:
+layer_note1 39, 0x46, 127
+layer_end
+
+.sound_elise_press_start_to_play:
+chan_setbank 13
+chan_setinstr 19
+chan_setlayer 0, .layer_elise_EB8
+chan_end
+
+.layer_elise_EB8:
+layer_note1 39, 0x12c, 127
+layer_end
+
+.sound_elise_twirl_bounce:
+chan_setbank 13
+chan_setinstr 20
+chan_setlayer 0, .layer_elise_EC5
+chan_end
+
+.layer_elise_EC5:
+layer_note1 39, 0x15, 127
+layer_end
+
+.sound_elise_snoring3:
+chan_setbank 13
+chan_setlayer 0, .layer_elise_ECF
+chan_end
+
+.layer_elise_ECF:
+layer_delay 0x4e
+.layer_elise_ED1:
+layer_loop 50
+layer_call .layer_elise_fn_EE1
+layer_loopend
+layer_setinstr 21
+layer_note1 39, 0x44c, 127
+layer_jump .layer_elise_ED1
+layer_end
+
+.layer_elise_fn_EE1:
+layer_setinstr 21
+layer_note1 37, 0x53, 127
+layer_setinstr 15
+layer_note1 37, 0x4e, 64
+layer_end
+
+.sound_elise_so_longa_bowser:
+chan_setbank 13
+chan_setinstr 22
+chan_setlayer 0, .layer_elise_EF7
+chan_setlayer 1, .layer_elise_EF7
+chan_end
+
+.layer_elise_EF7:
+layer_note1 39, 0xc8, 110
+layer_end
+
+.sound_elise_ima_tired:
+chan_setbank 13
+chan_setinstr 23
+chan_setlayer 0, .layer_elise_F08
+chan_end
+
+.layer_elise_F08:
+layer_note1 39, 0x96, 110
+layer_end
+
 
 .channel38_table:
 sound_ref .sound_general_activate_cap_switch

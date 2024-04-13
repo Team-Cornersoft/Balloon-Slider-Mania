@@ -26,8 +26,8 @@
 // Total memory usage is calculated by 24*(2^VOL_RAMPING_EXPONENT) bytes. This is not technically on the heap, but it's memory nonetheless.
 #define VOL_RAMPING_EXPONENT 9
 
-#define PERSISTENT_SEQ_MEM 0x8200
-#define PERSISTENT_BANK_MEM 0xDC00
+#define PERSISTENT_SEQ_MEM 0xA200
+#define PERSISTENT_BANK_MEM 0x12000
 #define TEMPORARY_SEQ_MEM 0xE800
 #define TEMPORARY_BANK_MEM 0x5500
 #define MAX_NUM_SOUNDBANKS 0x100
