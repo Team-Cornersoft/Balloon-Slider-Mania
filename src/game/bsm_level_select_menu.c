@@ -92,7 +92,7 @@ static u32 bsmNarratorFailList[] = {
 static u32 bsmNarratorItemList[] = {
     SOUND_NARRATION_BSM_ITEM_0,
     SOUND_NARRATION_BSM_ITEM_1,
-    SOUND_NARRATION_BSM_ITEM_2,
+    // SOUND_NARRATION_BSM_ITEM_2,
     SOUND_NARRATION_BSM_ITEM_3,
     SOUND_NARRATION_BSM_ITEM_4,
 };

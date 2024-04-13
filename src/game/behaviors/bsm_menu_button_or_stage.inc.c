@@ -105,7 +105,7 @@ void bhv_bsm_menu_button_or_stage_init(void) {
 #else
             s32 tcsTokensCollected = TRUE;
             for (s32 i = 0; i < BSM_COURSE_ROW_2_END; i++) {
-                if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COMPLETED_COURSE))) {
+                if (!(bsmCompletionFlags[i] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))) {
                     tcsTokensCollected = FALSE;
                     break;
                 }
