@@ -55,7 +55,7 @@ enum SurfaceTypes {
     SURFACE_ICE,                        // 0x002E // Slippery Ice, in snow levels and THI's water floor
     SURFACE_LOOK_UP_WARP,               // 0x002F // Look up and warp (Wing cap entrance)
     SURFACE_HARD,                       // 0x0030 // Hard floor (Always has fall damage)
-    SURFACE_0031,                       // 0x0031 // Unused
+    SURFACE_BSM_SLOWMO_WARP,            // 0x0031 // BSM slowmo fading warp
     SURFACE_WARP,                       // 0x0032 // Surface warp. Warps to ID of force parameter's second byte if set, otherwise defaults to ID 0xF3.
     SURFACE_TIMER_START,                // 0x0033 // Timer start (Peach's secret slide)
     SURFACE_TIMER_END,                  // 0x0034 // Timer stop (Peach's secret slide)

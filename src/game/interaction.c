@@ -1971,6 +1971,10 @@ void mario_handle_special_floors(struct MarioState *m) {
             case SURFACE_WARP:
                 level_trigger_warp(m, WARP_OP_WARP_FLOOR);
                 break;
+            
+            case SURFACE_BSM_SLOWMO_WARP:
+                level_trigger_warp(m, WARP_OP_SLOWMO_WARP_FLOOR);
+                break;
 
             case SURFACE_TIMER_START:
                 // pss_begin_slide(m);

@@ -879,8 +879,20 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                 break;
 
             case WARP_OP_SLOWMO_WARP:
+            case WARP_OP_SLOWMO_WARP_FLOOR:
+                if (warpOp == WARP_OP_SLOWMO_WARP_FLOOR) {
+                    if ((m->floor) && (m->floor->force & 0xFF)) {
+                        sSourceWarpNodeId = m->floor->force & 0xFF;
+                    } else {
+                        assert(FALSE, "No floor with force parameter!");
+                        sSourceWarpNodeId = WARP_NODE_DEATH;
+                    }
+                    assert(area_get_warp_node(sSourceWarpNodeId) != NULL, "Invalid force warp parameter!");
+                } else {
+                    sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
+                }
+
                 sDelayedWarpTimer = 30;
-                sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
                 fadeMusic = FALSE;
                 play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                 shouldFadeMarioWarp = sDelayedWarpTimer;
