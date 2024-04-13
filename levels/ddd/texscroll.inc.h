@@ -1,0 +1,10 @@
+extern void scroll_ddd_dl_0_stars_mesh_layer_4_vtx_0();
+extern void scroll_ddd_dl_0_stars_001_mesh_layer_4_vtx_0();
+extern void scroll_ddd_dl_0_stars_002_mesh_layer_4_vtx_0();
+extern void scroll_ddd_dl_0_stars_003_mesh_layer_4_vtx_0();
+extern void scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_0();
+extern void scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_1();
+extern void scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_2();
+extern void scroll_ddd_dl_stage_a1_mesh_layer_5_vtx_0();
+extern void scroll_gfx_mat_ddd_dl_Dot_lights();
+extern void scroll_ddd();
