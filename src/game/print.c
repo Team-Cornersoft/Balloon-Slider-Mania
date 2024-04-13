@@ -405,36 +405,16 @@ s32 char_to_glyph_index(char c) {
         return GLYPH_TWO_EXCLAMATION; // !!, JP only
     }
 
-    if (c == '?') {
-        return GLYPH_QUESTION_MARK; // ?, JP only
+    if (c == '$') {
+        return GLYPH_COIN; // coin
     }
 
     if (c == '&') {
         return GLYPH_AMPERSAND; // &, JP only
     }
 
-    if (c == '/') {
-        return GLYPH_PERCENT; // %, JP only
-    }
-
-    if (c == '-') {
-        return GLYPH_MINUS; // minus
-    }
-
     if (c == '*') {
         return GLYPH_MULTIPLY; // x
-    }
-
-    if (c == ':') {
-        return GLYPH_COLON; // :
-    }
-
-    if (c == '$') {
-        return GLYPH_COIN; // coin
-    }
-
-    if (c == '@') {
-        return GLYPH_RED_COIN; // red coin
     }
 
     if (c == '+') {
@@ -445,12 +425,36 @@ s32 char_to_glyph_index(char c) {
         return GLYPH_MARIO_HEAD; // Imagine I drew Mario's head
     }
 
-    if (c == '^') {
-        return GLYPH_STAR; // star
+    if (c == '-') {
+        return GLYPH_MINUS; // minus
     }
 
     if (c == '.') {
         return GLYPH_PERIOD; // large shaded dot, JP only
+    }
+
+    if (c == '/') {
+        return GLYPH_PERCENT; // %, JP only
+    }
+
+    if (c == ':') {
+        return GLYPH_COLON; // :
+    }
+
+    if (c == ';') {
+        return GLYPH_BSM_ELISE; // Elise face
+    }
+
+    if (c == '?') {
+        return GLYPH_QUESTION_MARK; // ?, JP only
+    }
+
+    if (c == '@') {
+        return GLYPH_RED_COIN; // red coin
+    }
+
+    if (c == '^') {
+        return GLYPH_STAR; // star
     }
 
     if (c == '|') {

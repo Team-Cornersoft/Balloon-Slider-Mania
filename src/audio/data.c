@@ -246,12 +246,28 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .windowSize = 0x2400,
         .gain = 0x2CFF,
         .gainIndex = 0xA0,                  // Ignored with lightweight settings
-        .reverbIndex = 0x20,                // Ignored with lightweight settings
+        .reverbIndex = 0x30,                // Ignored with lightweight settings
 
         .delaysL = sReverbDelaysArr[1],
         .delaysR = sReverbDelaysArr[2],
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
+    },
+    [BRPRESET_BSM_ELISE_UNLOCK_JINGLE] = { /* Elise Unlock Jingle */
+        .useLightweightSettings = FALSE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 6),
+
+        .windowSize = 0x2200,
+        .gain = 0x33FF,
+        .gainIndex = 0xA0,
+        .reverbIndex = 0x30,
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1],
+        .reverbMultsR = sReverbMultsArr[2],
     },
 };
 

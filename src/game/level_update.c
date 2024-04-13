@@ -994,6 +994,17 @@ void initiate_delayed_warp(void) {
                     }
 
                     if (sSourceWarpNodeId == WARP_NODE_DEFAULT) {
+                        u8 *bsmCompletionFlags;
+                        bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+
+                        if (
+                           !(bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) &&
+                           gBSMLastCourse == BSM_COURSE_9_CORNERSOFT_PARADE &&
+                           gBSMTCSTokenCollected == TRUE
+                        ) {
+                            gDisplayEliseMessage = TRUE;
+                        }
+
                         save_file_update_bsm_completion(gCurrSaveFileNum - 1, gBSMLastCourse, TRUE, gBSMTCSTokenCollected, -1);
                         save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMFinalScoreCount, gBSMFrameTimer);
                         warp_special(WARP_SPECIAL_BSM_LEVEL_SELECT);
@@ -1459,6 +1470,27 @@ s32 update_level(void) {
     return changeLevel;
 }
 
+void init_level_bsm_fields(void) {
+    gBSMTCSTokenCollected = FALSE;
+    gBSMKeyCollected = FALSE;
+    gBSMRedBalloonsPopped = 0;
+    gBSMCountTo5 = 0;
+    gBSMScoreCount = 0;
+    gBSMFinalScoreCount = 0;
+    gBSMFrameTimer = 0;
+    gBSMLastBalloonType = 0;
+    gBSMNarratorItemTimer = 0;
+    gBSMGoSignaled = FALSE;
+    gRenderBSMSuccessMenu = FALSE;
+    clear_shared_area_point_balloons();
+
+#ifdef MARIO_POS_OVERRIDE
+    gBSMTimerActive = TRUE;
+#else
+    gBSMTimerActive = FALSE;
+#endif
+}
+
 s32 init_level(void) {
     s32 fadeFromColor = FALSE;
 #ifdef PUPPYPRINT_DEBUG
@@ -1493,25 +1525,9 @@ s32 init_level(void) {
 
     sTimerRunning = FALSE;
 
-    gBSMTCSTokenCollected = FALSE;
-    gBSMKeyCollected = FALSE;
-    gBSMRedBalloonsPopped = 0;
-    gBSMCountTo5 = 0;
-    gBSMScoreCount = 0;
-    gBSMFinalScoreCount = 0;
-    gBSMFrameTimer = 0;
-    gBSMLastBalloonType = 0;
-    gBSMNarratorItemTimer = 0;
-    gBSMGoSignaled = FALSE;
-    gRenderBSMSuccessMenu = FALSE;
-    memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
-    clear_shared_area_point_balloons();
+    init_level_bsm_fields();
 
-#ifdef MARIO_POS_OVERRIDE
-    gBSMTimerActive = TRUE;
-#else
-    gBSMTimerActive = FALSE;
-#endif
+    memset(gClownFontColor, 0xFF, sizeof(gClownFontColor));
 
     gTransitioningDirLight.overrideable = TRUE;
     gTransitioningDirLight.timer = U8_MAX;
@@ -1714,6 +1730,8 @@ s32 lvl_play_the_end_screen_sound(UNUSED s16 initOrUpdate, UNUSED s32 levelNum) 
 }
 
 s32 init_bsm_menu(UNUSED s16 frames, UNUSED s32 arg1) {
+    init_level_bsm_fields();
+
     gSelectionShown = BSM_SELECTION_NONE;
     gCurrLevelNum = LEVEL_CASTLE_GROUNDS;
     gBSMInitialized = FALSE;
@@ -1811,9 +1829,9 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
        (bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) &&
        (gPlayer1Controller->buttonDown & Z_TRIG)
     ) {
-        gUseEliseModel = TRUE;
+        gUsingEliseModel = TRUE;
     } else {
-        gUseEliseModel = FALSE;
+        gUsingEliseModel = FALSE;
     }
 
     sWarpDest.levelNum = gBSMStageProperties[gSelectionShown - BSM_SELECTION_STAGE_START_FIRST].levelID;
@@ -1829,6 +1847,10 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
     gBSMLastCourse = gSelectionShown - BSM_SELECTION_STAGE_START_FIRST;
     gBSMLastLevel = sWarpDest.levelNum;
     return sWarpDest.levelNum;
+}
+
+s32 bsm_check_elise_unlocked(UNUSED s16 arg0, UNUSED s32 arg1) {
+    return gDisplayEliseMessage;
 }
 
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {

@@ -45,5 +45,6 @@
     "2A_custom_course7_twilight": ["2F_custom_course7_twilight"],
     "2B_custom_course8_cyber": ["30_custom_course8_cyber"],
     "2C_custom_success_jingle": ["31_custom_success_jingle"],
-    "2D_custom_title_screen": ["32_custom_title_screen"]
+    "2D_custom_title_screen": ["32_custom_title_screen"],
+    "2E_custom_elise_unlock_jingle": ["33_custom_elise_unlock_jingle"]
 }

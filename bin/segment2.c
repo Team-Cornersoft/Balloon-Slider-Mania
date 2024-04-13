@@ -811,6 +811,10 @@ ALIGNED8 static const Texture texture_custom_bsm_hud_time[] = {
 #include "textures/segment2/custom_bsm_hud_time.rgba32.inc.c"
 };
 
+ALIGNED8 static const Texture texture_custom_bsm_elise[] = {
+#include "textures/segment2/custom_bsm_elise.rgba16.inc.c"
+};
+
 ALIGNED8 static const Texture texture_credits_char_3[] = {
 #include "textures/segment2/segment2.06200.rgba16.inc.c"
 };
@@ -2425,9 +2429,9 @@ const Texture *const main_hud_lut[] = {
     texture_hud_char_colon,            0x0, texture_hud_char_slash, texture_hud_char_minus,
     texture_hud_char_multiply, texture_hud_char_coin, texture_hud_char_red_coin, texture_hud_char_silver_coin,
     texture_hud_char_mario_head, texture_hud_char_star, texture_hud_char_decimal_point, texture_hud_char_beta_key,
-    texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut, texture_custom_bsm_hud_balloon,
-    texture_custom_bsm_hud_key, texture_custom_bsm_hud_key_na, texture_custom_bsm_hud_tcstoken, texture_custom_bsm_hud_tcstoken_na,
-    texture_custom_bsm_hud_score, texture_custom_bsm_hud_time,
+    texture_hud_char_apostrophe, texture_hud_char_double_quote, texture_hud_char_umlaut, texture_custom_bsm_elise,
+    texture_custom_bsm_hud_balloon, texture_custom_bsm_hud_key, texture_custom_bsm_hud_key_na, texture_custom_bsm_hud_tcstoken,
+    texture_custom_bsm_hud_tcstoken_na, texture_custom_bsm_hud_score, texture_custom_bsm_hud_time,
 };
 
 // Main small font print table 0x02008338-0x02008737

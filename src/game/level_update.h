@@ -227,6 +227,7 @@ s32 init_image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1);
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1);
+s32 bsm_check_elise_unlocked(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1);
 
 #endif // LEVEL_UPDATE_H

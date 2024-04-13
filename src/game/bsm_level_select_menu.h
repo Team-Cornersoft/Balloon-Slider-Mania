@@ -93,7 +93,8 @@ extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 extern enum BSMMenuSelectionTypes gSelectionShown;
 extern u8 gBSMInitialized;
-extern u8 gUseEliseModel;
+extern u8 gUsingEliseModel;
+extern u8 gDisplayEliseMessage;
 extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
 extern struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
 

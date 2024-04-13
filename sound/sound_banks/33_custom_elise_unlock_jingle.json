@@ -1,0 +1,22 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "instruments",
+    "envelopes": {
+        "envelope0": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 75,
+            "envelope": "envelope0",
+            "sound": "26_crystal_rhodes"
+        }
+	},
+    "instrument_list": [
+        "inst0"
+    ]
+}

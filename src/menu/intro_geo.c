@@ -10,8 +10,10 @@
 #include "textures.h"
 #include "types.h"
 #include "buffers/framebuffers.h"
+#include "game/bsm_level_select_menu.h"
 #include "game/game_init.h"
 #include "game/level_update.h"
+#include "game/print.h"
 #include "audio/external.h"
 
 // frame counts for the zoom in, hold, and zoom out of title model
@@ -99,8 +101,8 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
     Gfx *head = NULL;
 
     if (state == GEO_CONTEXT_RENDER) {
-        // Gfx *dl = alloc_display_list(sizeof(*dl) * 15 * 4 + 4);
-        Gfx *dl = alloc_display_list(sizeof(*dl) * 15 + 4);
+        // Gfx *dl = alloc_display_list(sizeof(*dl) * (15 * 4 + 4));
+        Gfx *dl = alloc_display_list(sizeof(*dl) * (15 + 4));
         head = dl;
 
         if (!dl || gBSMRetryMenuScale == 0) {
@@ -152,7 +154,71 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
 
         gDPSetEnvColor(dl++, 255, 255, 255, 255);
         gSPDisplayList(dl++, dl_hud_img_end);
-        gSPEndDisplayList(dl++);
+        gSPEndDisplayList(dl);
+    }
+
+    return head;
+}
+
+
+Gfx *geo_elise_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
+    Gfx *head = NULL;
+
+    gDisplayEliseMessage = FALSE;
+    if (state == GEO_CONTEXT_RENDER) {
+        Texture *(*hudLUT)[] = segmented_to_virtual(&main_hud_lut);
+
+        Gfx *dl = alloc_display_list(sizeof(*dl) * (15 + 14));
+        head = dl;
+
+        if (!dl) {
+            return NULL;
+        }
+
+        gDPSetCombineMode(dl++, BLANK, BLANK);
+
+        s32 x1 = SCREEN_CENTER_X - 116;
+        s32 y1 = SCREEN_CENTER_Y - 39;
+        s32 x2 = SCREEN_CENTER_X + 116;
+        s32 y2 = SCREEN_CENTER_Y + 39;
+
+        s32 xElise = x1 + 12 + 115;
+        s32 yElise = y1 + 12 - 3;
+
+        u8 r = 63;
+        u8 g = 63;
+        u8 b = 255;
+        u8 a = 255;
+
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, a);
+        // gDPSetEnvColor(dl++, 255, 255, 255, 255); // Not needed
+        gSPDisplayList(dl++, dl_hud_img_end);
+
+        // Elise face
+        gSPDisplayList(dl++, dl_rgba16_text_begin);
+        gDPSetTextureImage(dl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (*hudLUT)[GLYPH_BSM_ELISE]);
+
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 79, 79, 79, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, (xElise - 1) << 2, (yElise + 1) << 2, ((xElise - 1) + 16) << 2,
+                            ((yElise + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 255, 255, 255, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, xElise << 2, yElise << 2, (xElise + 16) << 2,
+                            (yElise + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+        gSPDisplayList(dl++, dl_rgba16_text_end);
+        gSPEndDisplayList(dl);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 12, "You can now play as", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(xElise + 19, y1 + 12, "Elise.", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 175, 175, 255);
+        print_small_text_buffered(x1 + 12, y1 + 42, "To play as Elise, hold <COL_FFFF00-->Z<COL_--------> when starting\nup a new track!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 
     return head;

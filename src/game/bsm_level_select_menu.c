@@ -37,7 +37,8 @@
 enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
 enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
 u8 gBSMInitialized = FALSE;
-u8 gUseEliseModel = FALSE;
+u8 gUsingEliseModel = FALSE;
+u8 gDisplayEliseMessage = FALSE;
 
 u8 bsmTrackSelectNarratorSpoken = 0;
 
@@ -563,7 +564,6 @@ void bhv_bsm_menu_button_manager_init(void) {
     locate_all_button_objects();
     init_image_screen_press_button(0, 0);
     gBSMInitialized = TRUE;
-    gUseEliseModel = FALSE;
 
     if (bsmTrackSelectNarratorSpoken != 0) {
         bsmTrackSelectNarratorSpoken = 1;

@@ -166,7 +166,13 @@ static const LevelScript goto_debug_level_select[] = {
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
+static const LevelScript goto_bsm_elise_unlocked[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_elise_message, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
 static const LevelScript goto_bsm_level_select[] = {
+    CALL(/*arg*/ 1, /*func*/ bsm_check_elise_unlocked),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ TRUE, goto_bsm_elise_unlocked),
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
 };
 

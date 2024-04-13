@@ -6,6 +6,7 @@
 // geo
 extern const GeoLayout intro_scam_screen[];
 extern const GeoLayout intro_retry_menu[];
+extern const GeoLayout intro_elise_message[];
 extern const GeoLayout intro_geo_splash_screen[];
 extern const GeoLayout intro_geo_mario_head_regular[];
 extern const GeoLayout intro_geo_mario_head_dizzy[];
@@ -23,6 +24,7 @@ extern const f32 intro_seg7_table_scale_2[];
 // script
 extern const LevelScript level_scam_warning_screen[];
 extern const LevelScript level_intro_retry_menu[];
+extern const LevelScript level_intro_elise_message[];
 extern const LevelScript level_intro_splash_screen[];
 extern const LevelScript level_intro_mario_head_regular[];
 extern const LevelScript level_intro_mario_head_dizzy[];
