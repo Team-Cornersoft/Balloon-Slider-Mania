@@ -1795,8 +1795,8 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
 
     bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
     if (
-       (gPlayer1Controller->buttonDown & Z_TRIG) &&
-       (bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))
+       (bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) &&
+       (gPlayer1Controller->buttonDown & Z_TRIG)
     ) {
         gUseEliseModel = TRUE;
     } else {

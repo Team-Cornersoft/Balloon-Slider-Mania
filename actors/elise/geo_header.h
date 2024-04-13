@@ -247,3 +247,4 @@ extern Gfx elise_000_displaylist_005_skinned_mesh_layer_1[];
 extern Gfx elise_000_displaylist_005_skinned_mesh_layer_1_mat_override_metal_v4_001_0[];
 extern Gfx elise_000_displaylist_005_mesh_layer_1[];
 extern Gfx elise_000_displaylist_005_mesh_layer_1_mat_override_metal_v4_001_0[];
+extern Gfx elise_material_revert_render_settings[];
