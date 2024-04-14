@@ -484,6 +484,59 @@ void select_gfx_pool(void) {
     gGfxPoolEnd = (u8 *) (gGfxPool->buffer + GFX_POOL_SIZE);
 }
 
+static void render_fbe_transition(void) {
+    if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
+        if (gFBEEnabled) {
+            RGBA16 *fb = gFramebuffers[sRenderedFramebuffer] - SCREEN_WIDTH;
+            s32 pixelOffset = ((gMenuWarpCounter - 4) * (gMenuWarpCounter - 2)) - 25;
+            s32 width;
+            s32 invWidth;
+            s32 lineOffset;
+
+            if (gMenuWarpCounter < 5) {
+                pixelOffset = 0;
+            }
+
+            for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
+                lineOffset = gFBEWarpTransitionProps[i][1];
+                fb += SCREEN_WIDTH;
+                if (pixelOffset <= lineOffset) {
+                    continue;
+                }
+
+                width = pixelOffset - lineOffset;
+                if (width >= SCREEN_WIDTH) {
+                    for (RGBA32 *u32Addr = (RGBA32 *) fb, *u32AddrDest = (RGBA32 *) &fb[SCREEN_WIDTH]; u32Addr < u32AddrDest; u32Addr++) {
+                        *u32Addr = 0x00010001;
+                    }
+                    continue;
+                }
+                invWidth = SCREEN_WIDTH - width;
+
+                if (gFBEWarpTransitionProps[i][0]) {
+                    for (RGBA16 *addr = &fb[SCREEN_WIDTH - 1], *addr2 = addr - width; addr >= fb; addr--, addr2--) {
+                        *addr = *addr2;
+                    }
+                    for (RGBA32 *u32Addr = (RGBA32 *) fb, *u32AddrDest = (RGBA32 *) &fb[width & ~0x1]; u32Addr < u32AddrDest; u32Addr++) {
+                        *u32Addr = 0x00010001;
+                    }
+                    fb[width - 1] = 0x0001;
+                } else {
+                    for (RGBA16 *addr = fb, *addr2 = &fb[width], *addrDest = &fb[SCREEN_WIDTH]; addr2 < addrDest; addr++, addr2++) {
+                        *addr = *addr2;
+                    }
+                    for (RGBA32 *u32Addr = (RGBA32 *) &fb[(invWidth + 1) & ~0x1], *u32AddrDest = (RGBA32 *) &fb[SCREEN_WIDTH]; u32Addr < u32AddrDest; u32Addr++) {
+                        *u32Addr = 0x00010001;
+                    }
+                    fb[invWidth] = 0x0001;
+                }
+            }
+        }
+
+        gMenuWarpCounter++;
+    }
+}
+
 /**
  * This function:
  * - Sends the current master display list out to be rendered.
@@ -499,52 +552,7 @@ void display_and_vsync(void) {
     }
     exec_display_list(&gGfxPool->spTask);
 
-    if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
-        if (gFBEEnabled) {
-            RGBA16 *fb = gFramebuffers[sRenderedFramebuffer];
-            s32 pixelOffset = ((gMenuWarpCounter - 4) * (gMenuWarpCounter - 2)) - 25;
-            s32 vertOffset;
-            s32 width;
-            s32 invWidth;
-            s32 j;
-
-            if (gMenuWarpCounter < 5) {
-                pixelOffset = 0;
-            }
-
-            for (s32 i = 0; i < SCREEN_HEIGHT; i++) {
-                s32 lineOffset = gFBEWarpTransitionProps[i][1];
-                if (pixelOffset <= lineOffset) {
-                    continue;
-                }
-
-                vertOffset = i * SCREEN_WIDTH;
-                width = pixelOffset - lineOffset;
-                if (width >= SCREEN_WIDTH) {
-                    width = SCREEN_WIDTH;
-                }
-                invWidth = SCREEN_WIDTH - width;
-
-                if (gFBEWarpTransitionProps[i][0]) {
-                    for (RGBA16 *addr = &fb[vertOffset + SCREEN_WIDTH - 1], *addr2 = addr - width; addr >= &fb[vertOffset + width]; addr--, addr2--) {
-                        *addr = *addr2;
-                    }
-                    for (j = vertOffset; j < (vertOffset + width); j++) {
-                        fb[j] = 0x0001;
-                    }
-                } else {
-                    for (RGBA16 *addr = &fb[vertOffset], *addr2 = addr + width; addr < &fb[vertOffset + SCREEN_WIDTH]; addr++, addr2++) {
-                        *addr = *addr2;
-                    }
-                    for (j = vertOffset + invWidth; j < (vertOffset + SCREEN_WIDTH); j++) {
-                        fb[j] = 0x0001;
-                    }
-                }
-            }
-        }
-
-        gMenuWarpCounter++;
-    }
+    render_fbe_transition();
 
 #ifndef UNLOCK_FPS
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);

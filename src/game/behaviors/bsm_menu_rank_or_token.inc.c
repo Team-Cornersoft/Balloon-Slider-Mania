@@ -47,7 +47,7 @@ struct BSMNarratorList *rankNarratorLists[NUM_RANKS] = {
 #define G_RANK_MULT 0.1f
 
 static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = 2770,
+    [BSM_COURSE_1_SNOWY_PEAK]        = 2780,
     [BSM_COURSE_2_LAVA_ISLE]         = 1840,
     [BSM_COURSE_3_FUNGI_CANYON]      = 2155,
     [BSM_COURSE_4_STARLIGHT_FEST]    = 2060,
