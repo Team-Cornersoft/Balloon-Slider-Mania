@@ -593,7 +593,7 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater, s32 bsmCuts
     if (m->actionState == ACT_STATE_STAR_DANCE_CUTSCENE) {
         switch (++m->actionTimer) {
             case 1:
-                if (bsmCutscene) {
+                if (bsmCutscene && gStarModelLastCollected != MODEL_BSM_TCS_TOKEN) {
                     break;
                 }
                 celebStar = spawn_object(m->marioObj, MODEL_STAR, bhvCelebrationStar);
@@ -604,6 +604,11 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater, s32 bsmCuts
                     obj_set_model(celebStar, gStarModelLastCollected);
                 }
 #endif
+                if (bsmCutscene) {
+                    play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(15, SEQ_CUSTOM_SUCCESS_JINGLE), 0);
+                    break;
+                }
+
                 disable_background_sound();
                 //! TODO: Is this check necessary? Both seem to do the exact same thing.
                 if (m->actionArg & 1) {
@@ -708,8 +713,13 @@ s32 act_fall_after_star_grab(struct MarioState *m) {
     }
     if (perform_air_step(m, AIR_STEP_CHECK_LEDGE_GRAB) == AIR_STEP_LANDED) {
         play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
-        set_mario_action(m, m->actionArg & 1 ? ACT_STAR_DANCE_NO_EXIT : ACT_STAR_DANCE_EXIT,
-                         m->actionArg);
+        if (gStarModelLastCollected == MODEL_BSM_TCS_TOKEN) {
+            m->faceAngle[1] += 0x8000;
+            set_mario_action(m, ACT_BSM_CELEBRATION, m->actionArg);
+        } else {
+            set_mario_action(m, m->actionArg & 1 ? ACT_STAR_DANCE_NO_EXIT : ACT_STAR_DANCE_EXIT,
+                            m->actionArg);
+        }
     }
     set_mario_animation(m, MARIO_ANIM_GENERAL_FALL);
     return FALSE;

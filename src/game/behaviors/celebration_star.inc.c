@@ -49,7 +49,7 @@ void celeb_star_act_face_camera(void) {
         o->oFaceAngleYaw = gMarioObject->header.gfx.angle[1];
     }
 
-    if (o->oTimer == 59) {
+    if (o->oTimer >= 59 && (!(gMarioState && gMarioState->action == ACT_BSM_CELEBRATION))) {
         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
     }
 }

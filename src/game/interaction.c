@@ -768,7 +768,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
     u32 starIndex;
     u32 starGrabAction = ACT_STAR_DANCE_EXIT;
 
-    if (obj->behavior == segmented_to_virtual(bhvTCSToken)) {
+    if (obj->behavior == segmented_to_virtual(bhvTCSToken) && COURSE_NUM_TO_INDEX(gCurrCourseNum) != BSM_COURSE_9_CORNERSOFT_PARADE) {
         gBSMTCSTokenCollected = TRUE;
         gBSMNarratorItemTimer = 10;
 
@@ -847,6 +847,20 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 #else
         starIndex = (obj->oBehParams >> 24) & 0x1F;
 #endif
+        if (obj->behavior == segmented_to_virtual(bhvTCSToken)) {
+            drop_queued_background_music();
+            fadeout_level_music(126);
+            gBSMTCSTokenCollected = TRUE;
+            gBSMTimerActive = FALSE;
+            play_sound(SOUND_MENU_STAR_SOUND, m->marioObj->header.gfx.cameraToObject);
+            update_mario_sound_and_camera(m);
+            if (starGrabAction != ACT_FALL_AFTER_STAR_GRAB) {
+                starGrabAction = ACT_BSM_CELEBRATION;
+                m->faceAngle[1] += 0x8000;
+            }
+            return set_mario_action(m, starGrabAction, 0);
+        }
+
         save_file_collect_star_or_key(m->numCoins, starIndex);
 
         m->numStars =

@@ -4965,7 +4965,11 @@ u8 get_cutscene_from_mario_status(struct Camera *c) {
                 cutscene = CUTSCENE_DANCE_DEFAULT;
                 break;
             case ACT_BSM_CELEBRATION:
-                cutscene = CUTSCENE_DANCE_BSM_VICTORY;
+                if (gStarModelLastCollected == MODEL_BSM_TCS_TOKEN) {
+                    cutscene = CUTSCENE_BSM_VICTORY_TCS_DANCE;
+                } else {
+                    cutscene = CUTSCENE_DANCE_BSM_VICTORY;
+                }
                 break;
         }
         switch (sMarioCamState->cameraEvent) {
@@ -7713,6 +7717,21 @@ void cutscene_key_dance(struct Camera *c) {
     cutscene_event(cutscene_key_dance_handheld_shake, c, 52, -1);
 }
 
+/**
+ * Cutscene that plays when Mario collects a key from bowser. It's basically a sequence of four jump
+ * cuts.
+ */
+void cutscene_bsm_victory_tcs_dance(struct Camera *c) {
+    cutscene_event(cutscene_dance_move_to_mario, c, 0, 10);
+    cutscene_event(cutscene_key_dance_focus_mario, c, 0, 10);
+    cutscene_event(cutscene_key_dance_jump_closeup, c, 0, 0);
+    cutscene_event(cutscene_key_dance_jump_lower_left, c, 22, 22);
+    cutscene_event(cutscene_key_dance_jump_above, c, 33, 33);
+    cutscene_event(cutscene_key_dance_jump_last, c, 44, 44);
+    cutscene_event(cutscene_key_dance_jump_cvar, c, 11, -1);
+    cutscene_event(cutscene_key_dance_shake_fov, c, 56, 56);
+}
+
 void cutscene_bowser_area_shake_fov(UNUSED struct Camera *c) {
     cutscene_set_fov_shake_preset(2);
 }
@@ -10305,6 +10324,14 @@ struct Cutscene sCutsceneKeyDance[] = {
 };
 
 /**
+ * Star dance cutscene.
+ * The camera moves closer and rotates clockwise around Mario.
+ */
+struct Cutscene sCutsceneBSMVictoryTCSDance[] = {
+    { cutscene_bsm_victory_tcs_dance, CUTSCENE_LOOP }
+};
+
+/**
  * Cutscene that plays when Mario presses a cap switch.
  */
 struct Cutscene sCutsceneCapSwitchPress[] = {
@@ -10793,52 +10820,53 @@ void play_cutscene(struct Camera *c) {
         break;
 
     switch (c->cutscene) {
-        CUTSCENE(CUTSCENE_STAR_SPAWN,           sCutsceneStarSpawn)
-        CUTSCENE(CUTSCENE_RED_COIN_STAR_SPAWN,  sCutsceneRedCoinStarSpawn)
-        CUTSCENE(CUTSCENE_ENDING,               sCutsceneEnding)
-        CUTSCENE(CUTSCENE_GRAND_STAR,           sCutsceneGrandStar)
-        CUTSCENE(CUTSCENE_DOOR_WARP,            sCutsceneDoorWarp)
-        CUTSCENE(CUTSCENE_DOOR_PULL,            sCutsceneDoorPull)
-        CUTSCENE(CUTSCENE_DOOR_PUSH,            sCutsceneDoorPush)
-        CUTSCENE(CUTSCENE_DOOR_PULL_MODE,       sCutsceneDoorPullMode)
-        CUTSCENE(CUTSCENE_DOOR_PUSH_MODE,       sCutsceneDoorPushMode)
-        CUTSCENE(CUTSCENE_ENTER_CANNON,         sCutsceneEnterCannon)
-        CUTSCENE(CUTSCENE_ENTER_PAINTING,       sCutsceneEnterPainting)
-        CUTSCENE(CUTSCENE_DEATH_EXIT,           sCutsceneDeathExit)
-        CUTSCENE(CUTSCENE_EXIT_PAINTING_SUCC,   sCutsceneExitPaintingSuccess)
-        CUTSCENE(CUTSCENE_UNUSED_EXIT,          sCutsceneUnusedExit)
-        CUTSCENE(CUTSCENE_INTRO_PEACH,          sCutsceneIntroPeach)
-        CUTSCENE(CUTSCENE_ENTER_BOWSER_ARENA,   sCutsceneEnterBowserArena)
-        CUTSCENE(CUTSCENE_DANCE_ROTATE,         sCutsceneDanceDefaultRotate)
-        CUTSCENE(CUTSCENE_DANCE_DEFAULT,        sCutsceneDanceDefaultRotate)
-        CUTSCENE(CUTSCENE_DANCE_BSM_VICTORY,    sCutsceneDanceBSMVictory)
-        CUTSCENE(CUTSCENE_DANCE_FLY_AWAY,       sCutsceneDanceFlyAway)
-        CUTSCENE(CUTSCENE_DANCE_CLOSEUP,        sCutsceneDanceCloseup)
-        CUTSCENE(CUTSCENE_KEY_DANCE,            sCutsceneKeyDance)
-        CUTSCENE(CUTSCENE_0F_UNUSED,            sCutsceneUnused)
-        CUTSCENE(CUTSCENE_END_WAVING,           sCutsceneEndWaving)
-        CUTSCENE(CUTSCENE_CREDITS,              sCutsceneCredits)
-        CUTSCENE(CUTSCENE_CAP_SWITCH_PRESS,     sCutsceneCapSwitchPress)
-        CUTSCENE(CUTSCENE_SLIDING_DOORS_OPEN,   sCutsceneSlidingDoorsOpen)
-        CUTSCENE(CUTSCENE_PREPARE_CANNON,       sCutscenePrepareCannon)
-        CUTSCENE(CUTSCENE_UNLOCK_KEY_DOOR,      sCutsceneUnlockKeyDoor)
-        CUTSCENE(CUTSCENE_STANDING_DEATH,       sCutsceneStandingDeath)
-        CUTSCENE(CUTSCENE_ENTER_POOL,           sCutsceneEnterPool)
-        CUTSCENE(CUTSCENE_DEATH_ON_STOMACH,     sCutsceneDeathStomach)
-        CUTSCENE(CUTSCENE_DEATH_ON_BACK,        sCutsceneDeathOnBack)
-        CUTSCENE(CUTSCENE_QUICKSAND_DEATH,      sCutsceneQuicksandDeath)
-        CUTSCENE(CUTSCENE_SUFFOCATION_DEATH,    sCutsceneSuffocation)
-        CUTSCENE(CUTSCENE_EXIT_BOWSER_SUCC,     sCutsceneExitBowserSuccess)
-        CUTSCENE(CUTSCENE_EXIT_BOWSER_DEATH,    sCutsceneExitBowserDeath)
-        CUTSCENE(CUTSCENE_EXIT_SPECIAL_SUCC,    sCutsceneExitSpecialSuccess)
-        CUTSCENE(CUTSCENE_EXIT_WATERFALL,       sCutsceneExitWaterfall)
-        CUTSCENE(CUTSCENE_EXIT_FALL_WMOTR,      sCutsceneFallToCastleGrounds)
-        CUTSCENE(CUTSCENE_NONPAINTING_DEATH,    sCutsceneNonPaintingDeath)
-        CUTSCENE(CUTSCENE_DIALOG,               sCutsceneDialog)
-        CUTSCENE(CUTSCENE_READ_MESSAGE,         sCutsceneReadMessage)
-        CUTSCENE(CUTSCENE_RACE_DIALOG,          sCutsceneDialog)
-        CUTSCENE(CUTSCENE_ENTER_PYRAMID_TOP,    sCutsceneEnterPyramidTop)
-        CUTSCENE(CUTSCENE_SSL_PYRAMID_EXPLODE,  sCutscenePyramidTopExplode)
+        CUTSCENE(CUTSCENE_STAR_SPAWN,            sCutsceneStarSpawn)
+        CUTSCENE(CUTSCENE_RED_COIN_STAR_SPAWN,   sCutsceneRedCoinStarSpawn)
+        CUTSCENE(CUTSCENE_ENDING,                sCutsceneEnding)
+        CUTSCENE(CUTSCENE_GRAND_STAR,            sCutsceneGrandStar)
+        CUTSCENE(CUTSCENE_DOOR_WARP,             sCutsceneDoorWarp)
+        CUTSCENE(CUTSCENE_DOOR_PULL,             sCutsceneDoorPull)
+        CUTSCENE(CUTSCENE_DOOR_PUSH,             sCutsceneDoorPush)
+        CUTSCENE(CUTSCENE_DOOR_PULL_MODE,        sCutsceneDoorPullMode)
+        CUTSCENE(CUTSCENE_DOOR_PUSH_MODE,        sCutsceneDoorPushMode)
+        CUTSCENE(CUTSCENE_ENTER_CANNON,          sCutsceneEnterCannon)
+        CUTSCENE(CUTSCENE_ENTER_PAINTING,        sCutsceneEnterPainting)
+        CUTSCENE(CUTSCENE_DEATH_EXIT,            sCutsceneDeathExit)
+        CUTSCENE(CUTSCENE_EXIT_PAINTING_SUCC,    sCutsceneExitPaintingSuccess)
+        CUTSCENE(CUTSCENE_UNUSED_EXIT,           sCutsceneUnusedExit)
+        CUTSCENE(CUTSCENE_INTRO_PEACH,           sCutsceneIntroPeach)
+        CUTSCENE(CUTSCENE_ENTER_BOWSER_ARENA,    sCutsceneEnterBowserArena)
+        CUTSCENE(CUTSCENE_DANCE_ROTATE,          sCutsceneDanceDefaultRotate)
+        CUTSCENE(CUTSCENE_DANCE_DEFAULT,         sCutsceneDanceDefaultRotate)
+        CUTSCENE(CUTSCENE_DANCE_BSM_VICTORY,     sCutsceneDanceBSMVictory)
+        CUTSCENE(CUTSCENE_DANCE_FLY_AWAY,        sCutsceneDanceFlyAway)
+        CUTSCENE(CUTSCENE_DANCE_CLOSEUP,         sCutsceneDanceCloseup)
+        CUTSCENE(CUTSCENE_KEY_DANCE,             sCutsceneKeyDance)
+        CUTSCENE(CUTSCENE_BSM_VICTORY_TCS_DANCE, sCutsceneBSMVictoryTCSDance)
+        CUTSCENE(CUTSCENE_0F_UNUSED,             sCutsceneUnused)
+        CUTSCENE(CUTSCENE_END_WAVING,            sCutsceneEndWaving)
+        CUTSCENE(CUTSCENE_CREDITS,               sCutsceneCredits)
+        CUTSCENE(CUTSCENE_CAP_SWITCH_PRESS,      sCutsceneCapSwitchPress)
+        CUTSCENE(CUTSCENE_SLIDING_DOORS_OPEN,    sCutsceneSlidingDoorsOpen)
+        CUTSCENE(CUTSCENE_PREPARE_CANNON,        sCutscenePrepareCannon)
+        CUTSCENE(CUTSCENE_UNLOCK_KEY_DOOR,       sCutsceneUnlockKeyDoor)
+        CUTSCENE(CUTSCENE_STANDING_DEATH,        sCutsceneStandingDeath)
+        CUTSCENE(CUTSCENE_ENTER_POOL,            sCutsceneEnterPool)
+        CUTSCENE(CUTSCENE_DEATH_ON_STOMACH,      sCutsceneDeathStomach)
+        CUTSCENE(CUTSCENE_DEATH_ON_BACK,         sCutsceneDeathOnBack)
+        CUTSCENE(CUTSCENE_QUICKSAND_DEATH,       sCutsceneQuicksandDeath)
+        CUTSCENE(CUTSCENE_SUFFOCATION_DEATH,     sCutsceneSuffocation)
+        CUTSCENE(CUTSCENE_EXIT_BOWSER_SUCC,      sCutsceneExitBowserSuccess)
+        CUTSCENE(CUTSCENE_EXIT_BOWSER_DEATH,     sCutsceneExitBowserDeath)
+        CUTSCENE(CUTSCENE_EXIT_SPECIAL_SUCC,     sCutsceneExitSpecialSuccess)
+        CUTSCENE(CUTSCENE_EXIT_WATERFALL,        sCutsceneExitWaterfall)
+        CUTSCENE(CUTSCENE_EXIT_FALL_WMOTR,       sCutsceneFallToCastleGrounds)
+        CUTSCENE(CUTSCENE_NONPAINTING_DEATH,     sCutsceneNonPaintingDeath)
+        CUTSCENE(CUTSCENE_DIALOG,                sCutsceneDialog)
+        CUTSCENE(CUTSCENE_READ_MESSAGE,          sCutsceneReadMessage)
+        CUTSCENE(CUTSCENE_RACE_DIALOG,           sCutsceneDialog)
+        CUTSCENE(CUTSCENE_ENTER_PYRAMID_TOP,     sCutsceneEnterPyramidTop)
+        CUTSCENE(CUTSCENE_SSL_PYRAMID_EXPLODE,   sCutscenePyramidTopExplode)
     }
 
 #undef CUTSCENE
