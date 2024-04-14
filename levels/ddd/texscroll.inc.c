@@ -82,6 +82,27 @@ void scroll_ddd_dl_0_stars_003_mesh_layer_4_vtx_0() {
 	currentX += deltaX;
 }
 
+void scroll_ddd_dl_B_stage_a1_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 24;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_B_stage_a1_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
 void scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_0() {
 	int i = 0;
 	int count = 24;
@@ -145,16 +166,184 @@ void scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_2() {
 	currentX += deltaX;
 }
 
-void scroll_ddd_dl_stage_a1_mesh_layer_5_vtx_0() {
+void scroll_ddd_dl_C_Portal_a1_001_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 24;
+	int count = 20;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_stage_a1_mesh_layer_5_vtx_0);
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Portal_a1_001_mesh_layer_5_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_C_Portal_a1_001_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 51;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Portal_a1_001_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(0.10000000149011612 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_B_dress_mesh_layer_5_vtx_1() {
+	int i = 0;
+	int count = 52;
+	int width = 128 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_B_dress_mesh_layer_5_vtx_1);
+
+	deltaX = (int)(0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_B_eyes_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 112;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_B_eyes_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(-0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_C_Flower_guide_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int width = 128 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Flower_guide_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_C_Flower_guide_001_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int width = 128 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Flower_guide_001_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_C_Flower_guide_002_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int width = 128 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Flower_guide_002_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int width = 128 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.20000000298023224 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1() {
+	int i = 0;
+	int count = 86;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_F_Sun_mesh_layer_5_vtx_1);
+
+	deltaX = (int)(-0.20000000298023224 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -178,14 +367,67 @@ void scroll_gfx_mat_ddd_dl_Dot_lights() {
 
 };
 
+void scroll_gfx_mat_ddd_dl_Water_A_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_Water_A_layer5);
+
+
+	shift_s_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_s(mat, 16, PACK_TILESIZE(0, 1));
+
+};
+
+void scroll_gfx_mat_ddd_dl_Water_B_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_Water_B_layer5);
+
+
+	shift_s_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_s(mat, 16, PACK_TILESIZE(0, 1));
+	shift_t_down(mat, 16, PACK_TILESIZE(0, 1));
+
+};
+
+void scroll_gfx_mat_ddd_dl_Sparkles_A_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_Sparkles_A_layer5);
+
+
+	shift_s_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_t_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_s(mat, 16, PACK_TILESIZE(0, 1));
+
+};
+
+void scroll_gfx_mat_ddd_dl_Sparkles_B_layer5() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_Sparkles_B_layer5);
+
+
+	shift_s_down(mat, 14, PACK_TILESIZE(0, 1));
+	shift_s(mat, 16, PACK_TILESIZE(0, 1));
+	shift_t_down(mat, 16, PACK_TILESIZE(0, 1));
+
+};
+
 void scroll_ddd() {
 	scroll_ddd_dl_0_stars_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_001_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_002_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_003_mesh_layer_4_vtx_0();
+	scroll_ddd_dl_B_stage_a1_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_1();
 	scroll_ddd_dl_C_start_line_mesh_layer_5_vtx_2();
-	scroll_ddd_dl_stage_a1_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_C_Portal_a1_001_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_C_Portal_a1_001_mesh_layer_1_vtx_0();
+	scroll_ddd_dl_B_dress_mesh_layer_5_vtx_1();
+	scroll_ddd_dl_B_eyes_mesh_layer_1_vtx_0();
+	scroll_ddd_dl_C_Flower_guide_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_C_Flower_guide_001_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_C_Flower_guide_002_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1();
 	scroll_gfx_mat_ddd_dl_Dot_lights();
+	scroll_gfx_mat_ddd_dl_Water_A_layer5();
+	scroll_gfx_mat_ddd_dl_Water_B_layer5();
+	scroll_gfx_mat_ddd_dl_Sparkles_A_layer5();
+	scroll_gfx_mat_ddd_dl_Sparkles_B_layer5();
 };

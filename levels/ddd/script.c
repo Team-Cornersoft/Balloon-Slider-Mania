@@ -110,18 +110,18 @@ const LevelScript level_ddd_entry[] = {
 		OBJECT(MODEL_BSM_POINT_BALLOON, 26200, 0, 29600, 0, 0, 0, 0x00060000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 26200, 0, 29600, 0, 0, 0, 0x00060000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 26200, 0, 29600, 0, 0, 0, 0x00060000, bhvPointBalloon),
-		OBJECT(MODEL_NONE, -28, 4403, -7093, 0, 0, 0, 0x000B0000, bhvBSMCelebrationWarp),
+		OBJECT(MODEL_NONE, 20000, -5000, -10400, 0, 0, 0, 0x000B0000, bhvBSMCelebrationWarp),
 		MARIO_POS(0x01, -180, 0, 6325, 13600),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 26100, 0, 31400, 0, 0, 0, 0x00050000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 26100, 0, 31400, 0, 0, 0, 0x00050000, bhvPointBalloon),
-		OBJECT(MODEL_BSM_TCS_TOKEN, -12, 2382, -6778, 0, 0, 0, 0x00000000, bhvTCSToken),
+		OBJECT(MODEL_BSM_TCS_TOKEN, 20000, -4850, -10400, 0, 0, 0, 0x00000000, bhvTCSToken),
 		OBJECT(MODEL_NONE, 0, 6325, 13600, 0, -180, 0, 0x000A0000, bhvSpinAirborneWarp),
 		OBJECT(MODEL_NONE, 0, 6325, 13600, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
 		OBJECT(MODEL_NONE, 0, 6325, 13600, 0, -180, 0, 0x00F10000, bhvDeathWarp),
 		TERRAIN(ddd_area_1_collision),
 		ROOMS(ddd_area_1_collision_rooms),
 		MACRO_OBJECTS(ddd_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_TITLE_SCREEN),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
@@ -155,7 +155,7 @@ const LevelScript level_ddd_entry[] = {
 		TERRAIN(ddd_area_2_collision),
 		ROOMS(ddd_area_2_collision_rooms),
 		MACRO_OBJECTS(ddd_area_2_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
@@ -228,7 +228,7 @@ const LevelScript level_ddd_entry[] = {
 		TERRAIN(ddd_area_3_collision),
 		ROOMS(ddd_area_3_collision_rooms),
 		MACRO_OBJECTS(ddd_area_3_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
@@ -286,7 +286,7 @@ const LevelScript level_ddd_entry[] = {
 		TERRAIN(ddd_area_4_collision),
 		ROOMS(ddd_area_4_collision_rooms),
 		MACRO_OBJECTS(ddd_area_4_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
@@ -346,7 +346,7 @@ const LevelScript level_ddd_entry[] = {
 		TERRAIN(ddd_area_5_collision),
 		ROOMS(ddd_area_5_collision_rooms),
 		MACRO_OBJECTS(ddd_area_5_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
@@ -397,7 +397,37 @@ const LevelScript level_ddd_entry[] = {
 		TERRAIN(ddd_area_6_collision),
 		ROOMS(ddd_area_6_collision_rooms),
 		MACRO_OBJECTS(ddd_area_6_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
+		TERRAIN_TYPE(TERRAIN_SLIDE),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
+
+	AREA(7, ddd_area_7),
+		WARP_NODE(0x0A, LEVEL_SSL, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF0, LEVEL_SSL, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_SSL, 0x01, 0xF1, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xCC, LEVEL_SSL, 0x05, 0xCA, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xDB, LEVEL_SSL, 0x06, 0xDB, WARP_NO_CHECKPOINT),
+		TERRAIN(ddd_area_7_collision),
+		ROOMS(ddd_area_7_collision_rooms),
+		MACRO_OBJECTS(ddd_area_7_macro_objs),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
+		TERRAIN_TYPE(TERRAIN_SLIDE),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
+	END_AREA(),
+
+	AREA(8, ddd_area_8),
+		WARP_NODE(0x0A, LEVEL_SSL, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF0, LEVEL_SSL, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_SSL, 0x01, 0xF1, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xCC, LEVEL_SSL, 0x05, 0xCA, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xDB, LEVEL_SSL, 0x06, 0xDB, WARP_NO_CHECKPOINT),
+		TERRAIN(ddd_area_8_collision),
+		ROOMS(ddd_area_8_collision_rooms),
+		MACRO_OBJECTS(ddd_area_8_macro_objs),
+		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */

@@ -117,7 +117,7 @@ const LevelScript level_castle_courtyard_entry[] = {
 	INIT_LEVEL(),
 	LOAD_YAY0(0x07, _castle_courtyard_segment_7SegmentRomStart, _castle_courtyard_segment_7SegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
-	LOAD_MODEL_FROM_GEO(MODEL_BSM_TITLE_SCREEN_BALLOON, title_screen_balloon_geo),
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_TITLE_SCREEN_BALLOON, title_screen_balloon_geo), 
 	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
 
 	/* Fast64 begin persistent block [level commands] */
