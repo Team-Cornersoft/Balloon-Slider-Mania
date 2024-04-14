@@ -27,6 +27,10 @@
  * cannon reticle, and the unused keys.
  **/
 
+s32 gConsoleOffsetDiffX = 0;
+s32 gConsoleOffsetDiffY = 0;
+s32 gWidescreenViewportOffset = 0;
+
 #ifdef BREATH_METER
 #define HUD_BREATH_METER_X         40
 #define HUD_BREATH_METER_Y         32
@@ -429,7 +433,6 @@ static u16 get_press_button_alpha() {
 }
 
 static void render_press_button(void) {
-    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     u8 out[] = { GLYPH_A_BUTTON, GLYPH_SPACE };
 
     u16 alpha = get_press_button_alpha();
@@ -440,10 +443,10 @@ static void render_press_button(void) {
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     if (!(gEmulator & EMU_CONSOLE)) {
         gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, (u8) ((alpha * 95) >> 8));
-        print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff - 1, 208 + consoleDiff + 1, out);
+        print_hud_lut_string(HUD_LUT_GLOBAL, 282 + gConsoleOffsetDiffX - 1, 208 + gConsoleOffsetDiffY + 1, out);
     }
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, (u8) alpha);
-    print_hud_lut_string(HUD_LUT_GLOBAL, 282 + consoleDiff, 208 + consoleDiff, out);
+    print_hud_lut_string(HUD_LUT_GLOBAL, 282 + gConsoleOffsetDiffX, 208 + gConsoleOffsetDiffY, out);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 }
 
@@ -546,7 +549,6 @@ void set_hud_camera_status(s16 status) {
  * the camera status called, a defined glyph is rendered.
  */
 void render_hud_camera_status(void) {
-    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     Texture *(*cameraLUT)[6] = segmented_to_virtual(&main_hud_camera_lut);
 
     if (sCameraHUD.status == CAM_STATUS_NONE) {
@@ -555,8 +557,8 @@ void render_hud_camera_status(void) {
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     for (s32 i = 0; i < 2; i++) {
-        s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X) + consoleDiff;
-        s32 y = 205 + consoleDiff;
+        s32 x = GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(HUD_CAMERA_X) + gConsoleOffsetDiffX;
+        s32 y = 205 + gConsoleOffsetDiffY;
 
         if (i == 0) {
             if (gEmulator & EMU_CONSOLE) {
@@ -659,34 +661,32 @@ struct BSMPointDisplay bsmPointColors[3];
 u8 bsmPointColorDisplayIndex = 0;
 
 void init_bsm_hud(s32 updateLastValue) {
-    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
-
-    bsmHudProps[BSM_HUD_SCORE].x = 22 - consoleDiff;
-    bsmHudProps[BSM_HUD_SCORE].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_SCORE].x = 22 - gConsoleOffsetDiffX;
+    bsmHudProps[BSM_HUD_SCORE].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_SCORE].shadowX = bsmHudProps[BSM_HUD_SCORE].x - 2;
     bsmHudProps[BSM_HUD_SCORE].shadowY = bsmHudProps[BSM_HUD_SCORE].y + 2;
     bsmHudProps[BSM_HUD_SCORE].trackValueAddr = &gBSMScoreCount;
 
-    bsmHudProps[BSM_HUD_TIME].x = SCREEN_WIDTH - (22 + 64) + consoleDiff;
-    bsmHudProps[BSM_HUD_TIME].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_TIME].x = SCREEN_WIDTH - (22 + 64) + gConsoleOffsetDiffX;
+    bsmHudProps[BSM_HUD_TIME].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_TIME].shadowX = bsmHudProps[BSM_HUD_TIME].x - 2;
     bsmHudProps[BSM_HUD_TIME].shadowY = bsmHudProps[BSM_HUD_TIME].y + 2;
     bsmHudProps[BSM_HUD_TIME].trackValueAddr = NULL;
 
-    bsmHudProps[BSM_HUD_REDBALLOONS].x = 22 - consoleDiff;
-    bsmHudProps[BSM_HUD_REDBALLOONS].y = 205 + consoleDiff;
+    bsmHudProps[BSM_HUD_REDBALLOONS].x = 22 - gConsoleOffsetDiffX;
+    bsmHudProps[BSM_HUD_REDBALLOONS].y = 205 + gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_REDBALLOONS].shadowX = bsmHudProps[BSM_HUD_REDBALLOONS].x - 1;
     bsmHudProps[BSM_HUD_REDBALLOONS].shadowY = bsmHudProps[BSM_HUD_REDBALLOONS].y + 1;
     bsmHudProps[BSM_HUD_REDBALLOONS].trackValueAddr = &gBSMRedBalloonsPopped;
 
     bsmHudProps[BSM_HUD_KEY].x = SCREEN_CENTER_X - 18;
-    bsmHudProps[BSM_HUD_KEY].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_KEY].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_KEY].shadowX = bsmHudProps[BSM_HUD_KEY].x - 1;
     bsmHudProps[BSM_HUD_KEY].shadowY = bsmHudProps[BSM_HUD_KEY].y + 1;
     bsmHudProps[BSM_HUD_KEY].trackValueAddr = &gBSMKeyCollected;
 
     bsmHudProps[BSM_HUD_TCS].x = SCREEN_CENTER_X + 2;
-    bsmHudProps[BSM_HUD_TCS].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - consoleDiff;
+    bsmHudProps[BSM_HUD_TCS].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_TCS].shadowX = bsmHudProps[BSM_HUD_TCS].x - 1;
     bsmHudProps[BSM_HUD_TCS].shadowY = bsmHudProps[BSM_HUD_TCS].y + 1;
     bsmHudProps[BSM_HUD_TCS].trackValueAddr = &gBSMTCSTokenCollected;

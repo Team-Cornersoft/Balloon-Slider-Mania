@@ -1605,28 +1605,26 @@ void render_pause_red_coins(void) {
 
 #if defined(WIDE) && !defined(PUPPYCAM)
 void render_widescreen_setting(void) {
-    s32 consoleDiff = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
-
     // gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     // gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gDialogTextAlpha);
     // if (!gConfig.widescreen) {
-    //     print_generic_string_alpha(200 + consoleDiff, 50 - consoleDiff, textCurrRatio43, gDialogTextAlpha);
-    //     print_generic_string_alpha(200 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+    //     print_generic_string_alpha(200 + gConsoleOffsetDiffX, 50 - gConsoleOffsetDiffY, textCurrRatio43, gDialogTextAlpha);
+    //     print_generic_string_alpha(200 + gConsoleOffsetDiffX, 37 - gConsoleOffsetDiffY, textPressL, gDialogTextAlpha);
     // } else {
-    //     print_generic_string_alpha(196 + consoleDiff, 50 - consoleDiff, textCurrRatio169, gDialogTextAlpha);
-    //     print_generic_string_alpha(196 + consoleDiff, 37 - consoleDiff, textPressL, gDialogTextAlpha);
+    //     print_generic_string_alpha(196 + gConsoleOffsetDiffX, 50 - gConsoleOffsetDiffY, textCurrRatio169, gDialogTextAlpha);
+    //     print_generic_string_alpha(196 + gConsoleOffsetDiffX, 37 - gConsoleOffsetDiffY, textPressL, gDialogTextAlpha);
     // }
     // gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
 
     print_set_envcolour(255, 255, 255, (gDialogTextAlpha * 0xBF) >> 8);
     if (!gConfig.widescreen) {
-        print_small_text(296 + consoleDiff, 176 + consoleDiff, textCurrRatio43, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text(296 + gConsoleOffsetDiffX, 176 + gConsoleOffsetDiffY, textCurrRatio43, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     } else {
-        print_small_text(296 + consoleDiff, 176 + consoleDiff, textCurrRatio169, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text(296 + gConsoleOffsetDiffX, 176 + gConsoleOffsetDiffY, textCurrRatio169, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 
     print_set_envcolour(255, 255, 255, (gDialogTextAlpha * 0xBF) >> 8);
-    print_small_text(296 + consoleDiff, 189 + consoleDiff, textPressL, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    print_small_text(296 + gConsoleOffsetDiffX, 189 + gConsoleOffsetDiffY, textPressL, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
     if (gPlayer1Controller->buttonPressed & L_TRIG){
         gConfig.widescreen ^= 1;

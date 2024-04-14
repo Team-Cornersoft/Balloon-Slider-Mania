@@ -57,6 +57,10 @@ enum BalloonTypes {
     POINT_BALLOON_COUNT,
 };
 
+extern s32 gConsoleOffsetDiffX;
+extern s32 gConsoleOffsetDiffY;
+extern s32 gWidescreenViewportOffset;
+
 struct BalloonTypeProperties {
     f32 scale;
     s32 points;

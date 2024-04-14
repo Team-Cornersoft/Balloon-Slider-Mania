@@ -12,6 +12,7 @@
 #include "engine/level_script.h"
 #include "engine/math_util.h"
 #include "game_init.h"
+#include "hud.h"
 #include "main.h"
 #include "memory.h"
 #include "save_file.h"
@@ -34,6 +35,7 @@
 #include "vc_ultra.h"
 #include "profiling.h"
 #include "emutest.h"
+#include "lib/libpl/libpl-emu.h"
 
 // Emulators that the Instant Input patch should not be applied to
 #define INSTANT_INPUT_BLACKLIST (EMU_CONSOLE | EMU_WIIVC | EMU_ARES | EMU_SIMPLE64 | EMU_CEN64)
@@ -880,6 +882,15 @@ void thread5_game_loop(UNUSED void *arg) {
     gConfig.widescreen = save_file_get_widescreen_mode();
 #endif
     render_init();
+
+    // if (gSupportsLibpl) {
+    //     const lpl_plugin_info *libplPluginInfo = libpl_get_graphics_plugin();
+    //     if (libplPluginInfo->capabilities & LPL_WIDESCREEN_VIEWPORT) {
+    //         gWidescreenViewportOffset = 20; // This doesn't work with scissor I guess...
+    //     }
+    // }
+    gConsoleOffsetDiffY = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
+    gConsoleOffsetDiffX = gConsoleOffsetDiffY + gWidescreenViewportOffset;
 
     while (TRUE) {
         profiler_frame_setup();
