@@ -3,10 +3,9 @@
 const GeoLayout ddd_area_3_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(3, geo_switch_area),
+		GEO_SWITCH_CASE(2, geo_switch_area),
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, ddd_dl_1_area3_geo),
-			GEO_BRANCH(1, ddd_dl_2_area_3_geo),
 		GEO_CLOSE_NODE(),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 90, 150, 90, 0, 0, 0),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 255, 235, 255, 0, -127, 0),
@@ -16,12 +15,10 @@ const GeoLayout ddd_area_3_geo[] = {
 const GeoLayout ddd_dl_1_area3_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_2_area_3_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15978, -600, -16022, 0, 90, 0, ddd_dl_0_SKYBOX_a3_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15969, -600, 15969, 0, 90, 0, ddd_dl_0_SKYBOX_a3_001_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -15969, -600, -16022, 0, 90, 0, ddd_dl_0_SKYBOX_a3_002_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 15978, -600, 15969, 0, 90, 0, ddd_dl_0_SKYBOX_a3_003_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
