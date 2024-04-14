@@ -84,6 +84,8 @@ Gfx *render_blank_box_rounded_local_dl(Gfx *dl, s32 x1, s32 y1, s32 x2, s32 y2, 
 
 Gfx *geo_scam_warning_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
     if (state == GEO_CONTEXT_RENDER) {
+        random_u16(); // Progress the RNG
+
         gSPDisplayList(gDisplayListHead++, dl_hud_img_begin);
         render_multi_image(segmented_to_virtual(scam_warning), 0, 0, 320, 240, 320, 240, G_CYC_COPY);
         gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
