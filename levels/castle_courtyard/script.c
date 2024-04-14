@@ -25,9 +25,9 @@
 
 /* Fast64 begin persistent block [scripts] */
 static const LevelScript ccy_area1_jump[] = {
-	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON, -1038, 1812, -326, 0, 0, 0, 0x00000000, bhvTitleScreenBalloon), // B
-	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -749, 1664, -250, 0, 0, 0, 0x00010000, bhvTitleScreenBalloon), // A
-	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -531, 1886, -443, 0, 0, 0, 0x00020000, bhvTitleScreenBalloon), // L
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON, -1038, 1812, -226, 0, 0, 0, 0x00000000, bhvTitleScreenBalloon), // B
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -749, 1664, -150, 0, 0, 0, 0x00010000, bhvTitleScreenBalloon), // A
+	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -531, 1886, -343, 0, 0, 0, 0x00020000, bhvTitleScreenBalloon), // L
 	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,  -275, 1738,    0, 0, 0, 0, 0x00030000, bhvTitleScreenBalloon), // L
 	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,   -63, 1812, -200, 0, 0, 0, 0x00040000, bhvTitleScreenBalloon), // O
 	OBJECT(MODEL_BSM_TITLE_SCREEN_BALLOON,   183, 1683, -742, 0, 0, 0, 0x00050000, bhvTitleScreenBalloon), // O
