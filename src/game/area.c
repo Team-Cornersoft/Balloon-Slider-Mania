@@ -73,11 +73,11 @@ static char creditsStr[] = {
 "\
 <COL_5FFF5FFF> Mel<COL_--------> \n\
 Courses, Models & Artwork,\n\
-Custom Soundtrack\n\
+Original Soundtrack\n\
 \n\
 <COL_FF5F5FFF> ArcticJaguar725<COL_--------> \n\
 Programming, Sound Design,\n\
-Custom Soundtrack\n\
+Original Soundtrack\n\
 \n\
 <COL_5F5FFFFF> Tools Used<COL_--------> \n\
 HackerSM64, fast64\
