@@ -25,6 +25,9 @@ struct PoolSplit2 {
 
 #if defined(VERSION_JP) || defined(VERSION_US)
 s16 gVolume;
+f32 gBSMTCSApproachVolume = 1.0f;
+s32 gBSMTCSApproachReverb = 1.0f;
+s32 gBSMTCSApproachReverbGain = 0;
 s8 gReverbDownsampleRate;
 #endif
 
@@ -1276,6 +1279,10 @@ void audio_reset_session(s32 reverbPresetId) {
             }
             gCurrAudioFrameDmaCount = 0;
         }
+
+        gBSMTCSApproachVolume = 1.0f;
+        gBSMTCSApproachReverbGain = 0;
+        gBSMTCSApproachReverb = 256;
 
         persistent_pool_clear(&gSeqLoadedPool.persistent);
         persistent_pool_clear(&gBankLoadedPool.persistent);

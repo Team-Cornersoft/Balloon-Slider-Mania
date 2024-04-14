@@ -2,9 +2,11 @@
 #include <ultra64.h>
 
 #include "sm64.h"
+#include "behavior_data.h"
 #include "seq_ids.h"
 #include "string.h"
 #include "dialog_ids.h"
+#include "audio/heap.h"
 #include "audio/external.h"
 #include "audio/synthesis.h"
 #include "bsm_level_select_menu.h"
@@ -1147,6 +1149,40 @@ s32 play_mode_normal(void) {
 
     if (gBSMTimerActive && gBSMFrameTimer < 0xFFFFFFFF) {
         gBSMFrameTimer++;
+    }
+
+    f32 dist = 0;
+    if (
+       COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE &&
+       gMarioObject && gMarioState &&
+       (
+           // NOTE: Order matters here!
+           gMarioState->action == ACT_FALL_AFTER_STAR_GRAB ||
+           obj_find_nearest_object_with_behavior(gMarioObject, bhvTCSToken, &dist) != NULL
+       )
+    ) {
+        s32 volume = (dist - 1000) / 100;
+        s32 volume2 = volume - 48;
+
+        if (volume < 0) {
+            volume = 0;
+        } else if (volume > 256) {
+            volume = 256;
+        }
+
+        if (volume2 < 0) {
+            volume2 = 0;
+        } else if (volume2 > 256) {
+            volume2 = 256;
+        }
+
+        // gBSMTCSApproachVolume = sqrtf((f32) volume / 256.0f);
+        // gBSMTCSApproachReverb = sqr(volume2) >> 8;
+        // gBSMTCSApproachReverbGain = 0x3000 * (1.0f - gBSMTCSApproachVolume);
+    } else {
+        gBSMTCSApproachVolume = 1.0f;
+        gBSMTCSApproachReverbGain = 0;
+        gBSMTCSApproachReverb = 256;
     }
 
 #ifdef PUPPYPRINT_DEBUG

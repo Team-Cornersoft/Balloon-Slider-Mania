@@ -4,6 +4,7 @@
 #include "load.h"
 #include "data.h"
 #include "external.h"
+#include "heap.h"
 #include "seqplayer.h"
 #include "game/game_init.h"
 #include "game/main.h"
@@ -82,6 +83,9 @@ static void sequence_channel_process_sound(struct SequenceChannel *seqChannel) {
                     channelVolume *= seqChannel->seqPlayer->muteVolumeScale;
                 }
 #endif
+                if (seqChannel->seqPlayer == &gSequencePlayers[SEQ_PLAYER_LEVEL]) {
+                    channelVolume *= gBSMTCSApproachVolume;
+                }
 
                 panFromChannel = seqChannel->pan * seqChannel->panChannelWeight;
                 panLayerWeight = 1.0f - seqChannel->panChannelWeight;

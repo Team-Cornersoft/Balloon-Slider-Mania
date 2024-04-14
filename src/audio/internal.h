@@ -678,7 +678,7 @@ struct Note {
     /*0x01*/ u8 stereoStrongRight     : 1;
     /*0x01*/ u8 stereoStrongLeft      : 1;
 #else
-    /*    */ u8 pad0[0x01];
+    /*0x01*/ u8 seqPlayerId;
 #endif
     /*0x02*/ u8 sampleDmaIndex;
     /*0x03*/ u8 priority;

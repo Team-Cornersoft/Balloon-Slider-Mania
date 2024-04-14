@@ -1655,7 +1655,7 @@ chan_end
 .layer_96E:
 layer_somethingon
 .layer_96F:
-layer_note1 39, 0x12c, 80
+layer_note1 39, 0x12c, 64
 layer_jump .layer_96F
 layer_end
 
@@ -1670,10 +1670,10 @@ chan_setinstr 1
 chan_end
 
 .layer_988:
-layer_note1 41, 0x8, 105
+layer_note1 41, 0x8, 99
 layer_somethingon
 .layer_98C:
-layer_note1 39, 0x12c, 70
+layer_note1 39, 0x12c, 54
 layer_jump .layer_98C
 layer_end
 
@@ -1692,13 +1692,13 @@ chan_end
 layer_delay 1
 layer_somethingon
 .layer_9AB:
-layer_note1 39, 0x12c, 88
+layer_note1 39, 0x12c, 72
 layer_jump .layer_9AB
 layer_end
 
 .layer_9B3:
 layer_portamento 0x81, 39, 255
-layer_note1 48, 0x32, 80
+layer_note1 48, 0x32, 64
 layer_end
 
 .sound_moving_slide_stone:
@@ -1710,7 +1710,7 @@ chan_end
 .layer_9C3:
 layer_somethingon
 .layer_9C4:
-layer_note1 39, 0x12c, 68
+layer_note1 39, 0x12c, 52
 layer_jump .layer_9C4
 layer_end
 
@@ -1725,10 +1725,10 @@ chan_setinstr 4
 chan_end
 
 .layer_9DD:
-layer_note1 42, 0xc, 75
+layer_note1 42, 0xc, 59
 layer_somethingon
 .layer_9E1:
-layer_note1 39, 0x12c, 76
+layer_note1 39, 0x12c, 60
 layer_jump .layer_9E1
 layer_end
 
@@ -1741,7 +1741,7 @@ chan_end
 .layer_9F1:
 layer_somethingon
 .layer_9F2:
-layer_note1 39, 0x12c, 80
+layer_note1 39, 0x12c, 64
 layer_jump .layer_9F2
 layer_end
 
@@ -1754,7 +1754,7 @@ chan_end
 .layer_A02:
 layer_somethingon
 .layer_A03:
-layer_note1 39, 0x12c, 100
+layer_note1 39, 0x12c, 84
 layer_jump .layer_A03
 layer_end
 
@@ -1769,10 +1769,10 @@ chan_setinstr 7
 chan_end
 
 .layer_A1C:
-layer_note1 42, 0xc, 100
+layer_note1 42, 0xc, 84
 layer_somethingon
 .layer_A20:
-layer_note1 39, 0x12c, 81
+layer_note1 39, 0x12c, 65
 layer_jump .layer_A20
 layer_end
 

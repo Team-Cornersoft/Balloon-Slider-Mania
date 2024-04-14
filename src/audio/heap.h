@@ -101,6 +101,9 @@ struct UnkPool {
 
 extern u8 gAudioHeap[];
 extern s16 gVolume;
+extern f32 gBSMTCSApproachVolume;
+extern s32 gBSMTCSApproachReverb;
+extern s32 gBSMTCSApproachReverbGain;
 extern s8 gReverbDownsampleRate;
 extern struct SoundAllocPool gAudioInitPool;
 extern struct SoundAllocPool gNotesAndBuffersPool;

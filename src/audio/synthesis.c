@@ -414,6 +414,10 @@ u64 *synthesis_do_one_audio_update(s16 *aiBuf, u32 bufLen, u64 *cmd, s32 updateI
         cmd = synthesis_process_notes(aiBuf, bufLen, cmd);
         AUDIO_PROFILER_SWITCH(PROFILER_TIME_SUB_AUDIO_SYNTHESIS_PROCESSING, PROFILER_TIME_SUB_AUDIO_SYNTHESIS_ENVELOPE_REVERB);
     } else {
+        u32 gain = gSynthesisReverb.reverbGain + gBSMTCSApproachReverbGain;
+        if (gain > 0x7FFF) {
+            gain = 0x7FFF;
+        }
         if (gReverbDownsampleRate == 1) {
             // Put the oldest samples in the ring buffer into the wet channels
             aSetLoadBufferPair(cmd++, 0, v1->startPos);
@@ -429,7 +433,7 @@ u64 *synthesis_do_one_audio_update(s16 *aiBuf, u32 bufLen, u64 *cmd, s32 updateI
             // these channels.
             aSetBuffer(cmd++, 0, 0, 0, DEFAULT_LEN_2CH);
             // 0x8000 here is -100%
-            aMix(cmd++, 0, /*gain*/ 0x8000 + gSynthesisReverb.reverbGain, /*in*/ DMEM_ADDR_WET_LEFT_CH,
+            aMix(cmd++, 0, /*gain*/ 0x8000 + gain, /*in*/ DMEM_ADDR_WET_LEFT_CH,
                  /*out*/ DMEM_ADDR_WET_LEFT_CH);
         } else {
             // Same as above but upsample the previously downsampled samples used for reverb first
@@ -450,10 +454,10 @@ u64 *synthesis_do_one_audio_update(s16 *aiBuf, u32 bufLen, u64 *cmd, s32 updateI
             // Please use this chunk over the latter if matching BETTER_REVERB behavior ever becomes a future priority.
             aDMEMMove(cmd++, DMEM_ADDR_LEFT_CH, DMEM_ADDR_WET_LEFT_CH, DEFAULT_LEN_2CH);
             aSetBuffer(cmd++, 0, 0, 0, DEFAULT_LEN_2CH);
-            aMix(cmd++, 0, /*gain*/ 0x8000 + gSynthesisReverb.reverbGain, /*in*/ DMEM_ADDR_WET_LEFT_CH, /*out*/ DMEM_ADDR_WET_LEFT_CH);
+            aMix(cmd++, 0, /*gain*/ 0x8000 + gain, /*in*/ DMEM_ADDR_WET_LEFT_CH, /*out*/ DMEM_ADDR_WET_LEFT_CH);
 #else
             aSetBuffer(cmd++, 0, 0, 0, DEFAULT_LEN_2CH);
-            aMix(cmd++, 0, /*gain*/ 0x8000 + gSynthesisReverb.reverbGain, /*in*/ DMEM_ADDR_LEFT_CH, /*out*/ DMEM_ADDR_LEFT_CH);
+            aMix(cmd++, 0, /*gain*/ 0x8000 + gain, /*in*/ DMEM_ADDR_LEFT_CH, /*out*/ DMEM_ADDR_LEFT_CH);
             aDMEMMove(cmd++, DMEM_ADDR_LEFT_CH, DMEM_ADDR_WET_LEFT_CH, DEFAULT_LEN_2CH);
 #endif
         }
@@ -915,7 +919,16 @@ u64 *process_envelope(u64 *cmd, struct Note *note, s32 nSamples, u16 inBuf) {
         aSetVolume(cmd++, A_VOL | A_RIGHT, vol.sourceRight, 0, 0);
         aSetVolume32(cmd++, A_RATE | A_LEFT, vol.targetLeft, rampLeft);
         aSetVolume32(cmd++, A_RATE | A_RIGHT, vol.targetRight, rampRight);
-        aSetVolume(cmd++, A_AUX, gVolume, 0, note->reverbVol << 8);
+        if (note->seqPlayerId == SEQ_PLAYER_LEVEL) {
+            f32 rev = note->reverbVol << 8;
+            rev = ((f32) note->reverbVol + (20.0f * (1.0f - gBSMTCSApproachVolume))) * 256.0f;
+            if (rev > 0x7FFF) {
+                rev = 0x7FFF;
+            }
+            aSetVolume(cmd++, A_AUX, ((u32) gVolume * gBSMTCSApproachReverb) >> 8, 0, (u32) rev);
+        } else {
+            aSetVolume(cmd++, A_AUX, gVolume, 0, note->reverbVol << 8);
+        }
     }
 
 #ifdef ENABLE_STEREO_HEADSET_EFFECTS

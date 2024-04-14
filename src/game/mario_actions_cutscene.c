@@ -4,6 +4,7 @@
 #include "mario_actions_cutscene.h"
 #include "mario_actions_moving.h"
 #include "area.h"
+#include "audio/heap.h"
 #include "audio/external.h"
 #include "behavior_data.h"
 #include "camera.h"
@@ -681,6 +682,9 @@ s32 act_star_dance(struct MarioState *m) {
 
 s32 act_bsm_victory(struct MarioState *m) {
     play_sound(SOUND_SPECIAL2_CHEERING, gGlobalSoundSource);
+    gBSMTCSApproachVolume = 1.0f;
+    gBSMTCSApproachReverbGain = 0;
+    gBSMTCSApproachReverb = 256;
 
     set_mario_animation(m, m->actionState == ACT_STATE_STAR_DANCE_RETURN ? MARIO_ANIM_RETURN_FROM_STAR_DANCE
                                                                          : MARIO_ANIM_STAR_DANCE);
