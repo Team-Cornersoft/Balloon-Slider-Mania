@@ -1176,9 +1176,9 @@ s32 play_mode_normal(void) {
             volume2 = 256;
         }
 
-        // gBSMTCSApproachVolume = sqrtf((f32) volume / 256.0f);
-        // gBSMTCSApproachReverb = sqr(volume2) >> 8;
-        // gBSMTCSApproachReverbGain = 0x3000 * (1.0f - gBSMTCSApproachVolume);
+        gBSMTCSApproachVolume = sqrtf((f32) volume / 256.0f);
+        gBSMTCSApproachReverb = sqr(volume2) >> 8;
+        gBSMTCSApproachReverbGain = 0x3000 * (1.0f - gBSMTCSApproachVolume);
     } else {
         gBSMTCSApproachVolume = 1.0f;
         gBSMTCSApproachReverbGain = 0;
