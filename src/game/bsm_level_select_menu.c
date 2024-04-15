@@ -108,6 +108,28 @@ static u32 bsmNarratorTrackselectList[] = {
     SOUND_NARRATION_BSM_TRACKSELECT_2,
     SOUND_NARRATION_BSM_TRACKSELECT_3,
 };
+static u32 bsmNarratorReadyList[] = {
+    SOUND_NARRATION_BSM_READY_0,
+    SOUND_NARRATION_BSM_READY_1,
+    SOUND_NARRATION_BSM_READY_2,
+};
+static u32 bsmNarratorGoList[] = {
+    SOUND_NARRATION_BSM_GO_0,
+    SOUND_NARRATION_BSM_GO_1,
+    SOUND_NARRATION_BSM_GO_2,
+};
+static u32 bsmNarratorPBTimeList[] = {
+    SOUND_NARRATION_BSM_PB_TIME_0,
+    SOUND_NARRATION_BSM_PB_TIME_1,
+};
+static u32 bsmNarratorDevTimeList[] = {
+    SOUND_NARRATION_BSM_DEV_TIME_0,
+    SOUND_NARRATION_BSM_DEV_TIME_1,
+};
+static u32 bsmNarratorGoodTimeList[] = {
+    SOUND_NARRATION_BSM_GOOD_TIME_0,
+    SOUND_NARRATION_BSM_GOOD_TIME_1,
+};
 
 struct BSMNarratorList gBSMNarratorRankF       = {bsmNarratorRankFList,       -1, ARRAY_COUNT(bsmNarratorRankFList)      };
 struct BSMNarratorList gBSMNarratorRankD       = {bsmNarratorRankDList,       -1, ARRAY_COUNT(bsmNarratorRankDList)      };
@@ -121,6 +143,11 @@ struct BSMNarratorList gBSMNarratorFail        = {bsmNarratorFailList,        -1
 struct BSMNarratorList gBSMNarratorItem        = {bsmNarratorItemList,        -1, ARRAY_COUNT(bsmNarratorItemList)       };
 struct BSMNarratorList gBSMNarratorReds        = {bsmNarratorRedsList,        -1, ARRAY_COUNT(bsmNarratorRedsList)       };
 struct BSMNarratorList gBSMNarratorTrackselect = {bsmNarratorTrackselectList, -1, ARRAY_COUNT(bsmNarratorTrackselectList)};
+struct BSMNarratorList gBSMNarratorReady       = {bsmNarratorReadyList,       -1, ARRAY_COUNT(bsmNarratorReadyList)      };
+struct BSMNarratorList gBSMNarratorGo          = {bsmNarratorGoList,          -1, ARRAY_COUNT(bsmNarratorGoList)         };
+struct BSMNarratorList gBSMNarratorPBTime      = {bsmNarratorPBTimeList,      -1, ARRAY_COUNT(bsmNarratorPBTimeList)     };
+struct BSMNarratorList gBSMNarratorDevTime     = {bsmNarratorDevTimeList,     -1, ARRAY_COUNT(bsmNarratorDevTimeList)    };
+struct BSMNarratorList gBSMNarratorGoodTime    = {bsmNarratorGoodTimeList,    -1, ARRAY_COUNT(bsmNarratorGoodTimeList)   };
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .developerTime = 2071, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
