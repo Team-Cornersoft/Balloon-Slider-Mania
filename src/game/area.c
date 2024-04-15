@@ -559,7 +559,7 @@ u8 *bsmRankTextures[] = {
     custom_menu_rank_rank_g_rgba32_rgba32,
 };
 
-void bsm_play_narrator_rank_sound(s32 rank, s32 time) {
+void bsm_play_narrator_time_sound(s32 time) {
     struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
 
     s32 isTimePB = FALSE;
@@ -576,12 +576,6 @@ void bsm_play_narrator_rank_sound(s32 rank, s32 time) {
         return;
     }
 
-    // If B, A, S, or G rank, default to rank sound
-    if (rank >= 3) {
-        play_narrator_sound_at_random_by_rank_id(rank);
-        return;
-    }
-
     // Did the player PB, and was the PB at least up to par?
     if (isTimePB && time < ((baselineTime * 103) / 100)) {
         play_narrator_sound_at_random(&gBSMNarratorPBTime);
@@ -594,8 +588,7 @@ void bsm_play_narrator_rank_sound(s32 rank, s32 time) {
         return;
     }
 
-    // None of the above, player probably sucks lmao
-    play_narrator_sound_at_random_by_rank_id(rank);
+    // Play nothing
 }
 
 void bsm_render_success_menu(void) {
@@ -637,6 +630,10 @@ void bsm_render_success_menu(void) {
             
             bsm_print_if_time_allows(10, 15, "BONUSES", SCREEN_CENTER_X, PRINT_Y_BASE + 52, FALSE, TRUE);
 
+            if (successMenuTimer == 15) {
+                bsm_play_narrator_time_sound(gBSMFrameTimer);
+            }
+
             sprintf(strBuf, "Base Score:  <COL_%s-->%d<COL_-------->", gBSMScoreCount > 0 ? "3FFF3F" : "FF3F3F", gBSMScoreCount);
             bsm_print_if_time_allows(30, 10, strBuf, PRINT_X_BASE, PRINT_Y_BASE + 76, TRUE, FALSE);
 
@@ -669,7 +666,7 @@ void bsm_render_success_menu(void) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
                     rankAlphaSqr = sqr(rankAlpha);
                 } else if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES == successMenuTimer) {
-                    bsm_play_narrator_rank_sound(rank, gBSMFrameTimer);
+                    play_narrator_sound_at_random_by_rank_id(rank);
                 }
 
                 f32 x = (SCREEN_CENTER_X + 32) - 12;
