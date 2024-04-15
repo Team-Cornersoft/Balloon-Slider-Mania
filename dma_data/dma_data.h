@@ -14,4 +14,4 @@ extern ALIGNED16 const struct DMAVideoProps course5_video_data[291];
 extern ALIGNED16 const struct DMAVideoProps course6_video_data[291];
 extern ALIGNED16 const struct DMAVideoProps course7_video_data[291];
 extern ALIGNED16 const struct DMAVideoProps course8_video_data[291];
-extern ALIGNED16 const struct DMAVideoProps course9_video_data[1];
+extern ALIGNED16 const struct DMAVideoProps course9_video_data[388];
