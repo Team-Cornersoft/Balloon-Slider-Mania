@@ -9106,56 +9106,76 @@ sound_ref .sound_bsm_narrator_trackselect_0
 sound_ref .sound_bsm_narrator_trackselect_1
 sound_ref .sound_bsm_narrator_trackselect_2
 sound_ref .sound_bsm_narrator_trackselect_3
-sound_ref .sound_bsm_narrator_ready
-sound_ref .sound_bsm_narrator_go
 sound_ref .sound_bsm_narrator_title
+sound_ref .sound_bsm_narrator_ready_0
+sound_ref .sound_bsm_narrator_ready_1
+sound_ref .sound_bsm_narrator_ready_2
+sound_ref .sound_bsm_narrator_go_0
+sound_ref .sound_bsm_narrator_go_1
+sound_ref .sound_bsm_narrator_go_2
+sound_ref .sound_bsm_narrator_pb_time_0
+sound_ref .sound_bsm_narrator_pb_time_1
+sound_ref .sound_bsm_narrator_dev_time_0
+sound_ref .sound_bsm_narrator_dev_time_1
+sound_ref .sound_bsm_narrator_good_time_0
+sound_ref .sound_bsm_narrator_good_time_1
 
 
-narrator_sound rank_f_0,       0, 0xdb,  78
+narrator_sound rank_f_0,       0, 0xd1,  78
 narrator_sound rank_f_1,       1, 0x97,  78
-narrator_sound rank_f_2,       2, 0x62,  78
+narrator_sound rank_f_2,       2, 0x126, 78
 narrator_sound rank_d_0,       3, 0x94,  78
-narrator_sound rank_d_1,       4, 0xa0,  78
-narrator_sound rank_d_2,       5, 0xb4,  78
+narrator_sound rank_d_1,       4, 0xe0,  78
+narrator_sound rank_d_2,       5, 0x16c, 78
 narrator_sound rank_c_0,       6, 0x4e,  78
-narrator_sound rank_c_1,       7, 0x6e,  78
-narrator_sound rank_c_2,       8, 0x2c,  78
-narrator_sound rank_b_0,       9, 0x5c,  78
-narrator_sound rank_b_1,      10, 0x58,  78
-narrator_sound rank_b_2,      11, 0x53,  78
-narrator_sound rank_a_0,      12, 0x4c,  78
-narrator_sound rank_a_1,      13, 0x6c,  78
-narrator_sound rank_a_2,      14, 0x75,  78
-narrator_sound rank_s_0,      15, 0x77,  78
-narrator_sound rank_s_1,      16, 0x8f,  78
-narrator_sound rank_s_2,      17, 0x87,  78
+narrator_sound rank_c_1,       7, 0x6f,  78
+narrator_sound rank_c_2,       8, 0x4d,  78
+narrator_sound rank_b_0,       9, 0x5a,  78
+narrator_sound rank_b_1,      10, 0x93,  78
+narrator_sound rank_b_2,      11, 0x54,  78
+narrator_sound rank_a_0,      12, 0x63,  78
+narrator_sound rank_a_1,      13, 0x73,  78
+narrator_sound rank_a_2,      14, 0xaf,  78
+narrator_sound rank_s_0,      15, 0x8a,  78
+narrator_sound rank_s_1,      16, 0x8d,  78
+narrator_sound rank_s_2,      17, 0x98,  78
 narrator_sound rank_g_0,      18, 0xcb,  78
 narrator_sound rank_g_1,      19, 0x87,  78
 narrator_sound rank_g_2,      20, 0x11d, 78
 narrator_sound victory_0,     21, 0xc5,  78
 narrator_sound victory_1,     22, 0x7e,  78
 narrator_sound victory_2,     23, 0x67,  78
-narrator_sound victory_3,     24, 0x6c,  78
-narrator_sound fail_0,        25, 0x59,  78
-narrator_sound fail_1,        26, 0x78,  78
-narrator_sound fail_2,        27, 0x77,  78
-narrator_sound fail_3,        28, 0x70,  78
+narrator_sound victory_3,     24, 0xf6,  78
+narrator_sound fail_0,        25, 0x4d,  78
+narrator_sound fail_1,        26, 0xa8,  78
+narrator_sound fail_2,        27, 0x79,  78
+narrator_sound fail_3,        28, 0x8b,  78
 narrator_sound item_0,        29, 0x55,  81
-narrator_sound item_1,        30, 0x25,  84
-narrator_sound item_2,        31, 0x63,  82
-narrator_sound item_3,        32, 0x44,  82
+narrator_sound item_1,        30, 0x62,  81
+narrator_sound item_2,        31, 0x64,  79
+narrator_sound item_3,        32, 0x44,  81
 narrator_sound item_4,        33, 0x45,  81
-narrator_sound reds_0,        34, 0x46,  81
-narrator_sound reds_1,        35, 0x84,  81
-narrator_sound reds_2,        36, 0x58,  81
-narrator_sound reds_3,        37, 0x54,  81
+narrator_sound reds_0,        34, 0x65,  81
+narrator_sound reds_1,        35, 0xac,  81
+narrator_sound reds_2,        36, 0x71,  81
+narrator_sound reds_3,        37, 0x6c,  81
 narrator_sound trackselect_0, 38, 0x94,  75
-narrator_sound trackselect_1, 39, 0xb8,  75
+narrator_sound trackselect_1, 39, 0xc5,  75
 narrator_sound trackselect_2, 40, 0xab,  75
 narrator_sound trackselect_3, 41, 0x77,  75
-narrator_sound ready,         42, 0x5f,  78
-narrator_sound go,            43, 0x85,  78
-narrator_sound title,         44, 0x1d7, 64
+narrator_sound title,         42, 0x27e, 63
+narrator_sound ready_0,       43, 0x5f,  78
+narrator_sound ready_1,       44, 0x78,  78
+narrator_sound ready_2,       45, 0x7b,  78
+narrator_sound go_0,          46, 0x85,  78
+narrator_sound go_1,          47, 0xd5,  78
+narrator_sound go_2,          48, 0xac,  78
+narrator_sound pb_time_0,     49, 0x11b, 78
+narrator_sound pb_time_1,     50, 0x144, 78
+narrator_sound dev_time_0,    51, 0x186, 78
+narrator_sound dev_time_1,    52, 0x1a0, 78
+narrator_sound good_time_0,   53, 0xea,  78
+narrator_sound good_time_1,   54, 0xed,  78
 
 .align 2, 0
 .envelope_32C4:

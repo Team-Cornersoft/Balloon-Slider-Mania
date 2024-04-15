@@ -135,6 +135,15 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
         // dl = render_blank_box_rounded_local_dl(dl, x1 - 1, y1 - 1, x2 + 1, y2 + 1, r / 2, g / 2, b / 2, 255);
         // dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, 255);
 
+        static u32 tmp = 0;
+        if (gPlayer1Controller->buttonPressed & L_TRIG) {
+            play_sound(SOUND_NARRATION_BSM_RANK_F_0 | (tmp << 16), gGlobalSoundSource);
+            tmp++;
+            if (tmp > 0x36) {
+                tmp = 0;
+            }
+        }
+
         s32 x1 = SCREEN_CENTER_X - BOX_HALF_WIDTH_EXCESS;
         s32 y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT_EXCESS;
         s32 x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH_EXCESS;

@@ -1134,9 +1134,9 @@ s32 play_mode_normal(void) {
 
         if (gBSMReadyGoTimer == READY_GO_TIMER_VALUE - 5) {
             if (gBSMGoSignaled) {
-                play_sound(SOUND_NARRATION_BSM_GO, gGlobalSoundSource);
+                play_sound(SOUND_NARRATION_BSM_GO_0, gGlobalSoundSource);
             } else {
-                play_sound(SOUND_NARRATION_BSM_READY, gGlobalSoundSource);
+                play_sound(SOUND_NARRATION_BSM_READY_0, gGlobalSoundSource);
             }
         }
     } else if (gBSMGoSignaled == FALSE && gBSMTimerActive) {
