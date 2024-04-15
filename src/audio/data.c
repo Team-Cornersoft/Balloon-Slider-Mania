@@ -253,14 +253,46 @@ struct BetterReverbSettings gBetterReverbSettings[] = {
         .reverbMultsL = sReverbMultsArr[1], // Ignored with lightweight settings
         .reverbMultsR = sReverbMultsArr[2], // Ignored with lightweight settings
     },
-    [BRPRESET_BSM_C9_GENERAL] = { /* Course 9 General */
+    [BRPRESET_BSM_C9_A1] = { /* Course 9 Area 1 */
+        .useLightweightSettings = FALSE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 6),
+
+        .windowSize = 0x1200,
+        .gain = 0x3DFF,
+        .gainIndex = 0xA0,
+        .reverbIndex = 0x30,
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1],
+        .reverbMultsR = sReverbMultsArr[2],
+    },
+    [BRPRESET_BSM_C9_A6] = { /* Course 9 General */
         .useLightweightSettings = FALSE,
         .downsampleRate = 2,
         .isMono = FALSE,
         .filterCount = (NUM_ALLPASS - 6),
 
         .windowSize = 0xC00,
-        .gain = 0x32FF,
+        .gain = 0x20FF,
+        .gainIndex = 0xA0,
+        .reverbIndex = 0x30,
+
+        .delaysL = sReverbDelaysArr[1],
+        .delaysR = sReverbDelaysArr[2],
+        .reverbMultsL = sReverbMultsArr[1],
+        .reverbMultsR = sReverbMultsArr[2],
+    },
+    [BRPRESET_BSM_C9_A7] = { /* Course 9 Area 7 */
+        .useLightweightSettings = FALSE,
+        .downsampleRate = 2,
+        .isMono = FALSE,
+        .filterCount = (NUM_ALLPASS - 6),
+
+        .windowSize = 0xC00,
+        .gain = 0x52FF,
         .gainIndex = 0xA0,
         .reverbIndex = 0x30,
 

@@ -1814,6 +1814,17 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
                 deathBarrierMultiplier = terminalVelocityMultiplier;
             }
             break;
+        case BSM_COURSE_9_CORNERSOFT_PARADE:
+            if (gCurrAreaIndex == 7) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 0.75f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 0.75f;
+                deathBarrierMultiplier = terminalVelocityMultiplier;
+            } else if (gCurrAreaIndex != 2) {
+                slideSpeedMultiplier = SLIDE_SPEED_MULTIPLIER_DEFAULT * 0.92f;
+                terminalVelocityMultiplier = TERMINAL_VELOCITY_MULTIPLIER_DEFAULT * 0.92f;
+                deathBarrierMultiplier = terminalVelocityMultiplier;
+            }
+            break;
     }
 
     // Updates once per frame:

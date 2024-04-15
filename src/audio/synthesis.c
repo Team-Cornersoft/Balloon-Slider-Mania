@@ -921,7 +921,7 @@ u64 *process_envelope(u64 *cmd, struct Note *note, s32 nSamples, u16 inBuf) {
         aSetVolume32(cmd++, A_RATE | A_RIGHT, vol.targetRight, rampRight);
         if (note->seqPlayerId == SEQ_PLAYER_LEVEL) {
             f32 rev = note->reverbVol << 8;
-            rev = ((f32) note->reverbVol + (20.0f * (1.0f - gBSMTCSApproachVolume))) * 256.0f;
+            rev = ((f32) note->reverbVol + (100.0f * (1.0f - gBSMTCSApproachVolume))) * 256.0f;
             if (rev > 0x7FFF) {
                 rev = 0x7FFF;
             }

@@ -895,7 +895,7 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     assert(area_get_warp_node(sSourceWarpNodeId) != NULL, "Invalid force warp parameter!");
 
                     // Override warp behavior for C9
-                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE) {
+                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE && gCurrAreaIndex != 1) {
                         sDelayedWarpTimer = 20;
                         play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                         play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
@@ -1171,8 +1171,10 @@ s32 play_mode_normal(void) {
            obj_find_nearest_object_with_behavior(gMarioObject, bhvTCSToken, &dist) != NULL
        )
     ) {
-        s32 volume = (dist - 1000) / 100;
+        s32 volume = (dist - 200) / 150;
         s32 volume2 = volume - 48;
+
+        volume = volume * 1.25f;
 
         if (volume < 0) {
             volume = 0;
@@ -1187,8 +1189,8 @@ s32 play_mode_normal(void) {
         }
 
         gBSMTCSApproachVolume = sqrtf((f32) volume / 256.0f);
-        gBSMTCSApproachReverb = sqr(volume2) >> 8;
-        gBSMTCSApproachReverbGain = 0x3000 * (1.0f - gBSMTCSApproachVolume);
+        gBSMTCSApproachReverb = volume2;
+        gBSMTCSApproachReverbGain = 0x2000 * (1.0f - gBSMTCSApproachVolume);
     } else {
         gBSMTCSApproachVolume = 1.0f;
         gBSMTCSApproachReverbGain = 0;
