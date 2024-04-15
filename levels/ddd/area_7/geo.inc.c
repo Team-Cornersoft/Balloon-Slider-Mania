@@ -3,12 +3,19 @@
 const GeoLayout ddd_area_7_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(5, geo_switch_area),
+		GEO_SWITCH_CASE(2, geo_switch_area),
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, ddd_dl_1_area7_geo),
-			GEO_BRANCH(1, ddd_dl_A_Stairs_a1_geo),
-			GEO_BRANCH(1, ddd_dl_A_Stairs_a1_001_geo),
-			GEO_BRANCH(1, ddd_dl_B_Elise_a1_geo),
+		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -5755, -20300, ddd_dl_A_Arena_a1_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_A_Arena_a1_mesh_layer_5),
+		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, -2950, -7200, ddd_dl_A_Stairs_a1_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, 1050, 16800, ddd_dl_A_Stairs_a1_001_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, -5428, -23915, ddd_dl_B_Elise_a1_mesh_layer_5),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_B_Elise_a1_mesh_layer_1),
 		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
@@ -16,34 +23,6 @@ const GeoLayout ddd_area_7_geo[] = {
 const GeoLayout ddd_dl_1_area7_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, -5755, -20300, ddd_dl_A_Arena_a1_mesh_layer_1),
-		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_A_Arena_a1_mesh_layer_5),
-		GEO_CLOSE_NODE(),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_A_Stairs_a1_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, -2950, -7200, ddd_dl_A_Stairs_a1_mesh_layer_5),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_A_Stairs_a1_001_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, 1050, 16800, ddd_dl_A_Stairs_a1_001_mesh_layer_5),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_B_Elise_a1_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 0, -5428, -23915, ddd_dl_B_Elise_a1_mesh_layer_5),
-		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_B_Elise_a1_mesh_layer_1),
-		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

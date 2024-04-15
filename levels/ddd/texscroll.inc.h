@@ -54,4 +54,6 @@ extern void scroll_gfx_mat_ddd_dl_MvsWW_Mario_a2_layer4();
 extern void scroll_gfx_mat_ddd_dl_MvsWW_Wario_a2_layer4();
 extern void scroll_gfx_mat_ddd_dl_MvsWW_Mario_a1_layer4();
 extern void scroll_gfx_mat_ddd_dl_MvsWW_Wario_a1_layer4();
+extern void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b2_layer4();
+extern void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b1_layer4();
 extern void scroll_ddd();

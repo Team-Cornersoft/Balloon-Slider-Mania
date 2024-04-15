@@ -35,6 +35,7 @@ const GeoLayout ddd_dl_1_area1_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_B_stage_a1_mesh_layer_1),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 9151, 2421, ddd_dl_B_stage_a1_001_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -141, 8417, -767, 95, 105, 0, ddd_dl_C_balloons_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, ddd_dl_C_balloons_mesh_layer_6),

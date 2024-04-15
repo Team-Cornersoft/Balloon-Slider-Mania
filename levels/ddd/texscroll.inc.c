@@ -1085,6 +1085,30 @@ void scroll_gfx_mat_ddd_dl_MvsWW_Wario_a1_layer4() {
 
 };
 
+void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b2_layer4() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_MvsWW_Peach_b2_layer4);
+	static int interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 = 8;
+	static int cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 = 8;
+
+	if (--cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 <= 0) {
+		shift_s(mat, 15, PACK_TILESIZE(0, 64));
+		cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 = interval_tex_ddd_dl_MvsWW_Peach_b2_layer4;
+	}
+
+};
+
+void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b1_layer4() {
+	Gfx *mat = segmented_to_virtual(mat_ddd_dl_MvsWW_Peach_b1_layer4);
+	static int interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 = 8;
+	static int cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 = 8;
+
+	if (--cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 <= 0) {
+		shift_s(mat, 15, PACK_TILESIZE(0, 64));
+		cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 = interval_tex_ddd_dl_MvsWW_Peach_b1_layer4;
+	}
+
+};
+
 void scroll_ddd() {
 	scroll_ddd_dl_0_stars_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_001_mesh_layer_4_vtx_0();
@@ -1142,4 +1166,6 @@ void scroll_ddd() {
 	scroll_gfx_mat_ddd_dl_MvsWW_Wario_a2_layer4();
 	scroll_gfx_mat_ddd_dl_MvsWW_Mario_a1_layer4();
 	scroll_gfx_mat_ddd_dl_MvsWW_Wario_a1_layer4();
+	scroll_gfx_mat_ddd_dl_MvsWW_Peach_b2_layer4();
+	scroll_gfx_mat_ddd_dl_MvsWW_Peach_b1_layer4();
 };
