@@ -1091,7 +1091,7 @@ void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b2_layer4() {
 	static int cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 = 8;
 
 	if (--cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 <= 0) {
-		shift_s(mat, 15, PACK_TILESIZE(0, 64));
+		shift_s(mat, 15, PACK_TILESIZE(0, 128));
 		cur_interval_tex_ddd_dl_MvsWW_Peach_b2_layer4 = interval_tex_ddd_dl_MvsWW_Peach_b2_layer4;
 	}
 
@@ -1103,7 +1103,7 @@ void scroll_gfx_mat_ddd_dl_MvsWW_Peach_b1_layer4() {
 	static int cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 = 8;
 
 	if (--cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 <= 0) {
-		shift_s(mat, 15, PACK_TILESIZE(0, 64));
+		shift_s(mat, 15, PACK_TILESIZE(0, 128));
 		cur_interval_tex_ddd_dl_MvsWW_Peach_b1_layer4 = interval_tex_ddd_dl_MvsWW_Peach_b1_layer4;
 	}
 
