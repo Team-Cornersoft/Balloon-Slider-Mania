@@ -66,6 +66,7 @@ s16 gCurrSaveFileNum = 1;
 s16 gCurrLevelNum = LEVEL_MIN;
 
 u8 gRenderBSMSuccessMenu = FALSE;
+static u8 bsmLastTimeGood = FALSE;
 static char strBuf[128];
 
 // NOTE: Puppyprint only supports 12 lines total (I think), with deferred prints only supporting under 254 characters (excluding newline)
@@ -559,7 +560,7 @@ u8 *bsmRankTextures[] = {
     custom_menu_rank_rank_g_rgba32_rgba32,
 };
 
-void bsm_play_narrator_time_sound(s32 time) {
+s32 bsm_play_narrator_time_sound(s32 time) {
     struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
 
     s32 isTimePB = FALSE;
@@ -571,24 +572,25 @@ void bsm_play_narrator_time_sound(s32 time) {
     s32 devTime = gBSMStageProperties[gBSMLastCourse].developerTime;
 
     // Did the player beat the dev time for the first time?
-    if (time < devTime && bsmData[gBSMLastCourse].bestTimeInFrames >= devTime) {
+    if (time < devTime && (bsmData[gBSMLastCourse].bestTimeInFrames >= devTime || bsmData[gBSMLastCourse].bestTimeInFrames == 0)) {
         play_narrator_sound_at_random(&gBSMNarratorDevTime);
-        return;
+        return TRUE;
     }
 
     // Did the player PB, and was the PB at least up to par?
     if (isTimePB && time < ((baselineTime * 103) / 100)) {
         play_narrator_sound_at_random(&gBSMNarratorPBTime);
-        return;
+        return TRUE;
     }
 
     // Was the player within 5% of the dev time?
     if (((time * 95) / 100) <= devTime) {
         play_narrator_sound_at_random(&gBSMNarratorGoodTime);
-        return;
+        return TRUE;
     }
 
     // Play nothing
+    return FALSE;
 }
 
 void bsm_render_success_menu(void) {
@@ -631,7 +633,7 @@ void bsm_render_success_menu(void) {
             bsm_print_if_time_allows(10, 15, "BONUSES", SCREEN_CENTER_X, PRINT_Y_BASE + 52, FALSE, TRUE);
 
             if (successMenuTimer == 15) {
-                bsm_play_narrator_time_sound(gBSMFrameTimer);
+                bsmLastTimeGood = bsm_play_narrator_time_sound(gBSMFrameTimer);
             }
 
             sprintf(strBuf, "Base Score:  <COL_%s-->%d<COL_-------->", gBSMScoreCount > 0 ? "3FFF3F" : "FF3F3F", gBSMScoreCount);
@@ -666,7 +668,10 @@ void bsm_render_success_menu(void) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
                     rankAlphaSqr = sqr(rankAlpha);
                 } else if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES == successMenuTimer) {
-                    play_narrator_sound_at_random_by_rank_id(rank);
+                    // When good time achieved, only play rank sound if it's at least C rank or better
+                    if (rank >= 2 || bsmLastTimeGood == FALSE) {
+                        play_narrator_sound_at_random_by_rank_id(rank);
+                    }
                 }
 
                 f32 x = (SCREEN_CENTER_X + 32) - 12;
