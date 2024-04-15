@@ -83,15 +83,6 @@ const GeoLayout ddd_dl_2_area1_geo[] = {
 const GeoLayout ddd_dl_3_area1_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 20000, -5755, -10300, ddd_dl_A_Arena_a1_mesh_layer_1),
-		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_A_Arena_a1_mesh_layer_5),
-		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 20000, -950, 2800, ddd_dl_A_Stairs_a1_mesh_layer_5),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 20000, -5428, -13915, ddd_dl_B_Elise_a1_mesh_layer_5),
-		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_B_Elise_a1_mesh_layer_1),
-		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
