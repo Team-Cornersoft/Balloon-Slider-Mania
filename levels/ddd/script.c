@@ -125,6 +125,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -156,6 +158,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -227,6 +231,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -285,6 +291,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -332,6 +340,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -384,6 +394,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
@@ -404,6 +416,8 @@ const LevelScript level_ddd_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE9_CORNERSOFT, BRPRESET_BSM_C9_GENERAL, BRPRESET_BSM_C9_GENERAL),
+		SET_ECHO(0x16, 0x16),
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
