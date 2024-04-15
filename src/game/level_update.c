@@ -882,8 +882,10 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 
             case WARP_OP_SLOWMO_WARP:
             case WARP_OP_SLOWMO_WARP_FLOOR:
+                sDelayedWarpTimer = 30;
+                fadeMusic = FALSE;
+
                 if (warpOp == WARP_OP_SLOWMO_WARP_FLOOR) {
-                    play_sound(SOUND_SPECIAL1_BSM_CUSTOM_FADE_WARP, gGlobalSoundSource);
                     if ((m->floor) && (m->floor->force & 0xFF)) {
                         sSourceWarpNodeId = m->floor->force & 0xFF;
                     } else {
@@ -891,12 +893,20 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                         sSourceWarpNodeId = WARP_NODE_DEATH;
                     }
                     assert(area_get_warp_node(sSourceWarpNodeId) != NULL, "Invalid force warp parameter!");
+
+                    // Override warp behavior for C9
+                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE) {
+                        sDelayedWarpTimer = 20;
+                        play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                        play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
+                        break;
+                    }
+
+                    play_sound(SOUND_SPECIAL1_BSM_CUSTOM_FADE_WARP, gGlobalSoundSource);
                 } else {
                     sSourceWarpNodeId = GET_BPARAM2(m->usedObj->oBehParams);
                 }
 
-                sDelayedWarpTimer = 30;
-                fadeMusic = FALSE;
                 play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                 shouldFadeMarioWarp = sDelayedWarpTimer;
                 animSlowdownRate = 1.0f;
