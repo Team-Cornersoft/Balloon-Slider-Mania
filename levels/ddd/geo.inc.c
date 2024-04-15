@@ -5,4 +5,3 @@
 #include "levels/ddd/area_5/geo.inc.c"
 #include "levels/ddd/area_6/geo.inc.c"
 #include "levels/ddd/area_7/geo.inc.c"
-#include "levels/ddd/area_8/geo.inc.c"

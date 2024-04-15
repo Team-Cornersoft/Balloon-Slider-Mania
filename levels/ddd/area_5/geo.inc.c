@@ -3,13 +3,11 @@
 const GeoLayout ddd_area_5_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(4, geo_switch_area),
+		GEO_SWITCH_CASE(2, geo_switch_area),
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, ddd_dl_1_area5_geo),
-			GEO_BRANCH(1, ddd_dl_2_area5_geo),
-			GEO_BRANCH(1, ddd_dl_3_area5_geo),
 		GEO_CLOSE_NODE(),
-		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 110, 150, 90, 0, 0, 0),
+		GEO_SCENE_LIGHT(LIGHT_TYPE_AMBIENT, 220, 220, 200, 0, 0, 0),
 		GEO_SCENE_LIGHT(LIGHT_TYPE_DIRECTIONAL, 255, 255, 255, 0, 127, 0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
@@ -65,18 +63,6 @@ const GeoLayout ddd_dl_1_area5_geo[] = {
 				GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_F_Sun_mesh_layer_5),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_2_area5_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout ddd_dl_3_area5_geo[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
