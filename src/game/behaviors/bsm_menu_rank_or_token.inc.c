@@ -55,7 +55,7 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
     [BSM_COURSE_6_SCORCH_ISLE]       = 1910,
     [BSM_COURSE_7_SPORE_CANYON]      = 1815,
     [BSM_COURSE_8_CYBER_FEST]        = 1970,
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = 1000,
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = 1950,
 };
 
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
