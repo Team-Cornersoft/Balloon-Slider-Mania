@@ -546,7 +546,7 @@ void scroll_ddd_dl_Rainbow_pipe_a2_001_mesh_layer_1_vtx_0() {
 
 void scroll_ddd_dl_Rainbow_road_a2_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 136;
+	int count = 167;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;

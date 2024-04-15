@@ -64,7 +64,7 @@ const GeoLayout ddd_dl_2_area1_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, ddd_dl_A_Tree_A_a1_mesh_layer_4),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -14971, -13946, -14042, ddd_dl_A_Tree_B_a1_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -14971, -7046, -14042, ddd_dl_A_Tree_B_a1_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, -15003, -6998, -13975, 0, 90, 0, ddd_dl_B_stairs_a1_mesh_layer_5),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -15000, -24556, -21100, ddd_dl_C_Portal_a1_001_mesh_layer_5),
 		GEO_OPEN_NODE(),

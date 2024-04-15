@@ -30,7 +30,7 @@ const GeoLayout ddd_dl_1_area4_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_ALPHA, ddd_dl_A_MvsWW_a4_backdrop_mesh_layer_4),
 		GEO_CLOSE_NODE(),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_ALPHA, 31300, 16300, -400, ddd_dl_A_the_fucking_moon_001_mesh_layer_4),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 25150, -2475, 0, 90, 0, 90, ddd_dl_C_Rainbow_pipe_a4_mesh_layer_5),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 12150, 3525, 0, 90, 0, 90, ddd_dl_C_Rainbow_pipe_a4_mesh_layer_5),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_C_Rainbow_pipe_a4_mesh_layer_1),
 		GEO_CLOSE_NODE(),
