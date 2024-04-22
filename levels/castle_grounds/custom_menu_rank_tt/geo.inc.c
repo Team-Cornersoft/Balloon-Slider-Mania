@@ -31,7 +31,7 @@ const GeoLayout custom_menu_rank_tt_04_rank_tt_top_geo[] = {
 const GeoLayout custom_menu_rank_tt_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_SWITCH_CASE(2, geo_switch_anim_state),
+		GEO_SWITCH_CASE(4, geo_switch_anim_state),
 		GEO_OPEN_NODE(),
 			GEO_BRANCH(1, custom_menu_rank_tt_01_rank_tt_bronze_geo),
 			GEO_BRANCH(1, custom_menu_rank_tt_02_rank_tt_silver_geo),
