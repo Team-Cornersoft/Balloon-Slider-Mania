@@ -60,4 +60,6 @@ extern const LevelScript level_cgds_menu_select[];
 
 #include "levels/castle_grounds/custom_menu_title/geo_header.h"
 
+#include "levels/castle_grounds/custom_menu_rank_tt/geo_header.h"
+
 #endif
