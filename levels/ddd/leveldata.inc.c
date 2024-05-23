@@ -26,4 +26,8 @@
 #include "levels/ddd/area_7/room.inc.c"
 #include "levels/ddd/area_7/macro.inc.c"
 #include "levels/ddd/area_7/spline.inc.c"
+#include "levels/ddd/area_8/collision.inc.c"
+#include "levels/ddd/area_8/room.inc.c"
+#include "levels/ddd/area_8/macro.inc.c"
+#include "levels/ddd/area_8/spline.inc.c"
 #include "levels/ddd/model.inc.c"

@@ -17,10 +17,6 @@ const GeoLayout ddd_area_6_geo[] = {
 const GeoLayout ddd_dl_1_area6_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -10000, 14200, 22000, 90, 0, 0, ddd_dl_C_Rainbow_pipe_a6_mesh_layer_1),
-		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_C_Rainbow_pipe_a6_mesh_layer_5),
-		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -10200, 8989, 238, ddd_dl_C_stage_a6_a_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, ddd_dl_C_stage_a6_a_mesh_layer_6),
@@ -49,10 +45,10 @@ const GeoLayout ddd_dl_2_area6_geo[] = {
 const GeoLayout ddd_dl_3_area_6_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -200, 8989, 238, ddd_dl_C_stage_a6_b_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -200, 8989, 238, ddd_dl_C_stage_a6_b_mesh_layer_4),
 		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_C_stage_a6_b_mesh_layer_1),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, ddd_dl_C_stage_a6_b_mesh_layer_6),
-			GEO_DISPLAY_LIST(LAYER_ALPHA, ddd_dl_C_stage_a6_b_mesh_layer_4),
 		GEO_CLOSE_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 10625, -50, ddd_dl_mvsww_backdrop_b_mesh_layer_1),
 	GEO_CLOSE_NODE(),

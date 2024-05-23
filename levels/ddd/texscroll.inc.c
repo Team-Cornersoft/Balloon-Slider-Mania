@@ -546,7 +546,7 @@ void scroll_ddd_dl_Rainbow_pipe_a2_001_mesh_layer_1_vtx_0() {
 
 void scroll_ddd_dl_Rainbow_road_a2_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 167;
+	int count = 169;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
@@ -733,6 +733,27 @@ void scroll_ddd_dl_0_stars_007_mesh_layer_4_vtx_0() {
 	currentX += deltaX;
 }
 
+void scroll_ddd_dl_A_MvsWW_a4_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 14;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_A_MvsWW_a4_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
 void scroll_ddd_dl_A_MvsWW_a4_backdrop_mesh_layer_5_vtx_0() {
 	int i = 0;
 	int count = 28;
@@ -783,6 +804,27 @@ void scroll_ddd_dl_C_Rainbow_pipe_a4_mesh_layer_1_vtx_0() {
 	static int currentX = 0;
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Rainbow_pipe_a4_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_A_rainbow_road_A5_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 106;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_A_rainbow_road_A5_mesh_layer_5_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
 
@@ -943,14 +985,14 @@ void scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1() {
 	currentX += deltaX;
 }
 
-void scroll_ddd_dl_C_Rainbow_pipe_a6_mesh_layer_1_vtx_0() {
+void scroll_ddd_dl_A_rainbow_road_A8_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 234;
+	int count = 90;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Rainbow_pipe_a6_mesh_layer_1_vtx_0);
+	Vtx *vertices = segmented_to_virtual(ddd_dl_A_rainbow_road_A8_mesh_layer_5_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
 
@@ -964,16 +1006,174 @@ void scroll_ddd_dl_C_Rainbow_pipe_a6_mesh_layer_1_vtx_0() {
 	currentX += deltaX;
 }
 
-void scroll_ddd_dl_C_Rainbow_pipe_a6_mesh_layer_5_vtx_0() {
+void scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 234;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_pipe_a2_002_mesh_layer_1_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_5_vtx_0() {
 	int i = 0;
 	int count = 18;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_C_Rainbow_pipe_a6_mesh_layer_5_vtx_0);
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_pipe_a2_002_mesh_layer_5_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_Z_Ocean_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 56;
+	int width = 32 * 0x20;
+	int height = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Z_Ocean_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.0 * 0x20) % width;
+	deltaY = (int)(-0.05000000074505806 * 0x20) % height;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentX += deltaX;	currentY += deltaY;
+}
+
+void scroll_ddd_dl_Z_Ocean_001_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 52;
+	int width = 32 * 0x20;
+	int height = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Z_Ocean_001_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.0 * 0x20) % width;
+	deltaY = (int)(-0.05000000074505806 * 0x20) % height;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentX += deltaX;	currentY += deltaY;
+}
+
+void scroll_ddd_dl_Z_Ocean_002_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 61;
+	int width = 32 * 0x20;
+	int height = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Z_Ocean_002_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.0 * 0x20) % width;
+	deltaY = (int)(-0.05000000074505806 * 0x20) % height;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentX += deltaX;	currentY += deltaY;
+}
+
+void scroll_ddd_dl_Z_Ocean_003_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 84;
+	int width = 32 * 0x20;
+	int height = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	static int currentY = 0;
+	int deltaY;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Z_Ocean_003_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.0 * 0x20) % width;
+	deltaY = (int)(-0.05000000074505806 * 0x20) % height;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+	if (absi(currentY) > height) {
+		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+		vertices[i].n.tc[1] += deltaY;
+	}
+	currentX += deltaX;	currentY += deltaY;
+}
+
+void scroll_ddd_dl_Z_Rainglow_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 22;
+	int width = 16 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_Z_Rainglow_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.05000000074505806 * 0x20) % width;
 
 	if (absi(currentX) > width) {
 		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
@@ -1145,9 +1345,11 @@ void scroll_ddd() {
 	scroll_ddd_dl_0_stars_005_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_006_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_007_mesh_layer_4_vtx_0();
+	scroll_ddd_dl_A_MvsWW_a4_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_A_MvsWW_a4_backdrop_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_Rainbow_pipe_a4_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_Rainbow_pipe_a4_mesh_layer_1_vtx_0();
+	scroll_ddd_dl_A_rainbow_road_A5_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_B_dress_mesh_layer_5_vtx_1();
 	scroll_ddd_dl_B_eyes_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_C_Flower_guide_mesh_layer_5_vtx_0();
@@ -1155,8 +1357,14 @@ void scroll_ddd() {
 	scroll_ddd_dl_C_Flower_guide_002_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1();
-	scroll_ddd_dl_C_Rainbow_pipe_a6_mesh_layer_1_vtx_0();
-	scroll_ddd_dl_C_Rainbow_pipe_a6_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_A_rainbow_road_A8_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_1_vtx_0();
+	scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Z_Ocean_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Z_Ocean_001_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Z_Ocean_002_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Z_Ocean_003_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_Z_Rainglow_mesh_layer_5_vtx_0();
 	scroll_gfx_mat_ddd_dl_Dot_lights();
 	scroll_gfx_mat_ddd_dl_Water_A_layer5();
 	scroll_gfx_mat_ddd_dl_Water_B_layer5();
