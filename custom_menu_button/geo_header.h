@@ -1,12 +1,10 @@
 extern const GeoLayout custom_menu_button_geo[];
 extern u8 custom_menu_button_box_top_rgba16_ia8[];
 extern u8 custom_menu_button_box_bottom_rgba16_ia8[];
-extern u8 custom_menu_button_credits_text_rgba16_ci8[];
-extern u8 custom_menu_button_credits_text_rgba16_pal_rgba16[];
-extern u8 custom_menu_button_stats_text_rgba16_ci8[];
-extern u8 custom_menu_button_stats_text_rgba16_pal_rgba16[];
 extern u8 custom_menu_button_time_trial_text_rgba16_ci8[];
 extern u8 custom_menu_button_time_trial_text_rgba16_pal_rgba16[];
+extern u8 custom_menu_button_stats_text_rgba16_ci8[];
+extern u8 custom_menu_button_stats_text_rgba16_pal_rgba16[];
 extern Vtx custom_menu_button_model_mesh_layer_5_vtx_cull[8];
 extern Vtx custom_menu_button_model_mesh_layer_5_vtx_0[8];
 extern Gfx custom_menu_button_model_mesh_layer_5_tri_0[];
