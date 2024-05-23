@@ -53,7 +53,7 @@
 /**
  * Number of supported areas per level.
  */
-#define AREA_COUNT 8
+#define AREA_COUNT 10
 
 /**
  * Makes signs and NPCs easier to talk to.

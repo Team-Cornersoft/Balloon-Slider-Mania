@@ -5,7 +5,7 @@ include util.mk
 # Default target
 default: all
 
-TARGET_STRING := secrethacksurprisedpikachuface
+TARGET_STRING := bsm
 
 # Preprocessor definitions
 DEFINES :=
