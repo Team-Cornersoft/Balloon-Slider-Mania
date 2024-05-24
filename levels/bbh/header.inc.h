@@ -181,7 +181,7 @@ extern Vtx bbh_dl_A_the_fucking_moon_mesh_layer_4_vtx_cull[8];
 extern Vtx bbh_dl_A_the_fucking_moon_mesh_layer_4_vtx_0[4];
 extern Gfx bbh_dl_A_the_fucking_moon_mesh_layer_4_tri_0[];
 extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_1_vtx_cull[8];
-extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_1_vtx_0[1048];
+extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_1_vtx_0[1054];
 extern Gfx bbh_dl_A_area1_slide_a_mesh_layer_1_tri_0[];
 extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_1_vtx_1[911];
 extern Gfx bbh_dl_A_area1_slide_a_mesh_layer_1_tri_1[];
