@@ -502,7 +502,7 @@ extern Vtx jrb_dl_A_environment_a3_a_mesh_layer_5_vtx_cull[8];
 extern Vtx jrb_dl_A_environment_a3_a_mesh_layer_5_vtx_0[18];
 extern Gfx jrb_dl_A_environment_a3_a_mesh_layer_5_tri_0[];
 extern Vtx jrb_dl_A_environment_a3_a_mesh_layer_4_vtx_cull[8];
-extern Vtx jrb_dl_A_environment_a3_a_mesh_layer_4_vtx_0[60];
+extern Vtx jrb_dl_A_environment_a3_a_mesh_layer_4_vtx_0[94];
 extern Gfx jrb_dl_A_environment_a3_a_mesh_layer_4_tri_0[];
 extern Vtx jrb_dl_A_environment_a3_b_mesh_layer_1_vtx_cull[8];
 extern Vtx jrb_dl_A_environment_a3_b_mesh_layer_1_vtx_0[83];

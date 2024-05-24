@@ -90,7 +90,6 @@ const LevelScript level_jrb_entry[] = {
 		OBJECT(MODEL_NONE, -14345, -537, 23442, 0, -180, 0, 0x00F00000, bhvAirborneStarCollectWarp),
 		OBJECT(MODEL_NONE, -14345, -537, 23442, 0, -180, 0, 0x00F10000, bhvDeathWarp),
 		OBJECT(MODEL_NONE, 10975, -4607, 9999, 0, 90, 0, 0x00C10000, bhvInstantActiveWarp),
-		OBJECT(MODEL_NONE, -1317, -5697, 10017, 110, 60, 0, 0x80C0003C, bhvWarp),
 		OBJECT(MODEL_NONE, -7176, -11259, -22639, 0, 0, 0, 0x80C2003C, bhvWarp),
 		TERRAIN(jrb_area_1_collision),
 		ROOMS(jrb_area_1_collision_rooms),
