@@ -156,7 +156,7 @@ extern Vtx bob_dl_A_area1_slide_a_mesh_layer_1_vtx_0[608];
 extern Gfx bob_dl_A_area1_slide_a_mesh_layer_1_tri_0[];
 extern Vtx bob_dl_A_area1_slide_a_mesh_layer_1_vtx_1[586];
 extern Gfx bob_dl_A_area1_slide_a_mesh_layer_1_tri_1[];
-extern Vtx bob_dl_A_area1_slide_a_mesh_layer_1_vtx_2[315];
+extern Vtx bob_dl_A_area1_slide_a_mesh_layer_1_vtx_2[319];
 extern Gfx bob_dl_A_area1_slide_a_mesh_layer_1_tri_2[];
 extern Vtx bob_dl_C_start_line_mesh_layer_1_vtx_cull[8];
 extern Vtx bob_dl_C_start_line_mesh_layer_1_vtx_0[28];
