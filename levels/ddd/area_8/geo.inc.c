@@ -395,7 +395,6 @@ const GeoLayout ddd_dl_1_area8_geo[] = {
 				GEO_DISPLAY_LIST(LAYER_ALPHA, ddd_dl_C_cloud_bit_047_mesh_layer_4),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 10800, -8700, -12800, ddd_dl_C_CS_token_pillar_mesh_layer_1),
 		GEO_TRANSLATE_ROTATE(LAYER_OPAQUE, 6514, -5900, -6371, 0, -40, 0),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1000, -9000, 6000, ddd_dl_C_Platform_A_mesh_layer_1),
 		GEO_OPEN_NODE(),

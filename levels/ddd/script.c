@@ -233,7 +233,7 @@ const LevelScript level_ddd_entry[] = {
 		OBJECT(MODEL_BSM_POINT_BALLOON, 3597, 131, -6891, 0, -22, 0, 0x00000000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 3558, 356, -1639, 0, 5, 0, 0x00060000, bhvPointBalloon),
 		OBJECT(MODEL_BSM_POINT_BALLOON, 3558, 956, -1639, 0, 5, 0, 0x00050000, bhvPointBalloon),
-		OBJECT(MODEL_NONE, -8229, 2709, 12497, 0, -180, 0, 0x00A50000, bhvInstantActiveWarp),
+		OBJECT(MODEL_NONE, -8229, 2809, 12497, 0, -180, 0, 0x00A50000, bhvInstantActiveWarp),
 		TERRAIN(ddd_area_5_collision),
 		ROOMS(ddd_area_5_collision_rooms),
 		MACRO_OBJECTS(ddd_area_5_macro_objs),
