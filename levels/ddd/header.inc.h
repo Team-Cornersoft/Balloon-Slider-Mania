@@ -426,7 +426,7 @@ extern Vtx ddd_dl_B_stage_a1_mesh_layer_5_vtx_0[24];
 extern Gfx ddd_dl_B_stage_a1_mesh_layer_5_tri_0[];
 extern Vtx ddd_dl_B_stage_a1_mesh_layer_5_vtx_1[26];
 extern Gfx ddd_dl_B_stage_a1_mesh_layer_5_tri_1[];
-extern Vtx ddd_dl_B_stage_a1_mesh_layer_5_vtx_2[132];
+extern Vtx ddd_dl_B_stage_a1_mesh_layer_5_vtx_2[124];
 extern Gfx ddd_dl_B_stage_a1_mesh_layer_5_tri_2[];
 extern Vtx ddd_dl_B_stage_a1_mesh_layer_1_vtx_cull[8];
 extern Vtx ddd_dl_B_stage_a1_mesh_layer_1_vtx_0[48];
