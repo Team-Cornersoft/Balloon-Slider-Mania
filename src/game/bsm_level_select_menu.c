@@ -36,6 +36,7 @@
 
 enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
 enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
+enum BSMMenuGameplayMode gBSMGameplayMode = 0;
 u8 gBSMInitialized = FALSE;
 u8 gUsingEliseModel = FALSE;
 u8 gDisplayEliseMessage = FALSE;
@@ -708,6 +709,20 @@ void bhv_bsm_menu_button_manager_loop(void) {
     // This should be at the very bottom
     bhv_bsm_menu_button_manager_update_selected_button();
     bsm_manager_render_update();
+}
+
+Gfx *geo_bsm_switch_gameplay_mode(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct GraphNodeSwitchCase *switchCase = (struct GraphNodeSwitchCase *) node;
+
+        switchCase->selectedCase = gBSMGameplayMode;
+        
+        if (switchCase->selectedCase >= BSM_MENU_GAMEPLAY_MODE_COUNT) {
+            switchCase->selectedCase = 0;
+        }
+    }
+
+    return NULL;
 }
 
 #define Z_POS_OFFSET 1200

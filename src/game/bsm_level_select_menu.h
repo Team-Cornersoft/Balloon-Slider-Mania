@@ -7,6 +7,13 @@
 #include "types.h"
 #include "engine/graph_node.h"
 
+enum BSMMenuGameplayMode {
+    BSM_MENU_GAMEPLAY_MODE_MANIA,
+    BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS,
+
+    BSM_MENU_GAMEPLAY_MODE_COUNT,
+};
+
 enum BSMMenuLayoutBGState {
     BSM_MENU_LAYOUT_BG_MINIMAL,
     BSM_MENU_LAYOUT_BG_STANDARD,
@@ -97,6 +104,7 @@ extern struct BSMStatsShow gBSMShowStats;
 extern s32 gBSMSelectedButton;
 extern enum BSMMenuLayoutBGState gBSMMenuLayoutBGState;
 extern enum BSMMenuSelectionTypes gSelectionShown;
+extern enum BSMMenuGameplayMode gBSMGameplayMode;
 extern u8 gBSMInitialized;
 extern u8 gUsingEliseModel;
 extern u8 gDisplayEliseMessage;
@@ -120,6 +128,7 @@ void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);
 struct Object *get_selcted_menu_object(u8 button);
 
 Gfx *geo_bsm_menu_video_scene(s32 callContext, struct GraphNode *node, UNUSED void *context);
+Gfx *geo_bsm_switch_gameplay_mode(s32 callContext, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_level_select_camera(s32 state, struct GraphNode *node, UNUSED void *context);
 Gfx *geo_bsm_make_way_for_credits(s32 state, struct GraphNode *node, UNUSED void *context);
 
