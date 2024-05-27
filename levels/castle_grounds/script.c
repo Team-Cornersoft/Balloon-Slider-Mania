@@ -71,7 +71,6 @@ const LevelScript level_cgds_menu_select[] = {
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TITLE, custom_menu_title_geo), 
 	
     CALL(/*arg*/ 0, /*func*/ init_bsm_menu),
-
 	AREA(1, castle_grounds_area_1_custom_static),
 		JUMP_LINK(cgds_area1_jump),
 		OBJECT(MODEL_NONE, 0, 0, 0, 0, 0, 0, 0x00000000, bhvBSMMenuButtonManager), // Button Manager
