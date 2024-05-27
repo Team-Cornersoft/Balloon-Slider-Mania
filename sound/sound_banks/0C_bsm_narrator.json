@@ -266,22 +266,62 @@
         "inst51": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "33_bsm_narrator_dev_time_0"
+            "sound": "33_bsm_narrator_pb_time_2"
         },
         "inst52": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "34_bsm_narrator_dev_time_1"
+            "sound": "34_bsm_narrator_pb_time_3"
         },
         "inst53": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "35_bsm_narrator_good_time_0"
+            "sound": "35_bsm_narrator_bronze_medal"
         },
         "inst54": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "36_bsm_narrator_good_time_1"
+            "sound": "36_bsm_narrator_silver_medal"
+        },
+        "inst55": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "37_bsm_narrator_gold_medal"
+        },
+        "inst56": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "38_bsm_narrator_dev_time"
+        },
+        "inst57": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "39_bsm_narrator_mania_mode_0"
+        },
+        "inst58": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3A_bsm_narrator_mania_mode_1"
+        },
+        "inst59": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3B_bsm_narrator_mania_mode_2"
+        },
+        "inst60": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3C_bsm_narrator_time_trials_0"
+        },
+        "inst61": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3D_bsm_narrator_time_trials_1"
+        },
+        "inst62": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3E_bsm_narrator_time_trials_2"
         }
     },
     "instrument_list": [
@@ -339,6 +379,14 @@
         "inst51",
         "inst52",
         "inst53",
-        "inst54"
+        "inst54",
+        "inst55",
+        "inst56",
+        "inst57",
+        "inst58",
+        "inst59",
+        "inst60",
+        "inst61",
+        "inst62"
     ]
 }

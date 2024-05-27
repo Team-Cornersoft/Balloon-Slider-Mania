@@ -573,7 +573,7 @@ s32 bsm_play_narrator_time_sound(s32 time) {
 
     // Did the player beat the dev time for the first time?
     if (time < devTime && (bsmData[gBSMLastCourse].bestTimeInFrames >= devTime || bsmData[gBSMLastCourse].bestTimeInFrames == 0)) {
-        play_narrator_sound_at_random(&gBSMNarratorDevTime);
+        // play_narrator_sound_at_random(&gBSMNarratorDevTime);
         return TRUE;
     }
 
@@ -585,7 +585,7 @@ s32 bsm_play_narrator_time_sound(s32 time) {
 
     // Was the player within 5% of the dev time?
     if (((time * 95) / 100) <= devTime) {
-        play_narrator_sound_at_random(&gBSMNarratorGoodTime);
+        // play_narrator_sound_at_random(&gBSMNarratorGoodTime);
         return TRUE;
     }
 

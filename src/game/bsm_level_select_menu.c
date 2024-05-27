@@ -121,14 +121,18 @@ static u32 bsmNarratorGoList[] = {
 static u32 bsmNarratorPBTimeList[] = {
     SOUND_NARRATION_BSM_PB_TIME_0,
     SOUND_NARRATION_BSM_PB_TIME_1,
+    SOUND_NARRATION_BSM_PB_TIME_2,
+    SOUND_NARRATION_BSM_PB_TIME_3,
 };
-static u32 bsmNarratorDevTimeList[] = {
-    SOUND_NARRATION_BSM_DEV_TIME_0,
-    SOUND_NARRATION_BSM_DEV_TIME_1,
+static u32 bsmNarratorManiaModeList[] = {
+    SOUND_NARRATION_BSM_MANIA_MODE_0,
+    SOUND_NARRATION_BSM_MANIA_MODE_1,
+    SOUND_NARRATION_BSM_MANIA_MODE_2,
 };
-static u32 bsmNarratorGoodTimeList[] = {
-    SOUND_NARRATION_BSM_GOOD_TIME_0,
-    SOUND_NARRATION_BSM_GOOD_TIME_1,
+static u32 bsmNarratorTimeTrialsList[] = {
+    SOUND_NARRATION_BSM_TIME_TRIALS_0,
+    SOUND_NARRATION_BSM_TIME_TRIALS_1,
+    SOUND_NARRATION_BSM_TIME_TRIALS_2,
 };
 
 struct BSMNarratorList gBSMNarratorRankF       = {bsmNarratorRankFList,       -1, ARRAY_COUNT(bsmNarratorRankFList)      };
@@ -146,8 +150,8 @@ struct BSMNarratorList gBSMNarratorTrackselect = {bsmNarratorTrackselectList, -1
 struct BSMNarratorList gBSMNarratorReady       = {bsmNarratorReadyList,       -1, ARRAY_COUNT(bsmNarratorReadyList)      };
 struct BSMNarratorList gBSMNarratorGo          = {bsmNarratorGoList,          -1, ARRAY_COUNT(bsmNarratorGoList)         };
 struct BSMNarratorList gBSMNarratorPBTime      = {bsmNarratorPBTimeList,      -1, ARRAY_COUNT(bsmNarratorPBTimeList)     };
-struct BSMNarratorList gBSMNarratorDevTime     = {bsmNarratorDevTimeList,     -1, ARRAY_COUNT(bsmNarratorDevTimeList)    };
-struct BSMNarratorList gBSMNarratorGoodTime    = {bsmNarratorGoodTimeList,    -1, ARRAY_COUNT(bsmNarratorGoodTimeList)   };
+struct BSMNarratorList gBSMNarratorManiaMode   = {bsmNarratorManiaModeList,   -1, ARRAY_COUNT(bsmNarratorManiaModeList)  };
+struct BSMNarratorList gBSMNarratorTimeTrials  = {bsmNarratorTimeTrialsList,  -1, ARRAY_COUNT(bsmNarratorTimeTrialsList) };
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .developerTime = 2071, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },

@@ -9115,10 +9115,18 @@ sound_ref .sound_bsm_narrator_go_1
 sound_ref .sound_bsm_narrator_go_2
 sound_ref .sound_bsm_narrator_pb_time_0
 sound_ref .sound_bsm_narrator_pb_time_1
-sound_ref .sound_bsm_narrator_dev_time_0
-sound_ref .sound_bsm_narrator_dev_time_1
-sound_ref .sound_bsm_narrator_good_time_0
-sound_ref .sound_bsm_narrator_good_time_1
+sound_ref .sound_bsm_narrator_pb_time_2
+sound_ref .sound_bsm_narrator_pb_time_3
+sound_ref .sound_bsm_narrator_bronze_medal
+sound_ref .sound_bsm_narrator_silver_medal
+sound_ref .sound_bsm_narrator_gold_medal
+sound_ref .sound_bsm_narrator_dev_time
+sound_ref .sound_bsm_narrator_mania_mode_0
+sound_ref .sound_bsm_narrator_mania_mode_1
+sound_ref .sound_bsm_narrator_mania_mode_2
+sound_ref .sound_bsm_narrator_time_trials_0
+sound_ref .sound_bsm_narrator_time_trials_1
+sound_ref .sound_bsm_narrator_time_trials_2
 
 
 narrator_sound rank_f_0,       0, 0xd1,  78
@@ -9163,19 +9171,27 @@ narrator_sound trackselect_0, 38, 0x94,  75
 narrator_sound trackselect_1, 39, 0xc5,  75
 narrator_sound trackselect_2, 40, 0xab,  75
 narrator_sound trackselect_3, 41, 0x77,  75
-narrator_sound title,         42, 0x27e, 63
+narrator_sound title,         42, 0x251, 72
 narrator_sound ready_0,       43, 0x5f,  78
 narrator_sound ready_1,       44, 0x78,  78
 narrator_sound ready_2,       45, 0x7b,  78
 narrator_sound go_0,          46, 0x85,  78
 narrator_sound go_1,          47, 0xd5,  78
 narrator_sound go_2,          48, 0xac,  78
-narrator_sound pb_time_0,     49, 0x11b, 78
+narrator_sound pb_time_0,     49, 0xc8,  78
 narrator_sound pb_time_1,     50, 0x144, 78
-narrator_sound dev_time_0,    51, 0x186, 78
-narrator_sound dev_time_1,    52, 0x1a0, 78
-narrator_sound good_time_0,   53, 0xea,  78
-narrator_sound good_time_1,   54, 0xed,  78
+narrator_sound pb_time_2,     51, 0xe7,  78
+narrator_sound pb_time_3,     52, 0xe5,  78
+narrator_sound bronze_medal,  53, 0xf8,  78
+narrator_sound silver_medal,  54, 0xfc,  78
+narrator_sound gold_medal,    55, 0xeb,  78
+narrator_sound dev_time,      56, 0x15e, 78
+narrator_sound mania_mode_0,  57, 0xb8,  78
+narrator_sound mania_mode_1,  58, 0xb7,  78
+narrator_sound mania_mode_2,  59, 0xa6,  78
+narrator_sound time_trials_0, 60, 0xbd,  78
+narrator_sound time_trials_1, 61, 0xc2,  78
+narrator_sound time_trials_2, 62, 0xc4,  78
 
 .align 2, 0
 .envelope_32C4:

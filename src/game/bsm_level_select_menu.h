@@ -90,8 +90,8 @@ extern struct BSMNarratorList gBSMNarratorTrackselect;
 extern struct BSMNarratorList gBSMNarratorReady;
 extern struct BSMNarratorList gBSMNarratorGo;
 extern struct BSMNarratorList gBSMNarratorPBTime;
-extern struct BSMNarratorList gBSMNarratorDevTime;
-extern struct BSMNarratorList gBSMNarratorGoodTime;
+extern struct BSMNarratorList gBSMNarratorManiaMode;
+extern struct BSMNarratorList gBSMNarratorTimeTrials;
 extern struct BSMStatsShow gBSMShowStats;
 
 extern s32 gBSMSelectedButton;
