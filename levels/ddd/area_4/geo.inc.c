@@ -24,7 +24,7 @@ const GeoLayout ddd_dl_1_area4_geo[] = {
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, -18679, 17605, 15391, 6, -90, 0, ddd_dl_0_stars_006_mesh_layer_4),
 		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 15726, 16637, -15666, 6, -90, 0, ddd_dl_0_stars_007_mesh_layer_4),
 		GEO_BILLBOARD_WITH_PARAMS_AND_DL(LAYER_TRANSPARENT, 31200, 16300, -400, ddd_dl_A_moon_glow_001_mesh_layer_5),
-		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -210, 3520, 10, 0, -90, 0, ddd_dl_A_MvsWW_a4_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -210, 3920, 10, 0, -90, 0, ddd_dl_A_MvsWW_a4_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_A_MvsWW_a4_mesh_layer_5),
 		GEO_CLOSE_NODE(),

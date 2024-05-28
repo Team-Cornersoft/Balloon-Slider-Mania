@@ -64,6 +64,7 @@ const GeoLayout ddd_dl_1_area5_geo[] = {
 				GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ddd_dl_F_Sun_mesh_layer_5),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_TRANSPARENT, 700, 3250, -29193, 0, -180, 0, ddd_dl_F_Sun_001_mesh_layer_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

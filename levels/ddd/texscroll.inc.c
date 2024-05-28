@@ -546,12 +546,54 @@ void scroll_ddd_dl_Rainbow_pipe_a2_001_mesh_layer_1_vtx_0() {
 
 void scroll_ddd_dl_Rainbow_road_a2_mesh_layer_5_vtx_0() {
 	int i = 0;
-	int count = 169;
+	int count = 171;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_road_a2_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0() {
+	int i = 0;
+	int count = 18;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0);
+
+	deltaX = (int)(0.25 * 0x20) % width;
+
+	if (absi(currentX) > width) {
+		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
+	}
+
+	for (i = 0; i < count; i++) {
+		vertices[i].n.tc[0] += deltaX;
+	}
+	currentX += deltaX;
+}
+
+void scroll_ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0() {
+	int i = 0;
+	int count = 234;
+	int width = 32 * 0x20;
+
+	static int currentX = 0;
+	int deltaX;
+	Vtx *vertices = segmented_to_virtual(ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
 
@@ -594,48 +636,6 @@ void scroll_ddd_dl_Rainbow_pipe_a3_mesh_layer_5_vtx_0() {
 	static int currentX = 0;
 	int deltaX;
 	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_pipe_a3_mesh_layer_5_vtx_0);
-
-	deltaX = (int)(0.25 * 0x20) % width;
-
-	if (absi(currentX) > width) {
-		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
-	}
-
-	for (i = 0; i < count; i++) {
-		vertices[i].n.tc[0] += deltaX;
-	}
-	currentX += deltaX;
-}
-
-void scroll_ddd_dl_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0() {
-	int i = 0;
-	int count = 18;
-	int width = 32 * 0x20;
-
-	static int currentX = 0;
-	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0);
-
-	deltaX = (int)(0.25 * 0x20) % width;
-
-	if (absi(currentX) > width) {
-		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
-	}
-
-	for (i = 0; i < count; i++) {
-		vertices[i].n.tc[0] += deltaX;
-	}
-	currentX += deltaX;
-}
-
-void scroll_ddd_dl_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0() {
-	int i = 0;
-	int count = 234;
-	int width = 32 * 0x20;
-
-	static int currentX = 0;
-	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0);
 
 	deltaX = (int)(0.25 * 0x20) % width;
 
@@ -964,14 +964,14 @@ void scroll_ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0() {
 	currentX += deltaX;
 }
 
-void scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1() {
+void scroll_ddd_dl_F_Sun_001_mesh_layer_5_vtx_0() {
 	int i = 0;
 	int count = 86;
 	int width = 32 * 0x20;
 
 	static int currentX = 0;
 	int deltaX;
-	Vtx *vertices = segmented_to_virtual(ddd_dl_F_Sun_mesh_layer_5_vtx_1);
+	Vtx *vertices = segmented_to_virtual(ddd_dl_F_Sun_001_mesh_layer_5_vtx_0);
 
 	deltaX = (int)(-0.20000000298023224 * 0x20) % width;
 
@@ -1221,10 +1221,10 @@ void scroll_ddd() {
 	scroll_ddd_dl_Rainbow_pipe_a2_001_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_Rainbow_pipe_a2_001_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_Rainbow_road_a2_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0();
+	scroll_ddd_dl_00_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_Rainbow_pipe_a3_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_Rainbow_pipe_a3_mesh_layer_5_vtx_0();
-	scroll_ddd_dl_Rainbow_pipe_a3_001_mesh_layer_5_vtx_0();
-	scroll_ddd_dl_Rainbow_pipe_a3_001_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_0_stars_004_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_005_mesh_layer_4_vtx_0();
 	scroll_ddd_dl_0_stars_006_mesh_layer_4_vtx_0();
@@ -1240,7 +1240,7 @@ void scroll_ddd() {
 	scroll_ddd_dl_C_Flower_guide_001_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_Flower_guide_002_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_C_Flower_guide_003_mesh_layer_5_vtx_0();
-	scroll_ddd_dl_F_Sun_mesh_layer_5_vtx_1();
+	scroll_ddd_dl_F_Sun_001_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_A_rainbow_road_A8_mesh_layer_5_vtx_0();
 	scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_1_vtx_0();
 	scroll_ddd_dl_Rainbow_pipe_a2_002_mesh_layer_5_vtx_0();

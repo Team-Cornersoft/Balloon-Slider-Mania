@@ -50,6 +50,7 @@ const GeoLayout ddd_dl_3_area_6_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_OPAQUE, ddd_dl_C_stage_a6_b_mesh_layer_1),
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, ddd_dl_C_stage_a6_b_mesh_layer_6),
 		GEO_CLOSE_NODE(),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -200, 8989, 238, ddd_dl_D_stage_a6_b_wario_mesh_layer_4),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 0, 10625, -50, ddd_dl_mvsww_backdrop_b_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
