@@ -1257,8 +1257,9 @@
 #define /*0x100*/ oYoshiTargetYaw  OBJECT_FIELD_S32(0x1E)
 
 /* BSM Menu Title Logo */
-#define /*0x0F4*/ oBSMMenuTitleRollHome OBJECT_FIELD_S32(0x1B)
-#define /*0x0F8*/ oBSMMenuTitleSineFunc OBJECT_FIELD_S32(0x1C)
+#define /*0x0F4*/ oBSMMenuTitleRollHome     OBJECT_FIELD_S32(0x1B)
+#define /*0x0F8*/ oBSMMenuTitleSineFunc     OBJECT_FIELD_S32(0x1C)
+#define /*0x0FC*/ oBSMMenuTitleGeneralScale OBJECT_FIELD_F32(0x1D)
 
 /* BSM Menu Button Or Stage */
 #define /*0x0F4*/ oBSMMenuStageCutscene OBJECT_FIELD_S32(0x1B)
