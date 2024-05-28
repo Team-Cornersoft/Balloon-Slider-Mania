@@ -41,7 +41,7 @@ u8 gBSMInitialized = FALSE;
 u8 gUsingEliseModel = FALSE;
 u8 gDisplayEliseMessage = FALSE;
 
-u8 bsmTrackSelectNarratorSpoken = 0;
+u8 bsmTrackSelectNarratorSpoken = FALSE;
 
 static u32 bsmNarratorRankFList[] = {
     SOUND_NARRATION_BSM_RANK_F_0,
@@ -167,6 +167,7 @@ struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
+struct Object *bsmMenuButtonTimeTrials;
 struct Object *bsmMenuButtonStats;
 struct Object *bsmMenuButtonCredits;
 
@@ -198,6 +199,9 @@ void play_narrator_sound_at_random(struct BSMNarratorList *list) {
 struct Object *get_selcted_menu_object(u8 button) {
     if (button < BSM_COURSE_COUNT) {
         return bsmMenuLevels[button];
+    }
+    if (button == BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS) {
+        return bsmMenuButtonTimeTrials;
     }
     if (button == BSM_COURSE_COUNT + BSM_BUTTON_STATS) {
         return bsmMenuButtonStats;
@@ -322,6 +326,7 @@ static void locate_all_button_objects(void) {
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
         bsmMenuLevels[i] = NULL;
     }
+    bsmMenuButtonTimeTrials = NULL;
     bsmMenuButtonStats = NULL;
     bsmMenuButtonCredits = NULL;
 
@@ -334,7 +339,9 @@ static void locate_all_button_objects(void) {
                     bsmMenuLevels[obj->oBehParams2ndByte] = obj;
                 }
             } else if (obj_has_model(obj, MODEL_BSM_MENU_BUTTON)) {
-                if (obj->oBehParams2ndByte == BSM_BUTTON_STATS) { // Stats
+                if (obj->oBehParams2ndByte == BSM_BUTTON_TIME_TRIALS) { // Time Trials
+                    bsmMenuButtonTimeTrials = obj;
+                } else if (obj->oBehParams2ndByte == BSM_BUTTON_STATS) { // Stats
                     bsmMenuButtonStats = obj;
                 } else if (obj->oBehParams2ndByte == BSM_BUTTON_CREDITS) { // Credits
                     bsmMenuButtonCredits = obj;
@@ -349,6 +356,7 @@ static void locate_all_button_objects(void) {
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
         aggress(bsmMenuLevels[i] != NULL, "Missing BSM stage object(s)!");
     }
+    aggress(bsmMenuButtonTimeTrials != NULL, "Missing BSM time trials object!");
     aggress(bsmMenuButtonStats != NULL, "Missing BSM stats object!");
     aggress(bsmMenuButtonCredits != NULL, "Missing BSM credits object!");
 }
@@ -357,6 +365,7 @@ void bhv_bsm_menu_button_manager_update_selected_button(void) {
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
         bsmMenuLevels[i]->oBSMMenuIsSelected = FALSE;
     }
+    bsmMenuButtonTimeTrials->oBSMMenuIsSelected = FALSE;
     bsmMenuButtonStats->oBSMMenuIsSelected = FALSE;
     bsmMenuButtonCredits->oBSMMenuIsSelected = FALSE;
 
@@ -435,14 +444,17 @@ static void attempt_selection_move(void) {
         if (newFlags & STICK_UP) {
             moveMade = TRUE;
             switch (gBSMSelectedButton) {
-                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                case (BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS):
                     gBSMSelectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
+                    break;
+                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
                 case BSM_COURSE_9_CORNERSOFT_PARADE:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
                 /////////////////////////////////////////////////////////////////////////
                 case BSM_COURSE_1_SNOWY_PEAK:
@@ -469,14 +481,17 @@ static void attempt_selection_move(void) {
         } else if (newFlags & STICK_DOWN) {
             moveMade = TRUE;
             switch (gBSMSelectedButton) {
+                case (BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS):
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
+                    break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
+                    gBSMSelectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     gBSMSelectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
                     break;
                 case BSM_COURSE_9_CORNERSOFT_PARADE:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS;
                     break;
                 /////////////////////////////////////////////////////////////////////////
                 case BSM_COURSE_1_SNOWY_PEAK:
@@ -503,8 +518,11 @@ static void attempt_selection_move(void) {
         } else if (newFlags & STICK_LEFT) {
             moveMade = TRUE;
             switch (gBSMSelectedButton) {
-                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                case (BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS):
                     gBSMSelectedButton = BSM_COURSE_6_SCORCH_ISLE;
+                    break;
+                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                    gBSMSelectedButton = BSM_COURSE_7_SPORE_CANYON;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     gBSMSelectedButton = BSM_COURSE_7_SPORE_CANYON;
@@ -515,10 +533,10 @@ static void attempt_selection_move(void) {
                 /////////////////////////////////////////////////////////////////////////
                 case BSM_COURSE_1_SNOWY_PEAK:
                 case BSM_COURSE_2_LAVA_ISLE:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS;
                     break;
                 case BSM_COURSE_3_FUNGI_CANYON:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
                 case BSM_COURSE_4_STARLIGHT_FEST:
                     gBSMSelectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
@@ -537,8 +555,11 @@ static void attempt_selection_move(void) {
         } else if (newFlags & STICK_RIGHT) {
             moveMade = TRUE;
             switch (gBSMSelectedButton) {
-                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                case (BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS):
                     gBSMSelectedButton = BSM_COURSE_2_LAVA_ISLE;
+                    break;
+                case (BSM_COURSE_COUNT + BSM_BUTTON_STATS):
+                    gBSMSelectedButton = BSM_COURSE_3_FUNGI_CANYON;
                     break;
                 case (BSM_COURSE_COUNT + BSM_BUTTON_CREDITS):
                     gBSMSelectedButton = BSM_COURSE_3_FUNGI_CANYON;
@@ -556,10 +577,10 @@ static void attempt_selection_move(void) {
                 /////////////////////////////////////////////////////////////////////////
                 case BSM_COURSE_5_HOLIDAY_PEAK:
                 case BSM_COURSE_6_SCORCH_ISLE:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_TIME_TRIALS;
                     break;
                 case BSM_COURSE_7_SPORE_CANYON:
-                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_CREDITS;
+                    gBSMSelectedButton = BSM_COURSE_COUNT + BSM_BUTTON_STATS;
                     break;
                 case BSM_COURSE_8_CYBER_FEST:
                     gBSMSelectedButton = BSM_COURSE_9_CORNERSOFT_PARADE;
@@ -596,10 +617,7 @@ void bhv_bsm_menu_button_manager_init(void) {
     locate_all_button_objects();
     init_image_screen_press_button(0, 0);
     gBSMInitialized = TRUE;
-
-    if (bsmTrackSelectNarratorSpoken != 0) {
-        bsmTrackSelectNarratorSpoken = 1;
-    }
+    bsmTrackSelectNarratorSpoken = FALSE;
 }
 
 void bhv_bsm_menu_button_manager_loop(void) {
@@ -609,15 +627,19 @@ void bhv_bsm_menu_button_manager_loop(void) {
         return;
     }
 
-    if (bsmTrackSelectNarratorSpoken != 2) {
-        if (bsmTrackSelectNarratorSpoken == 0) {
-            // Don't randomize first playback
-            play_sound(gBSMNarratorTrackselect.sfxArray[0], gGlobalSoundSource);
-            gBSMNarratorTrackselect.lastAccessed = 0;
+    if (!bsmTrackSelectNarratorSpoken) {
+        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            play_narrator_sound_at_random(&gBSMNarratorTimeTrials);
         } else {
-            play_narrator_sound_at_random(&gBSMNarratorTrackselect);
+            if (gBSMNarratorTrackselect.lastAccessed < 0) {
+                // Don't randomize first playback
+                play_sound(gBSMNarratorTrackselect.sfxArray[0], gGlobalSoundSource);
+                gBSMNarratorTrackselect.lastAccessed = 0;
+            } else {
+                play_narrator_sound_at_random(&gBSMNarratorTrackselect);
+            }
         }
-        bsmTrackSelectNarratorSpoken = 2;
+        bsmTrackSelectNarratorSpoken = TRUE;
     }
 
     random_u16(); // Progress the RNG
@@ -638,6 +660,15 @@ void bhv_bsm_menu_button_manager_loop(void) {
             soundToPlay = SOUND_MENU_CLICK_FILE_SELECT;
 
             switch (gBSMSelectedButton) {
+                case (BSM_BUTTON_TIME_TRIALS + BSM_COURSE_COUNT):
+                    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+                        gBSMGameplayMode = BSM_MENU_GAMEPLAY_MODE_MANIA;
+                        play_narrator_sound_at_random(&gBSMNarratorManiaMode);
+                    } else {
+                        gBSMGameplayMode = BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS;
+                        play_narrator_sound_at_random(&gBSMNarratorTimeTrials);
+                    }
+                    break;
                 case (BSM_BUTTON_STATS + BSM_COURSE_COUNT):
                     gBSMShowStats.isShowingStats ^= TRUE;
                     break;

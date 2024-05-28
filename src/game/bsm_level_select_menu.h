@@ -41,6 +41,7 @@ enum BSMCourses {
 };
 
 enum BSMMenuButtons {
+    BSM_BUTTON_TIME_TRIALS,
     BSM_BUTTON_STATS,
     BSM_BUTTON_CREDITS,
 

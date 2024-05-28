@@ -28,18 +28,19 @@
 static const LevelScript cgds_area1_jump[] = {
 	OBJECT(MODEL_BSM_MENU_TITLE,   -980, 2020, 540, 0, 0, 15, 0x00000000, bhvBSMMenuTitle), // Title
 
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 540, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Stats
-	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 540, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Credits
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1490, 540, 0, 0,  0, (BSM_BUTTON_TIME_TRIALS << 16), bhvBSMMenuButtonOrStage), // Time Trials
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040, 1170, 540, 0, 0,  0, (BSM_BUTTON_STATS << 16), bhvBSMMenuButtonOrStage), // Stats
+	OBJECT(MODEL_BSM_MENU_BUTTON, -1040,  850, 540, 0, 0,  0, (BSM_BUTTON_CREDITS << 16), bhvBSMMenuButtonOrStage), // Credits
 
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 540, 0, 0,  0, 0x00000000, bhvBSMMenuButtonOrStage), // Course 1
-	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 540, 0, 0,  0, 0x00010000, bhvBSMMenuButtonOrStage), // Course 2
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 540, 0, 0,  0, 0x00020000, bhvBSMMenuButtonOrStage), // Course 3
-	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 540, 0, 0,  0, 0x00030000, bhvBSMMenuButtonOrStage), // Course 4
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 540, 0, 0,  0, 0x00040000, bhvBSMMenuButtonOrStage), // Course 5
-	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 540, 0, 0,  0, 0x00050000, bhvBSMMenuButtonOrStage), // Course 6
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 540, 0, 0,  0, 0x00060000, bhvBSMMenuButtonOrStage), // Course 7
-	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 540, 0, 0,  0, 0x00070000, bhvBSMMenuButtonOrStage), // Course 8
-	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 540, 0, 0,  0, 0x00080000, bhvBSMMenuButtonOrStage), // Course 9
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1810, 540, 0, 0,  0, (BSM_COURSE_1_SNOWY_PEAK        << 16), bhvBSMMenuButtonOrStage), // Course 1
+	OBJECT(MODEL_BSM_MENU_STAGE,      0, 1330, 540, 0, 0,  0, (BSM_COURSE_2_LAVA_ISLE         << 16), bhvBSMMenuButtonOrStage), // Course 2
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  850, 540, 0, 0,  0, (BSM_COURSE_3_FUNGI_CANYON      << 16), bhvBSMMenuButtonOrStage), // Course 3
+	OBJECT(MODEL_BSM_MENU_STAGE,      0,  370, 540, 0, 0,  0, (BSM_COURSE_4_STARLIGHT_FEST    << 16), bhvBSMMenuButtonOrStage), // Course 4
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1810, 540, 0, 0,  0, (BSM_COURSE_5_HOLIDAY_PEAK      << 16), bhvBSMMenuButtonOrStage), // Course 5
+	OBJECT(MODEL_BSM_MENU_STAGE,    980, 1330, 540, 0, 0,  0, (BSM_COURSE_6_SCORCH_ISLE       << 16), bhvBSMMenuButtonOrStage), // Course 6
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  850, 540, 0, 0,  0, (BSM_COURSE_7_SPORE_CANYON      << 16), bhvBSMMenuButtonOrStage), // Course 7
+	OBJECT(MODEL_BSM_MENU_STAGE,    980,  370, 540, 0, 0,  0, (BSM_COURSE_8_CYBER_FEST        << 16), bhvBSMMenuButtonOrStage), // Course 8
+	OBJECT(MODEL_BSM_MENU_STAGE,   -980,  370, 540, 0, 0,  0, (BSM_COURSE_9_CORNERSOFT_PARADE << 16), bhvBSMMenuButtonOrStage), // Course 9
 
 	SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT, BRPRESET_BSM_LEVEL_SELECT),
 	SET_ECHO(0x00, 0x00),

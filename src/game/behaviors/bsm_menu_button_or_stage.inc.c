@@ -33,6 +33,10 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
         cur_obj_unhide();
     }
 
+    if (cur_obj_has_model(MODEL_BSM_MENU_BUTTON) && o->oBehParams2ndByte == BSM_BUTTON_CREDITS) {
+        cur_obj_hide(); // Hide credits for now unless we find a suitable placement for them later on
+    }
+
 #ifdef BALLOON_SLIDER_MANIA_DISABLE_C9
     if (cur_obj_has_model(MODEL_BSM_MENU_STAGE) && o->oBehParams2ndByte == BSM_COURSE_9_CORNERSOFT_PARADE) {
         if (gBSMMenuLayoutBGState >= BSM_MENU_LAYOUT_BG_BONUS) {
@@ -242,11 +246,16 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
                     g = 0.75f;
                     b = 0.75f;
                 }
-            } else if (
-               gBSMShowStats.isShowingStats &&
-               obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) &&
-               objectGraphNode->oBehParams2ndByte == 0
-            ) {
+            } else if (obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) && (
+               (
+                  gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS &&
+                  objectGraphNode->oBehParams2ndByte == BSM_BUTTON_TIME_TRIALS
+               ) ||
+               (
+                  gBSMShowStats.isShowingStats &&
+                  objectGraphNode->oBehParams2ndByte == BSM_BUTTON_STATS
+               )
+            )) {
                 r = 1.0f;
                 g = 1.0f;
                 b = 0.0f;
@@ -301,11 +310,16 @@ Gfx *geo_bsm_menu_set_stats_envcolor(s32 callContext, struct GraphNode *node, UN
         f32 g = 1.0f;
         f32 b = 1.0f;
 
-        if (
-           gBSMShowStats.isShowingStats &&
-           obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) &&
-           objectGraphNode->oBehParams2ndByte == 0
-        ) {
+        if (obj_has_model(objectGraphNode, MODEL_BSM_MENU_BUTTON) && (
+           (
+              gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS &&
+              objectGraphNode->oBehParams2ndByte == BSM_BUTTON_TIME_TRIALS
+           ) ||
+           (
+              gBSMShowStats.isShowingStats &&
+              objectGraphNode->oBehParams2ndByte == BSM_BUTTON_STATS
+           )
+        )) {
             r = 1.0f;
             g = 1.0f;
             b = 0.0f;
