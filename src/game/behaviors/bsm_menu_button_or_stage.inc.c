@@ -259,6 +259,10 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
                 r = 1.0f;
                 g = 1.0f;
                 b = 0.0f;
+            } else if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+                r = 0.9f;
+                g = 0.65f;
+                b = 0.2f;
             }
 
             r = smoothstop((objectGraphNode->oBSMMenuFrameColor >> 24 & 0xFF) / 255.0f, r, 0.15f);
