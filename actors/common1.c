@@ -91,17 +91,20 @@ UNUSED static const u64 binid_22 = 22;
 #include "custom_menu_rank/model.inc.c"
 UNUSED static const u64 binid_23 = 23;
 
-#include "point_balloon/model.inc.c"
+#include "custom_menu_flag/model.inc.c"
 UNUSED static const u64 binid_24 = 24;
 
-#include "key_balloon/model.inc.c"
+#include "point_balloon/model.inc.c"
 UNUSED static const u64 binid_25 = 25;
 
-#include "point_balloon_popped/model.inc.c"
+#include "key_balloon/model.inc.c"
 UNUSED static const u64 binid_26 = 26;
 
-#include "tcs_token/model.inc.c"
+#include "point_balloon_popped/model.inc.c"
 UNUSED static const u64 binid_27 = 27;
 
+#include "tcs_token/model.inc.c"
+UNUSED static const u64 binid_28 = 28;
+
 #include "invisible_floor/collision.inc.c"
-UNUSED static const u64 binid_28 = 278;
+UNUSED static const u64 binid_29 = 29;

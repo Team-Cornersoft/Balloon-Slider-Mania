@@ -578,7 +578,8 @@ enum CustomModelIDs {
     MODEL_BSM_MENU_LOCK,            // castle grounds
     MODEL_BSM_MENU_TCSLOCK,         // castle grounds
     MODEL_BSM_MENU_TCSLOCK_X8,      // castle grounds
-    MODEL_BSM_MENU_RANK,            // castle grounds
+    MODEL_BSM_MENU_RANK,            // common1
+    MODEL_BSM_MENU_FLAG,            // common1
     MODEL_BSM_MENU_TCSTOKEN,        // castle grounds
     MODEL_BSM_MENU_TITLE,           // castle grounds
     MODEL_BSM_TITLE_SCREEN_BALLOON, // castle courtyard

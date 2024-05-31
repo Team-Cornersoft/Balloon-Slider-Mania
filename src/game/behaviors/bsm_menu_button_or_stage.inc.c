@@ -138,6 +138,9 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) {
         o->oBSMMenuTCSTokenObj = spawn_object_relative(buttonId, -340, -140, 20, o, MODEL_BSM_MENU_TCSTOKEN, bhvBSMMenuRankOrToken);
         vec3f_copy(&o->oBSMMenuTCSTokenObj->oHomeVec, &o->oBSMMenuTCSTokenObj->oPosVec); // Set home
+    } else if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COMPLETED_COURSE)) {
+        o->oBSMMenuTCSTokenObj = spawn_object_relative(buttonId, -340, -140, 20, o, MODEL_BSM_MENU_FLAG, bhvBSMMenuRankOrToken);
+        vec3f_copy(&o->oBSMMenuTCSTokenObj->oHomeVec, &o->oBSMMenuTCSTokenObj->oPosVec); // Set home
     }
 
     bhv_bsm_menu_button_or_stage_common();
