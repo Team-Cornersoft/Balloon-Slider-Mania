@@ -125,6 +125,7 @@ extern s16 sDelayedWarpOp;
 extern s16 sDelayedWarpTimer;
 extern s16 sSourceWarpNodeId;
 extern s32 shouldFadeMarioWarp;
+extern s32 marioWarpPresetVel;
 extern f32 animSlowdownRate;
 extern f32 animTotalForward;
 extern s32 sDelayedWarpArg;

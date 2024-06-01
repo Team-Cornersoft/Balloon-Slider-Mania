@@ -1664,6 +1664,7 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
             m->fadeWarpOpacity = 255;
             m->flags &= ~MARIO_TELEPORTING;
             shouldFadeMarioWarp = 0;
+            marioWarpPresetVel = TRUE;
             animSlowdownRate = 1.0f;
             animTotalForward = 1.0f;
         }

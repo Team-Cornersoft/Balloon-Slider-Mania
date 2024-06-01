@@ -153,6 +153,7 @@ s32 sDelayedWarpArg;
 s8 sTimerRunning;
 s8 gNeverEnteredCastle;
 s32 shouldFadeMarioWarp = 0;
+s32 marioWarpPresetVel = FALSE;
 f32 animSlowdownRate = 1.0f;
 f32 animTotalForward = 1.0f;
 // Prevent multiple 100 coin stars from spawning
@@ -336,7 +337,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
         case MARIO_SPAWN_INSTANT_ACTIVE:
             if (m->marioObj) {
                 m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
-                if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_8_CYBER_FEST) {
+                if (marioWarpPresetVel) {
                     m->forwardVel = 64.0f * slideSpeedMultiplier;
                     m->slideVelX = m->forwardVel * sins(m->faceAngle[1]);
                     m->slideVelZ = m->forwardVel * coss(m->faceAngle[1]);
@@ -397,6 +398,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
     }
 #endif
 
+    marioWarpPresetVel = FALSE;
     set_mario_initial_cap_powerup(m);
 }
 
@@ -894,11 +896,21 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     }
                     assert(area_get_warp_node(sSourceWarpNodeId) != NULL, "Invalid force warp parameter!");
 
+                    // Override warp behavior for C3 and C7
+                    if (
+                       COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_3_FUNGI_CANYON ||
+                       COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_7_SPORE_CANYON
+                    ) {
+                        sDelayedWarpTimer = 20;
+                        play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                        play_sound(SOUND_MENU_ENTER_PIPE, gGlobalSoundSource);
+                        break;
+                    } 
+
                     // Override warp behavior for C9
                     if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE && gCurrAreaIndex != 1) {
                         sDelayedWarpTimer = 20;
-                        play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
-                        play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
+                        play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                         break;
                     }
 
@@ -1531,6 +1543,7 @@ void init_level_bsm_fields(void) {
     gBSMNarratorItemTimer = 0;
     gBSMGoSignaled = FALSE;
     gRenderBSMSuccessMenu = FALSE;
+    marioWarpPresetVel = FALSE;
     clear_shared_area_point_balloons();
 
 #ifdef MARIO_POS_OVERRIDE
