@@ -170,7 +170,7 @@ extern Gfx bbh_dl_A_area1_slide_a_mesh_layer_1_tri_2[];
 extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_1_vtx_3[245];
 extern Gfx bbh_dl_A_area1_slide_a_mesh_layer_1_tri_3[];
 extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_4_vtx_cull[8];
-extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_4_vtx_0[32];
+extern Vtx bbh_dl_A_area1_slide_a_mesh_layer_4_vtx_0[24];
 extern Gfx bbh_dl_A_area1_slide_a_mesh_layer_4_tri_0[];
 extern Vtx bbh_dl_B_jolly_tree_mesh_layer_1_vtx_cull[8];
 extern Vtx bbh_dl_B_jolly_tree_mesh_layer_1_vtx_0[20];
