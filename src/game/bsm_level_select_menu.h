@@ -7,6 +7,8 @@
 #include "types.h"
 #include "engine/graph_node.h"
 
+#define BSM_NUM_RANKS 7
+
 enum BSMMenuGameplayMode {
     BSM_MENU_GAMEPLAY_MODE_MANIA,
     BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS,
@@ -109,6 +111,8 @@ extern enum BSMMenuGameplayMode gBSMGameplayMode;
 extern u8 gBSMInitialized;
 extern u8 gUsingEliseModel;
 extern u8 gDisplayEliseMessage;
+extern u8 gDisplayGoldMarioMessage;
+extern u8 gDisplayWingMarioMessage;
 extern struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT];
 extern struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
 

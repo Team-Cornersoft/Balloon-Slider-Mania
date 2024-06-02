@@ -168,7 +168,7 @@ const LevelScript level_intro_elise_message[] = {
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 10, /*color*/ 0x00, 0x00, 0x00),
     SLEEP(/*frames*/ 25),
 
-    PLAY_SOUND_EFFECT(SOUND_MARIO_HERE_WE_GO | ELISE_INDEX_FLAGS),
+    PLAY_SOUND_EFFECT(SOUND_MARIO_HERE_WE_GO | ELISE_INDEX_FLAGS), // Let's go!
     SLEEP(/*frames*/ 40),
 
     CALL_LOOP(/*arg*/ -1, /*func*/ image_screen_press_button),
@@ -179,7 +179,93 @@ const LevelScript level_intro_elise_message[] = {
 
 	STOP_MUSIC_PLAYERS(180, (1 << SEQ_PLAYER_LEVEL)), // Just in case, probably not needed here
     SLEEP(/*frames*/ 12),
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
+	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, goto_bsm_level_select),
+};
+
+const LevelScript level_intro_gold_mario_message[] = {
+    INIT_LEVEL(),
+    LOAD_GODDARD(),
+    LOAD_BEHAVIOR_DATA(),
+    LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_YAY0(          /*seg*/ SEGMENT_GROUP0_YAY0,   _group0_yay0SegmentRomStart,  _group0_yay0SegmentRomEnd), // group0 load needed for scrolling textures!
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,  _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_GROUP0_GEO,     _group0_geoSegmentRomStart,   _group0_geoSegmentRomEnd,  _group0_geoSegmentBssStart,  _group0_geoSegmentBssEnd),
+    LOAD_YAY0(/*seg*/ 0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
+
+    // Load Scam Warning Screen
+    ALLOC_LEVEL_POOL(),
+    AREA(/*index*/ 1, intro_gold_mario_message),
+        SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE),
+        SET_ECHO(0x1C, 0x1C),
+    END_AREA(),
+    FREE_LEVEL_POOL(),
+
+	SET_ORTHO_CAM(TRUE),
+
+    // Start animation
+    LOAD_AREA(/*area*/ 1),
+    CALL(/*arg*/ 0, /*func*/ load_mario_area),
+    SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE),
+
+    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 10, /*color*/ 0x00, 0x00, 0x00),
+    SLEEP(/*frames*/ 25),
+
+    PLAY_SOUND_EFFECT(SOUND_NARRATION_BSM_REDS_0), // You did it!
+    SLEEP(/*frames*/ 40),
+
+    CALL_LOOP(/*arg*/ -1, /*func*/ image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 12, /*color*/ 0x00, 0x00, 0x00),
+    CALL_LOOP(/*arg*/ 12, /*func*/ image_screen_cannot_press_button),
+    UNLOAD_AREA(/*area*/ 1),
+    CLEAR_LEVEL(),
+
+	STOP_MUSIC_PLAYERS(180, (1 << SEQ_PLAYER_LEVEL)), // Just in case, probably not needed here
+    SLEEP(/*frames*/ 12),
+	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, goto_bsm_level_select),
+};
+
+const LevelScript level_intro_wing_mario_message[] = {
+    INIT_LEVEL(),
+    LOAD_GODDARD(),
+    LOAD_BEHAVIOR_DATA(),
+    LOAD_YAY0(          /*seg*/ SEGMENT_COMMON1_YAY0, _common1_yay0SegmentRomStart, _common1_yay0SegmentRomEnd),
+    LOAD_YAY0(          /*seg*/ SEGMENT_GROUP0_YAY0,   _group0_yay0SegmentRomStart,  _group0_yay0SegmentRomEnd), // group0 load needed for scrolling textures!
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_COMMON1_GEO,  _common1_geoSegmentRomStart,  _common1_geoSegmentRomEnd, _common1_geoSegmentBssStart, _common1_geoSegmentBssEnd),
+    LOAD_RAW_WITH_CODE( /*seg*/ SEGMENT_GROUP0_GEO,     _group0_geoSegmentRomStart,   _group0_geoSegmentRomEnd,  _group0_geoSegmentBssStart,  _group0_geoSegmentBssEnd),
+    LOAD_YAY0(/*seg*/ 0x07, _intro_segment_7SegmentRomStart, _intro_segment_7SegmentRomEnd),
+
+    // Load Scam Warning Screen
+    ALLOC_LEVEL_POOL(),
+    AREA(/*index*/ 1, intro_wing_mario_message),
+        SET_BACKGROUND_MUSIC_WITH_REVERB(0, SEQ_CUSTOM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE),
+        SET_ECHO(0x1C, 0x1C),
+    END_AREA(),
+    FREE_LEVEL_POOL(),
+
+	SET_ORTHO_CAM(TRUE),
+
+    // Start animation
+    LOAD_AREA(/*area*/ 1),
+    CALL(/*arg*/ 0, /*func*/ load_mario_area),
+    SET_MENU_MUSIC_WITH_REVERB(SEQ_CUSTOM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE, BRPRESET_BSM_ELISE_UNLOCK_JINGLE),
+
+    CALL(/*arg*/ 0, /*func*/ init_image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 10, /*color*/ 0x00, 0x00, 0x00),
+    SLEEP(/*frames*/ 25),
+
+    PLAY_SOUND_EFFECT(SOUND_NARRATION_BSM_RANK_G_0), // Congratulations!
+    SLEEP(/*frames*/ 40),
+
+    CALL_LOOP(/*arg*/ -1, /*func*/ image_screen_press_button),
+    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 12, /*color*/ 0x00, 0x00, 0x00),
+    CALL_LOOP(/*arg*/ 12, /*func*/ image_screen_cannot_press_button),
+    UNLOAD_AREA(/*area*/ 1),
+    CLEAR_LEVEL(),
+
+	STOP_MUSIC_PLAYERS(180, (1 << SEQ_PLAYER_LEVEL)), // Just in case, probably not needed here
+    SLEEP(/*frames*/ 12),
+	EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, goto_bsm_level_select),
 };
 
 const LevelScript level_intro_splash_screen[] = {

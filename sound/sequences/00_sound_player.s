@@ -8906,6 +8906,7 @@ sound_ref .sound_bsm_bell
 sound_ref .sound_bsm_gong
 sound_ref .sound_bsm_bouncy_mushroom
 sound_ref .sound_bsm_custom_warp
+sound_ref .sound_elise_custom_warp
 
 
 .sound_bsm_custom_warp:
@@ -8922,14 +8923,14 @@ chan_setlayer 3, .layer_bsm_custom_warp_4
 chan_end
 
 .layer_bsm_custom_warp:
-layer_setinstr 13
+layer_setinstr 3
 layer_setpan 0x40
 layer_portamento 0x1, 32, 0xC0
 layer_note1 0, 0x60, 95
 layer_end
 
 .layer_bsm_custom_warp_2:
-layer_setinstr 13
+layer_setinstr 3
 layer_setpan 0x50
 layer_portamento 0x1, 33, 0xC0
 layer_note1 0, 0x60, 95
@@ -8945,6 +8946,28 @@ layer_end
 layer_setpan 0x70
 layer_portamento 0x1, 19, 0xC0
 layer_note1 0, 0x50, 33
+layer_end
+
+.sound_elise_custom_warp:
+chan_setbank 6
+chan_setinstr 13
+chan_setpanmix 0
+chan_setval 48
+chan_call .set_reverb
+chan_setlayer 0, .layer_elise_custom_warp
+chan_setlayer 1, .layer_elise_custom_warp_2
+chan_end
+
+.layer_elise_custom_warp:
+layer_setpan 0x20
+layer_portamento 0x1, 23, 0x1C0
+layer_note1 0, 0x90, 111
+layer_end
+
+.layer_elise_custom_warp_2:
+layer_setpan 0x5F
+layer_portamento 0x1, 24, 0x1C0
+layer_note1 0, 0x90, 111
 layer_end
 
 .sound_bsm_bell:

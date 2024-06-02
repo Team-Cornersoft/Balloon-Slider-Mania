@@ -40,6 +40,8 @@ enum BSMMenuGameplayMode gBSMGameplayMode = BSM_MENU_GAMEPLAY_MODE_MANIA;
 u8 gBSMInitialized = FALSE;
 u8 gUsingEliseModel = FALSE;
 u8 gDisplayEliseMessage = FALSE;
+u8 gDisplayGoldMarioMessage = FALSE;
+u8 gDisplayWingMarioMessage = FALSE;
 
 u8 bsmTrackSelectNarratorSpoken = FALSE;
 

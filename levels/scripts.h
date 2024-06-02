@@ -6,6 +6,7 @@
 
 // scripts
 extern const LevelScript level_main_scripts_entry[];
+extern const LevelScript goto_bsm_level_select[];
 extern const LevelScript script_func_global_1[];
 extern const LevelScript script_func_global_2[];
 extern const LevelScript script_func_global_3[];

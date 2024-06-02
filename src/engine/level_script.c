@@ -498,6 +498,14 @@ static void level_cmd_init_mario(void) {
         gMarioSpawnInfo->model = gLoadedGraphNodes[MODEL_ELISE];
     } else {
         gMarioSpawnInfo->model = gLoadedGraphNodes[MODEL_MARIO];
+        
+        u32 unlockFlags = bsm_get_unlocked_special_awards();
+        if (unlockFlags & (1 << BSM_SPECIAL_UNLOCK_GOLD_MARIO)) {
+            // TODO:
+        }
+        if (unlockFlags & (1 << BSM_SPECIAL_UNLOCK_WING_MARIO)) {
+            // TODO:
+        }
     }
 
     gMarioSpawnInfo->next = NULL;

@@ -153,6 +153,7 @@ s32 sDelayedWarpArg;
 s8 sTimerRunning;
 s8 gNeverEnteredCastle;
 s32 shouldFadeMarioWarp = 0;
+s32 marioFadeFramesCarryover = -1;
 s32 marioWarpPresetVel = FALSE;
 f32 animSlowdownRate = 1.0f;
 f32 animTotalForward = 1.0f;
@@ -438,21 +439,23 @@ void init_mario_after_warp(void) {
     switch (marioSpawnType) {
         case MARIO_SPAWN_DOOR_WARP:
         case MARIO_SPAWN_SPIN_AIRBORNE_CIRCLE:
-            play_transition(WARP_TRANSITION_FADE_FROM_CIRCLE, 0x10, 0x00, 0x00, 0x00);
+            play_transition(WARP_TRANSITION_FADE_FROM_CIRCLE, (marioFadeFramesCarryover >= 0) ? marioFadeFramesCarryover : 0x10, 0x00, 0x00, 0x00);
             break;
         case MARIO_SPAWN_TELEPORT:
-            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 0x14, 0xFF, 0xFF, 0xFF);
+            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, (marioFadeFramesCarryover >= 0) ? marioFadeFramesCarryover : 0x14, 0xFF, 0xFF, 0xFF);
             break;
         case MARIO_SPAWN_SPIN_AIRBORNE:
-            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 0x1A, 0xFF, 0xFF, 0xFF);
+            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, (marioFadeFramesCarryover >= 0) ? marioFadeFramesCarryover : 0x1A, 0xFF, 0xFF, 0xFF);
             break;
         case MARIO_SPAWN_FADE_FROM_BLACK:
-            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 0x10, 0x00, 0x00, 0x00);
+            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, (marioFadeFramesCarryover >= 0) ? marioFadeFramesCarryover : 0x10, 0x00, 0x00, 0x00);
             break;
         default:
-            play_transition(WARP_TRANSITION_FADE_FROM_STAR, 0x10, 0x00, 0x00, 0x00);
+            play_transition(WARP_TRANSITION_FADE_FROM_STAR, (marioFadeFramesCarryover >= 0) ? marioFadeFramesCarryover : 0x10, 0x00, 0x00, 0x00);
             break;
     }
+
+    marioFadeFramesCarryover = -1;
 
     if (gCurrDemoInput == NULL) {
 #ifdef BETTER_REVERB
@@ -908,9 +911,25 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                     } 
 
                     // Override warp behavior for C9
-                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE && gCurrAreaIndex != 1) {
+                    if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE) {
+                        if (gCurrAreaIndex == 6) {
+                            sDelayedWarpTimer = 8;
+                            marioFadeFramesCarryover = sDelayedWarpTimer;
+                            play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                            break;
+                        }
+                        if (gCurrAreaIndex == 1) {
+                            play_sound(SOUND_SPECIAL1_ELISE_WARP, gGlobalSoundSource);
+                            play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                            shouldFadeMarioWarp = sDelayedWarpTimer;
+                            animSlowdownRate = 1.0f;
+                            animTotalForward = 1.0f;
+                            break;
+                        }
+
                         sDelayedWarpTimer = 20;
-                        play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                        play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
+                        play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                         break;
                     }
 
@@ -948,6 +967,39 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
     }
 
     return sDelayedWarpTimer;
+}
+
+u32 bsm_get_unlocked_special_awards(void) {
+    u32 unlockFlags = 0;
+
+    u8 *bsmCompletionFlags;
+    struct BSMCourseData *bsmCourseData;
+    bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
+    bsmCourseData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
+
+    // Check if ELISE has been unlocked
+    if ((bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN))) {
+        unlockFlags |= (1 << BSM_SPECIAL_UNLOCK_ELISE);
+    }
+
+    // Check if Gold Mario has been unlocked
+    u8 goldMarioUnlocked = TRUE;
+    for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
+        if (calculate_bsm_rank(i, bsmCourseData[i].score) != BSM_NUM_RANKS - 1) { // Must have obtained highest rank
+            goldMarioUnlocked = FALSE;
+            break;
+        }
+    }
+    if (goldMarioUnlocked) { // TODO:
+        unlockFlags |= (1 << BSM_SPECIAL_UNLOCK_GOLD_MARIO);
+    }
+
+    // Check if Wing Mario has been unlocked
+    if (TRUE) { // TODO:
+        unlockFlags |= (1 << BSM_SPECIAL_UNLOCK_WING_MARIO);
+    }
+
+    return unlockFlags;
 }
 
 /**
@@ -1019,19 +1071,23 @@ void initiate_delayed_warp(void) {
                     }
 
                     if (sSourceWarpNodeId == WARP_NODE_DEFAULT) {
-                        u8 *bsmCompletionFlags;
-                        bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
-
-                        if (
-                           !(bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) &&
-                           gBSMLastCourse == BSM_COURSE_9_CORNERSOFT_PARADE &&
-                           gBSMTCSTokenCollected == TRUE
-                        ) {
-                            gDisplayEliseMessage = TRUE;
-                        }
+                        u32 unlockFlagsExisting = bsm_get_unlocked_special_awards();
 
                         save_file_update_bsm_completion(gCurrSaveFileNum - 1, gBSMLastCourse, TRUE, gBSMTCSTokenCollected, -1);
                         save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMFinalScoreCount, gBSMFrameTimer);
+
+                        u32 newUnlockFlags = (bsm_get_unlocked_special_awards() & ~unlockFlagsExisting);
+
+                        if (newUnlockFlags & (1 << BSM_SPECIAL_UNLOCK_ELISE)) {
+                            gDisplayEliseMessage = TRUE;
+                        }
+                        if (newUnlockFlags & (1 << BSM_SPECIAL_UNLOCK_GOLD_MARIO)) {
+                            gDisplayGoldMarioMessage = TRUE;
+                        }
+                        if (newUnlockFlags & (1 << BSM_SPECIAL_UNLOCK_WING_MARIO)) {
+                            gDisplayWingMarioMessage = TRUE;
+                        }
+
                         warp_special(WARP_SPECIAL_BSM_LEVEL_SELECT);
 
                         gRenderBSMSuccessMenu = FALSE;
@@ -1544,6 +1600,7 @@ void init_level_bsm_fields(void) {
     gBSMGoSignaled = FALSE;
     gRenderBSMSuccessMenu = FALSE;
     marioWarpPresetVel = FALSE;
+    marioFadeFramesCarryover = -1;
     clear_shared_area_point_balloons();
 
 #ifdef MARIO_POS_OVERRIDE
@@ -1876,8 +1933,6 @@ s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1) {
 }
 
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
-    u8 *bsmCompletionFlags;
-
     if (setToLastLevel) {
         return gBSMLastLevel;
     }
@@ -1886,11 +1941,8 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
         return -1;
     }
 
-    bsmCompletionFlags = save_file_get_bsm_completion(gCurrSaveFileNum - 1);
-    if (
-       (bsmCompletionFlags[BSM_COURSE_9_CORNERSOFT_PARADE] & (1 << BSM_STAR_COLLECTED_CS_TOKEN)) &&
-       (gPlayer1Controller->buttonDown & Z_TRIG)
-    ) {
+    u32 unlockFlags = bsm_get_unlocked_special_awards();
+    if ((gPlayer1Controller->buttonDown & Z_TRIG) && (unlockFlags & (1 << BSM_SPECIAL_UNLOCK_ELISE))) {
         gUsingEliseModel = TRUE;
     } else {
         gUsingEliseModel = FALSE;
@@ -1911,8 +1963,18 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
     return sWarpDest.levelNum;
 }
 
-s32 bsm_check_elise_unlocked(UNUSED s16 arg0, UNUSED s32 arg1) {
-    return gDisplayEliseMessage;
+s32 bsm_check_special_unlocked(UNUSED s16 arg0, UNUSED s32 arg1) {
+    if (gDisplayEliseMessage) {
+        return BSM_SPECIAL_UNLOCK_ELISE;
+    }
+    if (gDisplayGoldMarioMessage) {
+        return BSM_SPECIAL_UNLOCK_GOLD_MARIO;
+    }
+    if (gDisplayWingMarioMessage) {
+        return BSM_SPECIAL_UNLOCK_WING_MARIO;
+    }
+
+    return BSM_SPECIAL_UNLOCK_NONE;
 }
 
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {

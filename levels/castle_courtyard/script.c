@@ -97,7 +97,8 @@ const LevelScript level_ccy_title_screen[] = {
     CALL(/*arg*/ -1, /*func*/ image_screen_cannot_press_button),
     SLEEP(/*frames*/ 1),
 
-	STOP_MUSIC_PLAYERS(150, (1 << SEQ_PLAYER_LEVEL)),
+	STOP_MUSIC(150),
+	// STOP_MUSIC_PLAYERS(150, (1 << SEQ_PLAYER_LEVEL)),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0x00, 0x00, 0x00),
     JUMP_LINK_PUSH_ARG(16),
 		UPDATE_OBJECTS(),

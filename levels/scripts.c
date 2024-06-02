@@ -5,6 +5,7 @@
 #include "game/area.h"
 
 #include "make_const_nonconst.h"
+#include "scripts.h"
 
 #include "segment_symbols.h"
 
@@ -49,7 +50,6 @@ static const LevelScript goto_ending[];
 static const LevelScript goto_mario_head_regular[];
 static const LevelScript goto_mario_head_dizzy[];
 static const LevelScript goto_debug_level_select[];
-static const LevelScript goto_bsm_level_select[];
 static const LevelScript goto_bsm_failure[];
 static const LevelScript goto_bsm_retry[];
 
@@ -171,9 +171,20 @@ static const LevelScript goto_bsm_elise_unlocked[] = {
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_elise_message, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
-static const LevelScript goto_bsm_level_select[] = {
-    CALL(/*arg*/ 1, /*func*/ bsm_check_elise_unlocked),
-    JUMP_IF(/*op*/ OP_EQ, /*arg*/ TRUE, goto_bsm_elise_unlocked),
+static const LevelScript goto_bsm_gold_mario_unlocked[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_gold_mario_message, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
+static const LevelScript goto_bsm_wing_mario_unlocked[] = {
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_wing_mario_message, _introSegmentBssStart, _introSegmentBssEnd),
+};
+
+const LevelScript goto_bsm_level_select[] = {
+    CALL(/*arg*/ 0, /*func*/ bsm_check_special_unlocked),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ BSM_SPECIAL_UNLOCK_ELISE, goto_bsm_elise_unlocked),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ BSM_SPECIAL_UNLOCK_GOLD_MARIO, goto_bsm_gold_mario_unlocked),
+    JUMP_IF(/*op*/ OP_EQ, /*arg*/ BSM_SPECIAL_UNLOCK_WING_MARIO, goto_bsm_wing_mario_unlocked),
+
     EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _castle_groundsSegmentRomStart, _castle_groundsSegmentRomEnd, level_cgds_menu_select, _castle_groundsSegmentBssStart, _castle_groundsSegmentBssEnd),
 };
 

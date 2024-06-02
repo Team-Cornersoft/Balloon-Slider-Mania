@@ -79,6 +79,13 @@ enum MarioSpawnType {
     MARIO_SPAWN_BSM_CELEBRATION,
 };
 
+enum BSMSpecialUnlockType {
+    BSM_SPECIAL_UNLOCK_NONE,
+    BSM_SPECIAL_UNLOCK_ELISE,
+    BSM_SPECIAL_UNLOCK_GOLD_MARIO,
+    BSM_SPECIAL_UNLOCK_WING_MARIO,
+};
+
 struct CreditsEntry {
     /*0x00*/ u8 levelNum;
     /*0x01*/ u8 areaIndex;
@@ -125,6 +132,7 @@ extern s16 sDelayedWarpOp;
 extern s16 sDelayedWarpTimer;
 extern s16 sSourceWarpNodeId;
 extern s32 shouldFadeMarioWarp;
+extern s32 marioFadeFramesCarryover;
 extern s32 marioWarpPresetVel;
 extern f32 animSlowdownRate;
 extern f32 animTotalForward;
@@ -215,6 +223,7 @@ void fade_into_special_warp(u32 arg, u32 color);
 void load_level_init_text(u32 arg);
 s16 level_trigger_warp(struct MarioState *m, s32 warpOp);
 void level_set_transition(s16 length, void (*updateFunction)());
+u32 bsm_get_unlocked_special_awards(void);
 
 s32 lvl_init_or_update(                  s16 initOrUpdate, UNUSED s32 levelNum);
 s32 lvl_init_from_save_file(      UNUSED s16 initOrUpdate,        s32 levelNum);
@@ -228,7 +237,7 @@ s32 init_image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_press_button(s16 frames, UNUSED s32 arg1);
 s32 image_screen_cannot_press_button(s16 frames, UNUSED s32 arg1);
 s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1);
-s32 bsm_check_elise_unlocked(UNUSED s16 arg0, UNUSED s32 arg1);
+s32 bsm_check_special_unlocked(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 retry_menu_state(s16 callType, UNUSED s32 arg1);
 
 #endif // LEVEL_UPDATE_H

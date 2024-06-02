@@ -166,14 +166,16 @@ void bhv_bsm_menu_button_or_stage_loop(void) {
                 if (o->oBSMMenuPressed == 1) {
                     o->oFaceAngleYaw = 0;
                     o->oBSMMenuStageCutscene = FALSE;
-                    save_file_update_bsm_completion(gCurrSaveFileNum - 1, buttonId, -1, -1, TRUE);
                 }
             } else {
                 f32 rot = coss(((f32) cutsceneFramesLeft / UNLOCK_CUTSCENE_FRAMES) * 0x8000);
-                if (rot >= 0) {
-                    o->oAnimState = 0;
-                } else {
-                    rot = -rot;
+                if (o->oAnimState != 0) {
+                    if (rot < 0) {
+                        rot = -rot;
+                    } else {
+                        save_file_update_bsm_completion(gCurrSaveFileNum - 1, buttonId, -1, -1, TRUE);
+                        o->oAnimState = 0;
+                    }
                 }
 
                 o->oFaceAngleYaw = 0x4000 - (0x4000 * rot);
@@ -263,9 +265,11 @@ Gfx *geo_bsm_menu_set_envcolor(s32 callContext, struct GraphNode *node, UNUSED v
                 g = 1.0f;
                 b = 0.0f;
             } else if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
-                r = 0.9f;
-                g = 0.65f;
-                b = 0.2f;
+                if (parentNode->oAnimState == 0) {
+                    r = 0.9f;
+                    g = 0.65f;
+                    b = 0.2f;
+                }
             }
 
             r = smoothstop((objectGraphNode->oBSMMenuFrameColor >> 24 & 0xFF) / 255.0f, r, 0.15f);

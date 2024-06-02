@@ -193,8 +193,8 @@ Gfx *geo_elise_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *co
         s32 x2 = SCREEN_CENTER_X + 116;
         s32 y2 = SCREEN_CENTER_Y + 39;
 
-        s32 xElise = x1 + 12 + 115;
-        s32 yElise = y1 + 12 - 3;
+        s32 xSprite = x1 + 12 + 115;
+        s32 ySprite = y1 + 12 - 3;
 
         u8 r = 63;
         u8 g = 63;
@@ -212,24 +212,174 @@ Gfx *geo_elise_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *co
         gDPPipeSync(dl++);
         gDPSetEnvColor(dl++, 79, 79, 79, 255);
         gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
-        gSPTextureRectangle(dl++, (xElise - 1) << 2, (yElise + 1) << 2, ((xElise - 1) + 16) << 2,
-                            ((yElise + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(dl++, (xSprite - 1) << 2, (ySprite + 1) << 2, ((xSprite - 1) + 16) << 2,
+                            ((ySprite + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
         
         gDPPipeSync(dl++);
         gDPSetEnvColor(dl++, 255, 255, 255, 255);
         gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
-        gSPTextureRectangle(dl++, xElise << 2, yElise << 2, (xElise + 16) << 2,
-                            (yElise + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gSPTextureRectangle(dl++, xSprite << 2, ySprite << 2, (xSprite + 16) << 2,
+                            (ySprite + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
         gSPDisplayList(dl++, dl_rgba16_text_end);
         gSPEndDisplayList(dl);
 
         print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered_light(x1 + 12, y1 + 12, "You can now play as", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-        print_small_text_buffered_light(xElise + 19, y1 + 12, "Elise.", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(xSprite + 19, y1 + 12, "Elise.", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 175, 175, 255);
         print_small_text_buffered(x1 + 12, y1 + 42, "To play as Elise, hold <COL_FFFF00-->Z<COL_--------> when starting\nup a new track!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    }
+
+    return head;
+}
+
+Gfx *geo_gold_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) { // TODO:
+    Gfx *head = NULL;
+
+    gDisplayGoldMarioMessage = FALSE;
+    if (state == GEO_CONTEXT_RENDER) {
+        Texture *(*hudLUT)[] = segmented_to_virtual(&main_hud_lut);
+
+        Gfx *dl = alloc_display_list(sizeof(*dl) * (15 + 14));
+        head = dl;
+
+        if (!dl) {
+            return NULL;
+        }
+
+        gDPSetCombineMode(dl++, BLANK, BLANK);
+
+        s32 x1 = SCREEN_CENTER_X - 116;
+        s32 y1 = SCREEN_CENTER_Y - 53;
+        s32 x2 = SCREEN_CENTER_X + 116;
+        s32 y2 = SCREEN_CENTER_Y + 53;
+
+        s32 xSprite = x1 + 12 + 102;
+        s32 ySprite = y1 + 38 - 2;
+
+        u8 r = 63;
+        u8 g = 63;
+        u8 b = 255;
+        u8 a = 255;
+
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, a);
+        // gDPSetEnvColor(dl++, 255, 255, 255, 255); // Not needed
+        gSPDisplayList(dl++, dl_hud_img_end);
+
+        // Gold Mario head
+        gSPDisplayList(dl++, dl_rgba16_text_begin);
+        gDPSetTextureImage(dl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (*hudLUT)[GLYPH_BSM_GOLD_MARIO]);
+
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 79, 79, 79, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, (xSprite - 1) << 2, (ySprite + 1) << 2, ((xSprite - 1) + 16) << 2,
+                            ((ySprite + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 255, 255, 255, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, xSprite << 2, ySprite << 2, (xSprite + 16) << 2,
+                            (ySprite + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+        gSPDisplayList(dl++, dl_rgba16_text_end);
+        gSPEndDisplayList(dl);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 12, "You earned the highest rank on", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 25, "every track! Mario has been", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 38, "transformed into", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(xSprite + 19, y1 + 38, "Gold Mario!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 63, 255);
+        print_small_text_buffered(SCREEN_CENTER_X, y1 + 69, "Thank you for playing", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered(SCREEN_CENTER_X, y1 + 82, "<FADE_FF3F3F--,FF3FFF--,0A>Balloon Slider Mania!<COL_-------->", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    }
+
+    return head;
+}
+
+Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) { // TODO:
+    Gfx *head = NULL;
+
+    gDisplayWingMarioMessage = FALSE;
+    if (state == GEO_CONTEXT_RENDER) {
+        Texture *(*hudLUT)[] = segmented_to_virtual(&main_hud_lut);
+
+        Gfx *dl = alloc_display_list(sizeof(*dl) * (15 + 14));
+        head = dl;
+
+        if (!dl) {
+            return NULL;
+        }
+
+        gDPSetCombineMode(dl++, BLANK, BLANK);
+
+        s32 x1 = SCREEN_CENTER_X - 116;
+        s32 y1 = SCREEN_CENTER_Y - 53;
+        s32 x2 = SCREEN_CENTER_X + 116;
+        s32 y2 = SCREEN_CENTER_Y + 53;
+
+        s32 xSprite = x1 + 12 + 102;
+        s32 ySprite = y1 + 38 - 2;
+
+        u8 r = 63;
+        u8 g = 63;
+        u8 b = 255;
+        u8 a = 255;
+
+        dl = render_blank_box_rounded_local_dl(dl, x1, y1, x2, y2, r, g, b, a);
+        // gDPSetEnvColor(dl++, 255, 255, 255, 255); // Not needed
+        gSPDisplayList(dl++, dl_hud_img_end);
+
+        // Wing Mario sprite
+        gSPDisplayList(dl++, dl_rgba16_text_begin);
+        gDPSetTextureImage(dl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (*hudLUT)[GLYPH_BSM_WING_MARIO]);
+
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 79, 79, 79, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, (xSprite - 1) << 2, (ySprite + 1) << 2, ((xSprite - 1) + 16) << 2,
+                            ((ySprite + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        
+        gDPPipeSync(dl++);
+        gDPSetEnvColor(dl++, 255, 255, 255, 255);
+        gSPDisplayList(dl++, &dl_rgba16_load_tex_block);                        
+        gSPTextureRectangle(dl++, xSprite << 2, ySprite << 2, (xSprite + 16) << 2,
+                            (ySprite + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+        gSPDisplayList(dl++, dl_rgba16_text_end);
+        gSPEndDisplayList(dl);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 12, "You beat the developer times on", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 25, "every track! Mario has been", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(x1 + 12, y1 + 38, "transformed into", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered_light(xSprite + 19, y1 + 38, "Wing Mario!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 63, 255);
+        print_small_text_buffered(SCREEN_CENTER_X, y1 + 69, "Thank you for playing", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+        print_set_envcolour(255, 255, 255, 255);
+        print_small_text_buffered(SCREEN_CENTER_X, y1 + 82, "<FADE_FF3F3F--,FF3FFF--,0A>Balloon Slider Mania!<COL_-------->", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     }
 
     return head;

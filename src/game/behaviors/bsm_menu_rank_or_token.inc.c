@@ -1,9 +1,7 @@
 #include "game/bsm_level_select_menu.h"
 #include "game/save_file.h"
 
-#define NUM_RANKS 7
-
-struct BSMNarratorList *rankNarratorLists[NUM_RANKS] = {
+struct BSMNarratorList *rankNarratorLists[BSM_NUM_RANKS] = {
     &gBSMNarratorRankF,
     &gBSMNarratorRankD,
     &gBSMNarratorRankC,
@@ -13,7 +11,7 @@ struct BSMNarratorList *rankNarratorLists[NUM_RANKS] = {
     &gBSMNarratorRankG,
 };
 
-// static const u16 BSMRankMinimumScores[BSM_COURSE_COUNT][NUM_RANKS-1] = {
+// static const u16 BSMRankMinimumScores[BSM_COURSE_COUNT][BSM_NUM_RANKS-1] = {
 // /*                                        D     C     B     A     S     G    */
 //     [BSM_COURSE_1_SNOWY_PEAK]        = {1680, 1904, 2128, 2352, 2576, 2800}, // G * (1.0 - 0.08n)
 //     [BSM_COURSE_2_LAVA_ISLE]         = {1104, 1252, 1399, 1546, 1693, 1840}, // G - (1.0 - 0.08n)
@@ -59,7 +57,7 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
 };
 
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
-    if (rankIndex >= NUM_RANKS) {
+    if (rankIndex >= BSM_NUM_RANKS) {
         return;
     }
 
@@ -67,11 +65,11 @@ void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
 }
 
 s32 get_bsm_rank_requirement(s32 courseNum, s32 rank) {
-    return (BSMGRanks[courseNum] * (1.0f - (G_RANK_MULT * ((NUM_RANKS - 1) - rank))));
+    return (BSMGRanks[courseNum] * (1.0f - (G_RANK_MULT * ((BSM_NUM_RANKS - 1) - rank))));
 }
 
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
-    u8 rank = NUM_RANKS - 1;
+    u8 rank = BSM_NUM_RANKS - 1;
     if (score == (u16) -1) {
         return -1;
     }
