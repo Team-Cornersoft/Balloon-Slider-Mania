@@ -35,6 +35,10 @@ const GeoLayout bob_dl_1_area2_geo[] = {
 const GeoLayout bob_dl_2_area2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -10259, -11990, 28565, 0, 10, 0, bob_dl_A2_backdrop_mesh_layer_1),
+		GEO_OPEN_NODE(),
+			GEO_DISPLAY_LIST(LAYER_ALPHA, bob_dl_A2_backdrop_mesh_layer_4),
+		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_dl_A_IceTunnel2_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
