@@ -17,6 +17,12 @@ static void bhv_bsm_menu_title_update_scale(void) {
     } else {
         cur_obj_unhide();
     }
+
+    if (gBSMShowStats.isShowingStats) {
+        o->oPosZ = 100;
+    } else {
+        o->oPosZ = o->oHomeZ;
+    }
 }
 
 void bhv_bsm_menu_title_init(void) {

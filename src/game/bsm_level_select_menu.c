@@ -157,15 +157,15 @@ struct BSMNarratorList gBSMNarratorManiaMode   = {bsmNarratorManiaModeList,   -1
 struct BSMNarratorList gBSMNarratorTimeTrials  = {bsmNarratorTimeTrialsList,  -1, ARRAY_COUNT(bsmNarratorTimeTrialsList) };
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
-    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .developerTime = 2071, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
-    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .developerTime = 1521, .courseName = "Aqueduct\nFlow"    , .courseNameNoNewline = "Aqueduct Flow"    },
-    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .developerTime = 1668, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
-    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .developerTime = 2746, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
-    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .developerTime = 1743, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
-    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .developerTime = 2559, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
-    {.levelID = LEVEL_LLL, .baselineTime =  75 * 30, .developerTime = 1886, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
-    {.levelID = LEVEL_SSL, .baselineTime = 120 * 30, .developerTime = 2805, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
-    {.levelID = LEVEL_DDD, .baselineTime = 150 * 30, .developerTime = 3873, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
+    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
+    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .courseName = "Aqueduct\nFlow"    , .courseNameNoNewline = "Aqueduct Flow"    },
+    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
+    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
+    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
+    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
+    {.levelID = LEVEL_LLL, .baselineTime =  75 * 30, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
+    {.levelID = LEVEL_SSL, .baselineTime = 120 * 30, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
+    {.levelID = LEVEL_DDD, .baselineTime = 150 * 30, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];

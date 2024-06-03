@@ -56,6 +56,19 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
     [BSM_COURSE_9_CORNERSOFT_PARADE] = 2405,
 };
 
+static const u16 BSMTimeTrialsRanks[BSM_COURSE_COUNT][BSM_NUM_MEDALS] = {
+/*                                       Br    Sv    Gd    Dv    */
+    [BSM_COURSE_1_SNOWY_PEAK]        = {9999, 9998, 9997, 2071},
+    [BSM_COURSE_2_LAVA_ISLE]         = {9999, 9998, 9997, 1521},
+    [BSM_COURSE_3_FUNGI_CANYON]      = {9999, 9998, 9997, 1668},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {9999, 9998, 9997, 2746},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = {9999, 9998, 9997, 1743},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {9999, 9998, 9997, 2559},
+    [BSM_COURSE_7_SPORE_CANYON]      = {9999, 9998, 9997, 1886},
+    [BSM_COURSE_8_CYBER_FEST]        = {9999, 9998, 9997, 2805},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {9999, 9998, 9997, 3873},
+};
+
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
     if (rankIndex >= BSM_NUM_RANKS) {
         return;
@@ -66,6 +79,10 @@ void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
 
 s32 get_bsm_rank_requirement(s32 courseNum, s32 rank) {
     return (BSMGRanks[courseNum] * (1.0f - (G_RANK_MULT * ((BSM_NUM_RANKS - 1) - rank))));
+}
+
+s32 get_bsm_tt_medal_requirement(s32 courseNum, s32 medal) {
+    return BSMTimeTrialsRanks[courseNum][medal];
 }
 
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
@@ -83,6 +100,21 @@ s32 calculate_bsm_rank(s32 courseNum, s32 score) {
     return rank;
 }
 
+s32 calculate_bsm_tt_medal(s32 courseNum, s32 time) {
+    u8 medal = BSM_NUM_MEDALS - 1;
+    if (time == 0) {
+        return -1;
+    }
+    
+    for (s32 i = 0; medal > 0; medal--, i++) {
+        if ((f32) time <= BSMTimeTrialsRanks[courseNum][medal]) {
+            break;
+        }
+    }
+
+    return medal;
+}
+
 void bhv_bsm_menu_rank_or_token_init(void) {
     if (cur_obj_has_model(MODEL_BSM_MENU_RANK)) {
         struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
@@ -91,9 +123,21 @@ void bhv_bsm_menu_rank_or_token_init(void) {
 
         if (rank < 0) {
             obj_mark_for_deletion(o);
+        } else {
+            o->oAnimState = rank;
         }
+    }
 
-        o->oAnimState = rank;
+    if (cur_obj_has_model(MODEL_BSM_MENU_TT_MEDAL)) {
+        struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
+        s32 buttonId = o->parentObj->oBehParams2ndByte;
+        s32 medal = calculate_bsm_tt_medal(buttonId, bsmData[buttonId].bestTimeInFrames);
+
+        if (medal < 0) {
+            obj_mark_for_deletion(o);
+        } else {
+            o->oAnimState = medal;
+        }
     }
 }
 

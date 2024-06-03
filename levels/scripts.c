@@ -120,6 +120,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_SILVER_COIN_NO_SHADOW,    silver_coin_no_shadow_geo),
 #endif 
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_RANK,            custom_menu_rank_geo),
+	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_TT_MEDAL,        custom_menu_rank_tt_geo),
 	LOAD_MODEL_FROM_GEO(MODEL_BSM_MENU_FLAG,            custom_menu_flag_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BSM_POINT_BALLOON,        point_balloon_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BSM_KEY_BALLOON,          key_balloon_geo),

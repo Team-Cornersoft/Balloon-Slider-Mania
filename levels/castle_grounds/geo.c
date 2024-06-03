@@ -28,5 +28,3 @@
 #include "levels/castle_grounds/custom_menu_lock/geo.inc.c"
 #include "levels/castle_grounds/custom_menu_button/geo.inc.c"
 #include "levels/castle_grounds/custom_menu_title/geo.inc.c"
-
-#include "levels/castle_grounds/custom_menu_rank_tt/geo.inc.c"

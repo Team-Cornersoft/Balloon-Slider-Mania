@@ -34,6 +34,7 @@
 #include "s2d_engine/init.h"
 #endif
 #include "actors/custom_menu_rank/geo_header.h"
+#include "actors/custom_menu_rank_tt/geo_header.h"
 
 struct SpawnInfo gPlayerSpawnInfos[1];
 struct GraphNode *gGraphNodePointers[MODEL_ID_COUNT];
@@ -66,7 +67,6 @@ s16 gCurrSaveFileNum = 1;
 s16 gCurrLevelNum = LEVEL_MIN;
 
 u8 gRenderBSMSuccessMenu = FALSE;
-static u8 bsmLastTimeGood = FALSE;
 static char strBuf[128];
 
 // NOTE: Puppyprint only supports 12 lines total (I think), with deferred prints only supporting under 254 characters (excluding newline)
@@ -550,7 +550,7 @@ static void success_render_tcs_and_key(void) {
 
 // NOTE: Adding new ranks isn't exactly safe without changing this...
 // Also: This assumes common1 is loaded!
-u8 *bsmRankTextures[] = {
+u8 *bsmRankTextures[BSM_NUM_RANKS] = {
     custom_menu_rank_rank_f_rgba32_rgba32,
     custom_menu_rank_rank_d_rgba32_rgba32,
     custom_menu_rank_rank_c_rgba32_rgba32,
@@ -560,38 +560,12 @@ u8 *bsmRankTextures[] = {
     custom_menu_rank_rank_g_rgba32_rgba32,
 };
 
-s32 bsm_play_narrator_time_sound(s32 time) {
-    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
-
-    s32 isTimePB = FALSE;
-    if (bsmData[gBSMLastCourse].bestTimeInFrames > gBSMFrameTimer && bsmData[gBSMLastCourse].bestTimeInFrames != 0) {
-        isTimePB = TRUE;
-    }
-    
-    s32 baselineTime = gBSMStageProperties[gBSMLastCourse].baselineTime;
-    s32 devTime = gBSMStageProperties[gBSMLastCourse].developerTime;
-
-    // Did the player beat the dev time for the first time?
-    if (time < devTime && (bsmData[gBSMLastCourse].bestTimeInFrames >= devTime || bsmData[gBSMLastCourse].bestTimeInFrames == 0)) {
-        // play_narrator_sound_at_random(&gBSMNarratorDevTime);
-        return TRUE;
-    }
-
-    // Did the player PB, and was the PB at least up to par?
-    if (isTimePB && time < ((baselineTime * 103) / 100)) {
-        play_narrator_sound_at_random(&gBSMNarratorPBTime);
-        return TRUE;
-    }
-
-    // Was the player within 5% of the dev time?
-    if (((time * 95) / 100) <= devTime) {
-        // play_narrator_sound_at_random(&gBSMNarratorGoodTime);
-        return TRUE;
-    }
-
-    // Play nothing
-    return FALSE;
-}
+u8 *bsmTimeTrialsMedalTextures[BSM_NUM_MEDALS] = {
+    custom_menu_rank_tt_rank_time_trial_bronze_rgba32_rgba32,
+    custom_menu_rank_tt_rank_time_trial_silver_rgba32_rgba32,
+    custom_menu_rank_tt_rank_time_trial_gold_rgba32_rgba32,
+    custom_menu_rank_tt_rank_time_trial_top_rgba32_rgba32,
+};
 
 void bsm_render_success_menu(void) {
     f32 alpha = 1.0f;
@@ -632,10 +606,6 @@ void bsm_render_success_menu(void) {
             
             bsm_print_if_time_allows(10, 15, "BONUSES", SCREEN_CENTER_X, PRINT_Y_BASE + 52, FALSE, TRUE);
 
-            if (successMenuTimer == 15) {
-                bsmLastTimeGood = bsm_play_narrator_time_sound(gBSMFrameTimer);
-            }
-
             sprintf(strBuf, "Base Score:  <COL_%s-->%d<COL_-------->", gBSMScoreCount > 0 ? "3FFF3F" : "FF3F3F", gBSMScoreCount);
             bsm_print_if_time_allows(30, 10, strBuf, PRINT_X_BASE, PRINT_Y_BASE + 76, TRUE, FALSE);
 
@@ -668,10 +638,7 @@ void bsm_render_success_menu(void) {
                     rankAlpha = (f32) (successMenuTimer - FADE_ALPHA_RANK_START + 1) / (FADE_ALPHA_RANK_FRAMES + 1);
                     rankAlphaSqr = sqr(rankAlpha);
                 } else if (FADE_ALPHA_RANK_START + FADE_ALPHA_RANK_FRAMES == successMenuTimer) {
-                    // When good time achieved, only play rank sound if it's at least C rank or better
-                    if (rank >= 2 || bsmLastTimeGood == FALSE) {
-                        play_narrator_sound_at_random_by_rank_id(rank);
-                    }
+                    play_narrator_sound_at_random_by_rank_id(rank);
                 }
 
                 f32 x = (SCREEN_CENTER_X + 32) - 12;
@@ -757,59 +724,89 @@ void process_bsm_actions(void) {
         print_small_text(SCREEN_CENTER_X, SCREEN_HEIGHT * 1 / 4 + 0, creditsStr, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     } else if (gSelectionShown == BSM_SELECTION_DETAILED_STATS) {
         s32 xBase = 60;
-        s32 yBase = (SCREEN_HEIGHT - 16) - 84;
+        s32 yBase = 116;
+        s32 yBaseInv = (SCREEN_HEIGHT - 16) - yBase;
+        s32 yBaseTail = 16 * 2;
+        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            yBaseTail = 0 * 2;
+        }
 
         bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
         print_set_envcolour(255, 255, 255, 255);
         prepare_blank_box();
-        render_blank_box_rounded(xBase - 12, 32, SCREEN_WIDTH - (xBase - 12), SCREEN_HEIGHT - 32, 0, 0, 0, 191);
+        render_blank_box_rounded(xBase - 12, yBase - 52, SCREEN_WIDTH - (xBase - 12), SCREEN_HEIGHT - (yBase - 52) + yBaseTail, 0, 0, 0, 191);
         finish_blank_box();
     
         sprintf(strBuf, "Track %d", gBSMSelectedButton + 1);
         print_set_envcolour(127, 255, 127, 255);
-        print_small_text(SCREEN_CENTER_X, 44, strBuf, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text(SCREEN_CENTER_X, yBase - 40, strBuf, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
     
         print_set_envcolour(191, 223, 255, 255);
-        print_small_text(SCREEN_CENTER_X, 58, gBSMStageProperties[gBSMSelectedButton].courseNameNoNewline, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-
-        print_set_envcolour(255, 159, 31, 255);
-        print_small_text(SCREEN_CENTER_X, 172, "Fastest Developer Time", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-
-        sprintf(strBuf, "%d:%02d.%02d",
-            gBSMStageProperties[gBSMSelectedButton].developerTime / (30 * 60),
-            (gBSMStageProperties[gBSMSelectedButton].developerTime / 30) % 60,
-            (gBSMStageProperties[gBSMSelectedButton].developerTime % 30) * 100 / 30);
-        print_set_envcolour(223, 159, 255, 255);
-        print_small_text(SCREEN_CENTER_X, 186, strBuf, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text(SCREEN_CENTER_X, yBase - 26, gBSMStageProperties[gBSMSelectedButton].courseNameNoNewline, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         create_dl_ortho_matrix();
-        create_dl_translation_matrix(MENU_MTX_NOPUSH, xBase, yBase, 0.0f);
+        create_dl_translation_matrix(MENU_MTX_NOPUSH, xBase, yBaseInv, 0.0f);
         gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_begin);
-        for (s32 rank = ARRAY_COUNT(bsmRankTextures) - 1, i = 0; rank > 0; rank--, i++) {
-            s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
-            s32 y = (i / 2) * -32.0f;
 
-            create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0.0f);
-            create_dl_scale_matrix(MENU_MTX_PUSH, 0.75f, 0.75f, 0.75f);
+        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            for (s32 medal = BSM_NUM_MEDALS - 1, i = 0; medal >= 0; medal--, i++) {
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 y = (i / 2) * -32.0f;
 
-            gDPPipeSync(gDisplayListHead++);
-            gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, VIRTUAL_TO_PHYSICAL(bsmRankTextures[rank]));
-            gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_tex_block);
-            gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_vert);
+                create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0.0f);
+                create_dl_scale_matrix(MENU_MTX_PUSH, 0.75f, 0.75f, 0.75f);
 
-            gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
-            gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
-        }
-        gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_end);
+                gDPPipeSync(gDisplayListHead++);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, VIRTUAL_TO_PHYSICAL(bsmTimeTrialsMedalTextures[medal]));
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_tex_block);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_vert);
 
-        bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
-        print_set_envcolour(255, 255, 255, 255);
-        for (s32 rank = ARRAY_COUNT(bsmRankTextures) - 1, i = 0; rank > 0; rank--, i++) {
-            s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
-            s32 y = (i / 2) * -32.0f;
+                gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+                gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+            }
+            gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_end);
 
-            sprintf(strBuf, "<COL_FFFF3F-->%d <COL_BFBFBF-->Pts.<COL_-------->", get_bsm_rank_requirement(gBSMSelectedButton, rank));
-            print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBase + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+            bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+            print_set_envcolour(255, 255, 255, 255);
+            for (s32 medal = BSM_NUM_MEDALS - 1, i = 0; medal >= 0; medal--, i++) {
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 y = (i / 2) * -32.0f;
+
+                s32 frameCount = get_bsm_tt_medal_requirement(gBSMSelectedButton, medal);
+
+                sprintf(strBuf, "<COL_DF9FFF-->%d:%02d.%02d<COL_-------->",
+                    frameCount / (30 * 60),
+                    (frameCount / 30) % 60,
+                    (frameCount % 30) * 100 / 30);
+                print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBaseInv + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+            }
+        } else { 
+           for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 y = (i / 2) * -32.0f;
+
+                create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0.0f);
+                create_dl_scale_matrix(MENU_MTX_PUSH, 0.75f, 0.75f, 0.75f);
+
+                gDPPipeSync(gDisplayListHead++);
+                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, VIRTUAL_TO_PHYSICAL(bsmRankTextures[rank]));
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_tex_block);
+                gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_load_vert);
+
+                gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+                gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+            }
+            gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_end);
+
+            bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
+            print_set_envcolour(255, 255, 255, 255);
+            for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 y = (i / 2) * -32.0f;
+
+                sprintf(strBuf, "<COL_FFFF3F-->%d <COL_BFBFBF-->Pts.<COL_-------->", get_bsm_rank_requirement(gBSMSelectedButton, rank));
+                print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBaseInv + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+            }
         }
     }
 }
