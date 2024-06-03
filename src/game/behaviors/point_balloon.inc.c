@@ -220,6 +220,11 @@ static void update_generic_balloon_positions(void) {
 }
 
 void bhv_point_balloon_init(void) {
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+        obj_mark_for_deletion(o);
+        return;
+    }
+
     u32 bType = o->oBehParams2ndByte;
     assert(bType < POINT_BALLOON_COUNT, "Invalid point balloon type detected!");
 
@@ -253,6 +258,10 @@ void bhv_point_balloon_init(void) {
 void bhv_point_balloon_loop(void) {
     u32 bType = o->oBehParams2ndByte;
     f32 scale = bProps[bType].scale;
+
+    if (o->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
+        return;
+    }
 
     // slideSpeedMultiplier added here to handle high Mario velocities
     if (o->oDistanceToMario <= ((120.0f * scale) + 160.0f /*About Mario's height*/) * slideSpeedMultiplier) {

@@ -3,17 +3,21 @@
 #define MAX_SCALE_DIFF 0.02f
 #define BASE_SCALE 0.725f
 
+f32 bsmMenuObjectGeneralScale = 1.0f;
+enum BSMMenuGameplayMode bsmMenuObjectGameplayMode = BSM_MENU_GAMEPLAY_MODE_MANIA;
+
 static void bhv_bsm_menu_title_update_scale(void) {
     if (o->oAnimState == (u8) gBSMGameplayMode) {
-        o->oBSMMenuTitleGeneralScale = smoothstop(o->oBSMMenuTitleGeneralScale, 1.0f, 0.35f);
+        bsmMenuObjectGeneralScale = smoothstop(bsmMenuObjectGeneralScale, 1.0f, 0.35f);
     } else {
-        o->oBSMMenuTitleGeneralScale = smoothstop(o->oBSMMenuTitleGeneralScale, 0.0f, 0.35f);
+        bsmMenuObjectGeneralScale = smoothstop(bsmMenuObjectGeneralScale, 0.0f, 0.35f);
     }
 
-    if (o->oBSMMenuTitleGeneralScale <= 0.005f) {
-        o->oBSMMenuTitleGeneralScale = 0.005f;
+    if (bsmMenuObjectGeneralScale <= 0.005f) {
+        bsmMenuObjectGeneralScale = 0.005f;
         cur_obj_hide();
         o->oAnimState = gBSMGameplayMode;
+        bsmMenuObjectGameplayMode = gBSMGameplayMode;
     } else {
         cur_obj_unhide();
     }
@@ -30,7 +34,8 @@ void bhv_bsm_menu_title_init(void) {
 
     o->oBSMMenuTitleRollHome = o->oFaceAngleRoll;
     o->oAnimState = gBSMGameplayMode;
-    o->oBSMMenuTitleGeneralScale = 1.0f;
+    bsmMenuObjectGameplayMode = gBSMGameplayMode;
+    bsmMenuObjectGeneralScale = 1.0f;
 }
 
 void bhv_bsm_menu_title_loop(void) {
@@ -45,6 +50,6 @@ void bhv_bsm_menu_title_loop(void) {
 
     bhv_bsm_menu_title_update_scale();
 
-    scale *= o->oBSMMenuTitleGeneralScale;
+    scale *= bsmMenuObjectGeneralScale;
     cur_obj_scale(scale);
 }

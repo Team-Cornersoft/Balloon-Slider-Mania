@@ -17,6 +17,9 @@ enum AttackHandler {
     ATTACK_HANDLER_SQUISHED_WITH_BLUE_COIN
 };
 
+extern f32 bsmMenuObjectGeneralScale;
+extern enum BSMMenuGameplayMode bsmMenuObjectGameplayMode;
+
 void shelled_koopa_attack_handler(s32 attackType);
 void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 scale, ModelID32 model,
                    f32 startSpeed, f32 endSpeed, s16 movePitch);

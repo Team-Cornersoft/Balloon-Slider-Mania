@@ -148,6 +148,11 @@ Gfx *geo_retry_screen(s32 state, UNUSED struct GraphNode *node, UNUSED void *con
         s32 y1 = SCREEN_CENTER_Y - BOX_HALF_HEIGHT_EXCESS;
         s32 x2 = SCREEN_CENTER_X + BOX_HALF_WIDTH_EXCESS;
         s32 y2 = SCREEN_CENTER_Y + BOX_HALF_HEIGHT_EXCESS;
+
+        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            y1 += 32;
+            y2 -= 32;
+        }
         
         f32 mult = gBSMRetryMenuScale;
         if (mult > 1.0f) {

@@ -19,6 +19,25 @@ static void bhv_bsm_menu_button_or_stage_update_sub_objects(struct Object **obj)
             objRef->oPosX = o->oHomeX + xDiff + BSM_MENU_CAMERA_LAYOUT_OFFSET;
             objRef->oPosY = o->oHomeY + yDiff;
             objRef->header.gfx.node.flags = o->header.gfx.node.flags;
+
+            if (objRef != o->oBSMMenuLockObj) {
+                for (s32 i = 0; i < ARRAY_COUNT(objRef->header.gfx.scale); i++) {
+                    objRef->header.gfx.scale[i] *= bsmMenuObjectGeneralScale;
+                }
+
+                if (bsmMenuObjectGeneralScale <= 0.005f) {
+                    objRef->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
+                }
+
+                enum BSMMenuGameplayMode objGameplayMode = BSM_MENU_GAMEPLAY_MODE_MANIA;
+                if (objRef == o->oBSMMenuTTMedalObj) {
+                    objGameplayMode = BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS;
+                }
+
+                if (objGameplayMode != bsmMenuObjectGameplayMode) {
+                    objRef->header.gfx.node.flags |= GRAPH_RENDER_INVISIBLE;
+                }
+            }
         }
     }
 }
@@ -54,6 +73,7 @@ static void bhv_bsm_menu_button_or_stage_common(void) {
     bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuLockObj);
     bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuRankObj);
     bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuTCSTokenObj);
+    bhv_bsm_menu_button_or_stage_update_sub_objects(&o->oBSMMenuTTMedalObj);
 }
 
 void bhv_bsm_menu_button_or_stage_init(void) {
@@ -141,6 +161,12 @@ void bhv_bsm_menu_button_or_stage_init(void) {
     } else if (bsmCompletionFlags[buttonId] & (1 << BSM_STAR_COMPLETED_COURSE)) {
         o->oBSMMenuTCSTokenObj = spawn_object_relative(buttonId, -340, -140, 20, o, MODEL_BSM_MENU_FLAG, bhvBSMMenuRankOrToken);
         vec3f_copy(&o->oBSMMenuTCSTokenObj->oHomeVec, &o->oBSMMenuTCSTokenObj->oPosVec); // Set home
+    }
+    
+    // if (TRUE) {
+    if (calculate_bsm_tt_medal(buttonId, bsmData[buttonId].bestTimeInFrames) >= 0) {
+        o->oBSMMenuTTMedalObj = spawn_object_relative(buttonId, 340, -140, 20, o, MODEL_BSM_MENU_TT_MEDAL, bhvBSMMenuRankOrToken);
+        vec3f_copy(&o->oBSMMenuTTMedalObj->oHomeVec, &o->oBSMMenuTTMedalObj->oPosVec); // Set home
     }
 
     bhv_bsm_menu_button_or_stage_common();

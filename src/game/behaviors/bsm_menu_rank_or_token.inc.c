@@ -86,30 +86,34 @@ s32 get_bsm_tt_medal_requirement(s32 courseNum, s32 medal) {
 }
 
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
-    u8 rank = BSM_NUM_RANKS - 1;
+    s8 rank = BSM_NUM_RANKS - 1;
     if (score == (u16) -1) {
         return -1;
     }
     
-    for (s32 i = 0; rank > 0; rank--, i++) {
+    while (rank > 0) { // Lowest rank is F, which exists as an object (thus >)
         if ((f32) score >= get_bsm_rank_requirement(courseNum, rank)) {
             break;
         }
+
+        rank--;
     }
 
     return rank;
 }
 
 s32 calculate_bsm_tt_medal(s32 courseNum, s32 time) {
-    u8 medal = BSM_NUM_MEDALS - 1;
+    s8 medal = BSM_NUM_MEDALS - 1;
     if (time == 0) {
         return -1;
     }
     
-    for (s32 i = 0; medal > 0; medal--, i++) {
-        if ((f32) time <= BSMTimeTrialsRanks[courseNum][medal]) {
+    while (medal >= 0) { // Lowest medal is nothing, which does not exist as an object (thus >=)
+        if ((f32) time <= get_bsm_tt_medal_requirement(courseNum, medal)) {
             break;
         }
+
+        medal--;
     }
 
     return medal;

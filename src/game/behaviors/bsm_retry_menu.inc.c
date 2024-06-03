@@ -4,21 +4,28 @@ const char rankText[] = "RANK: ";
 
 void bhv_bsm_retry_menu_init(void) {
     s32 x = -8 - 16 - 12;
+    s32 selectionObjY = (SCREEN_CENTER_Y - 70 + 8);
     s32 i = 0;
+
     while (rankText[i] != '\0') {
         x -= get_clown_font_left_kerning(char_to_glyph_index(rankText[i]));
         x += get_clown_font_right_kerning(char_to_glyph_index(rankText[i]));
         i++;
     }
 
-    o->oBSMRetryMenuRankObj = spawn_object_abs_with_rot(o, 0, MODEL_BSM_MENU_RANK, bhvBSMRetryMenuRank,
-        x * 10, (SCREEN_CENTER_Y - 16 + 9) * 10, 0, 
-        0, 0, 0);
 
-    vec3f_copy(&o->oBSMRetryMenuRankObj->oHomeVec, &o->oBSMRetryMenuRankObj->oPosVec); // Set home
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+        selectionObjY += 32;
+    } else {
+        o->oBSMRetryMenuRankObj = spawn_object_abs_with_rot(o, 0, MODEL_BSM_MENU_RANK, bhvBSMRetryMenuRank,
+            x * 10, (SCREEN_CENTER_Y - 16 + 9) * 10, 0, 
+            0, 0, 0);
+
+        vec3f_copy(&o->oBSMRetryMenuRankObj->oHomeVec, &o->oBSMRetryMenuRankObj->oPosVec); // Set home
+    }
 
     struct Object *obj = spawn_object_abs_with_rot(o, 0, MODEL_BSM_RETRY_MENU_RETRY, bhvBSMRetryMenuSelection,
-        -54 * 10, (SCREEN_CENTER_Y - 70 + 8) * 10, 0, 
+        -54 * 10, selectionObjY * 10, 0, 
         0, 0, 0);
     if (obj) {
         obj->oBehParams2ndByte = 0;
@@ -26,7 +33,7 @@ void bhv_bsm_retry_menu_init(void) {
     }
 
     obj = spawn_object_abs_with_rot(o, 0, MODEL_BSM_RETRY_MENU_QUIT, bhvBSMRetryMenuSelection,
-        54 * 10, (SCREEN_CENTER_Y - 70 + 8) * 10, 0, 
+        54 * 10, selectionObjY * 10, 0, 
         0, 0, 0);
     if (obj) {
         obj->oBehParams2ndByte = 1;
@@ -47,12 +54,16 @@ void bhv_bsm_retry_menu_loop(void) {
         o->oBSMRetryMenuButtonPressed--;
     }
 
-    print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 54, "TOO BAD!");
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+        print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 22, "TOO BAD!");
+    } else {
+        print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 54, "TOO BAD!");
 
-    sprintf(buf, "SCORE: %d", gBSMScoreCount);
-    print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 12, buf);
+        sprintf(buf, "SCORE: %d", gBSMScoreCount);
+        print_text_centered(SCREEN_CENTER_X, SCREEN_CENTER_Y + 12, buf);
 
-    print_text_centered(SCREEN_CENTER_X - 8, SCREEN_CENTER_Y - 16, rankText);
+        print_text_centered(SCREEN_CENTER_X - 8, SCREEN_CENTER_Y - 16, rankText);
+    }
 
     if (o->oAction == 0) {
         if (o->oTimer == 5) {

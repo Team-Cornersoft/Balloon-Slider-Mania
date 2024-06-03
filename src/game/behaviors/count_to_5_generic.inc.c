@@ -1,4 +1,9 @@
 void bhv_ski_flag_spawner_loop(void) {
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+        obj_mark_for_deletion(o);
+        return;
+    }
+
     if (o->oSkiFlagSpawnerBalloon) {
         obj_scale(o->oSkiFlagSpawnerBalloon, (0.05f * o->oTimer) * o->oSkiFlagSpawnerBalloonReferenceScale);
 

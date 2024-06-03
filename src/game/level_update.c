@@ -1995,7 +1995,9 @@ s32 retry_menu_state(s16 callType, UNUSED s32 arg1) {
 
     // Get selection data
     if (callType == 2) {
-        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMScoreCount, 0);
+        if (gBSMGameplayMode != BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMScoreCount, 0);
+        }
         return gBSMRetryMenuSelection;
     }
 

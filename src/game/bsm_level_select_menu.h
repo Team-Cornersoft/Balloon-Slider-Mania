@@ -128,6 +128,7 @@ s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 get_bsm_rank_requirement(s32 courseNum, s32 rank);
 s32 get_bsm_tt_medal_requirement(s32 courseNum, s32 medal);
 s32 calculate_bsm_rank(s32 courseNum, s32 score);
+s32 calculate_bsm_tt_medal(s32 courseNum, s32 time);
 void play_narrator_sound_at_random(struct BSMNarratorList *list);
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);
 

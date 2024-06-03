@@ -257,55 +257,57 @@ static void bsm_manager_render_stats(void) {
         }
 
         s32 x = (obj->oHomeX * 0.1f) + SCREEN_CENTER_X;
-        s32 y1 = SCREEN_HEIGHT - (s32) (obj->oHomeY * 0.1f) - 11;
-        s32 y2 = y1 + 14;
+        s32 y = SCREEN_HEIGHT - (s32) (obj->oHomeY * 0.1f) - 4;
 
-        if (bsmData[i].bestTimeInFrames == 0) {
-            print_set_envcolour(255, 255, 255, 255);
-            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
-                sprintf(strBuffer, "<WAVE>No Time<WAVE>");
-            } else {
-                sprintf(strBuffer, "No Time");
-            }
-        } else {
-            s32 milliseconds = ((bsmData[i].bestTimeInFrames % 30) * 100) / 30;
-            s32 seconds = (bsmData[i].bestTimeInFrames / 30) % 60;
-            s32 minutes = (bsmData[i].bestTimeInFrames / (30 * 60));
-
-            if (minutes >= 10) {
-                minutes = 9;
-                seconds = 59;
-                milliseconds = 99;
-            }
-
-            print_set_envcolour(223, 159, 255, 255);
-            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
-                sprintf(strBuffer, "<WAVE>%d:%02d.%02d<WAVE>", minutes, seconds, milliseconds);
-            } else {
-                sprintf(strBuffer, "%d:%02d.%02d", minutes, seconds, milliseconds);
-            }
-        }
-
-        print_small_text_buffered(x, y1, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
-
-        if (bsmData[i].score == (u16) -1) {
-            print_set_envcolour(255, 255, 255, 255);
-            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            if (bsmData[i].bestTimeInFrames == 0) {
                 print_set_envcolour(255, 255, 255, 255);
-                sprintf(strBuffer, "<WAVE>No Score<WAVE>");
+                if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+                    sprintf(strBuffer, "<WAVE>No Time<WAVE>");
+                } else {
+                    sprintf(strBuffer, "No Time");
+                }
             } else {
-                sprintf(strBuffer, "No Score");
-            }
-        } else {
-            print_set_envcolour(255, 255, 95, 255);
-            if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
-                sprintf(strBuffer, "<WAVE>%d<WAVE>", bsmData[i].score);
-            } else {
-                sprintf(strBuffer, "%d", bsmData[i].score);
-            }
-        }
+                s32 milliseconds = ((bsmData[i].bestTimeInFrames % 30) * 100) / 30;
+                s32 seconds = (bsmData[i].bestTimeInFrames / 30) % 60;
+                s32 minutes = (bsmData[i].bestTimeInFrames / (30 * 60));
 
-        print_small_text_buffered(x, y2, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+                if (minutes >= 10) {
+                    minutes = 9;
+                    seconds = 59;
+                    milliseconds = 99;
+                }
+
+                print_set_envcolour(223, 159, 255, 255);
+                if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+                    sprintf(strBuffer, "<WAVE>%d:%02d.%02d<WAVE>", minutes, seconds, milliseconds);
+                } else {
+                    sprintf(strBuffer, "%d:%02d.%02d", minutes, seconds, milliseconds);
+                }
+            }
+
+            print_small_text_buffered(x, y, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        } else {
+            s32 yScore = y;
+            if (bsmData[i].score == (u16) -1) {
+                print_set_envcolour(255, 255, 255, 255);
+                if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+                    print_set_envcolour(255, 255, 255, 255);
+                    sprintf(strBuffer, "<WAVE>No Score<WAVE>");
+                } else {
+                    sprintf(strBuffer, "No Score");
+                }
+            } else {
+                print_set_envcolour(255, 255, 95, 255);
+                if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
+                    sprintf(strBuffer, "<WAVE>%d<WAVE>", bsmData[i].score);
+                } else {
+                    sprintf(strBuffer, "%d", bsmData[i].score);
+                }
+            }
+
+            print_small_text_buffered(x, yScore, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        }
     }
 }
 

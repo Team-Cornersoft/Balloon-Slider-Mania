@@ -679,7 +679,11 @@ void init_bsm_hud(s32 updateLastValue) {
     bsmHudProps[BSM_HUD_REDBALLOONS].shadowY = bsmHudProps[BSM_HUD_REDBALLOONS].y + 1;
     bsmHudProps[BSM_HUD_REDBALLOONS].trackValueAddr = &gBSMRedBalloonsPopped;
 
-    bsmHudProps[BSM_HUD_KEY].x = SCREEN_CENTER_X - 18;
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+        bsmHudProps[BSM_HUD_KEY].x = SCREEN_CENTER_X - 8;
+    } else {
+        bsmHudProps[BSM_HUD_KEY].x = SCREEN_CENTER_X - 18;
+    }
     bsmHudProps[BSM_HUD_KEY].y = SCREEN_HEIGHT - (HUD_TOP_Y + 16) - gConsoleOffsetDiffY;
     bsmHudProps[BSM_HUD_KEY].shadowX = bsmHudProps[BSM_HUD_KEY].x - 1;
     bsmHudProps[BSM_HUD_KEY].shadowY = bsmHudProps[BSM_HUD_KEY].y + 1;
@@ -828,6 +832,12 @@ void render_hud_bsm_info(void) {
     void **hudLUT = segmented_to_virtual(main_hud_lut);
 
     for (s32 i = 0; i < BSM_HUD_COUNT; i++) {
+        if (
+            gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS &&
+            (i == BSM_HUD_SCORE || i == BSM_HUD_REDBALLOONS || i == BSM_HUD_TCS)
+        ) {
+            continue;
+        }
         props = &bsmHudProps[i];
         s32 animY = props->y;
         if (props->animTimer < BOUNCE_ANIM_TIME) {
@@ -901,8 +911,8 @@ void render_hud_bsm_info(void) {
                         if (gBSMRedBalloonsPopped != 8 && j + 1 == gBSMRedBalloonsPopped) {
                             redBalloonAnimY = animShadowY;
                         } else if (
-                           gBSMRedBalloonsPopped == 8 &&
-                           (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
+                        gBSMRedBalloonsPopped == 8 &&
+                        (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
                         ) {
                             redBalloonAnimY = props->shadowY - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
                         }
