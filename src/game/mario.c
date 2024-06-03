@@ -1682,6 +1682,13 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
         }
     }
 
+    if (flags & MARIO_COSTUME_METAL_CAP) {
+        flags |= MARIO_METAL_CAP;
+    }
+    if (flags & MARIO_COSTUME_WING_CAP) {
+        flags |= MARIO_WING_CAP;
+    }
+
     if (flags & MARIO_VANISH_CAP) {
         bodyState->modelState = MODEL_STATE_NOISE_ALPHA;
     }
@@ -1940,9 +1947,9 @@ void init_mario(void) {
     if (save_file_get_flags()
         & (SAVE_FLAG_CAP_ON_GROUND | SAVE_FLAG_CAP_ON_KLEPTO | SAVE_FLAG_CAP_ON_UKIKI
            | SAVE_FLAG_CAP_ON_MR_BLIZZARD)) {
-        gMarioState->flags = 0;
+        gMarioState->flags &= MARIO_FLAGS_COSTUME_MASK;
     } else {
-        gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
+        gMarioState->flags = MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD | (gMarioState->flags & MARIO_FLAGS_COSTUME_MASK);
     }
 
     gMarioState->forwardVel = 0.0f;

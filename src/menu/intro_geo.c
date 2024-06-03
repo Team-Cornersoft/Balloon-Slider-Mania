@@ -237,7 +237,7 @@ Gfx *geo_elise_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *co
     return head;
 }
 
-Gfx *geo_gold_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) { // TODO:
+Gfx *geo_gold_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
     Gfx *head = NULL;
 
     gDisplayGoldMarioMessage = FALSE;
@@ -311,7 +311,7 @@ Gfx *geo_gold_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED voi
     return head;
 }
 
-Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) { // TODO:
+Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED void *context) {
     Gfx *head = NULL;
 
     gDisplayWingMarioMessage = FALSE;

@@ -494,6 +494,7 @@ static void level_cmd_init_mario(void) {
     gMarioSpawnInfo->behaviorArg = CMD_GET(u32, 4);
     gMarioSpawnInfo->behaviorScript = CMD_GET(void *, 8);
 
+    gMarioState->flags &= ~MARIO_FLAGS_COSTUME_MASK;
     if (gUsingEliseModel) {
         gMarioSpawnInfo->model = gLoadedGraphNodes[MODEL_ELISE];
     } else {
@@ -501,10 +502,10 @@ static void level_cmd_init_mario(void) {
         
         u32 unlockFlags = bsm_get_unlocked_special_awards();
         if (unlockFlags & (1 << BSM_SPECIAL_UNLOCK_GOLD_MARIO)) {
-            // TODO:
+            gMarioState->flags |= MARIO_COSTUME_METAL_CAP;
         }
         if (unlockFlags & (1 << BSM_SPECIAL_UNLOCK_WING_MARIO)) {
-            // TODO:
+            gMarioState->flags |= MARIO_COSTUME_WING_CAP;
         }
     }
 

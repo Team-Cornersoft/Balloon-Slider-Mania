@@ -45,15 +45,15 @@ struct BSMNarratorList *rankNarratorLists[BSM_NUM_RANKS] = {
 #define G_RANK_MULT 0.1f
 
 static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
-    [BSM_COURSE_1_SNOWY_PEAK]        = 2780,
-    [BSM_COURSE_2_LAVA_ISLE]         = 1835,
-    [BSM_COURSE_3_FUNGI_CANYON]      = 2110,
-    [BSM_COURSE_4_STARLIGHT_FEST]    = 2045,
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = 2100,
-    [BSM_COURSE_6_SCORCH_ISLE]       = 1910,
-    [BSM_COURSE_7_SPORE_CANYON]      = 1815,
-    [BSM_COURSE_8_CYBER_FEST]        = 1970,
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = 1950,
+    [BSM_COURSE_1_SNOWY_PEAK]        = 2760,
+    [BSM_COURSE_2_LAVA_ISLE]         = 1815,
+    [BSM_COURSE_3_FUNGI_CANYON]      = 2085,
+    [BSM_COURSE_4_STARLIGHT_FEST]    = 2020,
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = 2075,
+    [BSM_COURSE_6_SCORCH_ISLE]       = 1890,
+    [BSM_COURSE_7_SPORE_CANYON]      = 1790,
+    [BSM_COURSE_8_CYBER_FEST]        = 1945,
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = 2405,
 };
 
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {

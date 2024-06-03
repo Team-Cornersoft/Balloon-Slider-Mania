@@ -918,7 +918,15 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                             play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                             break;
                         }
+                        if (gCurrAreaIndex == 8) {
+                            marioWarpPresetVel = TRUE;
+                            sDelayedWarpTimer = 20;
+                            play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
+                            play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                            break;
+                        }
                         if (gCurrAreaIndex == 1) {
+                            sDelayedWarpTimer = 30;
                             play_sound(SOUND_SPECIAL1_ELISE_WARP, gGlobalSoundSource);
                             play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                             shouldFadeMarioWarp = sDelayedWarpTimer;
