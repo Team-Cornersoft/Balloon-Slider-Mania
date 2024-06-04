@@ -998,12 +998,19 @@ u32 bsm_get_unlocked_special_awards(void) {
             break;
         }
     }
-    if (goldMarioUnlocked) { // TODO:
+    if (goldMarioUnlocked) {
         unlockFlags |= (1 << BSM_SPECIAL_UNLOCK_GOLD_MARIO);
     }
 
     // Check if Wing Mario has been unlocked
-    if (TRUE) { // TODO:
+    u8 wingMarioUnlocked = TRUE;
+    for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
+        if (calculate_bsm_tt_medal(i, bsmCourseData[i].bestTimeInFrames) != BSM_NUM_MEDALS - 1) { // Must have obtained highest medal
+            wingMarioUnlocked = FALSE;
+            break;
+        }
+    }
+    if (wingMarioUnlocked) {
         unlockFlags |= (1 << BSM_SPECIAL_UNLOCK_WING_MARIO);
     }
 

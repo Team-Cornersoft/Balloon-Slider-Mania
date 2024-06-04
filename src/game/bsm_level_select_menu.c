@@ -278,7 +278,7 @@ static void bsm_manager_render_stats(void) {
                     milliseconds = 99;
                 }
 
-                print_set_envcolour(223, 159, 255, 255);
+                print_set_envcolour(255, 255, 0, 255);
                 if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
                     sprintf(strBuffer, "<WAVE>%d:%02d.%02d<WAVE>", minutes, seconds, milliseconds);
                 } else {

@@ -57,7 +57,7 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
 };
 
 static const u16 BSMTimeTrialsRanks[BSM_COURSE_COUNT][BSM_NUM_MEDALS] = {
-/*                                       Br    Sv    Gd    Dv    */
+/*                                       Br    Sv    Gd    St    */
     [BSM_COURSE_1_SNOWY_PEAK]        = {9999, 9998, 9997, 2071},
     [BSM_COURSE_2_LAVA_ISLE]         = {9999, 9998, 9997, 1521},
     [BSM_COURSE_3_FUNGI_CANYON]      = {9999, 9998, 9997, 1668},

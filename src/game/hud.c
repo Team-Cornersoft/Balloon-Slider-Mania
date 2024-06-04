@@ -892,70 +892,78 @@ void render_hud_bsm_info(void) {
             }
             print_small_text(props->x + 32, animY + 20, strBuff, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         } else if (i == BSM_HUD_REDBALLOONS) {
-            if (gBSMRedBalloonsPopped > 0) {
-                s32 redBalloonX;
+            s32 redBalloonX;
 
-                gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
-                gDPPipeSync(gDisplayListHead++);
-                gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+            gDPPipeSync(gDisplayListHead++);
+            gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
 
-                if (!(gEmulator & EMU_CONSOLE)) {
-                    redBalloonX = props->shadowX;
-                    gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
-                    for (u32 j = 0; j < gBSMRedBalloonsPopped; j++) {
-                        s32 redBalloonAnimY = props->shadowY;
-
-                        gDPPipeSync(gDisplayListHead++);
-                        gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-
-                        if (gBSMRedBalloonsPopped != 8 && j + 1 == gBSMRedBalloonsPopped) {
-                            redBalloonAnimY = animShadowY;
-                        } else if (
-                        gBSMRedBalloonsPopped == 8 &&
-                        (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
-                        ) {
-                            redBalloonAnimY = props->shadowY - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
-                        }
-                        gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonAnimY << 2, (redBalloonX + 16) << 2,
-                                            (redBalloonAnimY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-
-                        redBalloonX += 16;
-                    }
-                    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-                }
-
-                redBalloonX = props->x;
-
-                ColorRGBA colorIndex = {255, 255, 255, 255};
-                update_string_color(colorIndex, sBSMBalloonScoreColorIndex[POINT_BALLOON_RED], props->animTimer);
-                gDPSetEnvColor(gDisplayListHead++, colorIndex[0], colorIndex[1], colorIndex[2], colorIndex[3]);
+            if (!(gEmulator & EMU_CONSOLE)) {
+                redBalloonX = props->shadowX;
+                gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 95);
                 for (u32 j = 0; j < gBSMRedBalloonsPopped; j++) {
-                    gDPPipeSync(gDisplayListHead++);
-                    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-                    s32 redBalloonAnimY = props->y;
+                    s32 redBalloonAnimY = props->shadowY;
 
                     gDPPipeSync(gDisplayListHead++);
                     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
 
                     if (gBSMRedBalloonsPopped != 8 && j + 1 == gBSMRedBalloonsPopped) {
-                        redBalloonAnimY = animY;
+                        redBalloonAnimY = animShadowY;
                     } else if (
-                        gBSMRedBalloonsPopped == 8 &&
-                        (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
+                    gBSMRedBalloonsPopped == 8 &&
+                    (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
                     ) {
-                        redBalloonAnimY = props->y - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
+                        redBalloonAnimY = props->shadowY - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
                     }
                     gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonAnimY << 2, (redBalloonX + 16) << 2,
                                         (redBalloonAnimY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
                     redBalloonX += 16;
                 }
-                
-                gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+                gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+            }
 
-                if (props->animTimer == 10 && gBSMRedBalloonsPopped == 8) {
-                    play_narrator_sound_at_random(&gBSMNarratorReds);
+            redBalloonX = props->x;
+
+            ColorRGBA colorIndex = {255, 255, 255, 255};
+            update_string_color(colorIndex, sBSMBalloonScoreColorIndex[POINT_BALLOON_RED], props->animTimer);
+            gDPSetEnvColor(gDisplayListHead++, colorIndex[0], colorIndex[1], colorIndex[2], colorIndex[3]);
+            for (u32 j = 0; j < gBSMRedBalloonsPopped; j++) {
+                s32 redBalloonAnimY = props->y;
+
+                gDPPipeSync(gDisplayListHead++);
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+
+                if (gBSMRedBalloonsPopped != 8 && j + 1 == gBSMRedBalloonsPopped) {
+                    redBalloonAnimY = animY;
+                } else if (
+                    gBSMRedBalloonsPopped == 8 &&
+                    (gBSMRedBalloonsPopped - j - 1) == (u32) (props->animTimer / BOUNCE_ANIM_TIME)
+                ) {
+                    redBalloonAnimY = props->y - (s32) (2.0f * sins((s16) (u16) (0x8000 * (props->animTimer % BOUNCE_ANIM_TIME) / BOUNCE_ANIM_TIME)));
                 }
+                gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, redBalloonAnimY << 2, (redBalloonX + 16) << 2,
+                                    (redBalloonAnimY + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+                redBalloonX += 16;
+            }
+
+            gDPPipeSync(gDisplayListHead++);
+            gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON_NA]);
+            gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 95);
+            for (u32 j = gBSMRedBalloonsPopped; j < 8; j++) {
+                gDPPipeSync(gDisplayListHead++);
+                gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+                gSPTextureRectangle(gDisplayListHead++, redBalloonX << 2, props->y << 2, (redBalloonX + 16) << 2,
+                                    (props->y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+
+                redBalloonX += 16;
+            }
+            
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
+
+            if (props->animTimer == 10 && gBSMRedBalloonsPopped == 8) {
+                play_narrator_sound_at_random(&gBSMNarratorReds);
             }
         } else {
             gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);

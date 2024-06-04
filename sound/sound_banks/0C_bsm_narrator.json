@@ -291,37 +291,42 @@
         "inst56": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "38_bsm_narrator_dev_time"
+            "sound": "38_bsm_narrator_star_medal"
         },
         "inst57": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "39_bsm_narrator_mania_mode_0"
+            "sound": "39_bsm_narrator_dev_time"
         },
         "inst58": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "3A_bsm_narrator_mania_mode_1"
+            "sound": "3A_bsm_narrator_mania_mode_0"
         },
         "inst59": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "3B_bsm_narrator_mania_mode_2"
+            "sound": "3B_bsm_narrator_mania_mode_1"
         },
         "inst60": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "3C_bsm_narrator_time_trials_0"
+            "sound": "3C_bsm_narrator_mania_mode_2"
         },
         "inst61": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "3D_bsm_narrator_time_trials_1"
+            "sound": "3D_bsm_narrator_time_trials_0"
         },
         "inst62": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "3E_bsm_narrator_time_trials_2"
+            "sound": "3E_bsm_narrator_time_trials_1"
+        },
+        "inst63": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "3F_bsm_narrator_time_trials_2"
         }
     },
     "instrument_list": [
@@ -387,6 +392,7 @@
         "inst59",
         "inst60",
         "inst61",
-        "inst62"
+        "inst62",
+        "inst63"
     ]
 }

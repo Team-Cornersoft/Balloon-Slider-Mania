@@ -497,40 +497,20 @@ static s32 bsm_get_red_balloon_bonus(void) {
 
 static void success_render_tcs_and_key(void) {
     void **hudLUT = segmented_to_virtual(main_hud_lut);
-    s32 x1 = (SCREEN_CENTER_X - 80) - 8;
-    s32 x2 = (SCREEN_CENTER_X + 80) - 8;
+    s32 x1 = (SCREEN_CENTER_X - 84) - 8;
+    s32 x2 = (SCREEN_CENTER_X + 84) - 8;
     s32 y = (SCREEN_CENTER_Y - 60) - 8;
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     gDPPipeSync(gDisplayListHead++);
     bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
 
-    if (gBSMKeyCollected) {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY]);
-        if (!(gEmulator & EMU_CONSOLE)) {
-            print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
-            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-            gSPTextureRectangle(gDisplayListHead++, (x1 - 1) << 2, (y + 1) << 2, ((x1 - 1) + 16) << 2,
-                                ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-            gDPPipeSync(gDisplayListHead++);
-        }
-        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
-    } else {
-        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_KEY_NA]);
-        print_set_envcolour(255, 255, 255, (95 * gClownFontColor[3]) >> 8);
-    }
-
-    gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, x1 << 2, y << 2, (x1 + 16) << 2,
-                        (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-    gDPPipeSync(gDisplayListHead++);
-
     if (gBSMTCSTokenCollected) {
         gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_TCS]);
         if (!(gEmulator & EMU_CONSOLE)) {
             print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
             gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-            gSPTextureRectangle(gDisplayListHead++, (x2 - 1) << 2, (y + 1) << 2, ((x2 - 1) + 16) << 2,
+            gSPTextureRectangle(gDisplayListHead++, (x1 - 1) << 2, (y + 1) << 2, ((x1 - 1) + 16) << 2,
                                 ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
             gDPPipeSync(gDisplayListHead++);
         }
@@ -541,9 +521,55 @@ static void success_render_tcs_and_key(void) {
     }
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
-    gSPTextureRectangle(gDisplayListHead++, x2 << 2, y << 2, (x2 + 16) << 2,
+    gSPTextureRectangle(gDisplayListHead++, x1 << 2, y << 2, (x1 + 16) << 2,
                         (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
     gDPPipeSync(gDisplayListHead++);
+
+    if (gBSMRedBalloonsPopped > 0) {
+        x2 -= 14;
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON]);
+        if (!(gEmulator & EMU_CONSOLE)) {
+            print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (x2 - 1) << 2, (y + 1) << 2, ((x2 - 1) + 16) << 2,
+                                ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gDPPipeSync(gDisplayListHead++);
+        }
+        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
+
+        gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+        gSPTextureRectangle(gDisplayListHead++, x2 << 2, y << 2, (x2 + 16) << 2,
+                            (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gDPPipeSync(gDisplayListHead++);
+
+        x2 += 28;
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[gBSMRedBalloonsPopped]); // Note: This will not display a number if it's more than 9
+        if (!(gEmulator & EMU_CONSOLE)) {
+            print_set_envcolour(0, 0, 0, (95 * gClownFontColor[3]) >> 8);
+            gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+            gSPTextureRectangle(gDisplayListHead++, (x2 - 1) << 2, (y + 1) << 2, ((x2 - 1) + 16) << 2,
+                                ((y + 1) + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+            gDPPipeSync(gDisplayListHead++);
+        }
+        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
+
+        gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+        gSPTextureRectangle(gDisplayListHead++, x2 << 2, y << 2, (x2 + 16) << 2,
+                            (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gDPPipeSync(gDisplayListHead++);
+
+        x2 -= 10;
+        print_set_envcolour(255, 255, 255, gClownFontColor[3]);
+        print_small_text(x2, y + 5, "X", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+    } else {
+        gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT[GLYPH_BSM_RED_BALLOON_NA]);
+        print_set_envcolour(255, 255, 255, (95 * gClownFontColor[3]) >> 8);
+
+        gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
+        gSPTextureRectangle(gDisplayListHead++, x2 << 2, y << 2, (x2 + 16) << 2,
+                            (y + 16) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+        gDPPipeSync(gDisplayListHead++);
+    }
 
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 }
@@ -749,8 +775,9 @@ void process_bsm_actions(void) {
         gSPDisplayList(gDisplayListHead++, dl_rgba32_32x32_text_begin);
 
         if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+            s32 xOffset = 9;
             for (s32 medal = BSM_NUM_MEDALS - 1, i = 0; medal >= 0; medal--, i++) {
-                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2))) + xOffset;
                 s32 y = (i / 2) * -32.0f;
 
                 create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0.0f);
@@ -769,20 +796,21 @@ void process_bsm_actions(void) {
             bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
             print_set_envcolour(255, 255, 255, 255);
             for (s32 medal = BSM_NUM_MEDALS - 1, i = 0; medal >= 0; medal--, i++) {
-                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2))) + xOffset;
                 s32 y = (i / 2) * -32.0f;
 
                 s32 frameCount = get_bsm_tt_medal_requirement(gBSMSelectedButton, medal);
 
-                sprintf(strBuf, "<COL_DF9FFF-->%d:%02d.%02d<COL_-------->",
+                sprintf(strBuf, "<COL_FFFF00-->%d:%02d.%02d<COL_-------->",
                     frameCount / (30 * 60),
                     (frameCount / 30) % 60,
                     (frameCount % 30) * 100 / 30);
                 print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBaseInv + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
             }
         } else { 
-           for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {
-                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+            s32 xOffset = 3;
+            for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2))) + xOffset;
                 s32 y = (i / 2) * -32.0f;
 
                 create_dl_translation_matrix(MENU_MTX_PUSH, x, y, 0.0f);
@@ -801,7 +829,7 @@ void process_bsm_actions(void) {
             bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
             print_set_envcolour(255, 255, 255, 255);
             for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {
-                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2)));
+                s32 x = (i % 2) * (SCREEN_CENTER_X - (xBase - (12 / 2))) + xOffset;
                 s32 y = (i / 2) * -32.0f;
 
                 sprintf(strBuf, "<COL_FFFF3F-->%d <COL_BFBFBF-->Pts.<COL_-------->", get_bsm_rank_requirement(gBSMSelectedButton, rank));

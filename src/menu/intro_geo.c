@@ -369,7 +369,7 @@ Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED voi
         gSPEndDisplayList(dl);
 
         print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered_light(x1 + 12, y1 + 12, "You beat the developer times on", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(x1 + 12, y1 + 12, "You earned a star medal on", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 255, 255, 255);
         print_small_text_buffered_light(x1 + 12, y1 + 25, "every track! Mario has been", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);

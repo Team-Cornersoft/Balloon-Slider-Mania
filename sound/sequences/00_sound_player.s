@@ -9143,6 +9143,7 @@ sound_ref .sound_bsm_narrator_pb_time_3
 sound_ref .sound_bsm_narrator_bronze_medal
 sound_ref .sound_bsm_narrator_silver_medal
 sound_ref .sound_bsm_narrator_gold_medal
+sound_ref .sound_bsm_narrator_star_medal
 sound_ref .sound_bsm_narrator_dev_time
 sound_ref .sound_bsm_narrator_mania_mode_0
 sound_ref .sound_bsm_narrator_mania_mode_1
@@ -9208,13 +9209,14 @@ narrator_sound pb_time_3,     52, 0xe5,  78
 narrator_sound bronze_medal,  53, 0xf8,  78
 narrator_sound silver_medal,  54, 0xfc,  78
 narrator_sound gold_medal,    55, 0xeb,  78
-narrator_sound dev_time,      56, 0x15e, 78
-narrator_sound mania_mode_0,  57, 0xb8,  78
-narrator_sound mania_mode_1,  58, 0xb7,  78
-narrator_sound mania_mode_2,  59, 0xa6,  78
-narrator_sound time_trials_0, 60, 0xbd,  78
-narrator_sound time_trials_1, 61, 0xc2,  78
-narrator_sound time_trials_2, 62, 0xc4,  78
+narrator_sound star_medal,    56, 0x134, 78
+narrator_sound dev_time,      57, 0x15e, 78
+narrator_sound mania_mode_0,  58, 0xb8,  78
+narrator_sound mania_mode_1,  59, 0xb7,  78
+narrator_sound mania_mode_2,  60, 0xa6,  78
+narrator_sound time_trials_0, 61, 0xbd,  78
+narrator_sound time_trials_1, 62, 0xc2,  78
+narrator_sound time_trials_2, 63, 0xc4,  78
 
 .align 2, 0
 .envelope_32C4:

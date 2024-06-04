@@ -22,7 +22,7 @@ static void bhv_bsm_menu_title_update_scale(void) {
         cur_obj_unhide();
     }
 
-    if (gBSMShowStats.isShowingStats) {
+    if (gSelectionShown != BSM_SELECTION_CREDITS) {
         o->oPosZ = 100;
     } else {
         o->oPosZ = o->oHomeZ;
