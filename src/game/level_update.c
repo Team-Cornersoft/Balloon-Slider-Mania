@@ -912,19 +912,6 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 
                     // Override warp behavior for C9
                     if (COURSE_NUM_TO_INDEX(gCurrCourseNum) == BSM_COURSE_9_CORNERSOFT_PARADE) {
-                        if (gCurrAreaIndex == 6) {
-                            sDelayedWarpTimer = 8;
-                            marioFadeFramesCarryover = sDelayedWarpTimer;
-                            play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
-                            break;
-                        }
-                        if (gCurrAreaIndex == 8) {
-                            marioWarpPresetVel = TRUE;
-                            sDelayedWarpTimer = 20;
-                            play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
-                            play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
-                            break;
-                        }
                         if (gCurrAreaIndex == 1) {
                             sDelayedWarpTimer = 30;
                             play_sound(SOUND_SPECIAL1_ELISE_WARP, gGlobalSoundSource);
@@ -932,6 +919,19 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
                             shouldFadeMarioWarp = sDelayedWarpTimer;
                             animSlowdownRate = 1.0f;
                             animTotalForward = 1.0f;
+                            break;
+                        }
+                        if (gCurrAreaIndex == 5) {
+                            marioWarpPresetVel = TRUE;
+                            sDelayedWarpTimer = 20;
+                            play_sound(SOUND_MENU_ENTER_HOLE, gGlobalSoundSource);
+                            play_transition(WARP_TRANSITION_FADE_INTO_COLOR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
+                            break;
+                        }
+                        if (gCurrAreaIndex == 6) {
+                            sDelayedWarpTimer = 8;
+                            marioFadeFramesCarryover = sDelayedWarpTimer;
+                            play_transition(WARP_TRANSITION_FADE_INTO_STAR, sDelayedWarpTimer, 0x00, 0x00, 0x00);
                             break;
                         }
 
@@ -1088,8 +1088,15 @@ void initiate_delayed_warp(void) {
                     if (sSourceWarpNodeId == WARP_NODE_DEFAULT) {
                         u32 unlockFlagsExisting = bsm_get_unlocked_special_awards();
 
-                        save_file_update_bsm_completion(gCurrSaveFileNum - 1, gBSMLastCourse, TRUE, gBSMTCSTokenCollected, -1);
-                        save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMFinalScoreCount, gBSMFrameTimer);
+                        switch (gBSMGameplayMode) {
+                            case BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS:
+                                save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, -1, gBSMFrameTimer);
+                                break;
+                            case BSM_MENU_GAMEPLAY_MODE_MANIA:
+                            default:
+                                save_file_update_bsm_completion(gCurrSaveFileNum - 1, gBSMLastCourse, TRUE, gBSMTCSTokenCollected, -1);
+                                save_file_update_bsm_score(gCurrSaveFileNum - 1, gBSMLastCourse, gBSMFinalScoreCount, 0);
+                        }
 
                         u32 newUnlockFlags = (bsm_get_unlocked_special_awards() & ~unlockFlagsExisting);
 

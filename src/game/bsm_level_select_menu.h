@@ -61,6 +61,7 @@ enum BSMMenuSelectionTypes {
 struct BSMStageProperties {
     u8 levelID;                // Level ID tied to course
     s32 baselineTime;          // Average time expected to complete the course
+    s32 developerTime;         // Fastest developer time
     char *courseName;          // Name of the BSM Course
     char *courseNameNoNewline; // Name of the BSM Course, without newlines
 };
@@ -127,8 +128,10 @@ s32 update_menu_video_buffers(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 check_image_dma_complete(UNUSED s16 arg0, UNUSED s32 arg1);
 s32 get_bsm_rank_requirement(s32 courseNum, s32 rank);
 s32 get_bsm_tt_medal_requirement(s32 courseNum, s32 medal);
+s32 get_bsm_tt_dev_time_requirement(s32 courseNum);
 s32 calculate_bsm_rank(s32 courseNum, s32 score);
 s32 calculate_bsm_tt_medal(s32 courseNum, s32 time);
+s32 bsm_beat_or_tie_dev_time(s32 courseNum, s32 time);
 void play_narrator_sound_at_random(struct BSMNarratorList *list);
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);
 

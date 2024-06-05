@@ -595,18 +595,12 @@ u8 *bsmTimeTrialsMedalTextures[BSM_NUM_MEDALS] = {
 
 void bsm_render_success_menu(void) {
     f32 alpha = 1.0f;
-    u8 isTimePB = FALSE;
-    struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
 
     s32 timeBonus = bsm_get_time_bonus(gBSMLastCourse, gBSMFrameTimer);
     s32 redBalloonBonus = bsm_get_red_balloon_bonus();
     s32 tcsTokenBonus = gBSMTCSTokenCollected ? 125 : 0;
 
     gBSMFinalScoreCount = gBSMScoreCount + timeBonus + redBalloonBonus + tcsTokenBonus;
-
-    if (bsmData[gBSMLastCourse].bestTimeInFrames > gBSMFrameTimer || bsmData[gBSMLastCourse].bestTimeInFrames == 0) {
-        isTimePB = TRUE;
-    }
 
     gClownFontColor[0] = 255;
     gClownFontColor[1] = 255;
@@ -713,7 +707,7 @@ void bsm_render_success_menu(void) {
 
     bsm_print_if_time_allows(-1, 0, "TRACK CLEAR!", SCREEN_CENTER_X, PRINT_Y_BASE + 0, FALSE, TRUE);
 
-    sprintf(strBuf, "<COL_FFFF00-->Time:<COL_--------> %d:%02d.%02d%s", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30, isTimePB ? " <RAINBOW>(Record!)<RAINBOW>" : "");
+    sprintf(strBuf, "<COL_FFFF00-->Time:<COL_--------> %d:%02d.%02d", gBSMFrameTimer / (30 * 60), (gBSMFrameTimer / 30) % 60, (gBSMFrameTimer % 30) * 100 / 30);
     bsm_print_if_time_allows(-1, 0, strBuf, SCREEN_CENTER_X, PRINT_Y_BASE + 24, TRUE, TRUE);
 }
 
@@ -753,9 +747,6 @@ void process_bsm_actions(void) {
         s32 yBase = 116;
         s32 yBaseInv = (SCREEN_HEIGHT - 16) - yBase;
         s32 yBaseTail = 16 * 2;
-        if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
-            yBaseTail = 0 * 2;
-        }
 
         bzero(gCurrEnvCol, sizeof(gCurrEnvCol));
         print_set_envcolour(255, 255, 255, 255);
@@ -807,6 +798,16 @@ void process_bsm_actions(void) {
                     (frameCount % 30) * 100 / 30);
                 print_small_text(xBase + x + 28, SCREEN_HEIGHT - (yBaseInv + y + 17), strBuf, PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
             }
+
+            print_set_envcolour(255, 159, 31, 255);
+            print_small_text(SCREEN_CENTER_X, yBase + 56, "Fastest Developer Time", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+
+            sprintf(strBuf, "<RAINBOW>%d:%02d.%02d<RAINBOW>",
+                gBSMStageProperties[gBSMSelectedButton].developerTime / (30 * 60),
+                (gBSMStageProperties[gBSMSelectedButton].developerTime / 30) % 60,
+                (gBSMStageProperties[gBSMSelectedButton].developerTime % 30) * 100 / 30);
+            print_set_envcolour(255, 255, 0, 255);
+            print_small_text(SCREEN_CENTER_X, 186, strBuf, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
         } else { 
             s32 xOffset = 3;
             for (s32 rank = BSM_NUM_RANKS - 1, i = 0; rank > 0; rank--, i++) {

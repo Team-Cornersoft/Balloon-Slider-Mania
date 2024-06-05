@@ -57,16 +57,16 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
 };
 
 static const u16 BSMTimeTrialsRanks[BSM_COURSE_COUNT][BSM_NUM_MEDALS] = {
-/*                                       Br    Sv    Gd    St    */
-    [BSM_COURSE_1_SNOWY_PEAK]        = {9999, 9998, 9997, 2071},
-    [BSM_COURSE_2_LAVA_ISLE]         = {9999, 9998, 9997, 1521},
-    [BSM_COURSE_3_FUNGI_CANYON]      = {9999, 9998, 9997, 1668},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {9999, 9998, 9997, 2746},
-    [BSM_COURSE_5_HOLIDAY_PEAK]      = {9999, 9998, 9997, 1743},
-    [BSM_COURSE_6_SCORCH_ISLE]       = {9999, 9998, 9997, 2559},
-    [BSM_COURSE_7_SPORE_CANYON]      = {9999, 9998, 9997, 1886},
-    [BSM_COURSE_8_CYBER_FEST]        = {9999, 9998, 9997, 2805},
-    [BSM_COURSE_9_CORNERSOFT_PARADE] = {9999, 9998, 9997, 3873},
+/*                                       Bronze    Silver     Gold      Star    */
+    [BSM_COURSE_1_SNOWY_PEAK]        = { 84 * 30,  81 * 30,  78 * 30,  75 * 30},
+    [BSM_COURSE_2_LAVA_ISLE]         = { 57 * 30,  54 * 30,  52 * 30,  51 * 30},
+    [BSM_COURSE_3_FUNGI_CANYON]      = { 72 * 30,  64 * 30,  58 * 30,  55 * 30},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {116 * 30, 110 * 30, 105 * 30, 102 * 30},
+    [BSM_COURSE_5_HOLIDAY_PEAK]      = { 79 * 30,  72 * 30,  67 * 30,  63 * 30},
+    [BSM_COURSE_6_SCORCH_ISLE]       = {104 * 30, 101 * 30,  98 * 30,  95 * 30},
+    [BSM_COURSE_7_SPORE_CANYON]      = { 68 * 30,  65 * 30,  63 * 30,  61 * 30},
+    [BSM_COURSE_8_CYBER_FEST]        = {103 * 30, 100 * 30,  97 * 30,  95 * 30},
+    [BSM_COURSE_9_CORNERSOFT_PARADE] = {140 * 30, 135 * 30, 132 * 30, 130 * 30},
 };
 
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
@@ -83,6 +83,10 @@ s32 get_bsm_rank_requirement(s32 courseNum, s32 rank) {
 
 s32 get_bsm_tt_medal_requirement(s32 courseNum, s32 medal) {
     return BSMTimeTrialsRanks[courseNum][medal];
+}
+
+s32 get_bsm_tt_dev_time_requirement(s32 courseNum) {
+    return gBSMStageProperties[courseNum].developerTime;
 }
 
 s32 calculate_bsm_rank(s32 courseNum, s32 score) {
@@ -104,7 +108,7 @@ s32 calculate_bsm_rank(s32 courseNum, s32 score) {
 
 s32 calculate_bsm_tt_medal(s32 courseNum, s32 time) {
     s8 medal = BSM_NUM_MEDALS - 1;
-    if (time == 0) {
+    if (time <= 0) {
         return -1;
     }
     
@@ -117,6 +121,10 @@ s32 calculate_bsm_tt_medal(s32 courseNum, s32 time) {
     }
 
     return medal;
+}
+
+s32 bsm_beat_or_tie_dev_time(s32 courseNum, s32 time) {
+    return (time > 0 && (time <= get_bsm_tt_dev_time_requirement(courseNum))); // Tie-inclusive for developer time (<= instead of <)
 }
 
 void bhv_bsm_menu_rank_or_token_init(void) {

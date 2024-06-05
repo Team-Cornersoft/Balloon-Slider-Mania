@@ -11,7 +11,7 @@ static struct ObjectHitbox sTCSTokenHitbox = {
 };
 
 void bhv_tcs_token_init(void) {
-    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS) {
+    if (gBSMGameplayMode == BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS && COURSE_NUM_TO_INDEX(gCurrCourseNum) != BSM_COURSE_9_CORNERSOFT_PARADE) {
         obj_mark_for_deletion(o);
         return;
     }

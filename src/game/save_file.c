@@ -842,7 +842,7 @@ void save_file_update_bsm_score(s32 fileIndex, s32 courseIndex, s32 score, s32 t
         timeInFrames = (u16) -1;
     }
 
-    if (score > gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score == (u16) -1)) {
+    if (score >= 0 && (score > gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score || (gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score == (u16) -1))) {
         gSaveBuffer.files[fileIndex][0].bsmCourseData[courseIndex].score = score;
         gSaveBuffer.files[fileIndex][0].flags |= SAVE_FLAG_FILE_EXISTS;
         gSaveFileModified = TRUE;

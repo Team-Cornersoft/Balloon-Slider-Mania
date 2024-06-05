@@ -157,15 +157,16 @@ struct BSMNarratorList gBSMNarratorManiaMode   = {bsmNarratorManiaModeList,   -1
 struct BSMNarratorList gBSMNarratorTimeTrials  = {bsmNarratorTimeTrialsList,  -1, ARRAY_COUNT(bsmNarratorTimeTrialsList) };
 
 struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
-    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
-    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .courseName = "Aqueduct\nFlow"    , .courseNameNoNewline = "Aqueduct Flow"    },
-    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
-    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
-    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
-    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
-    {.levelID = LEVEL_LLL, .baselineTime =  75 * 30, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
-    {.levelID = LEVEL_SSL, .baselineTime = 120 * 30, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
-    {.levelID = LEVEL_DDD, .baselineTime = 150 * 30, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
+    {.levelID = LEVEL_BOB, .baselineTime = 110 * 30, .developerTime = 2050, .courseName = "Snowy\nPeak"       , .courseNameNoNewline = "Snowy Peak"       },
+    {.levelID = LEVEL_WF,  .baselineTime =  60 * 30, .developerTime = 1508, .courseName = "Aqueduct\nFlow"    , .courseNameNoNewline = "Aqueduct Flow"    },
+    {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .developerTime = 1594, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
+    {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .developerTime = 2937, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
+    {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .developerTime = 1710, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
+    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .developerTime = 2190, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
+    {.levelID = LEVEL_LLL, .baselineTime =  75 * 30, .developerTime = 1739, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
+    {.levelID = LEVEL_SSL, .baselineTime = 120 * 30, .developerTime = 2730, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
+    {.levelID = LEVEL_DDD, .baselineTime = 150 * 30, .developerTime = 3864, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
+
 };
 
 struct Object *bsmMenuLevels[BSM_COURSE_COUNT];
@@ -243,6 +244,8 @@ static void bsm_manager_render_stage_name(void) {
 }
 
 static void bsm_manager_render_stats(void) {
+    const char *wave = "<WAVE>";
+    const char *rainbow = "<RAINBOW>";
     struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
 
     for (s32 i = 0; i < BSM_COURSE_COUNT; i++) {
@@ -278,12 +281,11 @@ static void bsm_manager_render_stats(void) {
                     milliseconds = 99;
                 }
 
+                u8 displayRainbow = bsm_beat_or_tie_dev_time(i, bsmData[i].bestTimeInFrames);
+                u8 displayWave = get_selcted_menu_object(i)->oBSMMenuIsSelected;
+
                 print_set_envcolour(255, 255, 0, 255);
-                if (get_selcted_menu_object(i)->oBSMMenuIsSelected) {
-                    sprintf(strBuffer, "<WAVE>%d:%02d.%02d<WAVE>", minutes, seconds, milliseconds);
-                } else {
-                    sprintf(strBuffer, "%d:%02d.%02d", minutes, seconds, milliseconds);
-                }
+                sprintf(strBuffer, "%s%s%d:%02d.%02d%s%s", displayRainbow ? rainbow : "", displayWave ? wave : "", minutes, seconds, milliseconds, displayWave ? wave : "", displayRainbow ? rainbow : "");
             }
 
             print_small_text_buffered(x, y, strBuffer, PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
