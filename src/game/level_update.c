@@ -1976,7 +1976,7 @@ s32 bsm_menu_selection_made(s16 setToLastLevel, UNUSED s32 arg1) {
     sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
     sWarpDest.arg = WARP_FLAGS_NONE;
 
-    if (gFBEEnabled) {
+    if (gFBEEnabled && !gWidescreenViewportEnabled) {
         set_warp_transition_rgb(0x00, 0x00, 0x00);
     }
 

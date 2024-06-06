@@ -485,7 +485,7 @@ void geo_process_perspective(struct GraphNodePerspective *node) {
             f32 width = 300.0f * sAspectRatio;
 
             if (gMenuWarpCounter) {
-                if (gFBEEnabled) {
+                if (gFBEEnabled && !gWidescreenViewportEnabled) {
                     if (gMenuWarpCounter > 2) {
                         widthConstant *= 1.0f - ((gMenuWarpCounter - 2) * (gMenuWarpCounter - 3) * 0.00008f);
                         heightConstant *= 1.0f + (0.125f / (2.25f + gMenuWarpCounter));

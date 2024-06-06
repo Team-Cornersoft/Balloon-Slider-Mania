@@ -29,6 +29,7 @@
 
 s32 gConsoleOffsetDiffX = 0;
 s32 gConsoleOffsetDiffY = 0;
+s32 gWidescreenViewportEnabled = FALSE;
 s32 gWidescreenViewportOffset = 0;
 
 #ifdef BREATH_METER

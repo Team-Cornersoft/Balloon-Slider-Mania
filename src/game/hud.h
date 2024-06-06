@@ -59,6 +59,7 @@ enum BalloonTypes {
 
 extern s32 gConsoleOffsetDiffX;
 extern s32 gConsoleOffsetDiffY;
+extern s32 gWidescreenViewportEnabled;
 extern s32 gWidescreenViewportOffset;
 
 struct BalloonTypeProperties {

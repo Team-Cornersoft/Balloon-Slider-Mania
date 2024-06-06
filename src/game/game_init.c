@@ -486,7 +486,7 @@ void select_gfx_pool(void) {
 
 static void render_fbe_transition(void) {
     if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
-        if (gFBEEnabled) {
+        if (gFBEEnabled && !gWidescreenViewportEnabled) {
             RGBA16 *fb = gFramebuffers[sRenderedFramebuffer] - SCREEN_WIDTH;
             s32 pixelOffset = ((gMenuWarpCounter - 4) * (gMenuWarpCounter - 2)) - 25;
             s32 width;
@@ -891,12 +891,13 @@ void thread5_game_loop(UNUSED void *arg) {
 #endif
     render_init();
 
-    // if (gSupportsLibpl) {
-    //     const lpl_plugin_info *libplPluginInfo = libpl_get_graphics_plugin();
-    //     if (libplPluginInfo->capabilities & LPL_WIDESCREEN_VIEWPORT) {
-    //         gWidescreenViewportOffset = 20; // This doesn't work with scissor I guess...
-    //     }
-    // }
+    if (gSupportsLibpl) {
+        const lpl_plugin_info *libplPluginInfo = libpl_get_graphics_plugin();
+        if (libplPluginInfo->capabilities & LPL_WIDESCREEN_VIEWPORT) {
+            gWidescreenViewportEnabled = TRUE;
+            // gWidescreenViewportOffset = 20; // This doesn't work with scissor I guess...
+        }
+    }
     gConsoleOffsetDiffY = (gEmulator & EMU_CONSOLE) ? 0 : EMULATOR_DIFF;
     gConsoleOffsetDiffX = gConsoleOffsetDiffY + gWidescreenViewportOffset;
 
