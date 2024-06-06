@@ -40,6 +40,13 @@
 #define FAST_VERTICAL_CAMERA_MOVEMENT
 
 /**
+ * Enables camera collision for 8 direction camera and, by extension, to Parallel Lakitu cam or Reonucam if enabled.
+ * If you enable it, please consider using surface types with the SURFACE_FLAG_NO_CAM_COLLISION flag for small obstacles,
+ * such as fences, pillars, signs, etc, in order to make your game more enjoyable and not let the camera get in the way of gameplay.
+ */
+#define EIGHT_DIR_CAMERA_COLLISION
+
+/**
  * Enables "parallel lakitu camera" or "aglab cam" which lets you move the camera smoothly with the D-pad.
  */
 #define PARALLEL_LAKITU_CAM

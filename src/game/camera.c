@@ -1116,6 +1116,53 @@ s32 snap_to_45_degrees(s16 angle) {
     return angle;
 }
 
+#ifdef EIGHT_DIR_CAMERA_COLLISION
+
+// #define MIN_CAMERA_DISTANCE 300.0f // Minimum distance between Mario and the camera.
+#define MIN_CAMERA_DISTANCE 30.0f // Minimum distance between Mario and the camera.
+#define VERTICAL_RAY_OFFSET 300.0f // The ray is cast from 300 units above Mario in order to prevent small obstacles from constantly snapping the camera
+
+void eight_dir_collision_handler(struct Camera *c) {
+    struct Surface *surf;
+
+    Vec3f camdir;
+    Vec3f origin;
+    Vec3f thick;
+    Vec3f hitpos;
+
+    vec3f_copy(origin,gMarioState->pos);
+
+    origin[1] += VERTICAL_RAY_OFFSET; 
+    camdir[0] = c->pos[0] - origin[0];
+    camdir[1] = c->pos[1] - origin[1];
+    camdir[2] = c->pos[2] - origin[2];
+
+    find_surface_on_ray(origin, camdir, &surf, hitpos, (RAYCAST_FIND_FLOOR | RAYCAST_FIND_WALL | RAYCAST_FIND_CEIL));
+
+    if (surf) {
+        f32 distFromSurf = 100.0f;
+        f32 dist;
+        f32 yDist = 0;
+        Vec3f camToMario;
+        vec3f_diff(camToMario, gMarioState->pos, hitpos);
+        s16 yaw = atan2s(camToMario[2], camToMario[0]);
+        vec3f_get_lateral_dist(hitpos,gMarioState->pos, &dist);
+        if (dist < MIN_CAMERA_DISTANCE) {
+            distFromSurf += (dist - MIN_CAMERA_DISTANCE); // If Mario runs right up to the screen, the camera pull back slightly...
+            yDist = MIN_CAMERA_DISTANCE - CLAMP(dist, 0, MIN_CAMERA_DISTANCE); // ...and also up slightly.
+        }
+        thick[0] = sins(yaw) * distFromSurf;
+        thick[1] = yDist;
+        thick[2] = coss(yaw) * distFromSurf;
+        vec3f_add(hitpos,thick);
+        vec3f_copy(c->pos,hitpos);
+    }
+
+    c->yaw = atan2s(c->pos[2] - gMarioState->pos[2], c->pos[0] - gMarioState->pos[0]);
+
+}
+#endif
+
 /**
  * A mode that only has 8 camera angles, 45 degrees apart
  */
@@ -1154,6 +1201,9 @@ void mode_8_directions_camera(struct Camera *c) {
     c->nextYaw = update_8_directions_camera(c, c->focus, pos);
     c->pos[0] = pos[0];
     c->pos[2] = pos[2];
+#ifdef EIGHT_DIR_CAMERA_COLLISION
+    eight_dir_collision_handler(c);
+#endif
     sAreaYawChange = sAreaYaw - oldAreaYaw;
     set_camera_height(c, pos[1]);
 }
