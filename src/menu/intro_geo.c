@@ -337,7 +337,7 @@ Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED voi
         s32 x2 = SCREEN_CENTER_X + 116;
         s32 y2 = SCREEN_CENTER_Y + 53;
 
-        s32 xSprite = x1 + 12 + 102;
+        s32 xSprite = x1 + 12 + 52;
         s32 ySprite = y1 + 38 - 2;
 
         u8 r = 63;
@@ -369,16 +369,16 @@ Gfx *geo_wing_mario_message(s32 state, UNUSED struct GraphNode *node, UNUSED voi
         gSPEndDisplayList(dl);
 
         print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered_light(x1 + 12, y1 + 12, "You earned a star medal on", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(x1 + 12, y1 + 12, "You earned a star medal on every", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered_light(x1 + 12, y1 + 25, "every track! Mario has been", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(x1 + 12, y1 + 25, "track! Mario has been given a", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered_light(x1 + 12, y1 + 38, "transformed into", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(x1 + 12, y1 + 38, "cosmetic", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 255, 255, 255);
-        print_small_text_buffered_light(xSprite + 19, y1 + 38, "Wing Mario!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
+        print_small_text_buffered_light(xSprite + 19, y1 + 38, "Wing Cap!", PRINT_TEXT_ALIGN_LEFT, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);
 
         print_set_envcolour(255, 255, 63, 255);
         print_small_text_buffered(SCREEN_CENTER_X, y1 + 69, "Thank you for playing", PRINT_TEXT_ALIGN_CENTER, PRINT_ALL, FONT_BALLOON_SLIDER_MANIA);

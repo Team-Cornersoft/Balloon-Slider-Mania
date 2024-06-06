@@ -59,13 +59,13 @@ static const u16 BSMGRanks[BSM_COURSE_COUNT] = {
 static const u16 BSMTimeTrialsRanks[BSM_COURSE_COUNT][BSM_NUM_MEDALS] = {
 /*                                       Bronze    Silver     Gold      Star    */
     [BSM_COURSE_1_SNOWY_PEAK]        = { 84 * 30,  81 * 30,  78 * 30,  75 * 30},
-    [BSM_COURSE_2_LAVA_ISLE]         = { 57 * 30,  54 * 30,  52 * 30,  51 * 30},
+    [BSM_COURSE_2_LAVA_ISLE]         = { 57 * 30,  55 * 30,  53 * 30,  52 * 30},
     [BSM_COURSE_3_FUNGI_CANYON]      = { 72 * 30,  64 * 30,  58 * 30,  55 * 30},
-    [BSM_COURSE_4_STARLIGHT_FEST]    = {116 * 30, 110 * 30, 105 * 30, 102 * 30},
+    [BSM_COURSE_4_STARLIGHT_FEST]    = {116 * 30, 110 * 30, 106 * 30, 103 * 30},
     [BSM_COURSE_5_HOLIDAY_PEAK]      = { 79 * 30,  72 * 30,  67 * 30,  63 * 30},
     [BSM_COURSE_6_SCORCH_ISLE]       = {104 * 30, 101 * 30,  98 * 30,  95 * 30},
     [BSM_COURSE_7_SPORE_CANYON]      = { 68 * 30,  65 * 30,  63 * 30,  61 * 30},
-    [BSM_COURSE_8_CYBER_FEST]        = {103 * 30, 100 * 30,  97 * 30,  95 * 30},
+    [BSM_COURSE_8_CYBER_FEST]        = {104 * 30, 101 * 30,  98 * 30,  96 * 30},
     [BSM_COURSE_9_CORNERSOFT_PARADE] = {140 * 30, 135 * 30, 132 * 30, 130 * 30},
 };
 

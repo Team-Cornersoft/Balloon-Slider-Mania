@@ -162,7 +162,7 @@ struct BSMStageProperties gBSMStageProperties[BSM_COURSE_COUNT] = {
     {.levelID = LEVEL_JRB, .baselineTime =  90 * 30, .developerTime = 1594, .courseName = "Fungi\nCanyon"     , .courseNameNoNewline = "Fungi Canyon"     },
     {.levelID = LEVEL_CCM, .baselineTime = 140 * 30, .developerTime = 2937, .courseName = "Starlight\nFest"   , .courseNameNoNewline = "Starlight Fest"   },
     {.levelID = LEVEL_BBH, .baselineTime =  95 * 30, .developerTime = 1710, .courseName = "Holiday\nPeak"     , .courseNameNoNewline = "Holiday Peak"     },
-    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .developerTime = 2190, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
+    {.levelID = LEVEL_HMC, .baselineTime = 110 * 30, .developerTime = 2084, .courseName = "Dragon\nFlow"      , .courseNameNoNewline = "Dragon Flow"      },
     {.levelID = LEVEL_LLL, .baselineTime =  75 * 30, .developerTime = 1739, .courseName = "Twilight\nCanyon"  , .courseNameNoNewline = "Twilight Canyon"  },
     {.levelID = LEVEL_SSL, .baselineTime = 120 * 30, .developerTime = 2730, .courseName = "Cyber\nFest"       , .courseNameNoNewline = "Cyber Fest"       },
     {.levelID = LEVEL_DDD, .baselineTime = 150 * 30, .developerTime = 3864, .courseName = "Cornersoft\nParade", .courseNameNoNewline = "Cornersoft Parade"},
