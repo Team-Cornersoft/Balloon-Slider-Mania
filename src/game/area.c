@@ -720,11 +720,14 @@ void bsm_render_success_menu_time_trials(void) {
     const s32 fadeAlphaMedalStart = 30;
     struct BSMCourseData *bsmData = save_file_get_bsm_data(gCurrSaveFileNum - 1);
     s32 oldTime = bsmData[gBSMLastCourse].bestTimeInFrames;
+    if (oldTime <= 0) {
+        oldTime = S32_MAX;
+    }
 
     f32 alpha = 1.0f;
 
     u8 isTimePB = FALSE;
-    if (((s32) gBSMFrameTimer > 0) && (oldTime > (s32) gBSMFrameTimer || oldTime == 0)) {
+    if (((s32) gBSMFrameTimer > 0) && (oldTime > (s32) gBSMFrameTimer)) {
         isTimePB = TRUE;
     }
 
