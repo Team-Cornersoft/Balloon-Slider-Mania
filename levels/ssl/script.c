@@ -131,6 +131,8 @@ const LevelScript level_ssl_entry[] = {
 		SET_BACKGROUND_MUSIC(0x00, SEQ_CUSTOM_COURSE8_CYBER),
 		TERRAIN_TYPE(TERRAIN_SLIDE),
 		/* Fast64 begin persistent block [area commands] */
+		OBJECT(MODEL_BSM_POINT_BALLOON, 9015, 3720, -3250, 0, -90, 0, 0x00000000, bhvPointBalloon),
+		OBJECT(MODEL_BSM_POINT_BALLOON, 7825, 3722, -2775, 0, -45, 0, 0x00000000, bhvPointBalloon),
 		SET_BACKGROUND_MUSIC_WITH_REVERB(0x00, SEQ_CUSTOM_COURSE8_CYBER, BRPRESET_BSM_C4_GENERAL, BRPRESET_BSM_C4_GENERAL),
 		SET_ECHO(0x18, 0x18),
 		/* Fast64 end persistent block [area commands] */

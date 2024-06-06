@@ -14,6 +14,7 @@
 #include "audio/external.h"
 #include "mario_actions_moving.h"
 #include "obj_behaviors.h"
+#include "rendering_graph_node.h"
 #include "level_geo.h"
 
 /**
@@ -569,7 +570,7 @@ Gfx *envfx_update_particles(s32 mode, Vec3s marioPos, Vec3s camTo, Vec3s camFrom
             return NULL;
 
         case ENVFX_RAIN:
-            if (gEmulator & EMU_CONSOLE) {
+            if (gEmulator & NO_CULLING_EMULATOR_BLACKLIST) {
                 return NULL;
             }
             play_sound(SOUND_CUSTOM_STEREO_RAIN, gGlobalSoundSource);
@@ -581,6 +582,10 @@ Gfx *envfx_update_particles(s32 mode, Vec3s marioPos, Vec3s camTo, Vec3s camFrom
 
         default:
             return NULL;
+    }
+
+    if (gEmulator & NO_CULLING_EMULATOR_BLACKLIST) {
+        return NULL;
     }
 
     gfx = envfx_update_snow(mode, marioPos, camFrom, camTo);
