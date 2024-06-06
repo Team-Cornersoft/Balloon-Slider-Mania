@@ -36,7 +36,7 @@
 
 enum BSMMenuLayoutBGState gBSMMenuLayoutBGState = BSM_MENU_LAYOUT_BG_MINIMAL;
 enum BSMMenuSelectionTypes gSelectionShown = BSM_SELECTION_NONE;
-enum BSMMenuGameplayMode gBSMGameplayMode = BSM_MENU_GAMEPLAY_MODE_TIME_TRIALS;
+enum BSMMenuGameplayMode gBSMGameplayMode = BSM_MENU_GAMEPLAY_MODE_MANIA;
 u8 gBSMInitialized = FALSE;
 u8 gUsingEliseModel = FALSE;
 u8 gDisplayEliseMessage = FALSE;
