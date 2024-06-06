@@ -77,6 +77,30 @@ void play_narrator_sound_at_random_by_rank_id(u8 rankIndex) {
     play_narrator_sound_at_random(rankNarratorLists[rankIndex]);
 }
 
+void play_narrator_sound_for_time_trials(s32 bsmCourse, s32 newMedal, s32 oldMedal, s32 newTime, s32 oldTime) {
+    // If no PB or medal isn't real, early return.
+    if (newMedal >= BSM_NUM_MEDALS || oldTime < newTime) {
+        return;
+    }
+
+    s32 devTime = get_bsm_tt_dev_time_requirement(bsmCourse);
+
+    // If beat dev time for first time, play dev time sound.
+    if (devTime < oldTime && devTime >= newTime) {
+        play_sound(SOUND_NARRATION_BSM_DEV_TIME, gGlobalSoundSource);
+        return;
+    }
+
+    // If earning a new medal for first time, play appropriate medal sound.
+    if (newMedal >= 0 && newMedal > oldMedal) {
+        play_sound(SOUND_NARRATION_BSM_BRONZE_MEDAL + (newMedal << SOUNDARGS_SHIFT_SOUNDID), gGlobalSoundSource);
+        return;
+    }
+
+    // By process of elimination, this was a PB with no medal promotion.
+    play_narrator_sound_at_random(&gBSMNarratorPBTime);
+}
+
 s32 get_bsm_rank_requirement(s32 courseNum, s32 rank) {
     return (BSMGRanks[courseNum] * (1.0f - (G_RANK_MULT * ((BSM_NUM_RANKS - 1) - rank))));
 }

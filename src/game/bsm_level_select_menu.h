@@ -134,6 +134,7 @@ s32 calculate_bsm_tt_medal(s32 courseNum, s32 time);
 s32 bsm_beat_or_tie_dev_time(s32 courseNum, s32 time);
 void play_narrator_sound_at_random(struct BSMNarratorList *list);
 void play_narrator_sound_at_random_by_rank_id(u8 rankIndex);
+void play_narrator_sound_for_time_trials(s32 bsmCourse, s32 newMedal, s32 oldMedal, s32 newTime, s32 oldTime);
 
 struct Object *get_selcted_menu_object(u8 button);
 

@@ -76,7 +76,11 @@ const s8 clownFontKerning[][2] = {
     {3,  9}, // '
     {1, 11}, // "
     {0, 14}, // Umlaut
+    {0, 15}, // BSM Elise
+    {0, 15}, // BSM Gold Mario
+    {0, 15}, // BSM Wing Mario
     {1, 14}, // BSM Balloon
+    {1, 14}, // BSM Balloon Invis
     {1, 13}, // BSM Key
     {1, 13}, // BSM Key Invis
     {0, 15}, // BSM TCS Token
