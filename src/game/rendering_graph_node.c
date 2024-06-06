@@ -2,6 +2,7 @@
 
 #include "area.h"
 #include "engine/math_util.h"
+#include "hud.h"
 #include "game_init.h"
 #include "gfx_dimensions.h"
 #include "main.h"
@@ -10,7 +11,6 @@
 #include "rendering_graph_node.h"
 #include "shadow.h"
 #include "sm64.h"
-#include "game_init.h"
 #include "puppyprint.h"
 #include "debug_box.h"
 #include "level_update.h"
