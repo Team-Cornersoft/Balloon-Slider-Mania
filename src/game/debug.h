@@ -40,9 +40,9 @@ void try_print_debug_mario_level_info(void);
 #define try_print_debug_mario_level_info()
 #endif
 
-extern char *__n64Assert_Filename;
-extern u32   __n64Assert_LineNum;
-extern char *__n64Assert_Message;
+extern SECTION_DATA char *__n64Assert_Filename;
+extern SECTION_DATA u32   __n64Assert_LineNum;
+extern SECTION_DATA char *__n64Assert_Message;
 extern void __n64Assert(char *fileName, u32 lineNum, char *message);
 
 /**

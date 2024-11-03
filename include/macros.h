@@ -103,6 +103,17 @@
 #define ALIGNED64
 #endif
 
+// Assign to a section type.
+#if defined(SDATA) && defined(__GNUC__)
+#define SECTION(x) __attribute__((section(x)))
+#define SECTION_BSS  SECTION(".bss")
+#define SECTION_DATA SECTION(".data")
+#else
+#define SECTION(x)
+#define SECTION_BSS
+#define SECTION_DATA
+#endif
+
 #ifndef ALIGN
 #define ALIGN(VAL_, ALIGNMENT_) (((VAL_) + ((ALIGNMENT_) - 1)) & ~((ALIGNMENT_) - 1))
 #endif

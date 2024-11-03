@@ -81,6 +81,20 @@ extern "C" {
  *
  */
 
+#if defined(SDATA) && defined(__GNUC__)
+extern __attribute__((section(".data"))) s32 	osRomType;	/* Bulk or cartridge ROM. 0=cartridge 1=bulk */
+extern __attribute__((section(".data"))) void 	*osRomBase;	/* Rom base address of the game image */
+extern __attribute__((section(".data"))) s32 	osTvType;	/* 0 = PAL, 1 = NTSC, 2 = MPAL */
+extern __attribute__((section(".data"))) s32 	osResetType;	/* 0 = cold reset, 1 = NMI */
+extern __attribute__((section(".data"))) s32 	osCicId;
+extern __attribute__((section(".data"))) s32 	osVersion;
+extern __attribute__((section(".data"))) u32	osMemSize;	/* Memory Size */
+extern s32 osAppNMIBuffer[];
+
+extern __attribute__((section(".data"))) u64	osClockRate;
+
+extern __attribute__((section(".data"))) OSIntMask __OSGlobalIntMask;	/* global interrupt mask */
+#else
 extern s32 	osRomType;	/* Bulk or cartridge ROM. 0=cartridge 1=bulk */
 extern void 	*osRomBase;	/* Rom base address of the game image */
 extern s32 	osTvType;	/* 0 = PAL, 1 = NTSC, 2 = MPAL */
@@ -93,6 +107,7 @@ extern s32	osAppNMIBuffer[];
 extern u64	osClockRate;
 
 extern OSIntMask __OSGlobalIntMask;	/* global interrupt mask */
+#endif
 
 
 /**************************************************************************

@@ -47,7 +47,7 @@ struct RumbleSettings {
     s16 decay;
 };
 
-extern struct Config gConfig;
+extern SECTION_BSS struct Config gConfig;
 
 // extern OSThread gUnkThread;
 extern OSThread gIdleThread;
@@ -73,10 +73,10 @@ extern OSMesg gPIMesgBuf[32];
 extern OSMesg gSIEventMesgBuf[1];
 extern OSMesg gIntrMesgBuf[16];
 extern OSMesg gUnknownMesgBuf[16];
-extern OSIoMesg gDmaIoMesg;
-extern OSMesg gMainReceivedMesg;
-extern OSMesgQueue gDmaMesgQueue;
-extern OSMesgQueue gSIEventMesgQueue;
+extern SECTION_BSS OSIoMesg gDmaIoMesg;
+extern SECTION_BSS OSMesg gMainReceivedMesg;
+extern SECTION_BSS OSMesgQueue gDmaMesgQueue;
+extern SECTION_BSS OSMesgQueue gSIEventMesgQueue;
 #if ENABLE_RUMBLE
 extern OSMesg gRumblePakSchedulerMesgBuf[1];
 extern OSMesg gRumbleThreadVIMesgBuf[1];
@@ -88,13 +88,13 @@ extern struct RumbleSettings gCurrRumbleSettings;
 extern struct VblankHandler *gVblankHandler1;
 extern struct VblankHandler *gVblankHandler2;
 extern struct SPTask *gActiveSPTask;
-extern s8 gAudioEnabled;
-extern u32 gNumVblanks;
-extern s8 gResetTimer;
-extern s8 gNmiResetBarsTimer;
-extern s8 gDebugLevelSelect;
+extern SECTION_DATA s8 gAudioEnabled;
+extern SECTION_BSS u32 gNumVblanks;
+extern SECTION_BSS s8 gResetTimer;
+extern SECTION_BSS s8 gNmiResetBarsTimer;
+extern SECTION_BSS s8 gDebugLevelSelect;
 #ifdef VANILLA_DEBUG
-extern s8 gShowDebugText;
+extern SECTION_DATA s8 gShowDebugText;
 #endif
 
 // Special struct that keeps track of whether its timer has been set.
@@ -111,5 +111,11 @@ void set_vblank_handler(s32 index, struct VblankHandler *handler, OSMesgQueue *q
 void dispatch_audio_sptask(struct SPTask *spTask);
 void exec_display_list(struct SPTask *spTask);
 void change_vi(OSViMode *mode, int width, int height);
+
+#ifdef SDATA
+void setgp(void);
+#else
+#define setgp()
+#endif
 
 #endif // MAIN_H

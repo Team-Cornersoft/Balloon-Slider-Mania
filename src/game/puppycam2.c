@@ -402,7 +402,7 @@ void puppycam_render_option_text(void) {
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
 }
 
-extern struct SaveBuffer gSaveBuffer;
+extern SECTION_BSS struct SaveBuffer gSaveBuffer;
 
 void puppycam_check_pause_buttons(void) {
     if (gPlayer1Controller->buttonPressed & R_TRIG) {

@@ -545,6 +545,8 @@ void set_hud_camera_status(s16 status) {
     sCameraHUD.status = status;
 }
 
+extern SECTION_DATA Texture *main_hud_camera_lut[];
+
 /**
  * Renders camera HUD glyphs using a table list, depending of
  * the camera status called, a defined glyph is rendered.

@@ -2,6 +2,7 @@
 #include <PR/os_internal_error.h>
 #include <stdarg.h>
 #include <string.h>
+#include "macros.h"
 #include "segments.h"
 
 #define STACK_TRAVERSAL_LIMIT 100
@@ -14,7 +15,7 @@ struct MapEntry {
 };
 extern u8 gMapStrings[];
 extern struct MapEntry gMapEntries[];
-extern u32 gMapEntrySize;
+extern SECTION_DATA u32 gMapEntrySize;
 extern u8 _mapDataSegmentRomStart[];
 
 

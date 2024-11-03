@@ -165,7 +165,7 @@ typedef struct
     /* 0xC */ u8 l_trig;
     /* 0xD */ u8 r_trig;
 } __OSContGCNShortPollFormat;
-extern u8 __osContLastCmd;
+extern SECTION_DATA u8 __osContLastCmd;
 u8 __osGamecubeRumbleEnabled[MAXCONTROLLERS];
 
 typedef struct
@@ -370,9 +370,9 @@ static u16 __osTranslateGCNButtons(u16 input, s32 c_stick_x, s32 c_stick_y) {
 
 extern s32 __osContinitialized;
 
-extern OSPifRam __osContPifRam;
-extern u8 __osContLastCmd;
-extern u8 __osMaxControllers;
+extern SECTION_DATA OSPifRam __osContPifRam;
+extern SECTION_DATA u8 __osContLastCmd;
+extern SECTION_DATA u8 __osMaxControllers;
 extern u8 __osGamecubeRumbleEnabled[MAXCONTROLLERS];
 
 extern OSTimer __osEepromTimer;

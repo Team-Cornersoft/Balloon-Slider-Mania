@@ -53,10 +53,13 @@ DECLARE_SEGMENT(assets)
 extern u8 _goddardSegmentStart[];
 extern u8 _goddardSegmentEnd[];
 extern u8 _engineSegmentStart[];
+extern u8 _engineSegmentEnd[];
+extern u8 _engineSegmentBssStart[];
 extern u8 _engineSegmentBssEnd[];
 extern u8 _mainSegmentStart[];
 extern u8 _mainSegmentEnd[];
-extern u8 _engineSegmentEnd[];
+extern u8 _mainSegmentBssStart[];
+extern u8 _mainSegmentBssEnd[];
 extern u8 _framebuffersSegmentBssStart[];
 extern u8 _framebuffersSegmentBssEnd[];
 extern u8 _zbufferSegmentBssStart[];
@@ -65,6 +68,16 @@ extern u8 _buffersSegmentBssStart[];
 extern u8 _buffersSegmentBssEnd[];
 extern u8 _dmaDataSegmentRomStart[];
 extern u8 _dmaDataSegmentRomEnd[];
+
+#ifdef SDATA
+extern u8 _sbssSegmentBssStart[];
+extern u8 _sbssSegmentBssEnd[];
+extern u8 _sdataSegmentStart[];
+extern u8 _sdataSegmentEnd[];
+extern u8 _sdataSegmentRomStart[];
+extern u8 _sdataSegmentRomEnd[];
+extern u8 _gp[];
+#endif
 
 DECLARE_LEVEL_SEGMENT(menu)
 DECLARE_LEVEL_SEGMENT(intro)

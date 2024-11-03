@@ -31,7 +31,7 @@ u16 SAVE_FILE_MAGIC = 0x4441;
 
 //STATIC_ASSERT(sizeof(struct SaveBuffer) == EEPROM_SIZE, "eeprom buffer size must match");
 
-extern struct SaveBuffer gSaveBuffer;
+extern SECTION_BSS struct SaveBuffer gSaveBuffer;
 
 struct WarpCheckpoint gWarpCheckpoint;
 

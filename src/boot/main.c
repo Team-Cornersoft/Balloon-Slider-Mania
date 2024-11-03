@@ -342,11 +342,18 @@ void check_stack_validity(void) {
 }
 #endif
 
-
+#ifdef SDATA
+extern void load_sdata(void);
+#else
+#define load_sdata()
+#endif
 extern void crash_screen_init(void);
 extern OSViMode VI;
+
 void thread3_main(UNUSED void *arg) {
+    setgp();
     setup_mesg_queues();
+    load_sdata();
     alloc_pool();
     load_engine_code_segment();
     detect_emulator();
@@ -504,6 +511,8 @@ void change_vi(OSViMode *mode, int width, int height) {
 }
 
 void get_audio_frequency(void) {
+    gConfig.audioFrequency = 1.0f;
+
     switch (gConfig.tvType) {
 #if defined(VERSION_JP) || defined(VERSION_US)
     case MODE_NTSC: gConfig.audioFrequency = 1.0f;    break;
@@ -521,6 +530,7 @@ void get_audio_frequency(void) {
  * Initialize hardware, start main thread, then idle.
  */
 void thread1_idle(UNUSED void *arg) {
+    setgp();
     osCreateViManager(OS_PRIORITY_VIMGR);
     switch (osTvType) {
         case OS_TV_NTSC:
@@ -579,6 +589,7 @@ void osInitialize_fakeisv() {
 #endif
 
 void main_func(void) {
+    setgp();
     ClearRAM();
     __osInitialize_common();
 #ifdef ISVPRINT

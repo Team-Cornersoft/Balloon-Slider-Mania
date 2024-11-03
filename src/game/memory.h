@@ -40,7 +40,7 @@ struct DmaHandlerList {
 
 #define EFFECTS_MEMORY_POOL 0x4000
 
-extern struct MemoryPool *gEffectsMemoryPool;
+extern SECTION_BSS struct MemoryPool *gEffectsMemoryPool;
 
 uintptr_t set_segment_base_addr(s32 segment, void *addr);
 void *get_segment_base_addr(s32 segment);
