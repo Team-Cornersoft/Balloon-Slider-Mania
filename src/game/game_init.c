@@ -361,11 +361,7 @@ void create_gfx_task_structure(void) {
     gGfxSPTask->task.t.yield_data_ptr = (u64 *) gGfxSPTaskYieldBuffer;
     gGfxSPTask->task.t.yield_data_size = OS_YIELD_DATA_SIZE;
 
-#ifdef PUPPYPRINT_DEBUG
-    if (!fDebug) {
-        assert(((u32)gDisplayListHead - ((u32)gGfxPool->buffer)) / 4 < ASSERTED_GFX_POOL_SIZE, "GFX too heavy! please split area!");
-    }
-#endif
+    assert((u8*) gDisplayListHead < gGfxPoolEnd, "GFX pool exceeded!");
 }
 
 /**

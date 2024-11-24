@@ -4,6 +4,7 @@
 
 #include "buffers/buffers.h"
 #include "slidec.h"
+#include "game/debug.h"
 #include "game/game_init.h"
 #include "game/main.h"
 #include "game/memory.h"
@@ -612,6 +613,8 @@ void *alloc_display_list(u32 size) {
     if (gGfxPoolEnd - size >= (u8 *) gDisplayListHead) {
         gGfxPoolEnd -= size;
         ptr = gGfxPoolEnd;
+    } else {
+        error("GFX pool exceeded!!");
     }
     return ptr;
 }
