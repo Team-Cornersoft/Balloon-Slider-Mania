@@ -584,7 +584,7 @@ ifneq (,$(call find-command,armips))
 else
   RSPASM              := $(TOOLS_DIR)/armips
 endif
-EMULATOR = mupen64plus
+EMULATOR = "/mnt/c/Program Files/parallel-launcher/parallel-launcher.exe"
 EMU_FLAGS =
 
 ifneq (,$(call find-command,wslview))
