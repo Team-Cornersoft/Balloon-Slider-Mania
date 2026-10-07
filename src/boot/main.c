@@ -23,16 +23,6 @@
 #include "game/profiling.h"
 #include "game/emutest.h"
 
-// Message IDs
-enum MessageIDs {
-    MESG_SP_COMPLETE = 100,
-    MESG_DP_COMPLETE,
-    MESG_VI_VBLANK,
-    MESG_START_GFX_SPTASK,
-    MESG_NMI_REQUEST,
-    MESG_RCP_HUNG,
-};
-
 // OSThread gUnkThread; // unused?
 OSThread gIdleThread;
 OSThread gMainThread;
@@ -58,6 +48,11 @@ OSViMode VI;
 
 struct Config gConfig;
 
+u8 gNewFrameReady = TRUE;
+s8 gGfxTasksQueued = 0;
+u16 gGfxActiveFramebuffer = 0;
+struct GfxPool *gCurrentRenderingPool = NULL;
+struct GfxPool *gNextRenderingPool = NULL;
 struct VblankHandler *gVblankHandler1       = NULL;
 struct VblankHandler *gVblankHandler2       = NULL;
 struct VblankHandler *gVblankHandler3       = NULL;
@@ -197,6 +192,29 @@ void pretend_audio_sptask_done(void) {
     osSendMesg(&gIntrMesgQueue, (OSMesg) MESG_SP_COMPLETE, OS_MESG_NOBLOCK);
 }
 
+void handle_gfx_pool_complete(void) {
+    gNewFrameReady = TRUE;
+    gCurrentRenderingPool = NULL;
+    gGfxTasksQueued--;
+    if (gGfxTasksQueued < 0) {
+        gGfxTasksQueued = 0;
+        assert(FALSE, "gGfxTasksQueued went negative!");
+    }
+
+    update_framebuffer();
+
+    if (gNextRenderingPool) {
+        gCurrentRenderingPool = gNextRenderingPool;
+        gNextRenderingPool = NULL;
+        if (gGfxActiveFramebuffer != sRenderingFramebuffer || !(gEmulator & INSTANT_INPUT_BLACKLIST)) {
+            // Don't render on top of currently displaying frame, unless instant input is active
+            exec_display_list(gCurrentRenderingPool);
+        }
+    }
+
+    render_fbe_transition();
+}
+
 void handle_vblank(void) {
     gNumVblanks++;
     if (gResetTimer > 0 && gResetTimer < 100) {
@@ -229,6 +247,16 @@ void handle_vblank(void) {
             profiler_rsp_started(PROFILER_RSP_GFX);
         }
     }
+
+    if (gNewFrameReady) {
+        gNewFrameReady = FALSE;
+        osViSwapBuffer((void *) PHYSICAL_TO_VIRTUAL(gPhysicalFramebuffers[sRenderedFramebuffer]));
+        gGfxActiveFramebuffer = sRenderedFramebuffer;
+        if (gGfxTasksQueued == 0 && gCurrentRenderingPool != NULL) {
+            exec_display_list(gCurrentRenderingPool);
+        }
+    }
+
 #if ENABLE_RUMBLE
     rumble_thread_update_vi();
 #endif
@@ -434,6 +462,9 @@ void thread3_main(UNUSED void *arg) {
             case MESG_RCP_HUNG:
                 alert_rcp_hung_up();
                 break;
+            case MESG_GFX_PIPELINE_FINISHED:
+                handle_gfx_pool_complete();
+                break;
         }
     }
 }
@@ -467,18 +498,25 @@ void dispatch_audio_sptask(struct SPTask *spTask) {
     }
 }
 
-void exec_display_list(struct SPTask *spTask) {
-    if (spTask != NULL) {
+void exec_display_list(struct GfxPool *gfxPool) {
+    const u32 saved = __osDisableInt();
+
+    if (gfxPool != NULL) {
+        update_framebuffer_for_pipeline(gfxPool);
+
         osWritebackDCacheAll();
-        spTask->state = SPTASK_STATE_NOT_STARTED;
+        gGfxTasksQueued++;
+        gfxPool->spTask.state = SPTASK_STATE_NOT_STARTED;
         if (sCurrentDisplaySPTask == NULL) {
-            sCurrentDisplaySPTask = spTask;
+            sCurrentDisplaySPTask = &gfxPool->spTask;
             sNextDisplaySPTask = NULL;
             osSendMesg(&gIntrMesgQueue, (OSMesg) MESG_START_GFX_SPTASK, OS_MESG_NOBLOCK);
         } else {
-            sNextDisplaySPTask = spTask;
+            sNextDisplaySPTask = &gfxPool->spTask;
         }
     }
+
+    __osRestoreInt(saved);
 }
 
 void turn_on_audio(void) {

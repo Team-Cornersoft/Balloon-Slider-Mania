@@ -26,7 +26,7 @@ extern struct SaveBuffer gSaveBuffer;
 
 extern u8 gGfxSPTaskStack[];
 
-extern struct GfxPool gGfxPools[2];
+extern struct GfxPool gGfxPools[3];
 
 extern u8 adpcmbuf[];		/* Buffer for audio records ADPCM) */
 

@@ -37,9 +37,6 @@
 #include "emutest.h"
 #include "lib/libpl/libpl-emu.h"
 
-// Emulators that the Instant Input patch should not be applied to
-#define INSTANT_INPUT_BLACKLIST (EMU_CONSOLE | EMU_WIIVC | EMU_ARES | EMU_SIMPLE64 | EMU_CEN64)
-
 // Gfx handlers
 struct SPTask *gGfxSPTask;
 Gfx *gDisplayListHead;
@@ -64,7 +61,6 @@ s8 gSramProbe;
 OSMesgQueue gGameVblankQueue;
 OSMesgQueue gGfxVblankQueue;
 OSMesg gGameMesgBuf[1];
-OSMesg gGfxMesgBuf[1];
 
 // Vblank Handler
 struct VblankHandler gGameVblankHandler;
@@ -108,6 +104,8 @@ static u8 checkingFBE = 0;
 static u8 fbeCheckFinished = FALSE;
 
 u16 gFBEWarpTransitionProps[SCREEN_HEIGHT][2];
+
+static Gfx gGFXPoolFBList[ARRAY_COUNT(gGfxPools)][2];
 
 // Display
 // ----------------------------------------------------------------------------------------------------
@@ -187,17 +185,48 @@ void init_z_buffer(s32 resetZB) {
     gDisplayListHead = tempGfxHead;
 }
 
+void update_framebuffer_for_pipeline(struct GfxPool *gfxPool) {
+    s32 poolIndex;
+    for (poolIndex = 0; poolIndex < ARRAY_COUNT(gGfxPools); poolIndex++) {
+        if (gfxPool == &gGfxPools[poolIndex]) {
+            break;
+        }
+    }
+    if (poolIndex == ARRAY_COUNT(gGfxPools)) {
+        poolIndex = 0;
+        assert(FALSE, "gfxPool not valid pool address!");
+    }
+
+    Gfx tmpFBAlloc[ARRAY_COUNT(gGFXPoolFBList[0])] = {
+        gsDPSetColorImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, SCREEN_WIDTH,
+                        gPhysicalFramebuffers[sRenderingFramebuffer]),
+        gsSPEndDisplayList(),
+    };
+
+    bcopy(tmpFBAlloc, gGFXPoolFBList[poolIndex], sizeof(gGFXPoolFBList[poolIndex]));
+}
+
 /**
  * Tells the RDP which of the three framebuffers it shall draw to.
  */
 void select_framebuffer(void) {
+    s32 poolIndex;
+    for (poolIndex = 0; poolIndex < ARRAY_COUNT(gGfxPools); poolIndex++) {
+        if (gGfxPool == &gGfxPools[poolIndex]) {
+            break;
+        }
+    }
+    if (poolIndex == ARRAY_COUNT(gGfxPools)) {
+        poolIndex = 0;
+        assert(FALSE, "gGfxPool not valid pool address!");
+    }
+
     Gfx *tempGfxHead = gDisplayListHead;
 
     gDPPipeSync(tempGfxHead++);
 
     gDPSetCycleType(tempGfxHead++, G_CYC_1CYCLE);
-    gDPSetColorImage(tempGfxHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, SCREEN_WIDTH,
-                     gPhysicalFramebuffers[sRenderingFramebuffer]);
+    gSPDisplayList(tempGfxHead++, gGFXPoolFBList[poolIndex]);
     gDPSetScissor(tempGfxHead++, G_SC_NON_INTERLACE, 0, gBorderHeight, SCREEN_WIDTH,
                   SCREEN_HEIGHT - gBorderHeight);
 
@@ -304,8 +333,8 @@ void make_viewport_clip_rect(Vp *viewport) {
 void create_gfx_task_structure(void) {
     s32 entries = gDisplayListHead - gGfxPool->buffer;
 
-    gGfxSPTask->msgqueue = &gGfxVblankQueue;
-    gGfxSPTask->msg = (OSMesg) 2;
+    gGfxSPTask->msgqueue = &gIntrMesgQueue;
+    gGfxSPTask->msg = (OSMesg) MESG_GFX_PIPELINE_FINISHED;
     gGfxSPTask->task.t.type = M_GFXTASK;
     gGfxSPTask->task.t.ucode_boot = rspbootTextStart;
     gGfxSPTask->task.t.ucode_boot_size = ((u8 *) rspbootTextEnd - (u8 *) rspbootTextStart);
@@ -451,6 +480,7 @@ void render_init(void) {
     FORCE_CRASH
 #endif
     gGfxPool = &gGfxPools[0];
+    gCurrentRenderingPool = gGfxPool;
     set_segment_base_addr(SEGMENT_RENDER, gGfxPool->buffer);
     gGfxSPTask = &gGfxPool->spTask;
     gDisplayListHead = gGfxPool->buffer;
@@ -458,7 +488,7 @@ void render_init(void) {
     init_rcp(CLEAR_ZBUFFER);
     clear_framebuffer(0);
     end_master_display_list();
-    exec_display_list(&gGfxPool->spTask);
+    exec_display_list(gCurrentRenderingPool);
 
     // Skip incrementing the initial framebuffer index on emulators so that they display immediately as the Gfx task finishes
     // VC probably emulates osViSwapBuffer accurately so instant patch breaks VC compatibility
@@ -473,16 +503,29 @@ void render_init(void) {
  * Selects the location of the F3D output buffer (gDisplayListHead).
  */
 void select_gfx_pool(void) {
-    gGfxPool = &gGfxPools[gGlobalTimer % ARRAY_COUNT(gGfxPools)];
+    for (s32 i = 0; i < ARRAY_COUNT(gGfxPools); i++) {
+        if (&gGfxPools[i] == gCurrentRenderingPool) {
+            continue;
+        }
+
+        if (&gGfxPools[i] == gNextRenderingPool) {
+            continue;
+        }
+
+        gGfxPool = &gGfxPools[i];
+        break;
+    }
     set_segment_base_addr(SEGMENT_RENDER, gGfxPool->buffer);
     gGfxSPTask = &gGfxPool->spTask;
     gDisplayListHead = gGfxPool->buffer;
     gGfxPoolEnd = (u8 *) (gGfxPool->buffer + GFX_POOL_SIZE);
 }
 
-static void render_fbe_transition(void) {
+void render_fbe_transition(void) {
     if (gSelectionShown >= BSM_SELECTION_STAGE_START_FIRST) {
         if (gFBEEnabled && !gWidescreenViewportEnabled) {
+            osInvalDCache(gFramebuffers[sRenderedFramebuffer], sizeof(gFramebuffers[sRenderedFramebuffer]));
+
             RGBA16 *fb = gFramebuffers[sRenderedFramebuffer] - SCREEN_WIDTH;
             s32 pixelOffset = ((gMenuWarpCounter - 4) * (gMenuWarpCounter - 2)) - 25;
             s32 width;
@@ -527,9 +570,23 @@ static void render_fbe_transition(void) {
                     fb[invWidth] = 0x0001;
                 }
             }
+
+            osWritebackDCacheAll();
         }
 
         gMenuWarpCounter++;
+    }
+}
+
+void update_framebuffer(void) {
+    // Skip swapping buffers on inaccurate emulators other than VC so that they display immediately as the Gfx task finishes
+    if (gEmulator & INSTANT_INPUT_BLACKLIST) {
+        if (++sRenderedFramebuffer == 3) {
+            sRenderedFramebuffer = 0;
+        }
+        if (++sRenderingFramebuffer == 3) {
+            sRenderingFramebuffer = 0;
+        }
     }
 }
 
@@ -541,31 +598,23 @@ static void render_fbe_transition(void) {
  * - Selects which framebuffer will be rendered and displayed to next time.
  */
 void display_and_vsync(void) {
-    osRecvMesg(&gGfxVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
-    if (gGoddardVblankCallback != NULL) {
-        gGoddardVblankCallback();
-        gGoddardVblankCallback = NULL;
-    }
-    exec_display_list(&gGfxPool->spTask);
+    // if (gGoddardVblankCallback != NULL) {
+    //     gGoddardVblankCallback();
+    //     gGoddardVblankCallback = NULL;
+    // }
 
-    render_fbe_transition();
+    if (gCurrentRenderingPool) {
+        gNextRenderingPool = gGfxPool;
+    } else {
+        gCurrentRenderingPool = gGfxPool;
+        exec_display_list(gCurrentRenderingPool);
+    }
 
 #ifndef UNLOCK_FPS
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
-#endif
-    osViSwapBuffer((void *) PHYSICAL_TO_VIRTUAL(gPhysicalFramebuffers[sRenderedFramebuffer]));
-#ifndef UNLOCK_FPS
     osRecvMesg(&gGameVblankQueue, &gMainReceivedMesg, OS_MESG_BLOCK);
 #endif
-    // Skip swapping buffers on inaccurate emulators other than VC so that they display immediately as the Gfx task finishes
-    if (gEmulator & INSTANT_INPUT_BLACKLIST) {
-        if (++sRenderedFramebuffer == 3) {
-            sRenderedFramebuffer = 0;
-        }
-        if (++sRenderingFramebuffer == 3) {
-            sRenderingFramebuffer = 0;
-        }
-    }
+
     gGlobalTimer++;
 }
 
@@ -828,7 +877,6 @@ void setup_game_memory(void) {
     // Setup general Segment 0
     set_segment_base_addr(SEGMENT_MAIN, (void *)RAM_START);
     // Create Mesg Queues
-    osCreateMesgQueue(&gGfxVblankQueue, gGfxMesgBuf, ARRAY_COUNT(gGfxMesgBuf));
     osCreateMesgQueue(&gGameVblankQueue, gGameMesgBuf, ARRAY_COUNT(gGameMesgBuf));
     // Setup z buffer and framebuffer
     gPhysicalZBuffer = VIRTUAL_TO_PHYSICAL(gZBuffer);

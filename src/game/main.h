@@ -3,6 +3,17 @@
 
 #include "config.h"
 
+// Message IDs
+enum MessageIDs {
+    MESG_SP_COMPLETE = 100,
+    MESG_DP_COMPLETE,
+    MESG_VI_VBLANK,
+    MESG_START_GFX_SPTASK,
+    MESG_NMI_REQUEST,
+    MESG_RCP_HUNG,
+    MESG_GFX_PIPELINE_FINISHED,
+};
+
 enum VIModes {
     MODE_NTSC,
     MODE_MPAL,
@@ -85,6 +96,8 @@ extern struct RumbleData gRumbleDataQueue[3];
 extern struct RumbleSettings gCurrRumbleSettings;
 #endif
 
+extern struct GfxPool *gCurrentRenderingPool;
+extern struct GfxPool *gNextRenderingPool;
 extern struct VblankHandler *gVblankHandler1;
 extern struct VblankHandler *gVblankHandler2;
 extern struct SPTask *gActiveSPTask;
@@ -109,7 +122,7 @@ typedef struct {
 
 void set_vblank_handler(s32 index, struct VblankHandler *handler, OSMesgQueue *queue, OSMesg *msg);
 void dispatch_audio_sptask(struct SPTask *spTask);
-void exec_display_list(struct SPTask *spTask);
+void exec_display_list(struct GfxPool *gfxPool);
 void change_vi(OSViMode *mode, int width, int height);
 
 #ifdef SDATA

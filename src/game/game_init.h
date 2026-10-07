@@ -9,6 +9,7 @@
 #include "types.h"
 #include "memory.h"
 #include "config.h"
+#include "game/emutest.h"
 
 #define MARIO_ANIMS_POOL_SIZE 0x4000
 #define DEMO_INPUTS_POOL_SIZE 0x800
@@ -17,6 +18,9 @@
 // So apparently this value actually matters...???
 #define FBE_PIXEL_OFFSET   13
 #define FBE_CHECK          0xFF01
+
+// Emulators that the Instant Input patch should not be applied to
+#define INSTANT_INPUT_BLACKLIST (EMU_CONSOLE | EMU_WIIVC | EMU_ARES | EMU_SIMPLE64 | EMU_CEN64)
 
 struct GfxPool {
     Gfx buffer[GFX_POOL_SIZE];
@@ -41,7 +45,6 @@ extern OSContPadEx gControllerPads[MAXCONTROLLERS];
 extern OSMesgQueue gGameVblankQueue;
 extern OSMesgQueue gGfxVblankQueue;
 extern OSMesg gGameMesgBuf[1];
-extern OSMesg gGfxMesgBuf[1];
 extern struct VblankHandler gGameVblankHandler;
 extern uintptr_t gPhysicalFramebuffers[3];
 extern uintptr_t gPhysicalZBuffer;
@@ -65,6 +68,8 @@ extern s8 gEepromProbe;
 extern s8 gSramProbe;
 #endif
 
+extern u16 sRenderedFramebuffer;
+extern u16 sRenderingFramebuffer;
 extern void (*gGoddardVblankCallback)(void);
 extern struct Controller* const gPlayer1Controller;
 extern struct Controller* const gPlayer2Controller;
@@ -100,6 +105,9 @@ void init_rcp(s32 resetZB);
 void end_master_display_list(void);
 void render_init(void);
 void select_gfx_pool(void);
+void update_framebuffer_for_pipeline(struct GfxPool *gfxPool);
+void render_fbe_transition(void);
+void update_framebuffer(void);
 void display_and_vsync(void);
 
 #endif // GAME_INIT_H
